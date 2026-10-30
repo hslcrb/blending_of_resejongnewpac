@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+
+:root {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #202824;
+    background: #f8f8f5;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 320px;
+    margin: 0;
+}
+
+button, a {
+    font: inherit;
+}
+
+button:focus-visible, a:focus-visible, .viewer-canvas:focus-visible {
+    outline: 3px solid #14735d;
+    outline-offset: 4px;
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 82px;
+    padding: 0 6%;
+    border-bottom: 1px solid #dfe3de;
+}
+
+.wordmark {
+    color: inherit;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.07em;
+    text-decoration: none;
+}
+
+.header-label {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.main-content {
+    width: min(100% - 12%, 1600px);
+    margin: 0 auto;
+}
+
+.intro {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 32px;
+    padding: clamp(52px, 7vw, 104px) 0 48px;
+}
+
+.eyebrow {
+    margin: 0 0 20px;
+    color: #34705e;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(2.7rem, 5.5vw, 5.6rem);
+    font-weight: 600;
+    letter-spacing: -0.075em;
+    line-height: 1.16;
+}
+
+.intro-copy {
+    margin: 0 0 5px;
+    color: #555f59;
+    font-size: 1.125rem;
+    line-height: 1.75;
+}
+
+.model-section {
+    position: relative;
+    height: min(67vw, 760px);
+    min-height: 540px;
+    overflow: hidden;
+    background: #e8e8e4;
+}
+
+.viewer-canvas, .viewer-canvas canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.viewer-canvas {
+    cursor: grab;
+    touch-action: none;
+}
+
+.viewer-canvas:active {
+    cursor: grabbing;
+}
+
+.viewer-heading {
+    position: absolute;
+    top: 32px;
+    left: 36px;
+    display: grid;
+    gap: 5px;
+    pointer-events: none;
+}
+
+.viewer-heading span {
+    color: #515b55;
+    font-size: 1rem;
+}
+
+.viewer-heading strong {
+    font-size: 1.25rem;
+}
+
+.viewer-controls {
+    position: absolute;
+    top: 32px;
+    right: 36px;
+    display: flex;
+    gap: 8px;
+}
+
+.viewer-controls button {
+    min-height: 48px;
+    padding: 0 18px;
+    border: 1px solid #b4bcb4;
+    border-radius: 0;
+    color: #202824;
+    background: rgb(250 250 247 / 90%);
+    cursor: pointer;
+}
+
+.viewer-controls button:hover:not(:disabled) {
+    background: #dcebe2;
+}
+
+.viewer-controls button:disabled {
+    cursor: wait;
+    opacity: 60%;
+}
+
+.viewer-hint {
+    position: absolute;
+    right: 36px;
+    bottom: 26px;
+    margin: 0;
+    color: #303a34;
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.viewer-status {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    color: #35423b;
+    text-align: center;
+    pointer-events: none;
+}
+
+.model-note {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 0 64px;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.model-note p {
+    margin: 0;
+}
+
+.model-note p:last-child {
+    color: #5d675f;
+}
+
+.site-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 32px 6%;
+    border-top: 1px solid #dfe3de;
+    color: #5d675f;
+    font-size: 1rem;
+}
+
+@media (max-width: 700px) {
+    .site-header {
+        min-height: 68px;
+        padding: 0 5%;
+    }
+
+    .main-content {
+        width: 90%;
+    }
+
+    .intro {
+        display: block;
+        padding: 52px 0 32px;
+    }
+
+    .intro-copy {
+        margin-top: 24px;
+    }
+
+    .desktop-break {
+        display: none;
+    }
+
+    .model-section {
+        height: 65vh;
+        min-height: 480px;
+    }
+
+    .viewer-heading {
+        top: 22px;
+        left: 20px;
+    }
+
+    .viewer-controls {
+        top: auto;
+        right: auto;
+        bottom: 92px;
+        left: 20px;
+    }
+
+    .viewer-hint {
+        right: auto;
+        bottom: 20px;
+        left: 20px;
+        font-size: 1rem;
+    }
+
+    .model-note {
+        display: block;
+        padding-bottom: 48px;
+    }
+
+    .model-note p + p {
+        margin-top: 8px;
+    }
+
+    .site-footer {
+        padding-right: 5%;
+        padding-left: 5%;
+    }
+}
+
+
