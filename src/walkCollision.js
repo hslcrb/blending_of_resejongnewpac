@@ -37,7 +37,7 @@ const WALK_BLOCKS = [
     { minX: 43.15, maxX: 72.85, minZ: 16.15, maxZ: 27.85 },
     { minX: 4.15, maxX: 11.85, minZ: 11.65, maxZ: 16.35 },
     { minX: 56.15, maxX: 63.85, minZ: 11.65, maxZ: 16.35 },
-    { minX: 73.15, maxX: 78.85, minZ: -37.35, maxZ: -6.65 },
+    { minX: 73.15, maxX: 78.85, minZ: -83.35, maxZ: -6.65 },
 ];
 
 export function canWalk(x, z) {

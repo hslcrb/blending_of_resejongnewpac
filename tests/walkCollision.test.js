@@ -34,3 +34,12 @@ test('the lobby back wall keeps the eye clear of the camera near plane', () => {
     }
     assert.ok(z > -11.1, `stopped at z=${z}`);
 });
+
+test('the long side garden is blocked while the outside path stays open', () => {
+    // Blender y=7..83 maps to negative z in the web viewer.
+    for (const z of [-8, -37, -44, -56, -69, -79, -83]) {
+        assert.equal(canWalk(76, z), false, `garden at z=${z}`);
+        assert.equal(canWalk(79.5, z), true, `outer path at z=${z}`);
+    }
+    assert.equal(canWalk(76, -84), true, 'beyond the rear edge');
+});

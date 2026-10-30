@@ -64,6 +64,24 @@ b={k:MeshBuilder() for k in mats}
 def box(m,*args):b[m].box(*args)
 def frustum(m,cx,cy,z0,z1,w0,d0,w1,d1):
  b[m].poly([(cx-w0/2,cy-d0/2,z0),(cx+w0/2,cy-d0/2,z0),(cx+w0/2,cy+d0/2,z0),(cx-w0/2,cy+d0/2,z0),(cx-w1/2,cy-d1/2,z1),(cx+w1/2,cy-d1/2,z1),(cx+w1/2,cy+d1/2,z1),(cx-w1/2,cy+d1/2,z1)])
+def curved_capital(m,cx,cy,z0,z1,w0,d0,w1,d1,segments=12):
+ # One continuous ring mesh.  The profile broadens toward the beam rather
+ # than spreading at a constant angle; dimensions are photo-based estimates.
+ builder=b[m];start=len(builder.v)
+ for level in range(segments+1):
+  t=level/segments
+  spread=t**1.7
+  w=w0+(w1-w0)*spread;d=d0+(d1-d0)*spread;z=z0+(z1-z0)*t
+  builder.v.extend([(cx-w/2,cy-d/2,z),(cx+w/2,cy-d/2,z),
+                    (cx+w/2,cy+d/2,z),(cx-w/2,cy+d/2,z)])
+ builder.f.append(tuple(start+i for i in (3,2,1,0)))
+ for level in range(segments):
+  lower=start+4*level;upper=lower+4
+  for i in range(4):
+   j=(i+1)%4
+   builder.f.append((lower+i,lower+j,upper+j,upper+i))
+ top=start+4*segments
+ builder.f.append(tuple(top+i for i in range(4)))
 def hip_roof(m,cx,cy,z0,z1,width,depth,ridge,axis='x'):
  builder=b[m]; start=len(builder.v)
  base=[(cx-width/2,cy-depth/2,z0),(cx+width/2,cy-depth/2,z0),(cx+width/2,cy+depth/2,z0),(cx-width/2,cy+depth/2,z0)]
@@ -252,7 +270,7 @@ for z in (4.5,12.8):box('stone2',rearx,47.65,z,33,.1,.13)
 columns=[4,11.2,18.4,25.6,32.8,40]
 for x in columns:
  stone_pillar(x,front-1.0,.25,16.65,1.55,1.6,.19)
- frustum('stone',x,front-1.0,16.55,17.25,1.55,1.6,2.45,2.2)
+ curved_capital('stone',x,front-1.0,16.55,17.25,1.55,1.6,2.45,2.2)
  box('stone',x,front-1.0,17.38,2.45,2.2,.26)
  box('stone2',x,front-1.815,8.5,.018,.02,16.4)
  for z in [i*1.25 for i in range(1,14)]: box('stone2',x,front-1.815,z,1.53,.02,.018)

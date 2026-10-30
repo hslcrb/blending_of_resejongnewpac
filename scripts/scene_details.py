@@ -85,7 +85,7 @@ light = detail_material('Lobby light diffuser', (.95,.88,.70), roughness=.55)
 
 # Low raised, planted beds are deliberately placed rather than scattered.
 beds = [(-61,-23,23,12), (14,-22,25,11), (58,-22,29,11),
-        (8,-14,7,4), (60,-14,7,4), (76,22,5,30)]
+        (8,-14,7,4), (60,-14,7,4), (76,45,5,76)]
 garden = DetailMesh()
 edge = DetailMesh()
 for x,y,w,d in beds:
@@ -102,7 +102,10 @@ tree_positions = [(-69,-23,8.7),(-61,-20,9.3),(-53,-25,8.1),
                   (4,-20,8.3),(12,-24,9.2),(21,-20,8.9),
                   (46,-23,9.0),(54,-19,8.5),(62,-24,9.4),(70,-20,8.0),
                   (8,-13.75,10.8),(60,-14,10.2),
-                  (76,9,10.4),(76,21,11.2),(76,33,10.0)]
+                  (76,9,10.4),(76,21,11.2),(76,33,10.0),
+                  # Photo-based continuation beside the long east elevation.
+                  # These positions and heights remain estimates.
+                  (76.1,44,9.5),(76.3,56,10.5),(75.9,69,8.8),(76.2,79,10.2)]
 templates=[]
 for template_id in range(5):
     branches = DetailMesh()
@@ -163,7 +166,7 @@ tree_soil.finish('Exposed soil around tree trunks',soil)
 # Their feet rest in the planted bed and the upper ends meet the trunk.
 tree_supports=DetailMesh()
 tree_ties=DetailMesh()
-for tree_id in (0,2,5,8,12):
+for tree_id in (0,2,5,8,12,15,17):
     x,y,_=tree_positions[tree_id]
     for arm in range(3):
         angle=tree_id*.23+arm*2*math.pi/3
@@ -212,7 +215,7 @@ for i,builder in enumerate(groundcover):
 # beds.  Their coordinates are chosen within each bed, not scattered buildings.
 shrub_sites=[(-65,-25),(-58,-26),(-56,-19),(7,-23),(17,-20),(23,-25),
              (49,-25),(57,-21),(66,-23),(69,-25),(6,-14),(58,-14),
-             (76,14),(76,27)]
+             (76,14),(76,27),(75.6,38.5),(76.8,50),(75.5,62),(76.8,74)]
 shrub_branches=DetailMesh()
 shrub_leaves=[DetailMesh(),DetailMesh(),DetailMesh()]
 for shrub_id,(x,y) in enumerate(shrub_sites):
@@ -461,9 +464,15 @@ for panel,center in enumerate((-2.2,46.2)):
         bpy.ops.object.convert(target='MESH')
 
 # Graphics are original SVG drawings rasterized to textures, not source photos.
-def graphic_plane(name, filepath, left, right, y, bottom, top, emission=0):
-    image=bpy.data.images.load(os.path.abspath(filepath),check_existing=True)
-    image.pack()
+graphic_images={}
+def graphic_plane(name, filepath, left, right, y, bottom, top, emission=0, u_range=(0,1)):
+    absolute=os.path.abspath(filepath)
+    if absolute not in graphic_images:
+        # Rebuilding in the same Blender session must read the current file,
+        # not reuse an older packed image with the same path.
+        graphic_images[absolute]=bpy.data.images.load(absolute,check_existing=False)
+        graphic_images[absolute].pack()
+    image=graphic_images[absolute]
     mesh=bpy.data.meshes.new(name)
     mesh.from_pydata([(left,y,bottom),(right,y,bottom),(right,y,top),(left,y,top)],[],[(0,1,2,3)])
     mesh.update()
@@ -471,7 +480,8 @@ def graphic_plane(name, filepath, left, right, y, bottom, top, emission=0):
     for face in mesh.polygons:
         for index in face.loop_indices:
             vertex=mesh.loops[index].vertex_index
-            layer.data[index].uv=[(0,0),(1,0),(1,1),(0,1)][vertex]
+            u0,u1=u_range
+            layer.data[index].uv=[(u0,0),(u1,0),(u1,1),(u0,1)][vertex]
     obj=bpy.data.objects.new(name,mesh)
     bpy.context.collection.objects.link(obj)
     mat=bpy.data.materials.new(name+' original vector artwork')
@@ -492,7 +502,21 @@ banner_left,banner_right=facade_x(-50.4),facade_x(-27.6)
 banner_mid=(banner_left+banner_right)/2
 for i,(left,right) in enumerate(((banner_left,banner_mid),(banner_mid,banner_right))):
     graphic_plane('Terrace banner %d • original art' % i,'assets/graphics/annex-banner.png',
-                  left,right,-12.225,annex_z(2.95),annex_z(4.25))
+                  left,right,-12.225,annex_z(2.95),annex_z(4.25),u_range=(i*.5,(i+1)*.5))
+
+# The original event graphic spans the glazed projection as a separate framed
+# panel.  Its backing overlaps the existing mullions; no photo pixels are used.
+# The left part of the projection is behind the corner pier from the plaza.
+# Fit the 4:1 graphic into the visible section instead of hiding its title.
+bridge_left,bridge_right=-35.0,facade_x(-21.7)
+bridge_top=annex_z(8.10)
+bridge_bottom=bridge_top-(bridge_right-bridge_left)/4
+bridge_frame=DetailMesh()
+bridge_frame.box(((bridge_left+bridge_right)/2,-2.62,(bridge_bottom+bridge_top)/2),
+                 (bridge_right-bridge_left+.12,.08,bridge_top-bridge_bottom+.12))
+bridge_frame.finish('Glazed bridge banner backing',metal)
+graphic_plane('Glazed bridge banner • original art','assets/graphics/bridge-banner.png',
+              bridge_left,bridge_right,-2.67,bridge_bottom,bridge_top)
 
 # A subtly varied, packed paving texture remains visible at pedestrian scale.
 random_texture=random.Random(8127)
