@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { instanceTreeMeshes } from './treeInstances.js';
 import './style.css';
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
@@ -186,6 +187,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         let disposed = false;
         let frameId;
         let model;
+        let treeBatch;
         let modeNow = 'orbit';
         let activePreset = 'perspective';
         let userAdjusted = false;
@@ -412,10 +414,12 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             shadowCamera.updateProjectionMatrix();
             model.traverse((object) => {
                 if (!object.isMesh) return;
-                object.receiveShadow = true;
                 const sourceName = object.userData.name || object.name.replaceAll('_', ' ');
-                object.castShadow = /^(stone|roof|roofedge|copper|white|Individual tree trunks and branching|Deciduous foliage \d+|Tree trunk \d+|Tree foliage \d+ shade \d+)$/i.test(sourceName);
+                object.receiveShadow = true;
+                object.castShadow = /^(stone|terrace_stone|terrace stone|roof|roofedge|copper|white|Individual tree trunks and branching|Deciduous foliage \d+|Tree trunk \d+|Tree foliage \d+ shade \d+)$/i.test(sourceName);
             });
+            // 공유 수목 형상을 묶어 드로 호출을 줄입니다. / Batch shared trees after framing and shadow setup.
+            treeBatch = instanceTreeMeshes(model, { animations: gltf.animations });
             renderer.shadowMap.needsUpdate = true;
             camera.near = radius / 1000;
             camera.far = radius * 100;
@@ -490,6 +494,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             window.removeEventListener('blur', clearInput);
             document.removeEventListener('visibilitychange', clearInput);
             if (model) {
+                treeBatch?.disposeInstances();
                 model.traverse((object) => {
                     object.geometry?.dispose();
                     const materials = Array.isArray(object.material) ? object.material : [object.material];

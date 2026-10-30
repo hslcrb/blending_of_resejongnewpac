@@ -101,7 +101,7 @@ edge.finish('Garden stone edging', curb)
 tree_positions = [(-69,-23,8.7),(-61,-20,9.3),(-53,-25,8.1),
                   (4,-20,8.3),(12,-24,9.2),(21,-20,8.9),
                   (46,-23,9.0),(54,-19,8.5),(62,-24,9.4),(70,-20,8.0),
-                  (8,-14,10.8),(60,-14,10.2),
+                  (8,-13.75,10.8),(60,-14,10.2),
                   (76,9,10.4),(76,21,11.2),(76,33,10.0)]
 templates=[]
 for template_id in range(5):
@@ -239,7 +239,9 @@ wall_x=facade_x(-2.7)
 for i in range(6):
     y=-13.65+i*2.65
     support=annex_z(.65+i*.53+.07)
-    x=wall_x+.76
+    # Keep the stone planter clear of the stair rail posts while maintaining
+    # overlap with their underlying retaining wall.
+    x=wall_x+.88
     # Solid stone supports extend to grade; the projecting planter is not
     # left cantilevered from the narrow stair wall.
     terrace_stone.box((x,y,(support+.36)/2),(1.56,2.42,support+.36))

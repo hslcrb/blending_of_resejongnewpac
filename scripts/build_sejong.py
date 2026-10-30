@@ -23,13 +23,16 @@ def material(name, color, metallic=0, roughness=.72):
 mats={
  'stone':material('밝은 화강석',(.68,.69,.67)),
  'stone2':material('밝은 석재 줄눈',(.56,.57,.55)),
+ 'terrace_stone':material('별관 외부 석재',(.60,.58,.53),0,.9),
  'roof':material('회색 지붕',(.37,.39,.39)),
  'roofedge':material('처마 하부',(.28,.30,.30)),
  'roofjoint':material('지붕 석재 이음매',(.29,.31,.31)),
+ 'beamjoint':material('처마보 판재 줄눈',(.235,.255,.255)),
  'copper':material('녹청색 지붕',(.29,.40,.37),.12,.8),
  'copperjoint':material('녹청 지붕 이음매',(.25,.35,.32),.12,.8),
  'dark':material('깊은 그늘',(.075,.09,.095)),
  'glass':material('짙은 유리',(.065,.13,.14),.35,.24),
+ 'connector_glass':material('연결동 세로창 유리',(.11,.22,.21),.18,.28),
  'shopglass':material('별관 상점 반투명 유리',(.16,.25,.24),.18,.22),
  'gold':material('청동 격자',(.62,.49,.28),.65,.3),
  'ground':material('광장 석재',(.59,.61,.60)),
@@ -165,13 +168,35 @@ for x in (-2.2,46.2):
  box('stone',x,front+.1,10.35,5.6,1.8,13.7)
  # The bottom of the monumental corner piers narrows toward the plinth.
  frustum('stone',x,front+.1,0,3.5,4.1,1.4,5.6,1.8)
-# Façade panel stone coursing on end piers and return wall.
-for z in [i*.72 for i in range(5,24)]:
- for x in (-2.2,46.2): box('stone2',x,front-.825,z,5.5,.018,.015)
-for x in [-4.8,-3.4,-2,0,43.7,45.3,46.9,48.3]: box('stone2',x,front-.84,8.5,.012,.02,17)
+# Separate courses and staggered joints on the two monumental stone piers.
+# Joint strips slightly overlap the wall; sizes are photo-based estimates.
+pier_base,pier_top,pier_course=3.6,17.2,.72
+for center in (-2.2,46.2):
+ z=pier_base
+ while z<pier_top:
+  box('stone2',center,front-.803,z,5.5,.012,.015)
+  z+=pier_course
+ rows=math.ceil((pier_top-pier_base)/pier_course)
+ for row in range(rows):
+  lo=pier_base+row*pier_course
+  hi=min(pier_top,lo+pier_course)
+  x=center-2.75+(row%2)*.68
+  while x<center+2.75:
+   if center-2.70<x<center+2.70:
+    box('stone2',x,front-.803,(lo+hi)/2,.012,.012,hi-lo-.02)
+   x+=1.36
 
 # Projecting cornice: stacked beams, sloped outward roof edge, roof slab.
 box('roofedge',cx,9.75,17.75,55,28.5,1.0)
+# The broad inner lintel has its own stone-block courses beneath the eaves.
+for z in (17.50,17.75,18.00):
+ box('beamjoint',cx,-4.503,z,54.8,.012,.012)
+for row in range(4):
+ lo=17.25+row*.25;hi=lo+.25
+ for i in range(26):
+  x=cx-26.7+i*2.1+(row%2)*1.05
+  if cx-27.35<x<cx+27.35:
+   box('beamjoint',x,-4.503,(lo+hi)/2,.014,.012,.23)
 box('dark',cx,9.5,18.35,57,31,.45)
 frustum('roof',cx,9,18.55,21.65,60,32,57,29)
 box('roofedge',cx,9,21.7,60.2,32.2,.26)
@@ -341,6 +366,20 @@ for i in range(6):
  box('stone',x,4.25,top/2,.44,15.5,top)
  box('stone2',x+.22,4.25,top+.009,.025,15.5,.018)
 apply_section(main_start,theatre_y,theatre_z)
+# Return-face joints use physical distances after the depth transformation.
+beam_y0,beam_y1=theatre_y(-4.5),theatre_y(24)
+beam_z0,beam_z1=theatre_z(17.25),theatre_z(18.25)
+for x in (cx-27.503,cx+27.503):
+ for part in (1,2,3):
+  z=beam_z0+(beam_z1-beam_z0)*part/4
+  box('beamjoint',x,(beam_y0+beam_y1)/2,z,.012,beam_y1-beam_y0-.1,.012)
+ for row in range(4):
+  lo=beam_z0+(beam_z1-beam_z0)*row/4
+  hi=beam_z0+(beam_z1-beam_z0)*(row+1)/4
+  y=beam_y0+.3+(row%2)*1.35
+  while y<beam_y1-.2:
+   box('beamjoint',x,y,(lo+hi)/2,.012,.014,hi-lo-.02)
+   y+=2.7
 # Use final-space diagonals so the lower lattice remains a diamond after
 # the section's nonlinear depth and height transforms.
 def side_lattice(x,ymin,ymax,zmin,zmax,spacing=.38):
@@ -427,7 +466,18 @@ for y in (-1.8,4.6):box('stone',-22.2,y,2.4,.38,.38,4.8)
 box('stone',ax,-8.1,.04,25,7.7,.08)
 box('stone',ax,-8.1,3.825,25,7.7,.35)
 box('stone',ax,-4.4,1.85,25,.30,3.7)
-for x in (ax-12.2,ax+12.2):box('stone',x,-8.1,1.85,.6,7.7,3.7)
+box('stone',ax-12.2,-8.1,1.85,.6,7.7,3.7)
+box('terrace_stone',ax+12.2,-8.1,1.85,.6,7.7,3.7)
+# Terrace return-wall masonry sits on the actual outer face, near the stair.
+for z in (.58,1.16,1.74,2.32,2.90,3.48):
+ box('stone2',ax+12.503,-8.1,z,.012,7.58,.012)
+for row in range(7):
+ lo=row*.58;hi=min(3.7,lo+.58)
+ if hi<=lo:continue
+ y=-11.85+(row%2)*.62
+ while y<-4.35:
+  box('stone2',ax+12.503,y,(lo+hi)/2,.012,.012,hi-lo-.02)
+  y+=1.24
 for x in (ax-9,ax-3.1,ax+3.1,ax+9):box('stone',x,-11.64,1.83,.55,.55,3.66)
 for x in (ax-11,ax+11):box('stone',x,-11.64,1.83,3,.55,3.66)
 box('dark',ax,-4.57,1.85,23,.05,3.6)
@@ -450,16 +500,40 @@ for left,right in shop_ranges:
  box('gold',(left+right)/2,-11.41,2.80,right-left,.08,.07)
 
 # Connecting building and broad ascending central stair.
-box('stone',-13.1,16,5.8,20,13,11.6)
+connector_min,connector_max=-23.1,-3.1
+connector_windows=[-22+i*1.6 for i in range(12)]
+# Preserve the rear mass while making a real 0.47m recess in the front wall.
+box('stone',-13.1,16.25,5.8,20,12.5,11.6)
+window_bands=[]
+for z in (5.1,8.0):
+ center=annex_z(z)
+ window_bands.append((inverse_annex_z(center-.95),inverse_annex_z(center+.95)))
+def connector_stone_span(x0,x1,z0,z1):
+ if x1>x0 and z1>z0:box('stone',(x0+x1)/2,9.75,(z0+z1)/2,x1-x0,.5,z1-z0)
+connector_stone_span(connector_min,connector_max,0,window_bands[0][0])
+connector_stone_span(connector_min,connector_max,window_bands[0][1],window_bands[1][0])
+connector_stone_span(connector_min,connector_max,window_bands[1][1],11.6)
+for lo,hi in window_bands:
+ edge=connector_min
+ for x in connector_windows:
+  connector_stone_span(edge,x-.16,lo,hi)
+  box('connector_glass',x,9.99,(lo+hi)/2,.32,.04,hi-lo)
+  edge=x+.16
+ connector_stone_span(edge,connector_max,lo,hi)
 box('glass',-13.1,9.42,1.8,19,.16,3.4)
-for x in [-22+i*1.6 for i in range(13)]:
- for z in (5.1,8.0):box('glass',x,9.47,z,.32,.08,1.45)
-for z in [4+i*.65 for i in range(12)]:box('stone2',-13.1,9.33,z,20,.02,.015)
+for z in [4+i*.65 for i in range(12)]:
+ if any(lo<z<hi for lo,hi in window_bands):
+  edge=connector_min
+  for x in connector_windows:
+   if x-.16>edge:box('stone2',(edge+x-.16)/2,9.493,z,x-.16-edge,.015,.015)
+   edge=x+.16
+  if connector_max>edge:box('stone2',(edge+connector_max)/2,9.493,z,connector_max-edge,.015,.015)
+ else:box('stone2',-13.1,9.493,z,20,.015,.015)
 for x in (-23.5,-2.7):
  for i in range(6):
   y=-13.65+i*2.65; h=.65+i*.53
-  box('stone',x,y,h/2,.65,2.7,h)
-  box('stone2',x,y,h+.035,.76,2.7,.07)
+  box('stone',x,y,h/2,.80,2.7,h)
+  box('stone2',x,y,h+.035,.82,2.7,.07)
  for i in range(10):
   y=-14+i*1.45
   tier=max(0,min(5,math.floor((y+15)/2.65)))
@@ -517,6 +591,40 @@ for face in stone_obj.data.polygons:
 stone_shader=next(n for n in mats['stone'].node_tree.nodes if n.type=='BSDF_PRINCIPLED')
 stone_texture=mats['stone'].node_tree.nodes.new('ShaderNodeTexImage');stone_texture.image=granite
 mats['stone'].node_tree.links.new(stone_texture.outputs['Color'],stone_shader.inputs['Base Color'])
+
+# Subtle, original stone finishes distinguish the secondary masonry and
+# weathered terrace wall. Packed pixels are generated in Blender, not sampled
+# from the reference photographs. Roof finishes stay untextured because the
+# tested fine-grain texture produced distracting moiré in the web viewer.
+def linear_to_srgb(value):
+ value=max(0,min(1,value))
+ return 12.92*value if value<=.0031308 else 1.055*(value**(1/2.4))-.055
+def add_stone_finish(key,base,seed,weather_strength=.002):
+ rng=random.Random(seed)
+ image=bpy.data.images.new('Original '+key+' stone grain',width=256,height=256,alpha=True)
+ pxs=[]
+ for py in range(256):
+  for px in range(256):
+   grain=rng.gauss(0,.004)
+   mottling=.003*math.sin(px*2*math.pi/53)*math.cos(py*2*math.pi/71)
+   weather=-weather_strength*max(0,math.sin(px*2*math.pi/31))
+   delta=grain+mottling+weather
+   pxs.extend((*[linear_to_srgb(c+delta) for c in base],1))
+ image.pixels[:]=pxs
+ image.pack()
+ obj=bpy.data.objects[key]
+ uv=obj.data.uv_layers.new(name='Stone finish projection')
+ for face in obj.data.polygons:
+  axis=max(range(3),key=lambda i:abs(face.normal[i]))
+  for li in face.loop_indices:
+   v=obj.data.vertices[obj.data.loops[li].vertex_index].co
+   uv.data[li].uv=((v.y/3,v.z/3) if axis==0 else (v.x/3,v.z/3) if axis==1 else (v.x/3,v.y/3))
+ shader=next(n for n in mats[key].node_tree.nodes if n.type=='BSDF_PRINCIPLED')
+ tex=mats[key].node_tree.nodes.new('ShaderNodeTexImage')
+ tex.image=image
+ mats[key].node_tree.links.new(tex.outputs['Color'],shader.inputs['Base Color'])
+add_stone_finish('stone2',(.56,.57,.55),626)
+add_stone_finish('terrace_stone',(.60,.58,.53),627,.018)
 
 # The reliefs, planting, fittings and artwork are original Blender geometry.
 # Reference photographs are retained as research material, never sampled.
