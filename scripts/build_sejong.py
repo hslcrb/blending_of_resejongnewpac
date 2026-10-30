@@ -224,6 +224,17 @@ for x in [cx-28.2+i*.60 for i in range(95)]:
 # Finer ribs under the inner stone beam are visible from the entrance.
 for x in [cx-26.5+i*.36 for i in range(148)]:
  box('stone2',x,-4.35,17.23,.055,1.0,.08)
+# Small square fixtures punctuate the inner soffit in the close-up photographs.
+# A four-piece dark bezel meets the underside of the beam and holds a recessed
+# glass lens; the quantity and spacing are estimates from the visible bays.
+# Place them midway between the five principal columns and between the fine ribs.
+for x in (7.6,14.8,22,29.2,36.4):
+ for y in (-4.02,-3.33):
+  for dx in (-.0875,.0875):
+   box('dark',x+dx,y,17.20,.025,.20,.10)
+  for dy in (-.0875,.0875):
+   box('dark',x,y+dy,17.20,.15,.025,.10)
+  box('glass',x,y,17.225,.15,.15,.04)
 def cornice_joints(cx,cy,z0,z1,width,depth,inset,course=.42,block=2.4):
  # Joints are placed on the actual sloping faces of the stone cornice.
  rows=math.ceil((z1-z0)/course)

@@ -611,7 +611,10 @@ function App() {
                             {mode === 'orbit' && <button type="button" disabled={!ready} onClick={() => setView({ name: 'front' })}>정면 보기</button>}
                             <button type="button" disabled={!ready} onClick={() => mode === 'walk' ? viewerRef.current?.resetWalk() : setView({ name: 'perspective' })}>{mode === 'walk' ? '시작 위치' : '처음 시점'}</button>
                         </div>
-                        <p className="viewer-hint">{mode === 'walk' ? '화면 드래그로 둘러보기 · WASD / 방향키로 이동 · Shift 빠르게' : '드래그로 회전 · 오른쪽 드래그로 이동 · 스크롤로 확대'}</p>
+                        <p className="viewer-hint">
+                            <span className="hint-pointer">{mode === 'walk' ? '화면 드래그로 둘러보기 · WASD / 방향키로 이동 · Shift 빠르게' : '드래그로 회전 · 오른쪽 드래그로 이동 · 스크롤로 확대'}</span>
+                            <span className="hint-touch">{mode === 'walk' ? '화면을 밀어 둘러보기 · 방향 버튼으로 이동' : '한 손가락으로 회전 · 두 손가락으로 이동과 확대'}</span>
+                        </p>
                     </div>
                     <div className="experience-bottom">
                         <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 대극장 로비와 별관 점포까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
