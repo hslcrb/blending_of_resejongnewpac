@@ -5,6 +5,14 @@ from mathutils import Vector
 # the supplied photographs do not establish surveyed measurements.
 bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete(use_global=False)
+# Remove only the obsolete, internally generated photo-relief datablocks.
+# The original reference images remain untouched under docs/references/.
+for mat in list(bpy.data.materials):
+ if (mat.name.startswith('Reference-guided') and 'photograph' in mat.name.lower()) or mat.name.startswith('Relief from supplied photograph'):
+  bpy.data.materials.remove(mat,do_unlink=True)
+for image in list(bpy.data.images):
+ if image.name.startswith(('left-relief-reference.png','relief-reference.png','Reference relief crop','Left relief crop','Left relief reference','Left relief study')):
+  bpy.data.images.remove(image,do_unlink=True)
 
 def material(name, color, metallic=0, roughness=.72):
     m=bpy.data.materials.new(name); m.diffuse_color=(*color,1); m.use_nodes=True
@@ -120,9 +128,20 @@ def apply_section(start,ymap,zmap):
 # Theatre: main mass, central glazed facade and stone end piers.
 main_start={key:len(builder.v) for key,builder in b.items()}
 cx=22; front=-3; back=34; W=54; D=37
-box('stone',cx,15.55,8.7,W,36.9,17.4)
-box('dark',cx,front+.55,8.8,41,1,16.6)
-box('glass',cx,front-.02,3.2,41,.18,5.8)
+# Open a real lobby in the front of the former solid auditorium block.
+# The interior arrangement is a plausible reconstruction: the supplied photos
+# document the exterior, not the lobby's actual fittings.
+box('stone',cx,18.25,8.7,W,31.5,17.4)  # auditorium beyond the rear lobby wall
+box('stone',-4.5,-.25,3.0,1.0,5.5,6.0)
+box('stone',48.5,-.25,3.0,1.0,5.5,6.0)
+box('stone',cx,-.25,.7,W,5.5,.2)  # continuous lobby floor, top at +1.07 m
+box('stone',cx,-.25,5.3,W,5.5,.35)  # lobby ceiling
+box('dark',cx,front+.55,11.225,41,1,11.75)
+# Split glazing and transom around a genuine opening, not a painted-on door.
+door_left,door_right=20.9,23.1
+box('glass',(1.5+door_left)/2,front-.02,3.2,door_left-1.5,.18,5.8)
+box('glass',(door_right+42.5)/2,front-.02,3.2,42.5-door_right,.18,5.8)
+box('glass',cx,front-.02,4.8,door_right-door_left,.18,2.6)
 for x in (-2.2,46.2):
  box('stone',x,front+.1,10.35,5.6,1.8,13.7)
  # The bottom of the monumental corner piers narrows toward the plinth.
@@ -229,10 +248,16 @@ def lattice(xmin,xmax,zmin,zmax,y,spacing=.37):
 lattice(2,42,5.35,8.15,front-.29)
 for z in (5.28,8.2,9.55,16.25): box('roofedge',cx,front-.36,z,40.5,.24,.16)
 # Ground floor window and door frames.
-for x in [2+i*1.45 for i in range(29)]: box('gold',x,front-.18,2.6,.045,.06,4.7)
-for z in (0.35,2.0,4.6): box('gold',cx,front-.2,z,40,.07,.055)
-for x in (7.5,15,22.5,30,37.5):
+for x in [2+i*1.45 for i in range(29)]:
+ if not door_left < x < door_right: box('gold',x,front-.18,2.6,.045,.06,4.7)
+for z in (.35,2.0):
+ box('gold',(2+door_left)/2,front-.2,z,door_left-2,.07,.055)
+ box('gold',(door_right+42)/2,front-.2,z,42-door_right,.07,.055)
+box('gold',cx,front-.2,4.6,40,.07,.055)
+for x in (7.5,15,30,37.5):
  box('gold',x,front-.28,1.4,.06,.08,2.5); box('gold',x+.55,front-.31,1.4,.035,.08,.6)
+for x in (door_left,door_right): box('gold',x,front-.2,2.15,.075,.09,2.7)
+box('gold',cx,front-.2,3.5,door_right-door_left,.09,.075)
 # Side elevation: two colonnaded stretches separated by the long stone wall,
 # as shown in the supplied axonometric site diagram.
 side_bays=[(.4,12.0),(34.2,46.8)]
@@ -284,16 +309,16 @@ for i in range(85):
    if .7<y<11.7:side_bar(a[0],a[1],q[0],q[1],x=-5.18)
 
 # A plinth with steps that rise towards the entrances, and return along the side.
-box('stone',cx,-5.35,.4,54,2.0,.8)
+box('stone',cx,-4.725,.4,54,3.65,.8)
 for i in range(8):
- z=.08+i*.09; y=-10+i*.46
- box('stone',cx,y,z,54,.47,.18)
- box('stone2',cx,y-.235,z+.09,54,.025,.018)
+ top=.17+i*.09; y=-10+i*.46
+ box('stone',cx,y,top/2,54,.47,top)
+ box('stone2',cx,y-.235,top+.009,54,.025,.018)
 box('stone',50.45,4.25,.4,2.9,15.5,.8)
 for i in range(6):
- z=.08+i*.09; x=54.1-i*.43
- box('stone',x,4.25,z,.44,15.5,.18)
- box('stone2',x+.22,4.25,z+.09,.025,15.5,.018)
+ top=.17+i*.09; x=54.1-i*.43
+ box('stone',x,4.25,top/2,.44,15.5,top)
+ box('stone2',x+.22,4.25,top+.009,.025,15.5,.018)
 apply_section(main_start,theatre_y,theatre_z)
 # Use final-space diagonals so the lower lattice remains a diamond after
 # the section's nonlinear depth and height transforms.
@@ -405,10 +430,11 @@ first_tread=annex_z(.105);last_tread=annex_z(.105+35*.09)
 stair_rise=(last_tread-first_tread)/35
 for i in range(36):
  y=-15+i*.37;top=first_tread+stair_rise*i
- box('stone',-13.1,y,top-.055,20,.38,.11)
+ box('stone',-13.1,y,top/2,20,.38,top)
  box('stone2',-13.1,y-.185,top+.009,20,.022,.018)
 # The landing begins at the back edge of the last tread, one riser above it.
-box('stone',-13.1,3.87,last_tread+stair_rise-.125,20,11.46,.25)
+landing_top=last_tread+stair_rise
+box('stone',-13.1,3.87,landing_top/2,20,11.46,landing_top)
 
 # Preserve the photo's facade proportions after applying measured section
 # heights.  This width scale is an estimate; it is not a plan measurement.
@@ -442,40 +468,9 @@ stone_shader=next(n for n in mats['stone'].node_tree.nodes if n.type=='BSDF_PRIN
 stone_texture=mats['stone'].node_tree.nodes.new('ShaderNodeTexImage');stone_texture.image=granite
 mats['stone'].node_tree.links.new(stone_texture.outputs['Color'],stone_shader.inputs['Base Color'])
 
-# Each pier uses its own supplied photograph.  The color is softly blended
-# onto a shallow mesh; the obscured details and actual depth remain estimates.
-def photo_relief(asset,name,center_x):
- image=bpy.data.images.load(os.path.abspath(asset),check_existing=False);image.pack()
- rw,rh=image.size;pix=list(image.pixels[:])
- def intensity(px,py):
-  px=max(0,min(rw-1,px));py=max(0,min(rh-1,py));i=(py*rw+px)*4
-  return (pix[i]+pix[i+1]+pix[i+2])/3
- nu,nv=40,56;verts=[];faces=[]
- for j in range(nv+1):
-  for i in range(nu+1):
-   u=i/nu;v=j/nv;px=round(u*(rw-1));py=round(v*(rh-1))
-   detail=intensity(px,py)-sum(intensity(px+dx,py+dy) for dx,dy in [(-4,0),(4,0),(0,-4),(0,4)])/4
-   verts.append((facade_x(center_x+(u-.5)*4.5),front-.95-max(-.04,min(.04,detail*.13)),theatre_z(10.25+(v-.5)*7.5)))
- for j in range(nv):
-  for i in range(nu):
-   a=j*(nu+1)+i;faces.append((a,a+1,a+nu+2,a+nu+1))
- mesh=bpy.data.meshes.new(name+' shallow mesh');mesh.from_pydata(verts,[],faces);mesh.update()
- relief=bpy.data.objects.new(name,mesh);bpy.context.collection.objects.link(relief)
- uv=mesh.uv_layers.new(name='Relief UV')
- for poly in mesh.polygons:
-  for li in poly.loop_indices:
-   idx=mesh.loops[li].vertex_index;uv.data[li].uv=((idx%(nu+1))/nu,(idx//(nu+1))/nv)
- mat=bpy.data.materials.new(name+' photograph');mat.use_nodes=True
- shader=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED')
- texture=mat.node_tree.nodes.new('ShaderNodeTexImage');texture.image=image
- mat.node_tree.links.new(texture.outputs['Color'],shader.inputs['Base Color'])
- mat.node_tree.links.new(texture.outputs['Alpha'],shader.inputs['Alpha'])
- shader.inputs['Roughness'].default_value=.85
- methods=[item.identifier for item in bpy.types.Material.bl_rna.properties['surface_render_method'].enum_items]
- mat.surface_render_method='BLENDED' if 'BLENDED' in methods else methods[0]
- mesh.materials.append(mat)
-photo_relief('assets/left-relief-reference.png','Reference-guided left relief',-2.2)
-photo_relief('assets/relief-reference.png','Reference-guided right relief',46.2)
+# The reliefs, planting, fittings and artwork are original Blender geometry.
+# Reference photographs are retained as research material, never sampled.
+exec(compile(open(os.path.join('scripts','scene_details.py'),encoding='utf-8').read(),'scripts/scene_details.py','exec'))
 for ob in bpy.context.scene.objects:
  if ob.type=='MESH':
   ob.select_set(True)

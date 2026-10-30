@@ -5,21 +5,90 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import './style.css';
 
-function BuildingViewer({ view, onStatusChange }) {
+// GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
+const WALK_START = new THREE.Vector3(33.1, 1.7, 27);
+const WALK_LIMITS = { minX: -75, maxX: 79, minZ: -118, maxZ: 32 };
+const WALK_BLOCKS = [
+    { minX: -7, maxX: 73, minZ: -111, maxZ: -11.4 },
+    { minX: -7, maxX: -3, minZ: -11.4, maxZ: 3.5 },
+    { minX: 69, maxX: 73, minZ: -11.4, maxZ: 3.5 },
+    { minX: -3, maxX: 31.54, minZ: 2.7, maxZ: 3.5 },
+    { minX: 34.65, maxX: 69, minZ: 2.7, maxZ: 3.5 },
+    { minX: -72, maxX: -34, minZ: -25, maxZ: 15 },
+    { minX: -34, maxX: -2, minZ: -24, maxZ: -9.6 },
+    { minX: -34, maxX: -30.54, minZ: -9.6, maxZ: 15.19 },
+    { minX: -2.32, maxX: -2, minZ: -9.6, maxZ: 15.19 },
+];
+
+function canWalk(x, z) {
+    if (x < WALK_LIMITS.minX || x > WALK_LIMITS.maxX || z < WALK_LIMITS.minZ || z > WALK_LIMITS.maxZ) return false;
+    return !WALK_BLOCKS.some((box) => x > box.minX && x < box.maxX && z > box.minZ && z < box.maxZ);
+}
+
+function groundHeight(x, z) {
+    if (x >= -30.54 && x <= -2.32 && z <= 15.19 && z >= 1.86) {
+        const step = THREE.MathUtils.clamp(Math.floor((15.19 - z) / 0.37), 0, 35);
+        return 0.1404375 + (3.3505658 - 0.1404375) * step / 35;
+    }
+    if (x >= -30.54 && x <= -2.32 && z < 1.86 && z >= -9.6) return 3.4423;
+    if (x >= -5 && x <= 71 && z <= 10.235 && z >= 6.545) {
+        const step = THREE.MathUtils.clamp(Math.floor((10.235 - z) / 0.46), 0, 7);
+        return 1.3375 * (0.17 + 0.09 * step);
+    }
+    if (x >= -5 && x <= 71 && z < 6.545 && z >= -11.4) return 1.07;
+    return 0;
+}
+
+function MoveButton({ direction, label, symbol, setHeld }) {
+    const release = () => setHeld(direction, false);
+    return (
+        <button
+            type="button"
+            className="move-btn"
+            aria-label={label}
+            onPointerDown={(event) => {
+                event.preventDefault();
+                event.currentTarget.setPointerCapture(event.pointerId);
+                setHeld(direction, true);
+            }}
+            onPointerUp={release}
+            onPointerCancel={release}
+            onLostPointerCapture={release}
+            onKeyDown={(event) => {
+                if (event.key === ' ' || event.key === 'Enter') {
+                    event.preventDefault();
+                    setHeld(direction, true);
+                }
+            }}
+            onKeyUp={(event) => {
+                if (event.key === ' ' || event.key === 'Enter') release();
+            }}
+            onBlur={release}
+        >
+            <span aria-hidden="true">{symbol}</span>
+        </button>
+    );
+}
+
+function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
     const containerRef = useRef(null);
     const sceneRef = useRef(null);
 
-    // 모델 크기에 맞춰 카메라와 상호작용 범위를 설정합니다. / Fit the camera and controls to the model.
     useEffect(() => {
         const container = containerRef.current;
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color('#e8e8e4');
         const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 2000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        let renderer;
+        try {
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        } catch {
+            onStatusChange('error');
+            return undefined;
+        }
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 0.9;
+        renderer.toneMappingExposure = 1.05;
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.shadowMap.autoUpdate = false;
@@ -33,31 +102,78 @@ function BuildingViewer({ view, onStatusChange }) {
         controls.mouseButtons.RIGHT = THREE.MOUSE.PAN;
         controls.touches.TWO = THREE.TOUCH.DOLLY_PAN;
 
-        scene.add(new THREE.HemisphereLight(0xffffff, 0xa5a39d, 1.3));
-        const sun = new THREE.DirectionalLight(0xffffff, 1.8);
-        sun.position.set(10, 20, 15);
+        // 절차적 하늘을 시점 중심에 두어 회전과 이동에 공간감을 더합니다. / Camera-centered sky with soft procedural clouds.
+        const sky = new THREE.Mesh(
+            new THREE.SphereGeometry(500, 32, 20),
+            new THREE.ShaderMaterial({
+                side: THREE.BackSide,
+                depthWrite: false,
+                vertexShader: `varying vec3 vDirection;
+                    void main() {
+                        vDirection = position;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }`,
+                fragmentShader: `varying vec3 vDirection;
+                    float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+                    float noise(vec2 p) {
+                        vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
+                        return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + 1.0), f.x), f.y);
+                    }
+                    float fbm(vec2 p) {
+                        float value = 0.0; float weight = 0.5;
+                        for (int i = 0; i < 3; i++) { value += noise(p) * weight; p = p * 2.03 + 7.4; weight *= 0.5; }
+                        return value;
+                    }
+                    void main() {
+                        vec3 d = normalize(vDirection);
+                        float elevation = clamp(d.y * 0.65 + 0.45, 0.05, 1.0);
+                        vec3 color = mix(vec3(0.46, 0.72, 0.90), vec3(0.10, 0.37, 0.72), pow(elevation, 0.65));
+                        vec2 clouds = d.xz / (max(d.y + 0.45, 0.05) + 0.32) * 1.65;
+                        float cloud = smoothstep(0.48, 0.69, fbm(clouds + vec2(3.5, 1.8)));
+                        cloud *= smoothstep(-0.55, -0.15, d.y) * 0.62;
+                        color = mix(color, vec3(1.0, 0.99, 0.97), cloud);
+                        float sunlight = pow(max(dot(d, normalize(vec3(0.45, 0.65, 0.6))), 0.0), 16.0);
+                        color += vec3(0.13, 0.11, 0.075) * sunlight;
+                        gl_FragColor = vec4(color, 1.0);
+                        #include <tonemapping_fragment>
+                        #include <colorspace_fragment>
+                    }`,
+            }),
+        );
+        sky.frustumCulled = false;
+        scene.add(sky);
+        scene.add(new THREE.HemisphereLight(0xffffff, 0xb3c2bd, 1.3));
+        const sun = new THREE.DirectionalLight(0xfff7e9, 1.8);
         sun.castShadow = true;
         sun.shadow.mapSize.set(1024, 1024);
         sun.shadow.bias = -0.00025;
         sun.shadow.normalBias = 0.04;
-        scene.add(sun);
-        scene.add(sun.target);
-        const fill = new THREE.DirectionalLight(0xffffff, 0.7);
+        scene.add(sun, sun.target);
+        const fill = new THREE.DirectionalLight(0xdcefff, 0.7);
         fill.position.set(-15, 8, -10);
         scene.add(fill);
 
         let disposed = false;
         let frameId;
         let model;
+        let modeNow = 'orbit';
         let activePreset = 'perspective';
         let userAdjusted = false;
         let gestureActive = false;
-        // 직접 조작한 시점은 보존하고 기본 시점만 화면 크기에 다시 맞춥니다. / Preserve a user-adjusted view; refit an untouched preset on resize.
+        let savedOrbit = null;
+        let yaw = 0;
+        let pitch = 0.1;
+        let lastTime = 0;
+        let dragging = null;
+        const held = new Set();
+        const touchHeld = new Set();
+
         controls.addEventListener('start', () => { gestureActive = true; });
         controls.addEventListener('end', () => { gestureActive = false; });
         controls.addEventListener('change', () => {
             if (gestureActive) userAdjusted = true;
         });
+
         const resize = () => {
             const width = container.clientWidth;
             const height = container.clientHeight;
@@ -65,58 +181,109 @@ function BuildingViewer({ view, onStatusChange }) {
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
             renderer.setSize(width, height);
-            if (sceneRef.current?.size && !userAdjusted && !gestureActive) {
-                sceneRef.current.setView(activePreset);
+            if (modeNow === 'orbit' && sceneRef.current?.size && !userAdjusted && !gestureActive) {
+                sceneRef.current.fitView(activePreset);
             }
         };
         const observer = new ResizeObserver(resize);
         observer.observe(container);
         resize();
 
-        const setView = (name) => {
-            if (!sceneRef.current?.size) return;
+        const fitView = (name) => {
+            if (!sceneRef.current?.size || modeNow !== 'orbit') return;
             activePreset = name;
             userAdjusted = false;
-            const { bounds, center } = sceneRef.current;
+            const { framePoints, center } = sceneRef.current;
             const direction = (name === 'front'
-                ? new THREE.Vector3(0, 0.16, 1)
-                : new THREE.Vector3(0.85, 0.55, 1)).normalize();
-            // 화면의 가로·세로 화각에 건물의 여덟 꼭짓점이 들어오도록 거리를 계산합니다. / Fit the building corners to the current view and aspect ratio.
+                ? new THREE.Vector3(0, 0.08, 1)
+                : new THREE.Vector3(0.38, 0.24, 1)).normalize();
             const right = new THREE.Vector3().crossVectors(camera.up, direction).normalize();
             const up = new THREE.Vector3().crossVectors(direction, right).normalize();
             const tanVertical = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
             const tanHorizontal = tanVertical * camera.aspect;
-            let distance = 0;
-            for (const x of [bounds.min.x, bounds.max.x]) {
-                for (const y of [bounds.min.y, bounds.max.y]) {
-                    for (const z of [bounds.min.z, bounds.max.z]) {
-                        const corner = new THREE.Vector3(x, y, z).sub(center);
-                        const depth = corner.dot(direction);
-                        distance = Math.max(distance, depth + Math.abs(corner.dot(right)) / tanHorizontal, depth + Math.abs(corner.dot(up)) / tanVertical);
-                    }
-                }
+            let minX = Infinity; let maxX = -Infinity; let minY = Infinity; let maxY = -Infinity;
+            for (const point of framePoints) {
+                const x = point.dot(right);
+                const y = point.dot(up);
+                minX = Math.min(minX, x); maxX = Math.max(maxX, x);
+                minY = Math.min(minY, y); maxY = Math.max(maxY, y);
             }
-            distance *= 1.2;
-            // 남은 감속 이동을 비운 뒤 카메라와 회전 중심을 함께 복원합니다. / Clear residual motion before restoring the camera and target.
+            // 실제 건축물의 투영 중심을 맞춰 빈 공간을 줄입니다. / Center the projected model, not the enclosing box.
+            const target = center.clone()
+                .addScaledVector(right, (minX + maxX) / 2 - center.dot(right))
+                .addScaledVector(up, (minY + maxY) / 2 - center.dot(up));
+            let distance = 0;
+            for (const point of framePoints) {
+                const depth = point.dot(direction) - target.dot(direction);
+                const x = point.dot(right) - target.dot(right);
+                const y = point.dot(up) - target.dot(up);
+                distance = Math.max(distance, depth + Math.abs(x) / tanHorizontal, depth + Math.abs(y) / tanVertical);
+            }
             const damping = controls.enableDamping;
             controls.enableDamping = false;
             controls.update();
-            camera.position.copy(center).add(direction.multiplyScalar(distance));
-            controls.target.copy(center);
+            camera.position.copy(target).add(direction.multiplyScalar(distance * 1.1));
+            controls.target.copy(target);
             controls.update();
             controls.enableDamping = damping;
         };
-        const handleKey = (event) => {
+
+        const resetWalk = () => {
+            camera.position.copy(WALK_START);
+            yaw = 0;
+            pitch = 0.1;
+            camera.rotation.set(pitch, yaw, 0, 'YXZ');
+            held.clear();
+            touchHeld.clear();
+        };
+
+        const setMode = (next) => {
+            if (next === modeNow || !sceneRef.current?.size) return;
+            held.clear();
+            touchHeld.clear();
+            dragging = null;
+            if (next === 'walk') {
+                savedOrbit = { position: camera.position.clone(), target: controls.target.clone(), preset: activePreset, adjusted: userAdjusted };
+                modeNow = 'walk';
+                controls.enabled = false;
+                camera.fov = 58;
+                camera.updateProjectionMatrix();
+                resetWalk();
+                container.focus({ preventScroll: true });
+            } else {
+                modeNow = 'orbit';
+                controls.enabled = true;
+                camera.fov = 35;
+                camera.updateProjectionMatrix();
+                if (savedOrbit) {
+                    camera.position.copy(savedOrbit.position);
+                    controls.target.copy(savedOrbit.target);
+                    activePreset = savedOrbit.preset;
+                    userAdjusted = savedOrbit.adjusted;
+                    controls.update();
+                } else {
+                    fitView('perspective');
+                }
+            }
+        };
+
+        const handleKeyDown = (event) => {
             if (!sceneRef.current?.size) return;
-            // Shift와 방향키는 화면 기준으로 시점과 회전 중심을 함께 이동합니다. / Shift and arrow keys pan in screen space.
+            const key = event.key.toLowerCase();
+            if (modeNow === 'walk') {
+                if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key)) {
+                    held.add(key);
+                    event.preventDefault();
+                }
+                return;
+            }
             if (event.shiftKey && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
                 userAdjusted = true;
                 const horizontal = event.key === 'ArrowLeft' ? -1 : event.key === 'ArrowRight' ? 1 : 0;
                 const vertical = event.key === 'ArrowDown' ? -1 : event.key === 'ArrowUp' ? 1 : 0;
-                const distance = controls.getDistance() * 0.045;
                 const offset = new THREE.Vector3(horizontal, vertical, 0)
                     .applyQuaternion(camera.quaternion)
-                    .multiplyScalar(distance);
+                    .multiplyScalar(controls.getDistance() * 0.045);
                 camera.position.add(offset);
                 controls.target.add(offset);
                 controls.update();
@@ -138,25 +305,68 @@ function BuildingViewer({ view, onStatusChange }) {
             camera.position.copy(controls.target).add(new THREE.Vector3().setFromSpherical(orbit));
             controls.update();
         };
-        sceneRef.current = { setView, handleKey };
+        const handleKeyUp = (event) => held.delete(event.key.toLowerCase());
+        const clearInput = () => { held.clear(); touchHeld.clear(); dragging = null; };
+        const setHeld = (direction, down) => {
+            if (down) touchHeld.add(direction);
+            else touchHeld.delete(direction);
+        };
+        const pointerDown = (event) => {
+            if (modeNow !== 'walk' || dragging || (event.pointerType === 'mouse' && event.button !== 0)) return;
+            dragging = { id: event.pointerId, x: event.clientX, y: event.clientY };
+            renderer.domElement.setPointerCapture(event.pointerId);
+            container.focus({ preventScroll: true });
+        };
+        const pointerMove = (event) => {
+            if (modeNow !== 'walk' || dragging?.id !== event.pointerId) return;
+            yaw -= (event.clientX - dragging.x) * 0.0035;
+            pitch = THREE.MathUtils.clamp(pitch - (event.clientY - dragging.y) * 0.0035, -1.2, 1.2);
+            dragging.x = event.clientX;
+            dragging.y = event.clientY;
+            camera.rotation.set(pitch, yaw, 0, 'YXZ');
+        };
+        const pointerEnd = (event) => {
+            if (dragging?.id === event.pointerId) dragging = null;
+        };
+        renderer.domElement.addEventListener('pointerdown', pointerDown);
+        renderer.domElement.addEventListener('pointermove', pointerMove);
+        renderer.domElement.addEventListener('pointerup', pointerEnd);
+        renderer.domElement.addEventListener('pointercancel', pointerEnd);
+        window.addEventListener('blur', clearInput);
+        document.addEventListener('visibilitychange', clearInput);
+
+        const onContextLost = (event) => {
+            event.preventDefault();
+            onStatusChange('error');
+        };
+        renderer.domElement.addEventListener('webglcontextlost', onContextLost);
+
+        sceneRef.current = { fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld };
+        viewerRef.current = sceneRef.current;
 
         new GLTFLoader().load('/model/sejong.glb', (gltf) => {
             if (disposed) return;
             model = gltf.scene;
             scene.add(model);
             model.updateWorldMatrix(true, true);
-            // 광장 바닥은 보이되 건물의 자동 구도 계산에서는 제외합니다. / Keep the plaza visible without letting it shrink the building framing.
             const bounds = new THREE.Box3();
+            const framePoints = [];
+            const sample = new THREE.Vector3();
             model.traverse((object) => {
-                if (object.isMesh && !/^(ground|line)$/i.test(object.name)) {
-                    bounds.union(new THREE.Box3().setFromObject(object));
+                if (!object.isMesh || /^(ground|line)$/i.test(object.name)) return;
+                bounds.union(new THREE.Box3().setFromObject(object));
+                const positions = object.geometry.attributes.position;
+                if (!positions) return;
+                const stride = Math.max(1, Math.floor(positions.count / 20000));
+                for (let i = 0; i < positions.count; i += stride) {
+                    sample.fromBufferAttribute(positions, i).applyMatrix4(object.matrixWorld);
+                    framePoints.push(sample.clone());
                 }
             });
             if (bounds.isEmpty()) bounds.setFromObject(model);
             const size = bounds.getSize(new THREE.Vector3());
             const center = bounds.getCenter(new THREE.Vector3());
             const radius = Math.max(size.x, size.y, size.z, 1);
-            // 고정 건축물의 그림자는 모델을 불러온 뒤 한 번 계산합니다. / Render static shadows once after loading the model.
             sun.target.position.copy(center);
             sun.position.copy(center).add(new THREE.Vector3(radius * 0.55, radius, radius * 0.7));
             const shadowCamera = sun.shadow.camera;
@@ -178,93 +388,169 @@ function BuildingViewer({ view, onStatusChange }) {
             camera.updateProjectionMatrix();
             controls.minDistance = radius * 0.06;
             controls.maxDistance = radius * 6;
-            sceneRef.current = { setView, handleKey, bounds, size, center, radius };
-            setView('perspective');
+            Object.assign(sceneRef.current, { bounds, framePoints, size, center, radius });
+            fitView('perspective');
             onStatusChange('ready');
         }, undefined, () => {
             if (!disposed) onStatusChange('error');
         });
 
-        const animate = () => {
-            controls.update();
+        const animate = (time) => {
+            const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.2) : 0;
+            lastTime = time;
+            if (modeNow === 'walk') {
+                const turn = (held.has('arrowleft') ? 1 : 0) - (held.has('arrowright') ? 1 : 0);
+                yaw += turn * dt * 1.55;
+                const forward = (held.has('w') || held.has('arrowup') || touchHeld.has('forward') ? 1 : 0)
+                    - (held.has('s') || held.has('arrowdown') || touchHeld.has('back') ? 1 : 0);
+                const side = (held.has('d') || touchHeld.has('right') ? 1 : 0)
+                    - (held.has('a') || touchHeld.has('left') ? 1 : 0);
+                if (forward || side) {
+                    const direction = new THREE.Vector3(-Math.sin(yaw) * forward + Math.cos(yaw) * side, 0, -Math.cos(yaw) * forward - Math.sin(yaw) * side).normalize();
+                    const steps = Math.max(1, Math.ceil(dt * 7 / 0.25));
+                    const dx = direction.x * dt * 7 / steps;
+                    const dz = direction.z * dt * 7 / steps;
+                    for (let i = 0; i < steps; i += 1) {
+                        if (canWalk(camera.position.x + dx, camera.position.z)) camera.position.x += dx;
+                        if (canWalk(camera.position.x, camera.position.z + dz)) camera.position.z += dz;
+                    }
+                }
+                camera.position.y = groundHeight(camera.position.x, camera.position.z) + 1.7;
+                camera.rotation.set(pitch, yaw, 0, 'YXZ');
+            } else {
+                controls.update();
+            }
+            sky.position.copy(camera.position);
             renderer.render(scene, camera);
             frameId = requestAnimationFrame(animate);
         };
-        animate();
+        frameId = requestAnimationFrame(animate);
 
         return () => {
             disposed = true;
             cancelAnimationFrame(frameId);
             observer.disconnect();
             controls.dispose();
+            sky.geometry.dispose();
+            sky.material.dispose();
+            renderer.domElement.removeEventListener('pointerdown', pointerDown);
+            renderer.domElement.removeEventListener('pointermove', pointerMove);
+            renderer.domElement.removeEventListener('pointerup', pointerEnd);
+            renderer.domElement.removeEventListener('pointercancel', pointerEnd);
+            renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
+            window.removeEventListener('blur', clearInput);
+            document.removeEventListener('visibilitychange', clearInput);
             if (model) {
                 model.traverse((object) => {
                     object.geometry?.dispose();
                     const materials = Array.isArray(object.material) ? object.material : [object.material];
-                    materials.forEach((material) => material?.dispose());
+                    materials.forEach((material) => {
+                        material?.map?.dispose();
+                        material?.dispose();
+                    });
                 });
             }
             renderer.dispose();
             renderer.domElement.remove();
+            viewerRef.current = null;
         };
-    }, [onStatusChange]);
+    }, [onStatusChange, viewerRef]);
 
-    useEffect(() => {
-        sceneRef.current?.setView(view.name);
-    }, [view]);
+    useEffect(() => { sceneRef.current?.setMode(mode); }, [mode]);
+    useEffect(() => { sceneRef.current?.fitView(view.name); }, [view]);
 
-    return <div className="viewer-canvas" ref={containerRef} tabIndex={0} role="group" onKeyDown={(event) => sceneRef.current?.handleKey(event)} aria-label="세종문화회관 외관 3D 모델. 드래그 또는 방향키로 회전, 오른쪽 드래그 또는 Shift와 방향키로 이동, 스크롤 또는 더하기와 빼기 키로 확대하거나 축소할 수 있습니다." />;
+    return (
+        <>
+            <div
+                className="viewer-canvas"
+                ref={containerRef}
+                tabIndex={0}
+                role="group"
+                onKeyDown={(event) => sceneRef.current?.handleKeyDown(event)}
+                onKeyUp={(event) => sceneRef.current?.handleKeyUp(event)}
+                onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) sceneRef.current?.clearInput(); }}
+                aria-label={mode === 'walk' ? '광장과 로비 걷기. WASD로 이동하고 방향키로 전진과 회전, 화면을 드래그해 둘러봅니다.' : '건축 모형. 드래그 또는 방향키로 회전하고 스크롤로 확대합니다.'}
+            />
+            {mode === 'walk' && (
+                <div className="walk-pad" aria-label="걷기 이동 조작">
+                    <span className="pad-spacer" />
+                    <MoveButton direction="forward" label="앞으로 이동" symbol="↑" setHeld={(key, down) => sceneRef.current?.setHeld(key, down)} />
+                    <span className="pad-spacer" />
+                    <MoveButton direction="left" label="왼쪽으로 이동" symbol="←" setHeld={(key, down) => sceneRef.current?.setHeld(key, down)} />
+                    <MoveButton direction="back" label="뒤로 이동" symbol="↓" setHeld={(key, down) => sceneRef.current?.setHeld(key, down)} />
+                    <MoveButton direction="right" label="오른쪽으로 이동" symbol="→" setHeld={(key, down) => sceneRef.current?.setHeld(key, down)} />
+                </div>
+            )}
+        </>
+    );
 }
 
 function App() {
     const [status, setStatus] = useState('loading');
+    const [mode, setMode] = useState('orbit');
     const [view, setView] = useState({ name: 'perspective' });
+    const viewerRef = useRef(null);
+    const ready = status === 'ready';
 
     return (
         <div className="app-shell">
             <header className="site-header">
-                <a className="wordmark" href="#top" aria-label="세종문화회관 건축 둘러보기 처음으로">세종문화회관</a>
-                <span className="header-label">건축 둘러보기</span>
+                <a className="brand" href="#top" aria-label="세종문화회관 건축 산책 처음으로">
+                    <span className="brand-mark" aria-hidden="true"><span /></span>
+                    <span><strong>세종문화회관</strong><small>ARCHITECTURE WALK</small></span>
+                </a>
+                <span className="header-location"><span /> SEOUL · GWANGHWAMUN</span>
             </header>
 
             <main id="top" className="main-content">
                 <section className="intro" aria-labelledby="page-title">
-                    <div>
-                        <p className="eyebrow">세종문화회관 건축</p>
-                        <h1 id="page-title">익숙한 풍경을<br />새로운 시선으로</h1>
+                    <div className="intro-main">
+                        <p className="eyebrow"><span /> SEJONG CENTER FOR THE PERFORMING ARTS</p>
+                        <h1 id="page-title">도시의 중심에서,<br /><em>건축을 걷다.</em></h1>
+                        <p className="intro-copy">익숙한 광장의 풍경을 새로운 시선으로.<br />세종문화회관의 외관을 가까이에서 둘러보세요.</p>
                     </div>
-                    <p className="intro-copy">세종문화회관의 외관을 직접 돌려보며<br className="desktop-break" /> 건축의 형태와 디테일을 살펴보세요.</p>
+                    <div className="intro-aside">
+                        <span className="aside-number">건축 산책</span>
+                        <span className="aside-line" />
+                        <p>지붕의 선과 열주,<br />광장에서 만나는 건축</p>
+                    </div>
                 </section>
 
-                <section className="model-section" aria-label="세종문화회관 3D 모델">
-                    <BuildingViewer view={view} onStatusChange={setStatus} />
-                    {status !== 'ready' && (
-                        <div className="viewer-status" role="status">
-                            {status === 'loading' ? '건축 모델을 불러오는 중입니다.' : '모델을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.'}
+                <section className="experience" aria-labelledby="viewer-title">
+                    <div className="experience-top">
+                        <div className="experience-title">
+                            <span className="status-dot" />
+                            <div><small>EXPLORE IN 3D</small><h2 id="viewer-title">세종문화회관 둘러보기</h2></div>
                         </div>
-                    )}
-                    <div className="viewer-heading">
-                        <span>3D 모델</span>
-                        <strong>세종문화회관</strong>
+                        <div className="mode-switch" role="group" aria-label="둘러보기 방식">
+                            <button type="button" aria-pressed={mode === 'orbit'} disabled={!ready} onClick={() => setMode('orbit')}><span aria-hidden="true">◉</span> 모형 보기</button>
+                            <button type="button" aria-pressed={mode === 'walk'} disabled={!ready} onClick={() => setMode('walk')}><span aria-hidden="true">↟</span> 직접 걷기</button>
+                        </div>
                     </div>
-                    <div className="viewer-controls" aria-label="모델 보기 설정">
-                        <button type="button" onClick={() => setView({ name: 'front' })} disabled={status !== 'ready'}>정면 보기</button>
-                        <button type="button" onClick={() => setView({ name: 'perspective' })} disabled={status !== 'ready'}>처음 시점</button>
+                    <div className="view-frame">
+                        <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} />
+                        {status !== 'ready' && (
+                            <div className="viewer-status" role="status">
+                                <span>{status === 'loading' ? '건축 모델을 불러오는 중입니다.' : '모델을 불러오지 못했습니다.'}</span>
+                                {status === 'error' && <button type="button" onClick={() => window.location.reload()}>다시 불러오기</button>}
+                            </div>
+                        )}
+                        <div className="viewer-label" aria-hidden="true"><span>{mode === 'walk' ? 'GROUND WALK' : 'ARCHITECTURE MODEL'}</span><strong>{mode === 'walk' ? '광장을 걷는 시선' : '세종문화회관'}</strong></div>
+                        <div className="view-actions">
+                            {mode === 'orbit' && <button type="button" disabled={!ready} onClick={() => setView({ name: 'front' })}>정면 보기</button>}
+                            <button type="button" disabled={!ready} onClick={() => mode === 'walk' ? viewerRef.current?.resetWalk() : setView({ name: 'perspective' })}>{mode === 'walk' ? '시작 위치' : '처음 시점'}</button>
+                        </div>
+                        <p className="viewer-hint">{mode === 'walk' ? '화면 드래그로 둘러보기 · WASD / 방향키로 이동' : '드래그로 회전 · 오른쪽 드래그로 이동 · 스크롤로 확대'}</p>
                     </div>
-                    <p className="viewer-hint">드래그·방향키 회전 <span aria-hidden="true">·</span> 오른쪽 드래그·Shift+방향키 이동<br />스크롤·+ / − 확대 / 축소 <span aria-hidden="true">·</span> 터치: 한 손가락 회전, 두 손가락 이동·확대</p>
+                    <div className="experience-bottom">
+                        <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 정문 계단을 지나 로비까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
+                        <p className="model-note">사진과 대극장 단면을 참고한 모델입니다.<br />일부 비례와 세부는 추정입니다.</p>
+                    </div>
                 </section>
-                <div className="model-note">
-                    <p>사진과 대극장 단면을 참고한 외관 모델입니다. 일부 비례와 세부는 추정입니다.</p>
-                    <p>터치 화면에서는 한 손가락으로 회전하고 두 손가락으로 이동하거나 확대할 수 있습니다.</p>
-                </div>
             </main>
-            <footer className="site-footer"><span>세종문화회관</span><span>건축 외관 3D 모델</span></footer>
+            <footer className="site-footer"><span>SEJONG CENTER</span><span>건축을 바라보는 새로운 시선</span></footer>
         </div>
     );
 }
 
 createRoot(document.getElementById('root')).render(<App />);
-
-
-
-
