@@ -354,36 +354,52 @@ for a,q in side_bays:
  for z in (4.8,8.3,15.8):box('roofedge',49.19,(a+q)/2,z,.22,q-a,.2)
  for y in [a+i*.9 for i in range(int((q-a)/.9)+1)]:box('gold',49.22,y,3.1,.06,.04,5.7)
 # Pale stone panels and recessed windows on the long middle wall.  The
-# positions and widths are estimated from the photos, not surveyed dimensions.
-side_windows=[(y,z) for y in (14.2,17.5,21,24.5,28,31.5)
-              for z in ((5.6,10.2) if y in (14.2,21,28) else (6.6,11.2))]
+# photographs show small vertical windows grouped into aligned rows, but the
+# exact number, spacing, and dimensions below are visual estimates, not a survey.
+side_window_half_width=.07
+side_window_half_height=.31
+side_window_groups=[
+ (14.2,(0,)), (18.0,(-.11,.11)), (21.7,(-.22,0,.22)),
+ (26.0,(-.22,0,.22)), (30.8,(-.11,.11)),
+]
+side_windows=[
+ (round(center+offset,4),z)
+ for z in (9.7,13.9)
+ for center,offsets in side_window_groups
+ for offset in offsets
+]
+# The lower row has fewer visible windows; the rear is obscured by trees.
+side_windows.extend([(17.89,5.5),(18.11,5.5),(26.0,5.5)])
+side_window_centers=sorted(set(y for y,_ in side_windows))
 side_y0,side_y1=12,34
 side_z0,side_z1=0,17.2
 def side_wall_span(y0,y1,z0,z1):
  if y1>y0 and z1>z0:box('stone',49.13,(y0+y1)/2,(z0+z1)/2,.27,y1-y0,z1-z0)
 cursor=side_y0
-for y in (14.2,17.5,21,24.5,28,31.5):
- side_wall_span(cursor,y-.16,side_z0,side_z1)
+for y in side_window_centers:
+ side_wall_span(cursor,y-side_window_half_width,side_z0,side_z1)
  bottom=side_z0
  for _,z in sorted((wy,wz) for wy,wz in side_windows if wy==y):
-  side_wall_span(y-.16,y+.16,bottom,z-.31)
-  box('glass',49.04,y,z,.045,.32,.62)
-  bottom=z+.31
- side_wall_span(y-.16,y+.16,bottom,side_z1)
- cursor=y+.16
+  side_wall_span(y-side_window_half_width,y+side_window_half_width,bottom,z-side_window_half_height)
+  box('glass',49.04,y,z,.045,2*side_window_half_width,2*side_window_half_height)
+  bottom=z+side_window_half_height
+ side_wall_span(y-side_window_half_width,y+side_window_half_width,bottom,side_z1)
+ cursor=y+side_window_half_width
 side_wall_span(cursor,side_y1,side_z0,side_z1)
 # Intersecting mortar lines stop at the openings rather than bridging them.
 for z in [i*.72 for i in range(1,24)]:
  cursor=side_y0
- for y,_ in sorted((y,wz) for y,wz in side_windows if abs(wz-z)<.31):
-  if y-.16>cursor:box('stone2',49.28,(cursor+y-.16)/2,z,.025,y-.16-cursor,.016)
-  cursor=y+.16
+ for y,_ in sorted((y,wz) for y,wz in side_windows if abs(wz-z)<side_window_half_height+.008):
+  if y-side_window_half_width>cursor:
+   box('stone2',49.28,(cursor+y-side_window_half_width)/2,z,.025,y-side_window_half_width-cursor,.016)
+  cursor=y+side_window_half_width
  if cursor<side_y1:box('stone2',49.28,(cursor+side_y1)/2,z,.025,side_y1-cursor,.016)
 for y in [12.6+i*1.35 for i in range(16)]:
  cursor=0
- for _,z in sorted((wy,z) for wy,z in side_windows if abs(wy-y)<.16):
-  if z-.31>cursor:box('stone2',49.29,y,(cursor+z-.31)/2,.025,.016,z-.31-cursor)
-  cursor=z+.31
+ for _,z in sorted((wy,z) for wy,z in side_windows if abs(wy-y)<side_window_half_width+.008):
+  if z-side_window_half_height>cursor:
+   box('stone2',49.29,y,(cursor+z-side_window_half_height)/2,.025,.016,z-side_window_half_height-cursor)
+  cursor=z+side_window_half_height
  if cursor<17:box('stone2',49.29,y,(cursor+17)/2,.025,.016,17-cursor)
 # The bronze fretwork continues on both stretches of the side colonnade.
 def side_bar(y1,z1,y2,z2,width=.04,x=49.18):
@@ -620,6 +636,12 @@ for builder in b.values():
 
 for k,v in b.items():v.finish(k,mats[k])
 
+# The original RGB values below describe linear shader colors. Image textures
+# are stored as sRGB so GLB/Three.js decodes them back to those same values.
+def linear_to_srgb(value):
+ value=max(0,min(1,value))
+ return 12.92*value if value<=.0031308 else 1.055*(value**(1/2.4))-.055
+
 # Low-contrast granite grain, generated and packed in Blender.  UVs are
 # projected per face so the stone keeps a consistent scale on all elevations.
 rng=random.Random(418)
@@ -631,7 +653,8 @@ for py in range(256):
   if rng.random()<.006:fleck-=.035
   mottling=.006*math.sin(2*math.pi*px/64)*math.cos(2*math.pi*py/64)
   value=fleck+mottling
-  pixels.extend((max(0,min(1,.68+value)),max(0,min(1,.69+value)),max(0,min(1,.67+value)),1))
+  pixels.extend((linear_to_srgb(.55+value),linear_to_srgb(.56+value),
+                 linear_to_srgb(.54+value),1))
 granite.pixels[:]=pixels;granite.pack()
 stone_obj=bpy.data.objects['stone'];uv=stone_obj.data.uv_layers.new(name='Granite projection')
 for face in stone_obj.data.polygons:
@@ -647,9 +670,6 @@ mats['stone'].node_tree.links.new(stone_texture.outputs['Color'],stone_shader.in
 # weathered terrace wall. Packed pixels are generated in Blender, not sampled
 # from the reference photographs. Roof finishes stay untextured because the
 # tested fine-grain texture produced distracting moiré in the web viewer.
-def linear_to_srgb(value):
- value=max(0,min(1,value))
- return 12.92*value if value<=.0031308 else 1.055*(value**(1/2.4))-.055
 def add_stone_finish(key,base,seed,weather_strength=.002):
  rng=random.Random(seed)
  image=bpy.data.images.new('Original '+key+' stone grain',width=256,height=256,alpha=True)

@@ -340,7 +340,8 @@ for py in range(256):
         variation=.012*math.sin(plank*2.1)
         seam=-.065 if local in (0,1) else 0
         value=grain+variation+seam
-        wood_pixels.extend((max(0,min(1,.36+value)),max(0,min(1,.23+value*.74)),max(0,min(1,.15+value*.5)),1))
+        wood_pixels.extend((linear_to_srgb(.27+value),linear_to_srgb(.17+value*.74),
+                            linear_to_srgb(.11+value*.5),1))
 wood_image.pixels[:]=wood_pixels
 wood_image.pack()
 deck_uv=deck_obj.data.uv_layers.new(name='Timber boards')
@@ -584,7 +585,7 @@ for py in range(256):
         grain=random_texture.gauss(0,.008)
         broad=.007*math.sin(px*2*math.pi/61)*math.sin(py*2*math.pi/97)
         v=grain+broad
-        pix.extend((max(0,min(1,.59+v)),max(0,min(1,.61+v)),max(0,min(1,.60+v)),1))
+        pix.extend((linear_to_srgb(.45+v),linear_to_srgb(.47+v),linear_to_srgb(.46+v),1))
 paving.pixels[:]=pix
 paving.pack()
 ground_obj=bpy.data.objects['ground']
