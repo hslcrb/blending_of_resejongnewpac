@@ -5,6 +5,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { instanceTreeMeshes } from './treeInstances.js';
 import { canWalk } from './walkCollision.js';
+import { walkKeyForEvent } from './walkKeys.js';
 import './style.css';
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
@@ -265,8 +266,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
 
         const handleKeyDown = (event) => {
             if (!sceneRef.current?.size) return;
-            const key = event.key.toLowerCase();
             if (modeNow === 'walk') {
+                const key = walkKeyForEvent(event);
                 if (key === 'shift') {
                     held.add(key);
                 } else if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key)) {
@@ -304,7 +305,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             camera.position.copy(controls.target).add(new THREE.Vector3().setFromSpherical(orbit));
             controls.update();
         };
-        const handleKeyUp = (event) => held.delete(event.key.toLowerCase());
+        const handleKeyUp = (event) => held.delete(walkKeyForEvent(event));
         const clearInput = () => { held.clear(); touchHeld.clear(); dragging = null; };
         const setHeld = (direction, down) => {
             if (down) touchHeld.add(direction);

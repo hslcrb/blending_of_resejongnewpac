@@ -519,6 +519,22 @@ for x in (ax-3.3,ax+3.3):
  box('stone2',x,af-.75,9.0,.16,1.6,.16)
 # Glazed terrace volume projecting toward the central court.
 box('roofedge',-25.6,1.4,4.85,8.0,8,.50)
+# The close views show a row of small dark rectangular recesses below the
+# terrace glazing, returning around the court-facing end. Their count and
+# dimensions are estimates from photographs, not a measured elevation.
+# The frames and backing form real recesses; the top meets the slab at z=4.6.
+fascia_bottom,fascia_top=4.05,4.60
+fascia_open_bottom,fascia_open_top=4.17,4.48
+for z0,z1 in ((fascia_bottom,fascia_open_bottom),(fascia_open_top,fascia_top)):
+ box('stone',-25.6,-2.49,(z0+z1)/2,8,.26,z1-z0)
+ box('stone',-21.71,1.4,(z0+z1)/2,.26,8,z1-z0)
+for i in range(11):
+ x=-29.6+i*.8
+ box('stone',x,-2.49,(fascia_open_bottom+fascia_open_top)/2,.12,.26,fascia_open_top-fascia_open_bottom)
+ y=-2.6+i*.8
+ box('stone',-21.71,y,(fascia_open_bottom+fascia_open_top)/2,.26,.12,fascia_open_top-fascia_open_bottom)
+box('dark',-25.6,-2.39,(fascia_open_bottom+fascia_open_top)/2,8,.04,fascia_open_top-fascia_open_bottom)
+box('dark',-21.83,1.4,(fascia_open_bottom+fascia_open_top)/2,.04,8,fascia_open_top-fascia_open_bottom)
 box('glass',-25.6,1.4,6.7,7.8,7.8,3.5)
 box('stone2',-25.6,1.4,8.55,8,8,.20)
 for x in [-29.45+i*1.3 for i in range(7)]:
