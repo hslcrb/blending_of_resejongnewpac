@@ -7,6 +7,7 @@ import { instanceTreeMeshes } from './treeInstances.js';
 import { canWalk } from './walkCollision.js';
 import { walkKeyForEvent } from './walkKeys.js';
 import { focusOrbitAt } from './orbitFocus.js';
+import { rearGroundHeight } from './rearGround.js';
 import './style.css';
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
@@ -14,6 +15,8 @@ const WALK_START = new THREE.Vector3(33.1, 1.7, 27);
 const WALK_SPEED = 2;
 const WALK_FAST_SPEED = 5;
 function groundHeight(x, z) {
+    const rearHeight = rearGroundHeight(x, z);
+    if (rearHeight !== null) return rearHeight;
     // 목재 무대 세 단은 각각 독립된 면 높이를 가집니다. / Walk on the three nested wooden platforms.
     if (x >= -28.5 && x <= -9.5 && z >= 21.8 && z <= 26.2) return 0.66;
     if (x >= -29.5 && x <= -8.5 && z >= 21.1 && z <= 26.9) return 0.44;
@@ -193,7 +196,9 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             const { framePoints, center } = sceneRef.current;
             const direction = (name === 'front'
                 ? new THREE.Vector3(0, 0.08, 1)
-                : new THREE.Vector3(0.38, 0.24, 1)).normalize();
+                : name === 'rear'
+                    ? new THREE.Vector3(-0.38, 0.30, -1)
+                    : new THREE.Vector3(0.38, 0.24, 1)).normalize();
             const right = new THREE.Vector3().crossVectors(camera.up, direction).normalize();
             const up = new THREE.Vector3().crossVectors(direction, right).normalize();
             const tanVertical = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
@@ -620,7 +625,10 @@ function App() {
                         )}
                         <div className="viewer-label" aria-hidden="true"><span>{mode === 'walk' ? 'GROUND WALK' : 'ARCHITECTURE MODEL'}</span><strong>{mode === 'walk' ? '광장을 걷는 시선' : '세종문화회관'}</strong></div>
                         <div className="view-actions">
-                            {mode === 'orbit' && <button type="button" disabled={!ready} onClick={() => setView({ name: 'front' })}>정면 보기</button>}
+                            {mode === 'orbit' && <>
+                                <button type="button" disabled={!ready} onClick={() => setView({ name: 'front' })}>정면 보기</button>
+                                <button type="button" disabled={!ready} onClick={() => setView({ name: 'rear' })}>뒷면 보기</button>
+                            </>}
                             <button type="button" disabled={!ready} onClick={() => mode === 'walk' ? viewerRef.current?.resetWalk() : setView({ name: 'perspective' })}>{mode === 'walk' ? '시작 위치' : '처음 시점'}</button>
                         </div>
                         <p className="viewer-hint">

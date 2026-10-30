@@ -197,6 +197,7 @@ button:disabled { cursor: not-allowed; opacity: .5; }
     .site-footer { padding: 28px 0 32px; }
 }
 @media (max-width: 400px) {
+    .viewer-label { display: none; }
     .experience-controls {
         align-items: stretch;
         flex-wrap: wrap;

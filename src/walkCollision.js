@@ -1,8 +1,23 @@
 // GLB의 광장과 출입구에 맞춘 보행 범위입니다. / Walkable plaza and entrances from the GLB.
-const WALK_LIMITS = { minX: -75, maxX: 80.6, minZ: -118, maxZ: 78 };
+const WALK_LIMITS = { minX: -75, maxX: 80.6, minZ: -166, maxZ: 78 };
 const WALK_BLOCKS = [
+    // 후면 정원의 식재 구역 / Planted islands in the rear garden.
+    ...[
+        [-70, -34, 122, 139], [-27, 5, 122, 139],
+        [12, 40, 123, 141], [48, 75, 124, 143],
+        [-70, -33, 146, 164], [-23, 15, 146, 164],
+        [24, 74, 147, 164],
+    ].map(([minX, maxX, minY, maxY]) => ({ minX, maxX, minZ: -maxY, maxZ: -minY })),
     // 로비 뒤 벽에서 카메라가 잘리지 않도록 여유를 둡니다. / Leave room before the auditorium wall for the camera near plane.
-    { minX: -7, maxX: 73, minZ: -111, maxZ: -11.1 },
+    { minX: -7, maxX: 73, minZ: -103.2, maxZ: -11.1 },
+    { minX: 23, maxX: 73, minZ: -111, maxZ: -103.2 },
+    // 후면 별동의 유리벽과 아래 열린 열주 / Rear wing wall and open colonnade.
+    { minX: -30, maxX: -7, minZ: -103.2, maxZ: -84 },
+    ...[-27.44, -19.12, -10.79, -2.46, 5.87, 14.20, 22.53].map((x) =>
+        ({ minX: x - 1.1, maxX: x + 1.1, minZ: -110, maxZ: -107.3 })),
+    // 계단 측면 옹벽을 통해 높이 차를 뛰어넘지 않도록 합니다. / Keep walkers from stepping through stair side walls.
+    { minX: 3.15, maxX: 3.75, minZ: -119.6, maxZ: -103.21 },
+    { minX: 21.1, maxX: 21.7, minZ: -119.6, maxZ: -103.21 },
     { minX: -7, maxX: -3, minZ: -11.4, maxZ: 3.5 },
     { minX: 69, maxX: 73, minZ: -11.4, maxZ: 3.5 },
     // 본관 입면 사이의 다섯 출입구 / Five openings in the main facade.

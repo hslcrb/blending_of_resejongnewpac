@@ -126,7 +126,7 @@ def hip_seams(cx,cy,z0,z1,width,depth,ridge,count,axis='x'):
 # Stone forecourt and paved joints, extended behind the theatre.
 # The deep plaza visible in the reference photos reaches well beyond the
 # entrance gardens. Its front extent remains a visual estimate, not a survey.
-box('ground',0,20,-.24,112,200,.48)
+box('ground',0,44,-.24,112,248,.48)
 for x in range(-56,57,2): box('line',x,-38,.006,.018,84,.012)
 for y in range(-80,5,2): box('line',0,y,.009,112,.018,.012)
 
@@ -270,14 +270,119 @@ cornice_joints(cx,9,18.55,21.65,60,32,1.5)
 box('stone',cx,29.5,20.45,30,9,6.1)
 box('stone',cx,29.5,25.5,30,9,4.0)
 for z in [23.8+i*.65 for i in range(6)]: box('stone2',cx,24.98,z,30,.02,.015)
-# Lower rear hall, seen beyond the fly tower in the site diagram.
-rearx=32
-box('stone',rearx,40.75,8.1,34,13.5,16.2)
-box('roofedge',rearx,40.75,16.3,37.2,14.5,.45)
-hip_roof('roof',rearx,40.75,16.52,19.0,37.2,14.5,20)
-for x in [rearx-14+i*2 for i in range(15)]:
- box('glass',x,47.56,8.7,.75,.14,8.2)
-for z in (4.5,12.8):box('stone2',rearx,47.65,z,33,.1,.13)
+# Rear hall, beyond the fly tower.  The supplied rear photograph shows a
+# recessed bronze-patterned upper facade, a lower diamond screen, narrow dark
+# windows between them and a continuous terrace above the ground-floor glazing.
+# Counts, depths and the obscured lower level remain visual estimates.
+rearhall_cx=32
+box('stone',rearhall_cx,40.75,8.1,34,13.5,16.2)
+box('roofedge',rearhall_cx,40.75,16.3,37.2,14.5,.45)
+hip_roof('roof',rearhall_cx,40.75,16.52,19.0,37.2,14.5,20)
+# Paired end piers and six shafts rise to the underside of the rear beam.
+for x in (16.5,47.5):
+ box('stone',x,47.32,9.80,3,.36,12.4)
+rearhall_columns=[18.3+i*5.48 for i in range(6)]
+for x in rearhall_columns:
+ stone_pillar(x,47.40,3.55,15.40,1.08,1.0,.13)
+ curved_capital('stone',x,47.40,15.32,16.08,1.08,1.0,1.65,1.20)
+ box('stone2',x,47.92,9.35,.014,.025,11.6)
+ for z in [4.1+i*1.25 for i in range(9)]:
+  box('stone2',x,47.92,z,1.06,.025,.014)
+# The background and windows lie behind the shafts, keeping actual depth.
+box('dark',rearhall_cx,47.57,9.76,28.0,.10,12.16)
+box('glass',rearhall_cx,47.65,4.70,27.8,.08,2.18)
+box('glass',rearhall_cx,47.65,8.92,27.8,.08,1.05)
+for z in (3.55,5.82,8.28,9.50,15.82):
+ box('roofedge',rearhall_cx,47.72,z,28.0,.18,.13)
+for x in [18.4+i*.92 for i in range(30)]:
+ box('gold',x,47.73,4.70,.035,.13,2.18)
+for z in (4.0,5.1):
+ box('gold',rearhall_cx,47.73,z,27.8,.13,.045)
+for x in [18.4+i*1.1 for i in range(26)]:
+ box('roofedge',x,47.72,8.92,.04,.16,1.05)
+# Original stepped motifs are individually modeled; no photo pixels are used.
+for i in range(49):
+ x=18.75+i*.55
+ for j in range(10):
+  z=10.05+j*.55
+  pts=[(-.22,-.16),(-.22,.17),(.10,.17),(.10,-.05),(-.07,-.05),(-.07,.05),(.22,.05),(.22,-.22)]
+  c=math.sqrt(.5)
+  pts=[(x+(u-v)*c,z+(u+v)*c) for u,v in pts]
+  for a,q in zip(pts,pts[1:]):
+   if 18.6<a[0]<45.4 and 18.6<q[0]<45.4 and 9.65<a[1]<15.68 and 9.65<q[1]<15.68:
+    b['gold'].bar(a[0],47.74,a[1],q[0],47.74,q[1],.04,.035)
+# Crossed bars are clipped to the lower rectangular panel.
+for slope in (-1,1):
+ lo=5.95-slope*45.4 if slope==1 else 5.95-slope*18.6
+ hi=8.17-slope*18.6 if slope==1 else 8.17-slope*45.4
+ k=lo
+ while k<=hi:
+  pts=[]
+  for x in (18.6,45.4):
+   z=slope*x+k
+   if 5.95<=z<=8.17:pts.append((x,z))
+  for z in (5.95,8.17):
+   x=(z-k)/slope
+   if 18.6<=x<=45.4:pts.append((x,z))
+  if len(pts)>=2:b['gold'].bar(pts[0][0],47.75,pts[0][1],pts[1][0],47.75,pts[1][1],.025,.035)
+  k+=.37
+# The low balcony and glazing below are deliberately separate pieces.
+box('stone',rearhall_cx,47.65,3.35,34,1.3,.46)
+box('glass',rearhall_cx,47.58,1.65,30,.08,3.0)
+for x in [17.5+i*2.9 for i in range(11)]:
+ box('roofedge',x,47.67,1.65,.07,.13,3.0)
+for z in (.20,2.90):
+ box('roofedge',rearhall_cx,47.67,z,30,.13,.08)
+
+# Rear stone wing: the additional rear photograph shows a flat-roofed,
+# elongated upper facade with many narrow windows over a recessed ground
+# level carried by tall columns. Counts and dimensions are visual estimates.
+rear_left,rear_right=-22,15
+rearx=(rear_left+rear_right)/2
+rear_width=rear_right-rear_left
+rear_y0,rear_y1=34,47.5
+# Inset inner volume leaves a sheltered approach beneath the projecting wing.
+box('stone',rearx,38.6,5.45,rear_width,9.2,10.9)
+box('dark',rearx,44.0,2.70,rear_width-.6,.16,5.35)
+box('glass',rearx,44.12,2.70,rear_width-1,.08,5.15)
+box('stone',rearx,45.4,.12,rear_width,4.2,.24)
+for x in (-20.9,-15,-9.1,-3.2,2.7,8.6,14.5):
+ box('stone',x,47.05,2.85,1.02,1.05,5.70)
+# A continuous slab joins the ground-floor supports to the upper facade.
+box('stone',rearx,40.75,5.78,rear_width,13.5,.36)
+box('stone',rearx,40.75,11.34,rear_width+.6,14.0,.42)
+# Build the facade around actual open slots; the glass is recessed behind it.
+rear_window_x=[-20.7+i*1.68 for i in range(21)]
+rear_half_width=.23
+rear_window_bottom,rear_window_top=6.25,10.85
+def rear_wall_segment(x0,x1,z0,z1):
+ if x1>x0 and z1>z0:
+  box('stone',(x0+x1)/2,47.32,(z0+z1)/2,x1-x0,.36,z1-z0)
+cursor=rear_left
+for x in rear_window_x:
+ rear_wall_segment(cursor,x-rear_half_width,5.96,11.13)
+ rear_wall_segment(x-rear_half_width,x+rear_half_width,5.96,rear_window_bottom)
+ rear_wall_segment(x-rear_half_width,x+rear_half_width,rear_window_top,11.13)
+ box('glass',x,47.06,(rear_window_bottom+rear_window_top)/2,2*rear_half_width,.055,rear_window_top-rear_window_bottom)
+ cursor=x+rear_half_width
+rear_wall_segment(cursor,rear_right,5.96,11.13)
+# Back the upper level and close its end walls, without filling the window slots.
+box('stone',rearx,45.0,8.55,rear_width,3.6,5.18)
+for x in (rear_left+.16,rear_right-.16):
+ box('stone',x,46.32,8.55,.32,2.0,5.18)
+# Stone courses stop at each window opening.
+for z in (6.38,7.15,7.92,8.69,9.46,10.23,11.0):
+ cursor=rear_left
+ for x in rear_window_x:
+  if x-rear_half_width>cursor:
+   box('stone2',(cursor+x-rear_half_width)/2,47.512,z,x-rear_half_width-cursor,.022,.014)
+  cursor=x+rear_half_width
+ if cursor<rear_right:
+  box('stone2',(cursor+rear_right)/2,47.512,z,rear_right-cursor,.022,.014)
+# Low mechanical penthouse with horizontal panels behind the flat parapet.
+box('roofedge',rearx,40.8,13.00,25,8.0,3.0)
+box('white',rearx,40.8,13.02,25.08,8.08,.66)
+box('roofedge',rearx,40.8,14.55,25.2,8.2,.10)
 
 # Six tall rectilinear columns with flared capitals and seams.
 columns=[4,11.2,18.4,25.6,32.8,40]
@@ -453,6 +558,38 @@ for i in range(6):
  box('stone',x,4.25,top/2,.44,15.5,top)
  box('stone2',x+.22,4.25,top+.009,.025,15.5,.018)
 apply_section(main_start,theatre_y,theatre_z)
+# Rear court stairs descend toward the garden, beside the junction of the
+# rear hall and the long wing. The photograph establishes the stair's
+# relationship to both facades, but its precise footprint is an estimate.
+# Create the treads in final Y/Z space to keep all risers the same height
+# despite the section's non-linear mapping.
+rear_stair_left,rear_stair_right=1.0,13.7
+rear_stair_center=(rear_stair_left+rear_stair_right)/2
+rear_stair_width=rear_stair_right-rear_stair_left
+rear_landing_height=theatre_z(3.58)
+rear_stair_count=24
+rear_stair_rise=rear_landing_height/rear_stair_count
+for i in range(rear_stair_count):
+ y=119.40-i*.39
+ top=(i+1)*rear_stair_rise
+ box('stone',rear_stair_center,y,top/2,rear_stair_width,.40,top)
+ box('stone2',rear_stair_center,y+.195,top+.008,rear_stair_width,.018,.014)
+ # Filled retaining edges overlap each tread and touch the paving beneath.
+ for x in (rear_stair_left-.10,rear_stair_right+.10):
+  box('stone',x,y,(top+.28)/2,.20,.40,top+.28)
+# Raised landing overlaps the innermost tread and extends back to the
+# recessed ground-floor frontage; the precise rear circulation is obscured.
+box('stone',rear_stair_center,106.73,rear_landing_height-.12,rear_stair_width,7.04,.24)
+for x in (rear_stair_left+.22,rear_stair_right-.22):
+ for y in (104.0,109.8):
+  box('stone',x,y,(rear_landing_height-.24)/2,.28,.28,rear_landing_height-.24)
+for x in (rear_stair_left-.10,rear_stair_right+.10):
+ for i in (0,6,12,18,23):
+  y=119.40-i*.39
+  top=(i+1)*rear_stair_rise+.28
+  box('roofedge',x,y,top+.45,.045,.045,.90)
+ fine_beam('roofedge',(x,119.40,rear_stair_rise+1.18),
+           (x,110.43,rear_landing_height+1.18),.055)
 # Return-face joints use physical distances after the depth transformation.
 beam_y0,beam_y1=theatre_y(-4.5),theatre_y(24)
 beam_z0,beam_z1=theatre_z(17.25),theatre_z(18.25)

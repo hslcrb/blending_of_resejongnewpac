@@ -30,6 +30,23 @@ test('the extended forecourt is walkable without crossing its front edge', () =>
     assert.equal(canWalk(33.1, 78.1), false);
 });
 
+test('rear garden paths stay open while planted islands and the edge are blocked', () => {
+    assert.equal(canWalk(8, -132), true);
+    assert.equal(canWalk(0, -142), true);
+    assert.equal(canWalk(0, -132), false);
+    assert.equal(canWalk(0, -151), false);
+    assert.equal(canWalk(8, -167), false);
+});
+
+test('the rear wing colonnade stays open between pillars and stops at the wall', () => {
+    assert.equal(canWalk(-15, -108.5), true);
+    assert.equal(canWalk(-19.12, -108.5), false);
+    assert.equal(canWalk(-15, -102.8), false);
+    assert.equal(canWalk(2, -105), true);
+    assert.equal(canWalk(3.5, -115), false, 'rear stair side wall');
+    assert.equal(canWalk(10, -115), true, 'rear stair treads');
+});
+
 test('the lobby back wall keeps the eye clear of the camera near plane', () => {
     // The auditorium front is at z=-11.4; leave room for the camera.
     assert.equal(canWalk(33.1, -11.2), false);

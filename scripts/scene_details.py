@@ -219,6 +219,113 @@ for tree_id in (0,2,5,8,12,15,17):
 tree_supports.finish('Young tree timber supports',wood)
 tree_ties.finish('Young tree support ties',metal)
 
+# The rear photograph shows a wooded garden with lighter paths behind the
+# theatre. These intentionally placed planting islands are a spatial
+# interpretation, not surveyed footprints or a reconstruction of each species.
+rear_beds=[
+    [(-70,127),(-67,123),(-60,122),(-54,123),(-48,122),(-41,124),(-36,125),(-34,129),(-35,134),(-38,138),(-46,139),(-53,137),(-61,139),(-68,136)],
+    [(-27,128),(-25,124),(-20,122),(-13,123),(-6,122),(1,124),(5,128),(4,134),(1,138),(-6,139),(-13,137),(-20,139),(-25,135)],
+    [(12,129),(15,125),(20,123),(27,124),(34,123),(39,126),(40,131),(39,137),(35,140),(28,141),(21,139),(16,140),(12,136)],
+    [(48,130),(51,126),(57,124),(63,125),(70,124),(74,128),(75,133),(74,139),(69,142),(62,143),(57,141),(51,142),(48,138)],
+    [(-70,152),(-67,148),(-61,146),(-54,147),(-47,146),(-40,148),(-35,147),(-33,151),(-34,157),(-37,162),(-44,164),(-51,162),(-59,164),(-67,161)],
+    [(-23,152),(-20,148),(-14,146),(-7,147),(0,146),(8,148),(12,147),(15,151),(14,157),(11,162),(4,164),(-3,162),(-11,164),(-19,161)],
+    [(24,153),(27,149),(34,147),(42,148),(49,147),(57,149),(65,147),(72,150),(74,154),(73,160),(68,163),(59,164),(52,162),(44,164),(36,162),(28,163),(24,159)],
+]
+rear_soil=detail_material('Rear garden deep planted soil',(.16,.22,.105),roughness=.98)
+rear_path_mat=detail_material('Rear garden warm path',(.53,.37,.27),roughness=.94)
+rear_edge_mat=detail_material('Rear garden stone border',(.43,.46,.40),roughness=.91)
+rear_bed_mesh=DetailMesh()
+rear_border=DetailMesh()
+for polygon in rear_beds:
+    start=len(rear_bed_mesh.vertices)
+    count=len(polygon)
+    rear_bed_mesh.vertices.extend([(x,y,z) for z in (0,.16) for x,y in polygon])
+    rear_bed_mesh.faces.append(tuple(start+i for i in reversed(range(count))))
+    rear_bed_mesh.faces.append(tuple(start+count+i for i in range(count)))
+    for i in range(count):
+        j=(i+1)%count
+        rear_bed_mesh.faces.append((start+i,start+j,start+count+j,start+count+i))
+        x0,y0=polygon[i];x1,y1=polygon[j]
+        rear_border.branch((x0,y0,.17),(x1,y1,.17),.075,.075,6)
+rear_bed_mesh.finish('Rear garden planting islands',rear_soil)
+rear_border.finish('Rear garden low stone borders',rear_edge_mat)
+
+# A gently bending crossing path follows the green edges in the photograph.
+rear_paths=DetailMesh()
+path_centers=[(-75,142.2),(-60,141.2),(-45,141.2),(-30,141.7),(-15,142.8),
+              (0,142.7),(15,142.6),(30,143.9),(45,144),(60,145),(78,145.2)]
+for i,(x,y) in enumerate(path_centers):
+    a=Vector(path_centers[max(0,i-1)])
+    b=Vector(path_centers[min(len(path_centers)-1,i+1)])
+    tangent=(b-a).normalized()
+    offset=Vector((-tangent.y,tangent.x))*1.2
+    rear_paths.vertices.extend([(x+offset.x,y+offset.y,0),(x-offset.x,y-offset.y,0),
+                                (x+offset.x,y+offset.y,.016),(x-offset.x,y-offset.y,.016)])
+for i in range(len(path_centers)-1):
+    a=4*i;b=a+4
+    rear_paths.faces.extend(((a,b,b+1,a+1),(a+2,a+3,b+3,b+2),
+                             (a,a+2,b+2,b),(a+1,b+1,b+3,a+3)))
+rear_paths.faces.extend(((0,1,3,2),(4*(len(path_centers)-1),4*(len(path_centers)-1)+2,
+                                     4*(len(path_centers)-1)+3,4*(len(path_centers)-1)+1)))
+rear_paths.finish('Rear garden warm paved paths',rear_path_mat)
+
+# The 44 tree positions are fixed, share the existing five hand-built tree
+# meshes, and include subdued autumn tones seen in the supplied rear photo.
+rear_trees=[
+    (-64,127,9.2),(-53,133,10.4),(-42,128,8.9),
+    (-20,127,10.2),(-10,134,9.4),(-1,128,8.8),
+    (19,130,9.7),(30,135,10.5),(36,128,8.8),
+    (55,130,9.3),(65,136,10.3),(71,130,8.6),
+    (-62,151,10.4),(-50,158,9.2),(-39,151,10.0),
+    (-15,151,9.4),(-3,158,10.6),(9,151,9.2),
+    (31,152,10.3),(43,158,9.0),(56,152,10.2),(68,158,9.3),
+    (-57,127,10.4),(-14,130,10.6),(24,132,11.0),(59,134,10.8),
+    (-55,154,10.5),(-7,154,10.0),(37,154,10.6),(62,154,10.2),
+    (-49,127,8.0),(-62,134,12.0),(-23,133,9.2),(-4,134,11.5),
+    (15,135,8.8),(34,132,11.8),(51,137,8.4),(69,136,12.0),
+    (-65,158,9.2),(-43,157,11.7),(-18,158,8.3),(5,157,11.5),
+    (27,158,8.6),(51,157,11.9),
+]
+rear_autumn=[
+    detail_material('Rear autumn foliage %d' % i,color,roughness=.92)
+    for i,color in enumerate(((.50,.48,.13),(.65,.52,.14),(.53,.36,.12),(.35,.42,.12)))
+]
+for rear_id,(x,y,height) in enumerate(rear_trees):
+    tree_id=len(tree_positions)+rear_id
+    for part,source in enumerate(templates[tree_id%len(templates)]):
+        name=('Tree trunk %d' % tree_id if part==0
+              else 'Tree foliage %d shade %d' % (tree_id,part-1))
+        ob=bpy.data.objects.new(name,source.data)
+        bpy.context.collection.objects.link(ob)
+        ob.location=(x,y,.16)
+        crown=(1.16,1.52,1.30,1.62,1.23,1.45,1.68)[rear_id%7]
+        ob.scale=(crown,crown,height/10)
+        ob.rotation_euler.z=tree_id*.57
+        if part and rear_id%3!=0:
+            ob.material_slots[0].link='OBJECT'
+            ob.material_slots[0].material=rear_autumn[(rear_id+part)%len(rear_autumn)]
+
+# Low ground plants occupy intentional sites within the islands.
+rear_plants=[DetailMesh(),DetailMesh()]
+rear_plant_regions=[(-70,-34,122,139),(-27,5,122,139),(12,40,123,141),
+                    (48,75,124,143),(-70,-33,146,164),(-23,15,146,164),(24,74,147,164)]
+for bed_id,(xmin,xmax,ymin,ymax) in enumerate(rear_plant_regions):
+    rng=random.Random(9200+bed_id)
+    for row in range(4):
+        for col in range(6):
+            x=xmin+3+(xmax-xmin-6)*col/5+rng.uniform(-.4,.4)
+            y=ymin+3+(ymax-ymin-6)*row/3+rng.uniform(-.35,.35)
+            if any((x-tx)**2+(y-ty)**2<1.05**2 for tx,ty,_ in rear_trees):
+                continue
+            for leaf in range(14):
+                a=2*math.pi*leaf/14+rng.uniform(-.15,.15)
+                direction=Vector((math.cos(a)*.6,math.sin(a)*.6,rng.uniform(.5,1))).normalized()
+                length=rng.uniform(.22,.42)
+                root=Vector((x,y,.16))
+                rear_plants[(row+col+leaf)%2].leaf(root+direction*length*.52,direction,length,.09)
+for i,builder in enumerate(rear_plants):
+    builder.finish('Rear garden understory %d' % i,leaf_mats[i+1])
+
 # Groundcover grows in irregular groups within the explicitly placed beds.
 # Each leaf emerges from a root near the soil rather than floating above it.
 groundcover=[DetailMesh(),DetailMesh()]

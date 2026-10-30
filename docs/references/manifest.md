@@ -4,6 +4,7 @@
 
 | 파일 | 크기 (바이트) | SHA-256 |
 | --- | ---: | --- |
+| [rear/image-1.png](rear/image-1.png) | 29115154 | `c6641e184be66ead1cc40c20fa645d0c4376b5bb8952d3797cfad4776f526450` |
 | [initial/image-1.png](initial/image-1.png) | 46631885 | `49e0bd0d9480af4390643685021586789e441199c6bdd9942d76a36b6c90f760` |
 | [initial/image-2.png](initial/image-2.png) | 63087 | `b762669ca9fc8ec76d9f5fe4907709542e2d0fb4dfe9b09d4d9cb8676bce0be4` |
 | [initial/image-3.png](initial/image-3.png) | 118693 | `a2d17d2dcec4f8815f8dbc8e7dee8bb2fa010d124d253d1ae5d377410eeaef31` |
