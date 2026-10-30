@@ -38,11 +38,55 @@ button:disabled { cursor: not-allowed; opacity: .5; }
 .experience-title .status-dot { margin: 0 0 0 5px; }
 .experience-title small { display: block; color: #7aa6a3; font: 700 9px 'DM Sans', sans-serif; letter-spacing: .16em; margin-bottom: 4px; }
 .experience-title h2 { margin: 0; font-size: 15px; line-height: 1.3; letter-spacing: -.04em; }
+.experience-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 .mode-switch { display: flex; gap: 3px; border-radius: 99px; padding: 4px; background: #dbeeea; border: 1px solid #cde5df; }
 .mode-switch button, .view-actions button { border: 0; cursor: pointer; }
 .mode-switch button { color: #648582; background: transparent; padding: 10px 17px; border-radius: 99px; font-size: 12px; font-weight: 700; white-space: nowrap; }
 .mode-switch button span { font-size: 14px; margin-right: 5px; }
 .mode-switch button[aria-pressed='true'] { color: #23655e; background: linear-gradient(180deg,#fff,#ecfaf5); box-shadow: 0 2px 6px #52897b28, inset 0 1px #fff; }
+.fullscreen-btn {
+    color: #286e6a;
+    border: 1px solid #c4e2dc;
+    border-radius: 99px;
+    background: linear-gradient(180deg, #fff, #eaf8f4);
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.fullscreen-btn span {
+    font-size: 16px;
+    margin-right: 6px;
+}
+.fullscreen-btn:hover {
+    background: #fff;
+}
+.fullscreen-error {
+    color: #8a3434;
+    font-size: 13px;
+    margin: 0 3px 12px;
+}
+.experience:fullscreen {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    border: 0;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    background: #eff9f7;
+}
+.experience:fullscreen .view-frame {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+    height: auto;
+}
 .view-frame { position: relative; height: min(68vw, 690px); min-height: 470px; overflow: hidden; border: 1px solid #cee8e7; border-radius: 15px; background: #d2edf2; }
 .viewer-canvas { position: absolute; inset: 0; overflow: hidden; touch-action: none; background: radial-gradient(ellipse at 74% 13%, #fffefa 0%, #f7ffffc9 8%, transparent 31%), linear-gradient(180deg, #a4d9e9 0%, #ddf2f1 57%, #e8f2e7 100%); cursor: grab; }
 .viewer-canvas:active { cursor: grabbing; }
@@ -80,8 +124,14 @@ button:disabled { cursor: not-allowed; opacity: .5; }
     .experience { padding: 13px; border-radius: 19px; }
     .experience-top { align-items: start; flex-direction: column; gap: 15px; padding-bottom: 14px; }
     .experience-title h2 { font-size: 14px; }
+    .experience-controls {
+        width: 100%;
+    }
     .mode-switch { width: 100%; }
     .mode-switch button { flex: 1; }
+    .fullscreen-btn {
+        padding-inline: 11px;
+    }
     .view-frame { height: 62vh; min-height: 440px; max-height: 630px; }
     .viewer-label { top: 18px; left: 18px; }
     .view-actions { right: 12px; top: 12px; gap: 4px; }
@@ -92,5 +142,35 @@ button:disabled { cursor: not-allowed; opacity: .5; }
     .experience-bottom { align-items: start; flex-direction: column; gap: 10px; }
     .model-note { text-align: left; padding-left: 37px; }
     .site-footer { padding: 28px 0 32px; }
+}
+@media (max-width: 400px) {
+    .experience-controls {
+        align-items: stretch;
+        flex-wrap: wrap;
+    }
+    .fullscreen-btn {
+        min-height: 40px;
+    }
+}
+@media (max-height: 500px) {
+    .experience:fullscreen {
+        padding: 10px;
+    }
+    .experience:fullscreen .experience-top {
+        flex-direction: row;
+        align-items: center;
+        padding-bottom: 8px;
+    }
+    .experience:fullscreen .experience-title small {
+        display: none;
+    }
+    .experience:fullscreen .experience-bottom {
+        padding-top: 6px;
+        gap: 4px;
+    }
+    .experience:fullscreen .experience-controls {
+        width: auto;
+        flex-wrap: nowrap;
+    }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

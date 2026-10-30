@@ -375,7 +375,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
                 if (!object.isMesh) return;
                 const sourceName = object.userData.name || object.name.replaceAll('_', ' ');
                 object.receiveShadow = true;
-                object.castShadow = /^(stone|terrace_stone|terrace stone|roof|roofedge|copper|white|Individual tree trunks and branching|Deciduous foliage \d+|Tree trunk \d+|Tree foliage \d+ shade \d+)$/i.test(sourceName);
+                object.castShadow = /^(stone|terrace_stone|terrace stone|roof|roofedge|copper|white|Individual tree trunks and branching|Deciduous foliage \d+|Tree trunk \d+|Tree foliage \d+ shade \d+|Plaza shrub stems|Plaza shrub foliage \d+)$/i.test(sourceName);
             });
             // 공유 수목 형상을 묶어 드로 호출을 줄입니다. / Batch shared trees after framing and shadow setup.
             treeBatch = instanceTreeMeshes(model, { animations: gltf.animations });
@@ -502,8 +502,44 @@ function App() {
     const [status, setStatus] = useState('loading');
     const [mode, setMode] = useState('orbit');
     const [view, setView] = useState({ name: 'perspective' });
+    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [fullscreenError, setFullscreenError] = useState('');
+    const experienceRef = useRef(null);
     const viewerRef = useRef(null);
     const ready = status === 'ready';
+    const fullscreenAvailable = document.fullscreenEnabled && typeof document.documentElement.requestFullscreen === 'function';
+
+    // 브라우저의 Escape 종료도 상태에 반영합니다. / Sync browser-driven fullscreen exits.
+    useEffect(() => {
+        const syncFullscreen = () => setIsFullscreen(document.fullscreenElement === experienceRef.current);
+        const exitOnEscape = (event) => {
+            if (event.key !== 'Escape' || document.fullscreenElement !== experienceRef.current) return;
+            document.exitFullscreen().catch(() => {
+                if (document.fullscreenElement === experienceRef.current) {
+                    setFullscreenError('전체 화면을 닫을 수 없습니다. 브라우저의 종료 기능을 사용해 주세요.');
+                }
+            });
+        };
+        document.addEventListener('fullscreenchange', syncFullscreen);
+        document.addEventListener('keydown', exitOnEscape);
+        return () => {
+            document.removeEventListener('fullscreenchange', syncFullscreen);
+            document.removeEventListener('keydown', exitOnEscape);
+        };
+    }, []);
+
+    const toggleFullscreen = async () => {
+        setFullscreenError('');
+        try {
+            if (document.fullscreenElement === experienceRef.current) {
+                await document.exitFullscreen();
+            } else {
+                await experienceRef.current?.requestFullscreen();
+            }
+        } catch {
+            setFullscreenError('전체 화면을 열 수 없습니다. 브라우저 설정을 확인해 주세요.');
+        }
+    };
 
     return (
         <div className="app-shell">
@@ -529,17 +565,31 @@ function App() {
                     </div>
                 </section>
 
-                <section className="experience" aria-labelledby="viewer-title">
+                <section className="experience" ref={experienceRef} aria-labelledby="viewer-title">
                     <div className="experience-top">
                         <div className="experience-title">
                             <span className="status-dot" />
                             <div><small>EXPLORE IN 3D</small><h2 id="viewer-title">세종문화회관 둘러보기</h2></div>
                         </div>
-                        <div className="mode-switch" role="group" aria-label="둘러보기 방식">
-                            <button type="button" aria-pressed={mode === 'orbit'} disabled={!ready} onClick={() => setMode('orbit')}><span aria-hidden="true">◉</span> 모형 보기</button>
-                            <button type="button" aria-pressed={mode === 'walk'} disabled={!ready} onClick={() => setMode('walk')}><span aria-hidden="true">↟</span> 직접 걷기</button>
+                        <div className="experience-controls">
+                            <div className="mode-switch" role="group" aria-label="둘러보기 방식">
+                                <button type="button" aria-pressed={mode === 'orbit'} disabled={!ready} onClick={() => setMode('orbit')}><span aria-hidden="true">◉</span> 모형 보기</button>
+                                <button type="button" aria-pressed={mode === 'walk'} disabled={!ready} onClick={() => setMode('walk')}><span aria-hidden="true">↟</span> 직접 걷기</button>
+                            </div>
+                            {fullscreenAvailable && (
+                                <button
+                                    type="button"
+                                    className="fullscreen-btn"
+                                    disabled={!ready}
+                                    onClick={toggleFullscreen}
+                                >
+                                    <span aria-hidden="true">{isFullscreen ? '⊟' : '⛶'}</span>
+                                    {isFullscreen ? '전체 화면 닫기' : '전체 화면'}
+                                </button>
+                            )}
                         </div>
                     </div>
+                    {fullscreenError && <p className="fullscreen-error" role="alert">{fullscreenError}</p>}
                     <div className="view-frame">
                         <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} />
                         {status !== 'ready' && (

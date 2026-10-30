@@ -123,12 +123,14 @@ for template_id in range(5):
         for fork in range(3):
             end2=end+radial*(.28+.18*fork)+lateral*((fork-1)*.68)+Vector((0,0,.38+.18*fork))
             branches.branch(end,end2,.025,.009,5)
-            for leaf_id in range(100):
+            for leaf_id in range(140):
                 # Leaves fill the crown along the limbs, not only at twig tips.
                 p=start.lerp(end2, rng.uniform(.40,1.0))
                 p+=radial*rng.uniform(-.35,.55)+lateral*rng.uniform(-.52,.52)+Vector((0,0,rng.uniform(-.32,.60)))
                 direction=(radial*rng.uniform(-1,1)+lateral*rng.uniform(-1,1)+Vector((0,0,rng.uniform(-.5,1))))
-                leaves[(template_id+arm+fork+leaf_id)%len(leaves)].leaf(p,direction,rng.uniform(.29,.48),rng.uniform(.14,.25))
+                # Smaller leaves and a higher leaf count avoid the oversized
+                # diamond-like foliage visible at pedestrian distance.
+                leaves[(template_id+arm+fork+leaf_id)%len(leaves)].leaf(p,direction,rng.uniform(.20,.31),rng.uniform(.09,.16))
     x,y,actual_height=tree_positions[template_id]
     prototype=[branches.finish('Tree trunk %d' % template_id,bark)]
     for shade,builder in enumerate(leaves):
@@ -179,26 +181,56 @@ for tree_id in (0,2,5,8,12):
 tree_supports.finish('Young tree timber supports',wood)
 tree_ties.finish('Young tree support ties',metal)
 
-# Groundcover grows within the explicitly placed beds; low, varied foliage
-# makes their edges read as planted gardens at walking height.
+# Groundcover grows in irregular groups within the explicitly placed beds.
+# Each leaf emerges from a root near the soil rather than floating above it.
 groundcover=[DetailMesh(),DetailMesh()]
 for bed_id,(x,y,w,d) in enumerate(beds):
     rng=random.Random(602+bed_id)
-    rows=max(2,int(d/1.6))
+    rows=max(2,round((d-1.4)/1.1)+1)
+    columns=max(2,round((w-1.4)/1.1)+1)
     for row in range(rows):
-        for col in range(int(w/1.4)):
-            px=x-w/2+.75+col*1.4+rng.uniform(-.18,.18)
-            py=y-d/2+1.0+row*(d-2)/(rows-1)+rng.uniform(-.18,.18)
+        for col in range(columns):
+            if rng.random()<.18:
+                continue
+            px=x-w/2+.7+col*(w-1.4)/(columns-1)+rng.uniform(-.44,.44)
+            py=y-d/2+.7+row*(d-1.4)/(rows-1)+rng.uniform(-.44,.44)
             if any((px-tx)**2+(py-ty)**2<.85**2 for tx,ty,_ in tree_positions):
                 continue
-            for j in range(24):
-                angle=j*2*math.pi/24+rng.uniform(-.10,.10)
-                radius=rng.uniform(.04,.42)
-                base=Vector((px+math.cos(angle)*radius,py+math.sin(angle)*radius,.18+rng.uniform(.08,.22)))
-                direction=Vector((math.cos(angle)*.6,math.sin(angle)*.6,rng.uniform(.35,1)))
-                groundcover[(col+row+j)%2].leaf(base,direction,rng.uniform(.18,.38),rng.uniform(.08,.14))
+            count=rng.randint(11,17)
+            phase=rng.uniform(0,2*math.pi)
+            for j in range(count):
+                angle=phase+j*2*math.pi/count+rng.uniform(-.15,.15)
+                direction=Vector((math.cos(angle)*rng.uniform(.5,.9),math.sin(angle)*rng.uniform(.5,.9),rng.uniform(.4,1))).normalized()
+                length=rng.uniform(.17,.34)
+                root=Vector((px+rng.uniform(-.09,.09),py+rng.uniform(-.09,.09),.18))
+                center=root+direction*length*.52
+                groundcover[(col+row+j)%2].leaf(center,direction,length,rng.uniform(.055,.11))
 for i,builder in enumerate(groundcover):
     builder.finish('Layered garden groundcover %d' % i,leaf_mats[i+1])
+
+# Low shrubs form small, intentional groups between trees in the photo-based
+# beds.  Their coordinates are chosen within each bed, not scattered buildings.
+shrub_sites=[(-65,-25),(-58,-26),(-56,-19),(7,-23),(17,-20),(23,-25),
+             (49,-25),(57,-21),(66,-23),(69,-25),(6,-14),(58,-14),
+             (76,14),(76,27)]
+shrub_branches=DetailMesh()
+shrub_leaves=[DetailMesh(),DetailMesh(),DetailMesh()]
+for shrub_id,(x,y) in enumerate(shrub_sites):
+    rng=random.Random(3900+shrub_id)
+    height=rng.uniform(.48,.82)
+    base=Vector((x,y,.18))
+    for stem in range(7):
+        angle=2*math.pi*stem/7+rng.uniform(-.25,.25)
+        radial=Vector((math.cos(angle),math.sin(angle),0))
+        tip=base+radial*rng.uniform(.20,.44)+Vector((0,0,height*rng.uniform(.65,1)))
+        shrub_branches.branch(base,tip,.018,.006,5)
+        for leaf_id in range(15):
+            p=base.lerp(tip,rng.uniform(.35,1))+radial*rng.uniform(-.07,.12)+Vector((rng.uniform(-.10,.10),rng.uniform(-.10,.10),rng.uniform(-.06,.08)))
+            direction=radial*rng.uniform(.1,.8)+Vector((rng.uniform(-.4,.4),rng.uniform(-.4,.4),rng.uniform(.25,1)))
+            shrub_leaves[(shrub_id+stem+leaf_id)%3].leaf(p,direction,rng.uniform(.12,.22),rng.uniform(.055,.105))
+shrub_branches.finish('Plaza shrub stems',bark)
+for i,builder in enumerate(shrub_leaves):
+    builder.finish('Plaza shrub foliage %d' % i,leaf_mats[i+1])
 
 # Benches and lighting are aligned with the plaza, with visible feet and slats.
 bench = DetailMesh()
