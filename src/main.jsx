@@ -12,9 +12,26 @@ const WALK_BLOCKS = [
     { minX: -7, maxX: 73, minZ: -111, maxZ: -11.4 },
     { minX: -7, maxX: -3, minZ: -11.4, maxZ: 3.5 },
     { minX: 69, maxX: 73, minZ: -11.4, maxZ: 3.5 },
-    { minX: -3, maxX: 31.54, minZ: 2.7, maxZ: 3.5 },
-    { minX: 34.65, maxX: 69, minZ: 2.7, maxZ: 3.5 },
-    { minX: -72, maxX: -34, minZ: -25, maxZ: 15 },
+    // 본관 입면 사이의 다섯 출입구 / Five openings in the main facade.
+    { minX: -3, maxX: 11.233, minZ: 2.7, maxZ: 3.5 },
+    { minX: 14.338, maxX: 21.396, minZ: 2.7, maxZ: 3.5 },
+    { minX: 24.501, maxX: 31.559, minZ: 2.7, maxZ: 3.5 },
+    { minX: 34.664, maxX: 41.722, minZ: 2.7, maxZ: 3.5 },
+    { minX: 44.827, maxX: 51.885, minZ: 2.7, maxZ: 3.5 },
+    { minX: 54.990, maxX: 69, minZ: 2.7, maxZ: 3.5 },
+    // 본관의 돌출 기둥 / Projecting columns at the main entrance.
+    ...[7.70, 17.87, 28.03, 38.19, 48.36, 58.52].map((x) => ({ minX: x - 1.445, maxX: x + 1.445, minZ: 2.85, maxZ: 5.15 })),
+    // 별관 점포 벽과 세 출입구 / Annex shop walls and three openings.
+    { minX: -72, maxX: -34, minZ: -25, maxZ: 4.25 },
+    { minX: -72, maxX: -70.6, minZ: 4.25, maxZ: 12.25 },
+    { minX: -35.35, maxX: -34, minZ: 4.25, maxZ: 12.25 },
+    { minX: -70.6, maxX: -62.869, minZ: 10.98, maxZ: 12.25 },
+    { minX: -60.611, maxX: -54.119, minZ: 10.98, maxZ: 12.25 },
+    { minX: -51.861, maxX: -45.359, minZ: 10.98, maxZ: 12.25 },
+    { minX: -43.101, maxX: -35.35, minZ: 10.98, maxZ: 12.25 },
+    { minX: -60.819, maxX: -58.469, minZ: 4.825, maxZ: 6.075 },
+    { minX: -52.067, maxX: -49.717, minZ: 4.825, maxZ: 6.075 },
+    { minX: -43.316, maxX: -40.966, minZ: 4.825, maxZ: 6.075 },
     { minX: -34, maxX: -2, minZ: -24, maxZ: -9.6 },
     { minX: -34, maxX: -30.54, minZ: -9.6, maxZ: 15.19 },
     { minX: -2.32, maxX: -2, minZ: -9.6, maxZ: 15.19 },
@@ -37,6 +54,7 @@ function groundHeight(x, z) {
     if (x >= -28.5 && x <= -9.5 && z >= 21.8 && z <= 26.2) return 0.66;
     if (x >= -29.5 && x <= -8.5 && z >= 21.1 && z <= 26.9) return 0.44;
     if (x >= -30.5 && x <= -7.5 && z >= 20.4 && z <= 27.6) return 0.22;
+    if (x >= -70.6 && x <= -35.35 && z >= 4.25 && z <= 11.95) return 0.107;
     if (x >= -30.54 && x <= -2.32 && z <= 15.19 && z >= 1.86) {
         const step = THREE.MathUtils.clamp(Math.floor((15.19 - z) / 0.37), 0, 35);
         return 0.1404375 + (3.3505658 - 0.1404375) * step / 35;
@@ -249,6 +267,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             camera.rotation.set(pitch, yaw, 0, 'YXZ');
             held.clear();
             touchHeld.clear();
+            container.focus({ preventScroll: true });
         };
 
         const setMode = (next) => {
@@ -573,7 +592,7 @@ function App() {
                         <p className="viewer-hint">{mode === 'walk' ? '화면 드래그로 둘러보기 · WASD / 방향키로 이동' : '드래그로 회전 · 오른쪽 드래그로 이동 · 스크롤로 확대'}</p>
                     </div>
                     <div className="experience-bottom">
-                        <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 정문 계단을 지나 로비까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
+                        <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 대극장 로비와 별관 점포까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
                         <p className="model-note">사진과 대극장 단면을 참고한 모델입니다.<br />일부 비례와 세부는 추정입니다.</p>
                     </div>
                 </section>

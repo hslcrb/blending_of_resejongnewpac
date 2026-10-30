@@ -30,11 +30,16 @@ mats={
  'copperjoint':material('녹청 지붕 이음매',(.25,.35,.32),.12,.8),
  'dark':material('깊은 그늘',(.075,.09,.095)),
  'glass':material('짙은 유리',(.065,.13,.14),.35,.24),
+ 'shopglass':material('별관 상점 반투명 유리',(.16,.25,.24),.18,.22),
  'gold':material('청동 격자',(.62,.49,.28),.65,.3),
  'ground':material('광장 석재',(.59,.61,.60)),
  'line':material('포장 줄눈',(.43,.46,.45)),
  'white':material('옥상 벽',(.77,.78,.75)),
 }
+shop_shader=next(n for n in mats['shopglass'].node_tree.nodes if n.type=='BSDF_PRINCIPLED')
+shop_shader.inputs['Alpha'].default_value=.42
+mats['shopglass'].diffuse_color=(.16,.25,.24,.42)
+mats['shopglass'].surface_render_method='BLENDED'
 
 class MeshBuilder:
  def __init__(self): self.v=[]; self.f=[]
@@ -143,11 +148,19 @@ box('stone',48.5,-.25,3.0,1.0,5.5,6.0)
 box('stone',cx,-.25,.7,W,5.5,.2)  # continuous lobby floor, top at +1.07 m
 box('stone',cx,-.25,5.3,W,5.5,.35)  # lobby ceiling
 box('dark',cx,front+.55,11.225,41,1,11.75)
-# Split glazing and transom around a genuine opening, not a painted-on door.
-door_left,door_right=20.9,23.1
-box('glass',(1.5+door_left)/2,front-.02,3.2,door_left-1.5,.18,5.8)
-box('glass',(door_right+42.5)/2,front-.02,3.2,42.5-door_right,.18,5.8)
-box('glass',cx,front-.02,4.8,door_right-door_left,.18,2.6)
+# The reference shows multiple entrance groups between the columns. The exact
+# door count is obscured; these five openings follow the visible bay rhythm.
+door_centers=(7.6,14.8,22,29.2,36.4)
+door_ranges=[(x-1.1,x+1.1) for x in door_centers]
+# Dark recessed wall panels give the entrance bays depth when viewed from the
+# plaza. Their placement is interpretive; the supplied references are exterior.
+for x in door_centers:box('dark',x,2.48,2.35,2.45,.05,3.10)
+edge=1.5
+for left,right in door_ranges:
+ box('glass',(edge+left)/2,front-.02,3.2,left-edge,.18,5.8)
+ box('glass',(left+right)/2,front-.02,4.8,right-left,.18,2.6)
+ edge=right
+box('glass',(edge+42.5)/2,front-.02,3.2,42.5-edge,.18,5.8)
 for x in (-2.2,46.2):
  box('stone',x,front+.1,10.35,5.6,1.8,13.7)
  # The bottom of the monumental corner piers narrows toward the plinth.
@@ -255,15 +268,17 @@ lattice(2,42,5.35,8.15,front-.29)
 for z in (5.28,8.2,9.55,16.25): box('roofedge',cx,front-.36,z,40.5,.24,.16)
 # Ground floor window and door frames.
 for x in [2+i*1.45 for i in range(29)]:
- if not door_left < x < door_right: box('gold',x,front-.18,2.6,.045,.06,4.7)
+ if not any(left < x < right for left,right in door_ranges): box('gold',x,front-.18,2.6,.045,.06,4.7)
 for z in (.35,2.0):
- box('gold',(2+door_left)/2,front-.2,z,door_left-2,.07,.055)
- box('gold',(door_right+42)/2,front-.2,z,42-door_right,.07,.055)
+ edge=2
+ for left,right in door_ranges:
+  box('gold',(edge+left)/2,front-.2,z,left-edge,.07,.055)
+  edge=right
+ box('gold',(edge+42)/2,front-.2,z,42-edge,.07,.055)
 box('gold',cx,front-.2,4.6,40,.07,.055)
-for x in (7.5,15,30,37.5):
- box('gold',x,front-.28,1.4,.06,.08,2.5); box('gold',x+.55,front-.31,1.4,.035,.08,.6)
-for x in (door_left,door_right): box('gold',x,front-.2,2.15,.075,.09,2.7)
-box('gold',cx,front-.2,3.5,door_right-door_left,.09,.075)
+for left,right in door_ranges:
+ for x in (left,right):box('gold',x,front-.2,2.15,.075,.09,2.7)
+ box('gold',(left+right)/2,front-.2,3.5,right-left,.09,.075)
 # Side elevation: two colonnaded stretches separated by the long stone wall,
 # as shown in the supplied axonometric site diagram.
 side_bays=[(.4,12.0),(34.2,46.8)]
@@ -369,6 +384,7 @@ box('dark',ax,af-.08,7.2,19,.18,12.8)
 box('glass',ax,af-.2,3.1,19,.16,5.6)
 for x in (ax-10.8,ax+10.8):box('stone',x,af-.05,7,3.4,1.7,14)
 for x in (ax-7.3,ax-2.4,ax+2.4,ax+7.3):
+ box('stone',x,af-.85,.15,1.55,1.7,.30)
  stone_pillar(x,af-.85,.25,13.8,1.15,1.3,.14)
  frustum('stone',x,af-.85,13.72,14.3,1.15,1.3,1.7,1.8)
  box('stone',x,af-.85,14.4,1.7,1.8,.20)
@@ -389,11 +405,11 @@ lattice(ax-9.8,ax+9.8,9.6,12.8,af-.24,.4)
 # The display projects forward of the colonnade, in a deep metal housing.
 screen_y=af-1.7
 box('dark',ax,screen_y,7.3,8.4,.4,5.7)
-for x in (ax-4.35,ax+4.35):box('white',x,screen_y-.22,7.3,.25,.35,6.1)
-for z in (4.25,10.35):box('white',ax,screen_y-.22,z,8.95,.35,.24)
+for x in (ax-4.31,ax+4.31):box('white',x,screen_y-.22,7.3,.24,.35,5.94)
+for z in (4.40,10.20):box('white',ax,screen_y-.22,z,8.86,.35,.14)
 # Brackets connect the screen to the terrace and rear facade.
 for x in (ax-3.3,ax+3.3):
- box('stone2',x,screen_y+.36,3.75,.18,.8,1.0)
+ box('stone2',x,screen_y+.34,3.9,.18,.9,.9)
  box('stone2',x,af-.75,9.0,.16,1.6,.16)
 # Glazed terrace volume projecting toward the central court.
 box('roofedge',-25.6,1.4,4.85,8.0,8,.50)
@@ -406,17 +422,38 @@ for y in [-2.5+i*1.3 for i in range(7)]:
 for z in (5.0,6.7,8.45):
  box('white',-25.6,-2.57,z,8,.10,.08);box('white',-21.63,1.4,z,.10,8,.08)
 for y in (-1.8,4.6):box('stone',-22.2,y,2.4,.38,.38,4.8)
-# Front low terrace and the banner fascia.
-box('stone',ax,-8.1,2.0,25,7.7,4)
-box('glass',ax,-12.02,1.65,19,.13,2.5)
+# The low terrace is a supported shell with recessed shop bays, rather than a
+# solid stone block with a decorative glass sheet stuck to the front.
+box('stone',ax,-8.1,.04,25,7.7,.08)
+box('stone',ax,-8.1,3.825,25,7.7,.35)
+box('stone',ax,-4.4,1.85,25,.30,3.7)
+for x in (ax-12.2,ax+12.2):box('stone',x,-8.1,1.85,.6,7.7,3.7)
+for x in (ax-9,ax-3.1,ax+3.1,ax+9):box('stone',x,-11.64,1.83,.55,.55,3.66)
+for x in (ax-11,ax+11):box('stone',x,-11.64,1.83,3,.55,3.66)
+box('dark',ax,-4.57,1.85,23,.05,3.6)
+shop_centers=(ax-6.2,ax,ax+6.2)
+shop_ranges=[(x-.8,x+.8) for x in shop_centers]
+edge=ax-9.5
+for left,right in shop_ranges:
+ box('shopglass',(edge+left)/2,-11.30,1.65,left-edge,.13,2.5)
+ box('stone2',(edge+left)/2,-11.30,.24,left-edge,.13,.32)
+ box('shopglass',(left+right)/2,-11.30,2.82,right-left,.13,.16)
+ edge=right
+box('shopglass',(edge+ax+9.5)/2,-11.30,1.65,ax+9.5-edge,.13,2.5)
+box('stone2',(edge+ax+9.5)/2,-11.30,.24,ax+9.5-edge,.13,.32)
+box('stone2',ax,-11.30,3.0,19,.13,.2)
 box('white',ax,-12.12,3.6,23,.18,1.0)
-for x in [ax-9+i*1.8 for i in range(11)]:box('stone2',x,-12.13,1.6,.08,.08,2.4)
+for x in [ax-9+i*1.8 for i in range(11)]:
+ if not any(left<x<right for left,right in shop_ranges):box('stone2',x,-11.41,1.6,.08,.08,2.4)
+for left,right in shop_ranges:
+ for x in (left,right):box('gold',x,-11.41,1.45,.06,.08,2.7)
+ box('gold',(left+right)/2,-11.41,2.80,right-left,.08,.07)
 
 # Connecting building and broad ascending central stair.
 box('stone',-13.1,16,5.8,20,13,11.6)
 box('glass',-13.1,9.42,1.8,19,.16,3.4)
 for x in [-22+i*1.6 for i in range(13)]:
- for z in (5.1,8.0):box('glass',x,9.37,z,.32,.08,1.45)
+ for z in (5.1,8.0):box('glass',x,9.47,z,.32,.08,1.45)
 for z in [4+i*.65 for i in range(12)]:box('stone2',-13.1,9.33,z,20,.02,.015)
 for x in (-23.5,-2.7):
  for i in range(6):

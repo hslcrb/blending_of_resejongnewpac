@@ -258,13 +258,15 @@ terrace_green.finish('Central stair terrace planting beds',grass)
 for i,builder in enumerate(terrace_leaves):
     builder.finish('Central stair terrace shrubs %d' % i,leaf_mats[i+1])
 
-# Simple lobby fittings and the two doors standing open against their jambs.
+# Simple lobby fittings and the entrance leaves standing open at the jambs.
 lobby = DetailMesh()
 lobby_trim = DetailMesh()
-for x in (facade_x(20.9),facade_x(23.1)):
-    lobby_trim.box((x,-2.1,2.30),(.08,1.55,2.45))
-    lobby_trim.box((x,-2.1,1.10),(.08,1.55,.08))
-    lobby_trim.box((x,-2.1,3.50),(.08,1.55,.08))
+lobby_glass = DetailMesh()
+for left,right in door_ranges:
+    for x in (facade_x(left),facade_x(right)):
+        for y in (-2.84,-1.36):lobby_trim.box((x,y,2.30),(.08,.08,2.45))
+        for z in (1.10,3.50):lobby_trim.box((x,-2.1,z),(.08,1.55,.08))
+        lobby_glass.box((x,-2.1,2.30),(.024,1.40,2.32))
 for x in (17,48):
     lobby.box((x,7.7,1.62),(5.8,1.2,1.1))
     lobby_trim.box((x,7.7,2.19),(6.1,1.4,.12))
@@ -275,6 +277,33 @@ for x in (9,21,33,45,57):
     lobby_trim.box((x,4,6.13),(2.0,.28,.05))
 lobby.finish('Lobby benches and counters', interior)
 lobby_trim.finish('Lobby open doors and fittings', metal)
+lobby_glass.finish('Lobby open door glass', mats['glass'])
+
+# Three separate open shop entrances follow the recessed terrace openings.
+# Store interiors are interpretive because the supplied photos show exteriors.
+store_trim=DetailMesh()
+store_glass=DetailMesh()
+for left,right in shop_ranges:
+    for x in (facade_x(left),facade_x(right)):
+        for y in (-11.18,-10.08):store_trim.box((x,y,1.55),(.06,.07,2.8))
+        for z in (.16,2.94):store_trim.box((x,-10.63,z),(.06,1.16,.07))
+        store_glass.box((x,-10.63,1.55),(.02,1.04,2.66))
+store_trim.finish('Annex shop open door frames',metal)
+store_glass.finish('Annex shop open door glass',mats['shopglass'])
+# Quietly detailed, illustrative shop interiors behind the transparent glazing.
+# The references do not document actual tenants or interior arrangements.
+store_furniture=DetailMesh()
+store_edging=DetailMesh()
+store_highlights=DetailMesh()
+for center in shop_centers:
+    x=facade_x(center)+2.1
+    store_furniture.box((x,-5.45,.70),(1.65,.55,1.2))
+    store_edging.box((x,-5.45,1.32),(1.72,.62,.08))
+    for i in range(4):
+        store_highlights.box((x-.58+i*.37,-5.77,1.02),(.25,.055,.32))
+store_furniture.finish('Annex shop display cabinets',wood)
+store_edging.finish('Annex shop cabinet edging',metal)
+store_highlights.finish('Annex shop display cards',interior)
 
 ceiling_lights = DetailMesh()
 for x in (9,21,33,45,57):
@@ -298,6 +327,22 @@ if os.path.exists(font_path):
         text_obj.location=(33.1,11.36,z)
         text_obj.rotation_euler=(math.pi/2,0,0)
         text_obj.data.materials.append(metal)
+        bpy.ops.object.select_all(action='DESELECT')
+        text_obj.select_set(True)
+        bpy.context.view_layer.objects.active=text_obj
+        bpy.ops.object.convert(target='MESH')
+    for label,center in zip(('SEJONG','ART','LOUNGE'),shop_centers):
+        lettering=bpy.data.curves.new('Annex shop lettering','FONT')
+        lettering.body=label
+        lettering.font=korean_font
+        lettering.align_x='CENTER'
+        lettering.size=.39
+        lettering.extrude=.002
+        text_obj=bpy.data.objects.new('Annex shop sign '+label,lettering)
+        bpy.context.collection.objects.link(text_obj)
+        text_obj.location=(facade_x(center),-4.62,2.50)
+        text_obj.rotation_euler=(math.pi/2,0,0)
+        text_obj.data.materials.append(interior)
         bpy.ops.object.select_all(action='DESELECT')
         text_obj.select_set(True)
         bpy.context.view_layer.objects.active=text_obj
