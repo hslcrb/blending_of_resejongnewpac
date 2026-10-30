@@ -7,7 +7,7 @@ import './style.css';
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
 const WALK_START = new THREE.Vector3(33.1, 1.7, 27);
-const WALK_LIMITS = { minX: -75, maxX: 79, minZ: -118, maxZ: 32 };
+const WALK_LIMITS = { minX: -75, maxX: 80.6, minZ: -118, maxZ: 32 };
 const WALK_BLOCKS = [
     { minX: -7, maxX: 73, minZ: -111, maxZ: -11.4 },
     { minX: -7, maxX: -3, minZ: -11.4, maxZ: 3.5 },
@@ -18,6 +18,13 @@ const WALK_BLOCKS = [
     { minX: -34, maxX: -2, minZ: -24, maxZ: -9.6 },
     { minX: -34, maxX: -30.54, minZ: -9.6, maxZ: 15.19 },
     { minX: -2.32, maxX: -2, minZ: -9.6, maxZ: 15.19 },
+    // 잔디 화단과 테두리를 사람의 폭만큼 여유 두고 피합니다. / Keep the walker clear of planted beds and edging.
+    { minX: -73.05, maxX: -49.15, minZ: 16.65, maxZ: 29.35 },
+    { minX: 1.15, maxX: 26.85, minZ: 16.15, maxZ: 27.85 },
+    { minX: 43.15, maxX: 72.85, minZ: 16.15, maxZ: 27.85 },
+    { minX: 4.15, maxX: 11.85, minZ: 11.65, maxZ: 16.35 },
+    { minX: 56.15, maxX: 63.85, minZ: 11.65, maxZ: 16.35 },
+    { minX: 73.15, maxX: 78.85, minZ: -37.35, maxZ: -6.65 },
 ];
 
 function canWalk(x, z) {
@@ -26,6 +33,10 @@ function canWalk(x, z) {
 }
 
 function groundHeight(x, z) {
+    // 목재 무대 세 단은 각각 독립된 면 높이를 가집니다. / Walk on the three nested wooden platforms.
+    if (x >= -28.5 && x <= -9.5 && z >= 21.8 && z <= 26.2) return 0.66;
+    if (x >= -29.5 && x <= -8.5 && z >= 21.1 && z <= 26.9) return 0.44;
+    if (x >= -30.5 && x <= -7.5 && z >= 20.4 && z <= 27.6) return 0.22;
     if (x >= -30.54 && x <= -2.32 && z <= 15.19 && z >= 1.86) {
         const step = THREE.MathUtils.clamp(Math.floor((15.19 - z) / 0.37), 0, 35);
         return 0.1404375 + (3.3505658 - 0.1404375) * step / 35;
@@ -85,7 +96,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             onStatusChange('error');
             return undefined;
         }
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
+        let pixelRatio = Math.min(window.devicePixelRatio, 1);
+        renderer.setPixelRatio(pixelRatio);
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.05;
@@ -164,6 +176,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         let yaw = 0;
         let pitch = 0.1;
         let lastTime = 0;
+        let performanceStart = 0;
+        let performanceFrames = 0;
         let dragging = null;
         const held = new Set();
         const touchHeld = new Set();
@@ -380,7 +394,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             model.traverse((object) => {
                 if (!object.isMesh) return;
                 object.receiveShadow = true;
-                object.castShadow = /^(stone|roof|roofedge|copper|white)$/i.test(object.name);
+                const sourceName = object.userData.name || object.name.replaceAll('_', ' ');
+                object.castShadow = /^(stone|roof|roofedge|copper|white|Individual tree trunks and branching|Deciduous foliage \d+|Tree trunk \d+|Tree foliage \d+ shade \d+)$/i.test(sourceName);
             });
             renderer.shadowMap.needsUpdate = true;
             camera.near = radius / 1000;
@@ -398,6 +413,21 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         const animate = (time) => {
             const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.2) : 0;
             lastTime = time;
+            // 낮은 프레임이 지속되는 기기에서만 해상도를 줄입니다. / Reduce pixel load only when slow frames persist.
+            if (!performanceStart) performanceStart = time;
+            else if (pixelRatio > 0.75 && time - performanceStart > 4000) {
+                performanceFrames += 1;
+                const elapsed = time - performanceStart - 4000;
+                if (elapsed >= 3000) {
+                    if (performanceFrames * 1000 / elapsed < 25) {
+                        pixelRatio = 0.75;
+                        renderer.setPixelRatio(pixelRatio);
+                        renderer.setSize(container.clientWidth, container.clientHeight);
+                    }
+                    performanceStart = time;
+                    performanceFrames = 0;
+                }
+            }
             if (modeNow === 'walk') {
                 const turn = (held.has('arrowleft') ? 1 : 0) - (held.has('arrowright') ? 1 : 0);
                 yaw += turn * dt * 1.55;

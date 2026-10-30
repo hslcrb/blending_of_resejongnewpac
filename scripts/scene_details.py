@@ -84,7 +84,8 @@ interior = detail_material('Lobby warm limestone', (.72,.70,.64), roughness=.83)
 light = detail_material('Lobby light diffuser', (.95,.88,.70), roughness=.55)
 
 # Low raised, planted beds are deliberately placed rather than scattered.
-beds = [(-61,-23,23,12), (14,-22,25,11), (58,-22,29,11)]
+beds = [(-61,-23,23,12), (14,-22,25,11), (58,-22,29,11),
+        (8,-14,7,4), (60,-14,7,4), (76,22,5,30)]
 garden = DetailMesh()
 edge = DetailMesh()
 for x,y,w,d in beds:
@@ -99,17 +100,21 @@ edge.finish('Garden stone edging', curb)
 # An explicit site plan. Each tree's *shape* varies, but its position is fixed.
 tree_positions = [(-69,-23,8.7),(-61,-20,9.3),(-53,-25,8.1),
                   (4,-20,8.3),(12,-24,9.2),(21,-20,8.9),
-                  (46,-23,9.0),(54,-19,8.5),(62,-24,9.4),(70,-20,8.0)]
-branches = DetailMesh()
-leaves = [DetailMesh() for _ in leaf_mats]
-for tree_id,(x,y,height) in enumerate(tree_positions):
-    rng = random.Random(1309+tree_id*53)
-    root = Vector((x,y,.18))
+                  (46,-23,9.0),(54,-19,8.5),(62,-24,9.4),(70,-20,8.0),
+                  (8,-14,10.8),(60,-14,10.2),
+                  (76,9,10.4),(76,21,11.2),(76,33,10.0)]
+templates=[]
+for template_id in range(5):
+    branches = DetailMesh()
+    leaves = [DetailMesh() for _ in leaf_mats]
+    rng = random.Random(1309+template_id*53)
+    root = Vector((0,0,0))
+    height=10
     stem_top = root+Vector((.2,-.12,height*.82))
     branches.branch(root, root+Vector((.03,-.02,height*.30)), .20,.145, 9)
     branches.branch(root+Vector((.03,-.02,height*.30)), stem_top, .145,.055, 8)
     for arm in range(9):
-        angle=arm*2*math.pi/9+.15*(tree_id%3)
+        angle=arm*2*math.pi/9+.15*(template_id%3)
         radial=Vector((math.cos(angle),math.sin(angle),0))
         lateral=Vector((-math.sin(angle),math.cos(angle),0))
         start=root+Vector((.07,-.04,height*(.33+.045*(arm%5))))
@@ -123,22 +128,38 @@ for tree_id,(x,y,height) in enumerate(tree_positions):
                 p=start.lerp(end2, rng.uniform(.40,1.0))
                 p+=radial*rng.uniform(-.35,.55)+lateral*rng.uniform(-.52,.52)+Vector((0,0,rng.uniform(-.32,.60)))
                 direction=(radial*rng.uniform(-1,1)+lateral*rng.uniform(-1,1)+Vector((0,0,rng.uniform(-.5,1))))
-                leaves[(tree_id+arm+fork+leaf_id)%len(leaves)].leaf(p,direction,rng.uniform(.29,.48),rng.uniform(.14,.25))
-branches.finish('Individual tree trunks and branching', bark)
-for i,builder in enumerate(leaves):
-    ob=builder.finish('Deciduous foliage %d' % i, leaf_mats[i])
-    # Blender and glTF both render the small, double-sided foliage from either side.
-    ob.data.materials[0].use_backface_culling=False
+                leaves[(template_id+arm+fork+leaf_id)%len(leaves)].leaf(p,direction,rng.uniform(.29,.48),rng.uniform(.14,.25))
+    x,y,actual_height=tree_positions[template_id]
+    prototype=[branches.finish('Tree trunk %d' % template_id,bark)]
+    for shade,builder in enumerate(leaves):
+        ob=builder.finish('Tree foliage %d shade %d' % (template_id,shade),leaf_mats[shade])
+        ob.data.materials[0].use_backface_culling=False
+        prototype.append(ob)
+    for ob in prototype:
+        ob.location=(x,y,.18)
+        ob.scale=(1,1,actual_height/10)
+        ob.rotation_euler.z=template_id*.57
+    templates.append(prototype)
+for tree_id,(x,y,height) in enumerate(tree_positions[5:],start=5):
+    prototype=templates[tree_id%len(templates)]
+    for index,source in enumerate(prototype):
+        name='Tree trunk %d' % tree_id if index==0 else 'Tree foliage %d shade %d' % (tree_id,index-1)
+        ob=bpy.data.objects.new(name,source.data)
+        bpy.context.collection.objects.link(ob)
+        ob.location=(x,y,.18)
+        ob.scale=(1,1,height/10)
+        ob.rotation_euler.z=tree_id*.57
 
 # Groundcover grows within the explicitly placed beds; low, varied foliage
 # makes their edges read as planted gardens at walking height.
 groundcover=[DetailMesh(),DetailMesh()]
 for bed_id,(x,y,w,d) in enumerate(beds):
     rng=random.Random(602+bed_id)
-    for row in range(4):
+    rows=max(2,int(d/1.6))
+    for row in range(rows):
         for col in range(int(w/1.4)):
             px=x-w/2+.75+col*1.4+rng.uniform(-.18,.18)
-            py=y-d/2+1.0+row*(d-2)/3+rng.uniform(-.18,.18)
+            py=y-d/2+1.0+row*(d-2)/(rows-1)+rng.uniform(-.18,.18)
             for j in range(24):
                 angle=j*2*math.pi/24+rng.uniform(-.10,.10)
                 radius=rng.uniform(.04,.42)
@@ -162,6 +183,80 @@ for x,y in [(-73,-31),(-35,-31),(0,-31),(35,-31),(75,-31)]:
     fittings.box((x,y-.8,4.28),(.20,.25,.12))
 bench.finish('Plaza benches, wood slats', wood)
 fittings.finish('Bench legs and plaza lights', metal)
+
+# Three connected timber platforms in front of the central stair.  Their
+# stepped footprint follows the supplied street-level views; measurements
+# remain estimates.  Each tier is solid all the way down to its predecessor.
+deck_wood=detail_material('Plaza deck oiled hardwood',(.36,.23,.15),roughness=.76)
+deck_end=detail_material('Plaza deck end grain',(.23,.13,.085),roughness=.82)
+deck=DetailMesh()
+deck_edges=DetailMesh()
+for layer,(width,depth) in enumerate(((23,7.2),(21,5.8),(19,4.4))):
+    x,y=-19,-24
+    bottom=layer*.22
+    top=bottom+.22
+    deck.box((x,y,(bottom+top)/2),(width,depth,top-bottom))
+    # The ends and front edges are made of narrow horizontal courses.
+    for z in (bottom+.045,bottom+.10,bottom+.155):
+        for yy in (y-depth/2-.006,y+depth/2+.006):
+            deck_edges.box((x,yy,z),(width,.012,.012))
+        for xx in (x-width/2-.006,x+width/2+.006):
+            deck_edges.box((xx,y,z),(.012,depth,.012))
+deck_obj=deck.finish('Central plaza stepped timber platform',deck_wood)
+deck_edges.finish('Timber platform board edges',deck_end)
+# A packed, original wood texture replaces subpixel seam geometry. This keeps
+# individual boards readable without distracting moiré as the camera moves.
+wood_image=bpy.data.images.new('Original timber plank grain',width=256,height=256,alpha=True)
+wood_rng=random.Random(3811)
+wood_pixels=[]
+for py in range(256):
+    plank=py//32
+    local=py%32
+    for px in range(256):
+        grain=.012*math.sin(px*.16+math.sin(py*.09)*2)+wood_rng.gauss(0,.004)
+        variation=.012*math.sin(plank*2.1)
+        seam=-.065 if local in (0,1) else 0
+        value=grain+variation+seam
+        wood_pixels.extend((max(0,min(1,.36+value)),max(0,min(1,.23+value*.74)),max(0,min(1,.15+value*.5)),1))
+wood_image.pixels[:]=wood_pixels
+wood_image.pack()
+deck_uv=deck_obj.data.uv_layers.new(name='Timber boards')
+for face in deck_obj.data.polygons:
+    for index in face.loop_indices:
+        point=deck_obj.data.vertices[deck_obj.data.loops[index].vertex_index].co
+        deck_uv.data[index].uv=(point.x/4,point.y/1.12)
+wood_shader=next(n for n in deck_wood.node_tree.nodes if n.type=='BSDF_PRINCIPLED')
+wood_texture=deck_wood.node_tree.nodes.new('ShaderNodeTexImage')
+wood_texture.image=wood_image
+deck_wood.node_tree.links.new(wood_texture.outputs['Color'],wood_shader.inputs['Base Color'])
+
+# Planted ledges are attached to the right-hand stair retaining wall, climbing
+# with the six stone terraces instead of floating beside the handrail.
+terrace_stone=DetailMesh()
+terrace_green=DetailMesh()
+terrace_leaves=[DetailMesh(),DetailMesh()]
+wall_x=facade_x(-2.7)
+for i in range(6):
+    y=-13.65+i*2.65
+    support=annex_z(.65+i*.53+.07)
+    x=wall_x+.76
+    # Solid stone supports extend to grade; the projecting planter is not
+    # left cantilevered from the narrow stair wall.
+    terrace_stone.box((x,y,(support+.36)/2),(1.56,2.42,support+.36))
+    terrace_green.box((x,y,support+.37),(1.40,2.24,.04))
+    rng=random.Random(1901+i)
+    for plant in range(6):
+        px=x+rng.uniform(-.5,.5)
+        py=y-1+plant*.4+rng.uniform(-.1,.1)
+        for j in range(14):
+            angle=j*2*math.pi/14
+            base=(px+rng.uniform(-.18,.18),py+rng.uniform(-.18,.18),support+.40+rng.uniform(.03,.14))
+            direction=(math.cos(angle)*.7,math.sin(angle)*.7,rng.uniform(.4,1))
+            terrace_leaves[(i+j)%2].leaf(base,direction,rng.uniform(.20,.36),rng.uniform(.09,.16))
+terrace_stone.finish('Central stair planted stone terraces',curb)
+terrace_green.finish('Central stair terrace planting beds',grass)
+for i,builder in enumerate(terrace_leaves):
+    builder.finish('Central stair terrace shrubs %d' % i,leaf_mats[i+1])
 
 # Simple lobby fittings and the two doors standing open against their jambs.
 lobby = DetailMesh()

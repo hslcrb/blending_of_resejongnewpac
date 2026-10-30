@@ -120,6 +120,12 @@ def annex_z(z):
  if z<=0:return z
  if z<=5.35:return theatre_z(z)
  return 6.47+(z-5.35)*1.31
+def inverse_annex_z(z):
+ if z<=0:return z
+ if z<=1.07:return z*.8/1.07
+ if z<=4.6:return .8+(z-1.07)*3.8/3.53
+ if z<=6.47:return 4.6+(z-4.6)*.75/1.87
+ return 5.35+(z-6.47)/1.31
 def apply_section(start,ymap,zmap):
  for key,builder in b.items():
   for i in range(start[key],len(builder.v)):
@@ -265,20 +271,20 @@ for a,q in side_bays:
  box('glass',49.1,(a+q)/2,7.5,.14,q-a,13)
  box('dark',49.12,(a+q)/2,12.7,.12,q-a,6.1)
 for y in (1,6,11):
- stone_pillar(50,y,.05,16.55,1.5,1.55,.18)
+ stone_pillar(50,y,0,16.55,1.5,1.55,.18)
  frustum('stone',50,y,16.48,17.25,1.5,1.55,2.2,2.4)
  box('stone',50,y,17.37,2.2,2.4,.24)
 for y in (35,40.3,45.6):
- stone_pillar(49.4,y,.05,15.2,1.5,1.55,.18)
+ stone_pillar(49.4,y,0,15.2,1.5,1.55,.18)
  frustum('stone',49.4,y,15.12,15.85,1.5,1.55,2.2,2.4)
- box('stone',49.4,y,15.96,2.2,2.4,.22)
+ box('stone',49.4,y,15.96,2.2,2.4,.24)
 # The courtyard-facing west return has its own glazed colonnade; the
 # connecting building hides part of its lower level in the photographs.
 box('glass',-5.1,6.2,7.5,.14,11.6,13)
 box('dark',-5.12,6.2,12.7,.12,11.6,6.1)
 box('dark',-5.12,6.2,6.7,.12,11.6,2.8)
 for y in (1,6,11):
- stone_pillar(-6,y,.05,16.55,1.5,1.55,.18)
+ stone_pillar(-6,y,0,16.55,1.5,1.55,.18)
  frustum('stone',-6,y,16.48,17.25,1.5,1.55,2.2,2.4)
  box('stone',-6,y,17.37,2.2,2.4,.24)
 for z in (4.8,8.3,15.8):box('roofedge',-5.19,6.2,z,.22,11.6,.2)
@@ -418,8 +424,15 @@ for x in (-23.5,-2.7):
   box('stone',x,y,h/2,.65,2.7,h)
   box('stone2',x,y,h+.035,.76,2.7,.07)
  for i in range(10):
-  y=-14+i*1.45; z=.22+(y+15)*.243
-  box('roofedge',x,y,z+.47,.055,.055,.9)
+  y=-14+i*1.45
+  tier=max(0,min(5,math.floor((y+15)/2.65)))
+  support_top=.65+tier*.53+.07
+  # The handrail is a straight solid in final space. Interpolate its final
+  # height first so each post actually reaches it after nonlinear mapping.
+  t=(y+14.4)/13.9
+  rail_bottom=annex_z(1.24-.03)*(1-t)+annex_z(4.62-.03)*t
+  top=inverse_annex_z(rail_bottom)+.01
+  box('roofedge',x,y,(support_top+top)/2,.055,.055,top-support_top)
  # Railing follows the slope of the stairs.
  x1=x-.03;x2=x+.03;y1=-14.4;y2=-.5;z1=1.24;z2=4.62
  b['roofedge'].poly([(x1,y1,z1-.03),(x1,y2,z2-.03),(x2,y2,z2-.03),(x2,y1,z1-.03),(x1,y1,z1+.03),(x1,y2,z2+.03),(x2,y2,z2+.03),(x2,y1,z1+.03)])
