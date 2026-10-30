@@ -23,3 +23,14 @@ test('the main entrance and circulation aisle stay accessible', () => {
         assert.equal(canWalk(x, z), true, `walkway at ${x}, ${z}`);
     }
 });
+
+test('the lobby back wall keeps the eye clear of the camera near plane', () => {
+    // The auditorium front is at z=-11.4; leave room for the camera.
+    assert.equal(canWalk(33.1, -11.2), false);
+    assert.equal(canWalk(33.1, -10.9), true);
+    let z = -10;
+    for (let i = 0; i < 20; i += 1) {
+        if (canWalk(33.1, z - 0.2)) z -= 0.2;
+    }
+    assert.ok(z > -11.1, `stopped at z=${z}`);
+});

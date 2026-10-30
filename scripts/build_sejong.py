@@ -293,7 +293,10 @@ lattice(2,42,5.35,8.15,front-.29)
 for z in (5.28,8.2,9.55,16.25): box('roofedge',cx,front-.36,z,40.5,.24,.16)
 # Ground floor window and door frames.
 for x in [2+i*1.45 for i in range(29)]:
- if not any(left < x < right for left,right in door_ranges): box('gold',x,front-.18,2.6,.045,.06,4.7)
+ if not any(left < x < right for left,right in door_ranges):
+  # Meet the stone sill and the underside of the upper beam; the added
+  # depth also connects the vertical member to that beam.
+  box('gold',x,front-.18,(.35+5.20)/2,.045,.16,5.20-.35)
 for z in (.35,2.0):
  edge=2
  for left,right in door_ranges:

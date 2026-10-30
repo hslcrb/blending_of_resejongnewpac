@@ -239,7 +239,7 @@ for x,y in [(-55,-30),(-45,-30),(7,-29),(19,-29),(49,-29),(62,-29)]:
     for j in range(5):
         bench.box((x,y+(j-2)*.10,.56),(2.9,.075,.09))
     for xx in (x-1.05,x+1.05):
-        fittings.box((xx,y,.29),(.11,.45,.54))
+        fittings.box((xx,y,.28),(.11,.45,.56))
 for x,y in [(-73,-31),(-35,-31),(0,-31),(35,-31),(75,-31)]:
     fittings.box((x,y,2.2),(.10,.10,4.4))
     fittings.box((x,y-.42,4.35),(.12,.9,.12))
@@ -315,9 +315,12 @@ for i in range(6):
         py=y-1+plant*.4+rng.uniform(-.1,.1)
         for j in range(14):
             angle=j*2*math.pi/14
-            base=(px+rng.uniform(-.18,.18),py+rng.uniform(-.18,.18),support+.40+rng.uniform(.03,.14))
-            direction=(math.cos(angle)*.7,math.sin(angle)*.7,rng.uniform(.4,1))
-            terrace_leaves[(i+j)%2].leaf(base,direction,rng.uniform(.20,.36),rng.uniform(.09,.16))
+            root_x=max(x-.67,min(x+.67,px+rng.uniform(-.18,.18)))
+            root_y=max(y-1.09,min(y+1.09,py+rng.uniform(-.18,.18)))
+            root=Vector((root_x,root_y,support+.39))
+            direction=Vector((math.cos(angle)*.7,math.sin(angle)*.7,rng.uniform(.4,1))).normalized()
+            length=rng.uniform(.20,.36)
+            terrace_leaves[(i+j)%2].leaf(root+direction*length*.52,direction,length,rng.uniform(.09,.16))
 terrace_stone.finish('Central stair planted stone terraces',curb)
 terrace_green.finish('Central stair terrace planting beds',grass)
 for i,builder in enumerate(terrace_leaves):
@@ -331,6 +334,8 @@ for left,right in door_ranges:
     for x in (facade_x(left),facade_x(right)):
         for y in (-2.84,-1.36):lobby_trim.box((x,y,2.30),(.08,.08,2.45))
         for z in (1.10,3.50):lobby_trim.box((x,-2.1,z),(.08,1.55,.08))
+        # Connect the open leaf to the bronze jamb without closing the passage.
+        for z in (1.4,3.2):lobby_trim.box((x,-3.02,z),(.08,.44,.14))
         lobby_glass.box((x,-2.1,2.30),(.024,1.40,2.32))
 for x in (17,48):
     lobby.box((x,7.7,1.62),(5.8,1.2,1.1))
