@@ -1,5 +1,5 @@
 // GLB의 광장과 출입구에 맞춘 보행 범위입니다. / Walkable plaza and entrances from the GLB.
-const WALK_LIMITS = { minX: -75, maxX: 80.6, minZ: -118, maxZ: 32 };
+const WALK_LIMITS = { minX: -75, maxX: 80.6, minZ: -118, maxZ: 78 };
 const WALK_BLOCKS = [
     // 로비 뒤 벽에서 카메라가 잘리지 않도록 여유를 둡니다. / Leave room before the auditorium wall for the camera near plane.
     { minX: -7, maxX: 73, minZ: -111, maxZ: -11.1 },

@@ -24,6 +24,12 @@ test('the main entrance and circulation aisle stay accessible', () => {
     }
 });
 
+test('the extended forecourt is walkable without crossing its front edge', () => {
+    assert.equal(canWalk(33.1, 55), true);
+    assert.equal(canWalk(33.1, 77.9), true);
+    assert.equal(canWalk(33.1, 78.1), false);
+});
+
 test('the lobby back wall keeps the eye clear of the camera near plane', () => {
     // The auditorium front is at z=-11.4; leave room for the camera.
     assert.equal(canWalk(33.1, -11.2), false);

@@ -6,6 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { instanceTreeMeshes } from './treeInstances.js';
 import { canWalk } from './walkCollision.js';
 import { walkKeyForEvent } from './walkKeys.js';
+import { focusOrbitAt } from './orbitFocus.js';
 import './style.css';
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
@@ -328,10 +329,20 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         const pointerEnd = (event) => {
             if (dragging?.id === event.pointerId) dragging = null;
         };
+        const focusOnDoubleClick = (event) => {
+            if (modeNow !== 'orbit' || !model) return;
+            if (focusOrbitAt({
+                camera, controls, model, clientX: event.clientX, clientY: event.clientY,
+                rect: renderer.domElement.getBoundingClientRect(),
+            })) {
+                userAdjusted = true;
+            }
+        };
         renderer.domElement.addEventListener('pointerdown', pointerDown);
         renderer.domElement.addEventListener('pointermove', pointerMove);
         renderer.domElement.addEventListener('pointerup', pointerEnd);
         renderer.domElement.addEventListener('pointercancel', pointerEnd);
+        renderer.domElement.addEventListener('dblclick', focusOnDoubleClick);
         window.addEventListener('blur', clearInput);
         document.addEventListener('visibilitychange', clearInput);
 
@@ -457,6 +468,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             renderer.domElement.removeEventListener('pointermove', pointerMove);
             renderer.domElement.removeEventListener('pointerup', pointerEnd);
             renderer.domElement.removeEventListener('pointercancel', pointerEnd);
+            renderer.domElement.removeEventListener('dblclick', focusOnDoubleClick);
             renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
             window.removeEventListener('blur', clearInput);
             document.removeEventListener('visibilitychange', clearInput);
@@ -612,7 +624,7 @@ function App() {
                             <button type="button" disabled={!ready} onClick={() => mode === 'walk' ? viewerRef.current?.resetWalk() : setView({ name: 'perspective' })}>{mode === 'walk' ? '시작 위치' : '처음 시점'}</button>
                         </div>
                         <p className="viewer-hint">
-                            <span className="hint-pointer">{mode === 'walk' ? '화면 드래그로 둘러보기 · WASD / 방향키로 이동 · Shift 빠르게' : '드래그로 회전 · 오른쪽 드래그로 이동 · 스크롤로 확대'}</span>
+                            <span className="hint-pointer">{mode === 'walk' ? '화면 드래그로 둘러보기 · WASD / 방향키로 이동 · Shift 빠르게' : '드래그 회전 · 더블클릭 중심 선택 · 오른쪽 드래그 이동 · 스크롤 확대'}</span>
                             <span className="hint-touch">{mode === 'walk' ? '화면을 밀어 둘러보기 · 방향 버튼으로 이동' : '한 손가락으로 회전 · 두 손가락으로 이동과 확대'}</span>
                         </p>
                     </div>

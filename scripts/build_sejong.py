@@ -124,9 +124,11 @@ def hip_seams(cx,cy,z0,z1,width,depth,ridge,count,axis='x'):
   fine_beam('copperjoint',(cx-ridge/2,cy,z1+.025),(cx+ridge/2,cy,z1+.025),.035)
 
 # Stone forecourt and paved joints, extended behind the theatre.
-box('ground',0,43,-.24,112,154,.48)
-for x in range(-56,57,2): box('line',x,-15,.006,.018,38,.012)
-for y in range(-34,5,2): box('line',0,y,.009,112,.018,.012)
+# The deep plaza visible in the reference photos reaches well beyond the
+# entrance gardens. Its front extent remains a visual estimate, not a survey.
+box('ground',0,20,-.24,112,200,.48)
+for x in range(-56,57,2): box('line',x,-38,.006,.018,84,.012)
+for y in range(-80,5,2): box('line',0,y,.009,112,.018,.012)
 
 # The source section gives longitudinal reference lines at 14.4, 64.4,
 # 87.7 and 112.5 metres from the front, and roof levels above ground.
@@ -521,13 +523,30 @@ box('stone',ax,15.5,20.7,17,9,3.2)
 lattice(ax-9.8,ax+9.8,9.6,12.8,af-.24,.4)
 # The display projects forward of the colonnade, in a deep metal housing.
 screen_y=af-1.7
-box('dark',ax,screen_y,7.3,8.4,.4,5.7)
-for x in (ax-4.31,ax+4.31):box('white',x,screen_y-.22,7.3,.24,.35,5.94)
-for z in (4.40,10.20):box('white',ax,screen_y-.22,z,8.86,.35,.14)
-# Brackets connect the screen to the terrace and rear facade.
+screen_lift=1.5
+box('dark',ax,screen_y,7.3+screen_lift,8.4,.4,5.7)
+for x in (ax-4.31,ax+4.31):box('white',x,screen_y-.22,7.3+screen_lift,.24,.35,5.94)
+for z in (4.40+screen_lift,10.20+screen_lift):box('white',ax,screen_y-.22,z,8.86,.35,.14)
+# Brackets run back to the facade at two levels; avoid exposed freestanding
+# posts under the screen. The exact support system is hidden in the photos.
 for x in (ax-3.3,ax+3.3):
- box('stone2',x,screen_y+.34,3.9,.18,.9,.9)
- box('stone2',x,af-.75,9.0,.16,1.6,.16)
+ box('stone2',x,af-.75,4.38+screen_lift,.16,1.6,.16)
+ box('stone2',x,af-.75,9.0+screen_lift,.16,1.6,.16)
+# The dark sloping canopy below the screen is visible in the terrace view.
+# Four corners and a shallow solid thickness make it a real surface, not a
+# projection from the photograph. Dimensions and support details are inferred.
+canopy_rear_y,canopy_front_y=screen_y-.05,screen_y-2.0
+canopy_rear_z,canopy_front_z=4.34+screen_lift,3.86+screen_lift
+b['dark'].poly([
+ (ax-5.1,canopy_front_y,canopy_front_z-.04),
+ (ax+5.1,canopy_front_y,canopy_front_z-.04),
+ (ax+4.2,canopy_rear_y,canopy_rear_z-.04),
+ (ax-4.2,canopy_rear_y,canopy_rear_z-.04),
+ (ax-5.1,canopy_front_y,canopy_front_z),
+ (ax+5.1,canopy_front_y,canopy_front_z),
+ (ax+4.2,canopy_rear_y,canopy_rear_z),
+ (ax-4.2,canopy_rear_y,canopy_rear_z)])
+box('dark',ax,canopy_front_y,canopy_front_z-.09,10.2,.07,.18)
 # Glazed terrace volume projecting toward the central court.
 box('roofedge',-25.6,1.4,4.85,8.0,8,.50)
 # The close views show a row of small dark rectangular recesses below the

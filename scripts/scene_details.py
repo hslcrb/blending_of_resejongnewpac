@@ -86,6 +86,8 @@ light = detail_material('Lobby light diffuser', (.95,.88,.70), roughness=.55)
 # Low raised, planted beds are deliberately placed rather than scattered.
 beds = [(-61,-23,23,12), (14,-22,25,11), (58,-22,29,11),
         (8,-14,7,4), (60,-14,7,4), (76,45,5,76)]
+# Keep a small clear patch at the base of the photo-inspired sign below.
+marker_x,marker_y=5.05,-12.50
 garden = DetailMesh()
 front_garden = DetailMesh()
 edge = DetailMesh()
@@ -225,6 +227,8 @@ for bed_id,(x,y,w,d) in enumerate(beds):
             px=x-w/2+.7+col*(w-1.4)/(columns-1)+rng.uniform(-.44,.44)
             py=y-d/2+.7+row*(d-1.4)/(rows-1)+rng.uniform(-.44,.44)
             if any((px-tx)**2+(py-ty)**2<.85**2 for tx,ty,_ in tree_positions):
+                continue
+            if bed_id==3 and (px-marker_x)**2+(py-marker_y)**2<1.1**2:
                 continue
             count=rng.randint(11,17)
             phase=rng.uniform(0,2*math.pi)
@@ -386,6 +390,41 @@ terrace_stone.finish('Central stair planted stone terraces',curb)
 terrace_green.finish('Central stair terrace planting beds',grass)
 for i,builder in enumerate(terrace_leaves):
     builder.finish('Central stair terrace shrubs %d' % i,leaf_mats[i+1])
+
+# A slender wayfinding marker stands near the central stair and main hall.
+# Its location and graphics are interpretive: the photographs show a vertical
+# marker but do not make its lettering or precise setting legible.  The marker
+# is placed within an existing blocked planting bed and has its own foot plate.
+wayfinding_shell=detail_material('Wayfinding dark green enamel',(.12,.24,.23),metallic=.25,roughness=.42)
+wayfinding_ink=detail_material('Wayfinding pale lettering',(.86,.90,.83),roughness=.72)
+wayfinding=DetailMesh()
+wayfinding.box((marker_x,marker_y,.205),(.64,.32,.05))
+wayfinding.box((marker_x,marker_y,1.31),(.52,.15,2.16))
+wayfinding.finish('Main hall wayfinding marker',wayfinding_shell)
+marker_graphic=DetailMesh()
+# Three short rules are individual original geometry, not photo-derived pixels.
+for z,width in ((1.55,.25),(1.43,.18),(1.31,.22)):
+    marker_graphic.box((marker_x,marker_y-.077,z),(width,.006,.012))
+marker_graphic.finish('Wayfinding marker graphic',wayfinding_ink)
+marker_font_path=r'C:\Windows\Fonts\malgun.ttf'
+if os.path.exists(marker_font_path):
+    marker_font=bpy.data.fonts.load(marker_font_path,check_existing=True)
+    for caption,z,size in [('세종',2.12,.13),('문화회관',1.94,.095)]:
+        lettering=bpy.data.curves.new('Wayfinding marker text','FONT')
+        lettering.body=caption
+        lettering.font=marker_font
+        lettering.align_x='CENTER'
+        lettering.size=size
+        lettering.extrude=.001
+        text_object=bpy.data.objects.new('Wayfinding marker '+caption,lettering)
+        bpy.context.collection.objects.link(text_object)
+        text_object.location=(marker_x,marker_y-.079,z)
+        text_object.rotation_euler=(math.pi/2,0,0)
+        text_object.data.materials.append(wayfinding_ink)
+        bpy.ops.object.select_all(action='DESELECT')
+        text_object.select_set(True)
+        bpy.context.view_layer.objects.active=text_object
+        bpy.ops.object.convert(target='MESH')
 
 # Simple lobby fittings and the entrance leaves standing open at the jambs.
 lobby = DetailMesh()
@@ -555,7 +594,7 @@ def graphic_plane(name, filepath, left, right, y, bottom, top, emission=0, u_ran
     return obj
 
 graphic_plane('Annex screen • original art','assets/graphics/annex-screen.png',
-              facade_x(-43.12),facade_x(-34.88),-4.91,annex_z(4.48),annex_z(10.12),.18)
+              facade_x(-43.12),facade_x(-34.88),-4.91,annex_z(4.48+screen_lift),annex_z(10.12+screen_lift),.18)
 banner_left,banner_right=facade_x(-50.4),facade_x(-27.6)
 banner_mid=(banner_left+banner_right)/2
 for i,(left,right) in enumerate(((banner_left,banner_mid),(banner_mid,banner_right))):
