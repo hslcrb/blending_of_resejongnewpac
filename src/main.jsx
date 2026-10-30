@@ -49,6 +49,15 @@ function BuildingViewer({ view, onStatusChange }) {
         let disposed = false;
         let frameId;
         let model;
+        let activePreset = 'perspective';
+        let userAdjusted = false;
+        let gestureActive = false;
+        // 직접 조작한 시점은 보존하고 기본 시점만 화면 크기에 다시 맞춥니다. / Preserve a user-adjusted view; refit an untouched preset on resize.
+        controls.addEventListener('start', () => { gestureActive = true; });
+        controls.addEventListener('end', () => { gestureActive = false; });
+        controls.addEventListener('change', () => {
+            if (gestureActive) userAdjusted = true;
+        });
         const resize = () => {
             const width = container.clientWidth;
             const height = container.clientHeight;
@@ -56,6 +65,9 @@ function BuildingViewer({ view, onStatusChange }) {
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
             renderer.setSize(width, height);
+            if (sceneRef.current?.size && !userAdjusted && !gestureActive) {
+                sceneRef.current.setView(activePreset);
+            }
         };
         const observer = new ResizeObserver(resize);
         observer.observe(container);
@@ -63,6 +75,8 @@ function BuildingViewer({ view, onStatusChange }) {
 
         const setView = (name) => {
             if (!sceneRef.current?.size) return;
+            activePreset = name;
+            userAdjusted = false;
             const { bounds, center } = sceneRef.current;
             const direction = (name === 'front'
                 ? new THREE.Vector3(0, 0.16, 1)
@@ -96,6 +110,7 @@ function BuildingViewer({ view, onStatusChange }) {
             if (!sceneRef.current?.size) return;
             // Shift와 방향키는 화면 기준으로 시점과 회전 중심을 함께 이동합니다. / Shift and arrow keys pan in screen space.
             if (event.shiftKey && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
+                userAdjusted = true;
                 const horizontal = event.key === 'ArrowLeft' ? -1 : event.key === 'ArrowRight' ? 1 : 0;
                 const vertical = event.key === 'ArrowDown' ? -1 : event.key === 'ArrowUp' ? 1 : 0;
                 const distance = controls.getDistance() * 0.045;
@@ -116,6 +131,7 @@ function BuildingViewer({ view, onStatusChange }) {
             else if (event.key === '+' || event.key === '=') orbit.radius *= 0.9;
             else if (event.key === '-') orbit.radius *= 1.1;
             else return;
+            userAdjusted = true;
             event.preventDefault();
             orbit.phi = THREE.MathUtils.clamp(orbit.phi, 0.05, controls.maxPolarAngle);
             orbit.radius = THREE.MathUtils.clamp(orbit.radius, controls.minDistance, controls.maxDistance);

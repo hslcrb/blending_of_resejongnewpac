@@ -48,10 +48,16 @@ b={k:MeshBuilder() for k in mats}
 def box(m,*args):b[m].box(*args)
 def frustum(m,cx,cy,z0,z1,w0,d0,w1,d1):
  b[m].poly([(cx-w0/2,cy-d0/2,z0),(cx+w0/2,cy-d0/2,z0),(cx+w0/2,cy+d0/2,z0),(cx-w0/2,cy+d0/2,z0),(cx-w1/2,cy-d1/2,z1),(cx+w1/2,cy-d1/2,z1),(cx+w1/2,cy+d1/2,z1),(cx-w1/2,cy+d1/2,z1)])
-def hip_roof(m,cx,cy,z0,z1,width,depth,ridge):
+def hip_roof(m,cx,cy,z0,z1,width,depth,ridge,axis='x'):
  builder=b[m]; start=len(builder.v)
- builder.v.extend([(cx-width/2,cy-depth/2,z0),(cx+width/2,cy-depth/2,z0),(cx+width/2,cy+depth/2,z0),(cx-width/2,cy+depth/2,z0),(cx-ridge/2,cy,z1),(cx+ridge/2,cy,z1)])
- builder.f.extend([tuple(start+i for i in face) for face in [(0,1,5,4),(1,2,5),(2,3,4,5),(3,0,4),(3,2,1,0)]])
+ base=[(cx-width/2,cy-depth/2,z0),(cx+width/2,cy-depth/2,z0),(cx+width/2,cy+depth/2,z0),(cx-width/2,cy+depth/2,z0)]
+ if axis=='y':
+  builder.v.extend(base+[(cx,cy-ridge/2,z1),(cx,cy+ridge/2,z1)])
+  faces=[(0,1,4),(1,2,5,4),(2,3,5),(3,0,4,5),(3,2,1,0)]
+ else:
+  builder.v.extend(base+[(cx-ridge/2,cy,z1),(cx+ridge/2,cy,z1)])
+  faces=[(0,1,5,4),(1,2,5),(2,3,4,5),(3,0,4),(3,2,1,0)]
+ builder.f.extend([tuple(start+i for i in face) for face in faces])
 def stone_pillar(cx,cy,z0,z1,w,d,bevel):
  # Eight-sided chamfered stone shaft; joints below remain separate fine lines.
  x=w/2; y=d/2; c=bevel
@@ -68,13 +74,20 @@ def fine_beam(m,start,end,width):
  if cross.length<.001:cross=axis.cross(Vector((0,1,0)))
  u=cross.normalized()*width/2;v=axis.cross(u).normalized()*width/2
  b[m].poly([tuple(a-u-v),tuple(q-u-v),tuple(q+u-v),tuple(a+u-v),tuple(a-u+v),tuple(q-u+v),tuple(q+u+v),tuple(a+u+v)])
-def hip_seams(cx,cy,z0,z1,width,depth,ridge,count):
+def hip_seams(cx,cy,z0,z1,width,depth,ridge,count,axis='x'):
  # The seam positions interpolate between the eaves and the ridge.
- for sign in (-1,1):
-  for i in range(count+1):
-   f=i/count*2-1
-   fine_beam('copperjoint',(cx+f*width/2,cy+sign*depth/2,z0+.025),(cx+f*ridge/2,cy,z1+.025),.025)
- fine_beam('copperjoint',(cx-ridge/2,cy,z1+.025),(cx+ridge/2,cy,z1+.025),.035)
+ if axis=='y':
+  for sign in (-1,1):
+   for i in range(count+1):
+    f=i/count*2-1
+    fine_beam('copperjoint',(cx+sign*width/2,cy+f*depth/2,z0+.025),(cx,cy+f*ridge/2,z1+.025),.025)
+  fine_beam('copperjoint',(cx,cy-ridge/2,z1+.025),(cx,cy+ridge/2,z1+.025),.035)
+ else:
+  for sign in (-1,1):
+   for i in range(count+1):
+    f=i/count*2-1
+    fine_beam('copperjoint',(cx+f*width/2,cy+sign*depth/2,z0+.025),(cx+f*ridge/2,cy,z1+.025),.025)
+  fine_beam('copperjoint',(cx-ridge/2,cy,z1+.025),(cx+ridge/2,cy,z1+.025),.035)
 
 # Stone forecourt and paved joints, extended behind the theatre.
 box('ground',0,43,-.24,112,154,.48)
@@ -127,8 +140,6 @@ box('roofedge',cx,9,21.7,60.2,32.2,.26)
 # Underside ribs run deep under all four eaves.
 for x in [cx-28.2+i*.60 for i in range(95)]:
  box('stone2',x,-5.7,17.98,.20,3.1,.50); box('stone2',x,23.7,17.98,.20,3.1,.50)
-for y in [-3+i*.60 for i in range(45)]:
- box('stone2',-6.6,y,17.98,3.0,.20,.50); box('stone2',50.6,y,17.98,3.0,.20,.50)
 # Finer ribs under the inner stone beam are visible from the entrance.
 for x in [cx-26.5+i*.36 for i in range(148)]:
  box('stone2',x,-4.35,17.23,.055,1.0,.08)
@@ -162,8 +173,6 @@ def cornice_joints(cx,cy,z0,z1,width,depth,inset,course=.42,block=2.4):
     b['roofjoint'].poly([(xl-.008,y-q,zl),(xl-.008,y+q,zl),(xh-.008,y+q,zh),(xh-.008,y-q,zh),(xl+.008,y-q,zl),(xl+.008,y+q,zl),(xh+.008,y+q,zh),(xh+.008,y-q,zh)])
 cornice_joints(cx,9,18.55,21.65,60,32,1.5)
 # High theatre fly tower behind the hipped roof.
-box('white',cx,13.75,22.2,46,22.5,2.2)
-hip_roof('copper',cx,13.75,23.3,25.7,46,22.5,20)
 box('stone',cx,29.5,20.45,30,9,6.1)
 box('stone',cx,29.5,25.5,30,9,4.0)
 for z in [23.8+i*.65 for i in range(6)]: box('stone2',cx,24.98,z,30,.02,.015)
@@ -238,6 +247,17 @@ for y in (35,40.3,45.6):
  stone_pillar(49.4,y,.05,15.2,1.5,1.55,.18)
  frustum('stone',49.4,y,15.12,15.85,1.5,1.55,2.2,2.4)
  box('stone',49.4,y,15.96,2.2,2.4,.22)
+# The courtyard-facing west return has its own glazed colonnade; the
+# connecting building hides part of its lower level in the photographs.
+box('glass',-5.1,6.2,7.5,.14,11.6,13)
+box('dark',-5.12,6.2,12.7,.12,11.6,6.1)
+box('dark',-5.12,6.2,6.7,.12,11.6,2.8)
+for y in (1,6,11):
+ stone_pillar(-6,y,.05,16.55,1.5,1.55,.18)
+ frustum('stone',-6,y,16.48,17.25,1.5,1.55,2.2,2.4)
+ box('stone',-6,y,17.37,2.2,2.4,.24)
+for z in (4.8,8.3,15.8):box('roofedge',-5.19,6.2,z,.22,11.6,.2)
+for y in [.4+i*.9 for i in range(13)]:box('gold',-5.22,y,3.1,.06,.04,5.7)
 for a,q in side_bays:
  for z in (4.8,8.3,15.8):box('roofedge',49.19,(a+q)/2,z,.22,q-a,.2)
  for y in [a+i*.9 for i in range(int((q-a)/.9)+1)]:box('gold',49.22,y,3.1,.06,.04,5.7)
@@ -248,10 +268,10 @@ for y in [12.6+i*1.35 for i in range(16)]:box('stone2',49.29,y,8.5,.025,.016,17)
 for y,z in [(14.2,5.6),(17.5,6.6),(21,5.6),(24.5,6.6),(28,5.6),(31.5,6.6),(14.2,10.2),(17.5,11.2),(21,10.2),(24.5,11.2),(28,10.2),(31.5,11.2)]:
  box('glass',49.31,y,z,.045,.32,.62)
 # The bronze fretwork continues on both stretches of the side colonnade.
-def side_bar(y1,z1,y2,z2,width=.04):
+def side_bar(y1,z1,y2,z2,width=.04,x=49.18):
  dx=y2-y1; dz=z2-z1; length=math.hypot(dx,dz)
  if not length:return
- ny=-dz/length*width/2; nz=dx/length*width/2; x=49.18; d=.035
+ ny=-dz/length*width/2; nz=dx/length*width/2; d=.035
  b['gold'].poly([(x-d/2,y1+ny,z1+nz),(x-d/2,y2+ny,z2+nz),(x-d/2,y2-ny,z2-nz),(x-d/2,y1-ny,z1-nz),(x+d/2,y1+ny,z1+nz),(x+d/2,y2+ny,z2+nz),(x+d/2,y2-ny,z2-nz),(x+d/2,y1-ny,z1-nz)])
 for i in range(85):
  for j in range(10):
@@ -259,7 +279,9 @@ for i in range(85):
   if not any(a+.3<y<q-.3 for a,q in side_bays):continue
   pts=[(-.22,-.16),(-.22,.17),(.10,.17),(.10,-.05),(-.07,-.05),(-.07,.05),(.22,.05),(.22,-.22)]
   pts=[(y+(u-v)*c,z+(u+v)*c) for u,v in pts]
-  for a,q in zip(pts,pts[1:]):side_bar(a[0],a[1],q[0],q[1])
+  for a,q in zip(pts,pts[1:]):
+   side_bar(a[0],a[1],q[0],q[1])
+   if .7<y<11.7:side_bar(a[0],a[1],q[0],q[1],x=-5.18)
 
 # A plinth with steps that rise towards the entrances, and return along the side.
 box('stone',cx,-5.35,.4,54,2.0,.8)
@@ -273,10 +295,40 @@ for i in range(6):
  box('stone',x,4.25,z,.44,15.5,.18)
  box('stone2',x+.22,4.25,z+.09,.025,15.5,.018)
 apply_section(main_start,theatre_y,theatre_z)
-# Create these lines after the section transform so their endpoints stay on
-# the final roof plane even at the change in height scale at the ridge.
+# Use final-space diagonals so the lower lattice remains a diamond after
+# the section's nonlinear depth and height transforms.
+def side_lattice(x,ymin,ymax,zmin,zmax,spacing=.38):
+ for slope in (-1,1):
+  low=zmin-slope*ymax if slope==1 else zmin-slope*ymin
+  high=zmax-slope*ymin if slope==1 else zmax-slope*ymax
+  k=low
+  while k<=high:
+   pts=[]
+   for y in (ymin,ymax):
+    z=slope*y+k
+    if zmin<=z<=zmax:pts.append((y,z))
+   for z in (zmin,zmax):
+    y=(z-k)/slope
+    if ymin<=y<=ymax:pts.append((y,z))
+   if len(pts)>=2:side_bar(pts[0][0],pts[0][1],pts[1][0],pts[1][1],.025,x)
+   k+=spacing
+side_lattice(-5.24,theatre_y(.4),theatre_y(12),theatre_z(5.35),theatre_z(8.15))
+side_lattice(49.24,theatre_y(.4),theatre_y(12),theatre_z(5.35),theatre_z(8.15))
+# Place the side ribs after the depth transform: equal physical spacing
+# matches the front cornice and remains uniform across section boundaries.
+side_pitch=.60*(24.349/17.25)
+rib_lo=theatre_z(17.73);rib_hi=theatre_z(18.23)
+for i in range(math.floor((61.4-(-3))/side_pitch)+1):
+ y=-3+i*side_pitch
+ for x in (-6.6,50.6):box('stone2',x,y,(rib_lo+rib_hi)/2,3,.20,rib_hi-rib_lo)
+# The converted section shows a near-flat structural audience roof at about
+# +34.71 to +34.86m.  The visible hipped covering sits above that structure;
+# its ridge orientation follows the supplied site diagram and roof photograph.
 roof_front=theatre_y(2.5);roof_back=theatre_y(25)
-hip_seams(cx,(roof_front+roof_back)/2,theatre_z(23.3),theatre_z(25.7),46,roof_back-roof_front,20,16)
+roof_base=35.06;roof_peak=37.2
+box('white',cx,(roof_front+roof_back)/2,(29.555+roof_base)/2,46,roof_back-roof_front,roof_base-29.555)
+hip_roof('copper',cx,(roof_front+roof_back)/2,roof_base,roof_peak,46,roof_back-roof_front,30,axis='y')
+hip_seams(cx,(roof_front+roof_back)/2,roof_base,roof_peak,46,roof_back-roof_front,30,16,axis='y')
 
 # Smaller west hall: similar roof and colonnade, prominent central screen.
 annex_start={key:len(builder.v) for key,builder in b.items()}
@@ -299,15 +351,19 @@ for x in [ax-13.8+i*.53 for i in range(53)]:
 for y in [-3+i*.54 for i in range(48)]:
  box('stone2',ax-13.7,y,14.84,2,.16,.46);box('stone2',ax+13.7,y,14.84,2,.16,.46)
 box('white',ax,12,18.4,23,19,1.7)
-hip_roof('copper',ax,12,19.25,20.6,23,19,9)
-hip_seams(ax,12,19.25,20.6,23,19,9,8)
+hip_roof('copper',ax,12,19.25,20.6,23,19,9,axis='y')
+hip_seams(ax,12,19.25,20.6,23,19,9,8,axis='y')
 box('stone',ax,15.5,20.7,17,9,3.2)
 lattice(ax-9.8,ax+9.8,9.6,12.8,af-.24,.4)
-box('dark',ax,af-.41,7.3,8.4,.2,5.7)
-for x in (ax-4.35,ax+4.35): box('white',x,af-.58,7.3,.25,.28,6.1)
-for z in (4.25,10.35):box('white',ax,af-.58,z,8.95,.28,.24)
-# The screen is carried on two short metal struts, not painted on the glazing.
-for x in (ax-3.3,ax+3.3):box('stone2',x,af-.65,3.8,.18,.45,.8)
+# The display projects forward of the colonnade, in a deep metal housing.
+screen_y=af-1.7
+box('dark',ax,screen_y,7.3,8.4,.4,5.7)
+for x in (ax-4.35,ax+4.35):box('white',x,screen_y-.22,7.3,.25,.35,6.1)
+for z in (4.25,10.35):box('white',ax,screen_y-.22,z,8.95,.35,.24)
+# Brackets connect the screen to the terrace and rear facade.
+for x in (ax-3.3,ax+3.3):
+ box('stone2',x,screen_y+.36,3.75,.18,.8,1.0)
+ box('stone2',x,af-.75,9.0,.16,1.6,.16)
 # Glazed terrace volume projecting toward the central court.
 box('roofedge',-25.6,1.4,4.85,8.0,8,.50)
 box('glass',-25.6,1.4,6.7,7.8,7.8,3.5)
@@ -354,31 +410,6 @@ for i in range(36):
 # The landing begins at the back edge of the last tread, one riser above it.
 box('stone',-13.1,3.87,last_tread+stair_rise-.125,20,11.46,.25)
 
-# Shallow incised suggestion on the left end panel; the right is photo-guided below.
-# The full relief is interpretive because it is not visible in the supplied close-up.
-relief_start={key:len(builder.v) for key,builder in b.items()}
-for x in (-2.2,):
- paths=[
-  [(-.35,10.6),(-.58,10.25),(-.65,9.85),(-.87,9.48),(-.68,9.35),(-.64,9.04),(-.42,8.75),(-.08,8.55),(.28,8.62),(.54,8.95),(.66,9.45),(.53,10.03),(.17,10.5),(-.35,10.6)],
-  [(-.58,9.85),(-.39,9.95),(-.18,9.92),(-.08,9.82),(-.29,9.78),(-.48,9.81)],
-  [(-.41,9.3),(-.24,9.24),(-.08,9.26),(.08,9.34)],
-  [(-.36,9.13),(-.17,9.08),(.02,9.12)],
- ]
- for n in range(7):
-  pts=[]
-  for i in range(23):
-   t=i/22
-   pts.append((-.85+n*.28+.34*math.sin(t*math.pi*1.25+n*.15),11.95-t*3.5))
-  paths.append(pts)
- # A shallow light-coloured raised profile with a fine darker incised edge.
- # The curves deliberately remain an interpretation, not a scan of the artwork.
- for pts in paths:
-  for a,c in zip(pts,pts[1:]):
-   a=(a[0]*1.45,10.4+(a[1]-10.4)*1.9);c=(c[0]*1.45,10.4+(c[1]-10.4)*1.9)
-   b['stone2'].bar(x+a[0]+.04,front-.865,a[1]-.04,x+c[0]+.04,front-.865,c[1]-.04,.07,.025)
-   b['stone'].bar(x+a[0],front-.91,a[1],x+c[0],front-.91,c[1],.13,.08)
-apply_section(relief_start,lambda y:y,theatre_z)
-
 # Preserve the photo's facade proportions after applying measured section
 # heights.  This width scale is an estimate; it is not a plan measurement.
 facade_scale=24.349/17.25
@@ -411,40 +442,40 @@ stone_shader=next(n for n in mats['stone'].node_tree.nodes if n.type=='BSDF_PRIN
 stone_texture=mats['stone'].node_tree.nodes.new('ShaderNodeTexImage');stone_texture.image=granite
 mats['stone'].node_tree.links.new(stone_texture.outputs['Color'],stone_shader.inputs['Base Color'])
 
-# The right pier uses the supplied close-up as a softly blended surface reference.
-# Small height changes provide a shallow relief; the unseen sculpture depth remains estimated.
-# Load a fresh copy so the packed image always matches the asset on disk.
-relief_image=bpy.data.images.load(os.path.abspath('assets/relief-reference.png'),check_existing=False)
-relief_image.pack()
-rw,rh=relief_image.size; pix=list(relief_image.pixels[:])
-def intensity(px,py):
- px=max(0,min(rw-1,px));py=max(0,min(rh-1,py));i=(py*rw+px)*4
- return (pix[i]+pix[i+1]+pix[i+2])/3
-nu,nv=40,56
-verts=[];faces=[]
-for j in range(nv+1):
- for i in range(nu+1):
-  u=i/nu;v=j/nv;px=round(u*(rw-1));py=round(v*(rh-1))
-  detail=intensity(px,py)-sum(intensity(px+dx,py+dy) for dx,dy in [(-4,0),(4,0),(0,-4),(0,4)])/4
-  verts.append((facade_x(46.2+(u-.5)*4.5),front-.95-max(-.04,min(.04,detail*.13)),theatre_z(10.25+(v-.5)*7.5)))
-for j in range(nv):
- for i in range(nu):
-  a=j*(nu+1)+i;faces.append((a,a+1,a+nu+2,a+nu+1))
-mesh=bpy.data.meshes.new('Photo-guided shallow relief');mesh.from_pydata(verts,[],faces);mesh.update()
-relief=bpy.data.objects.new('Reference-guided right relief',mesh);bpy.context.collection.objects.link(relief)
-uv=mesh.uv_layers.new(name='Relief UV')
-for poly in mesh.polygons:
- for li in poly.loop_indices:
-  idx=mesh.loops[li].vertex_index; uv.data[li].uv=((idx%(nu+1))/nu,(idx//(nu+1))/nv)
-mat=bpy.data.materials.new('Relief from supplied photograph');mat.use_nodes=True
-shader=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED')
-texture=mat.node_tree.nodes.new('ShaderNodeTexImage');texture.image=relief_image
-mat.node_tree.links.new(texture.outputs['Color'],shader.inputs['Base Color'])
-mat.node_tree.links.new(texture.outputs['Alpha'],shader.inputs['Alpha'])
-shader.inputs['Roughness'].default_value=.85
-methods=[item.identifier for item in bpy.types.Material.bl_rna.properties['surface_render_method'].enum_items]
-mat.surface_render_method='BLENDED' if 'BLENDED' in methods else methods[0]
-mesh.materials.append(mat)
+# Each pier uses its own supplied photograph.  The color is softly blended
+# onto a shallow mesh; the obscured details and actual depth remain estimates.
+def photo_relief(asset,name,center_x):
+ image=bpy.data.images.load(os.path.abspath(asset),check_existing=False);image.pack()
+ rw,rh=image.size;pix=list(image.pixels[:])
+ def intensity(px,py):
+  px=max(0,min(rw-1,px));py=max(0,min(rh-1,py));i=(py*rw+px)*4
+  return (pix[i]+pix[i+1]+pix[i+2])/3
+ nu,nv=40,56;verts=[];faces=[]
+ for j in range(nv+1):
+  for i in range(nu+1):
+   u=i/nu;v=j/nv;px=round(u*(rw-1));py=round(v*(rh-1))
+   detail=intensity(px,py)-sum(intensity(px+dx,py+dy) for dx,dy in [(-4,0),(4,0),(0,-4),(0,4)])/4
+   verts.append((facade_x(center_x+(u-.5)*4.5),front-.95-max(-.04,min(.04,detail*.13)),theatre_z(10.25+(v-.5)*7.5)))
+ for j in range(nv):
+  for i in range(nu):
+   a=j*(nu+1)+i;faces.append((a,a+1,a+nu+2,a+nu+1))
+ mesh=bpy.data.meshes.new(name+' shallow mesh');mesh.from_pydata(verts,[],faces);mesh.update()
+ relief=bpy.data.objects.new(name,mesh);bpy.context.collection.objects.link(relief)
+ uv=mesh.uv_layers.new(name='Relief UV')
+ for poly in mesh.polygons:
+  for li in poly.loop_indices:
+   idx=mesh.loops[li].vertex_index;uv.data[li].uv=((idx%(nu+1))/nu,(idx//(nu+1))/nv)
+ mat=bpy.data.materials.new(name+' photograph');mat.use_nodes=True
+ shader=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED')
+ texture=mat.node_tree.nodes.new('ShaderNodeTexImage');texture.image=image
+ mat.node_tree.links.new(texture.outputs['Color'],shader.inputs['Base Color'])
+ mat.node_tree.links.new(texture.outputs['Alpha'],shader.inputs['Alpha'])
+ shader.inputs['Roughness'].default_value=.85
+ methods=[item.identifier for item in bpy.types.Material.bl_rna.properties['surface_render_method'].enum_items]
+ mat.surface_render_method='BLENDED' if 'BLENDED' in methods else methods[0]
+ mesh.materials.append(mat)
+photo_relief('assets/left-relief-reference.png','Reference-guided left relief',-2.2)
+photo_relief('assets/relief-reference.png','Reference-guided right relief',46.2)
 for ob in bpy.context.scene.objects:
  if ob.type=='MESH':
   ob.select_set(True)
