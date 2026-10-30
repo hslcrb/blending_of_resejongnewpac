@@ -150,6 +150,35 @@ for tree_id,(x,y,height) in enumerate(tree_positions[5:],start=5):
         ob.scale=(1,1,height/10)
         ob.rotation_euler.z=tree_id*.57
 
+# Exposed soil around the trunks breaks up the uniform planting surface.
+# The discs overlap the bed surface slightly, so they sit on the ground.
+tree_soil=DetailMesh()
+for x,y,_ in tree_positions:
+    tree_soil.branch((x,y,.175),(x,y,.184),.53,.53,20)
+tree_soil.finish('Exposed soil around tree trunks',soil)
+
+# A few young trees have three timber supports, as in the plaza photographs.
+# Their feet rest in the planted bed and the upper ends meet the trunk.
+tree_supports=DetailMesh()
+tree_ties=DetailMesh()
+for tree_id in (0,2,5,8,12):
+    x,y,_=tree_positions[tree_id]
+    for arm in range(3):
+        angle=tree_id*.23+arm*2*math.pi/3
+        radial=Vector((math.cos(angle),math.sin(angle),0))
+        foot=Vector((x,y,.18))+radial*.80
+        top=Vector((x+.02,y-.01,1.90))+radial*.17
+        tree_supports.branch(foot,top,.045,.038,7)
+    # Short bands sit around the trunk and visibly bind the support heads.
+    for k in range(12):
+        a=2*math.pi*k/12
+        b=2*math.pi*(k+1)/12
+        tree_ties.branch((x+.02+.18*math.cos(a),y-.01+.18*math.sin(a),1.84),
+                         (x+.02+.18*math.cos(b),y-.01+.18*math.sin(b),1.84),
+                         .018,.018,5)
+tree_supports.finish('Young tree timber supports',wood)
+tree_ties.finish('Young tree support ties',metal)
+
 # Groundcover grows within the explicitly placed beds; low, varied foliage
 # makes their edges read as planted gardens at walking height.
 groundcover=[DetailMesh(),DetailMesh()]
@@ -160,6 +189,8 @@ for bed_id,(x,y,w,d) in enumerate(beds):
         for col in range(int(w/1.4)):
             px=x-w/2+.75+col*1.4+rng.uniform(-.18,.18)
             py=y-d/2+1.0+row*(d-2)/(rows-1)+rng.uniform(-.18,.18)
+            if any((px-tx)**2+(py-ty)**2<.85**2 for tx,ty,_ in tree_positions):
+                continue
             for j in range(24):
                 angle=j*2*math.pi/24+rng.uniform(-.10,.10)
                 radius=rng.uniform(.04,.42)

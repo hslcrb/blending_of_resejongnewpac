@@ -332,12 +332,38 @@ for y in [.4+i*.9 for i in range(13)]:box('gold',-5.22,y,3.1,.06,.04,5.7)
 for a,q in side_bays:
  for z in (4.8,8.3,15.8):box('roofedge',49.19,(a+q)/2,z,.22,q-a,.2)
  for y in [a+i*.9 for i in range(int((q-a)/.9)+1)]:box('gold',49.22,y,3.1,.06,.04,5.7)
-# Pale stone panels and small irregularly spaced windows on the long middle wall.
-box('stone',49.13,23,8.6,.27,22,17.2)
-for z in [i*.72 for i in range(1,24)]:box('stone2',49.28,23,z,.025,22,.016)
-for y in [12.6+i*1.35 for i in range(16)]:box('stone2',49.29,y,8.5,.025,.016,17)
-for y,z in [(14.2,5.6),(17.5,6.6),(21,5.6),(24.5,6.6),(28,5.6),(31.5,6.6),(14.2,10.2),(17.5,11.2),(21,10.2),(24.5,11.2),(28,10.2),(31.5,11.2)]:
- box('glass',49.31,y,z,.045,.32,.62)
+# Pale stone panels and recessed windows on the long middle wall.  The
+# positions and widths are estimated from the photos, not surveyed dimensions.
+side_windows=[(y,z) for y in (14.2,17.5,21,24.5,28,31.5)
+              for z in ((5.6,10.2) if y in (14.2,21,28) else (6.6,11.2))]
+side_y0,side_y1=12,34
+side_z0,side_z1=0,17.2
+def side_wall_span(y0,y1,z0,z1):
+ if y1>y0 and z1>z0:box('stone',49.13,(y0+y1)/2,(z0+z1)/2,.27,y1-y0,z1-z0)
+cursor=side_y0
+for y in (14.2,17.5,21,24.5,28,31.5):
+ side_wall_span(cursor,y-.16,side_z0,side_z1)
+ bottom=side_z0
+ for _,z in sorted((wy,wz) for wy,wz in side_windows if wy==y):
+  side_wall_span(y-.16,y+.16,bottom,z-.31)
+  box('glass',49.04,y,z,.045,.32,.62)
+  bottom=z+.31
+ side_wall_span(y-.16,y+.16,bottom,side_z1)
+ cursor=y+.16
+side_wall_span(cursor,side_y1,side_z0,side_z1)
+# Intersecting mortar lines stop at the openings rather than bridging them.
+for z in [i*.72 for i in range(1,24)]:
+ cursor=side_y0
+ for y,_ in sorted((y,wz) for y,wz in side_windows if abs(wz-z)<.31):
+  if y-.16>cursor:box('stone2',49.28,(cursor+y-.16)/2,z,.025,y-.16-cursor,.016)
+  cursor=y+.16
+ if cursor<side_y1:box('stone2',49.28,(cursor+side_y1)/2,z,.025,side_y1-cursor,.016)
+for y in [12.6+i*1.35 for i in range(16)]:
+ cursor=0
+ for _,z in sorted((wy,z) for wy,z in side_windows if abs(wy-y)<.16):
+  if z-.31>cursor:box('stone2',49.29,y,(cursor+z-.31)/2,.025,.016,z-.31-cursor)
+  cursor=z+.31
+ if cursor<17:box('stone2',49.29,y,(cursor+17)/2,.025,.016,17-cursor)
 # The bronze fretwork continues on both stretches of the side colonnade.
 def side_bar(y1,z1,y2,z2,width=.04,x=49.18):
  dx=y2-y1; dz=z2-z1; length=math.hypot(dx,dz)
