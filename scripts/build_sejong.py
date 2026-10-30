@@ -923,5 +923,16 @@ os.makedirs(os.path.join(os.getcwd(),'public','model'),exist_ok=True)
 blend_path=os.path.join(os.getcwd(),'public','model','sejong.blend')
 glb_path=os.path.join(os.getcwd(),'public','model','sejong.glb')
 bpy.ops.wm.save_as_mainfile(filepath=blend_path)
-bpy.ops.export_scene.gltf(filepath=glb_path,export_format='GLB')
+# Blender 5.2's meshopt exporter defaults to 12-bit exponential filtering,
+# which can move vertices by centimetres. Use 23 bits for architectural detail
+# and restore its process-wide setting immediately after this export.
+from io_scene_gltf2.io.exp import meshopt as meshopt_exporter
+previous_meshopt_bits=meshopt_exporter.EXP_FILTER_BITS
+try:
+ meshopt_exporter.EXP_FILTER_BITS=23
+ bpy.ops.export_scene.gltf(filepath=glb_path,export_format='GLB',
+                           export_meshopt_compression_enable=True,
+                           export_meshopt_extension='EXT_meshopt_compression')
+finally:
+ meshopt_exporter.EXP_FILTER_BITS=previous_meshopt_bits
 print('Saved',blend_path,glb_path,'objects',len(scene.objects),'vertices',sum(len(o.data.vertices) for o in scene.objects if o.type=='MESH'))

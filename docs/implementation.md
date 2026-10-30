@@ -113,6 +113,8 @@ npm run dev
 
 Blender 5.2와 프로젝트의 `assets/graphics/` PNG 세 장이 있는 상태에서 프로젝트 **루트**를 현재 디렉터리로 하여 실행한다. 스크립트는 현재 씬의 객체를 지우고 `public/model/sejong.blend`와 `public/model/sejong.glb`를 다시 저장하므로 필요한 기존 파일은 먼저 백업한다.
 
+웹용 GLB는 Blender 5.2의 Meshopt 내보내기로 압축하며 뷰어에서 Three.js Meshopt 디코더로 불러온다. 후면 추가 후 무압축 파일이 Cloudflare Pages의 파일당 25 MiB 제한을 넘어 자동 배포가 실패해 적용했다. 기본 12비트 필터는 위치 오차가 커 내보내는 동안 23비트로 높였다. 별도 비교에서 위치 성분의 최대 절대 오차는 약 0.031mm였으며 무손실 압축은 아니다. 이 설정은 Blender 5.2 내보내기 내부 상수에 의존한다. 편집용 Blender 원본은 유지한다.
+
 ```powershell
 & 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' --background --python-exit-code 1 --python scripts/build_sejong.py
 ```

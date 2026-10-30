@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { instanceTreeMeshes } from './treeInstances.js';
 import { canWalk } from './walkCollision.js';
 import { walkKeyForEvent } from './walkKeys.js';
@@ -360,7 +361,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         sceneRef.current = { fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld };
         viewerRef.current = sceneRef.current;
 
-        new GLTFLoader().load('/model/sejong.glb', (gltf) => {
+        const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+        loader.load('/model/sejong.glb', (gltf) => {
             if (disposed) return;
             model = gltf.scene;
             scene.add(model);
