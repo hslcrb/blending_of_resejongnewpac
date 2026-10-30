@@ -777,32 +777,53 @@ for left,right in shop_ranges:
 
 # Connecting building and broad ascending central stair.
 connector_min,connector_max=-23.1,-3.1
-connector_windows=[-22+i*1.6 for i in range(12)]
+connector_half_width=.11
+# The front photograph shows paired vertical slots in each repeating bay.
+connector_windows=[-22+i*1.6+offset for i in range(12) for offset in (-.19,.19)]
 # Preserve the rear mass while making a real 0.47m recess in the front wall.
 box('stone',-13.1,16.25,5.8,20,12.5,11.6)
 window_bands=[]
 for z in (5.1,8.0):
- center=annex_z(z)
+ # The glass frontage sits above the raised terrace, below both window rows.
+ # Heights are estimated from the supplied front photographs.
+ center=annex_z(z)+2.2
  window_bands.append((inverse_annex_z(center-.95),inverse_annex_z(center+.95)))
+landing_first=annex_z(.105)
+landing_last=annex_z(.105+35*.09)
+landing_height=landing_last+(landing_last-landing_first)/35
+connector_glass_lo=inverse_annex_z(landing_height+.015)
+connector_glass_hi=inverse_annex_z(7.0)
 def connector_stone_span(x0,x1,z0,z1):
  if x1>x0 and z1>z0:box('stone',(x0+x1)/2,9.75,(z0+z1)/2,x1-x0,.5,z1-z0)
-connector_stone_span(connector_min,connector_max,0,window_bands[0][0])
+connector_stone_span(connector_min,connector_max,0,connector_glass_lo)
+connector_stone_span(connector_min,connector_max,connector_glass_hi,window_bands[0][0])
 connector_stone_span(connector_min,connector_max,window_bands[0][1],window_bands[1][0])
 connector_stone_span(connector_min,connector_max,window_bands[1][1],11.6)
 for lo,hi in window_bands:
  edge=connector_min
  for x in connector_windows:
-  connector_stone_span(edge,x-.16,lo,hi)
-  box('connector_glass',x,9.99,(lo+hi)/2,.32,.04,hi-lo)
-  edge=x+.16
+  connector_stone_span(edge,x-connector_half_width,lo,hi)
+  box('connector_glass',x,9.99,(lo+hi)/2,2*connector_half_width,.04,hi-lo)
+  edge=x+connector_half_width
  connector_stone_span(edge,connector_max,lo,hi)
-box('glass',-13.1,9.42,1.8,19,.16,3.4)
+# A recessed glazed frontage faces the landing; the hidden interior remains a
+# stone backing, as no reliable interior layout is available from the photo.
+box('dark',-13.1,9.96,(connector_glass_lo+connector_glass_hi)/2,19.9,.05,connector_glass_hi-connector_glass_lo)
+box('glass',-16.8,9.42,(connector_glass_lo+connector_glass_hi)/2,11.6,.16,connector_glass_hi-connector_glass_lo)
+box('glass',-5.2,9.52,(connector_glass_lo+connector_glass_hi)/2,2.4,.12,connector_glass_hi-connector_glass_lo)
+box('stone',-8.0,9.49,(connector_glass_lo+connector_glass_hi)/2,.55,.35,connector_glass_hi-connector_glass_lo)
+for x in [-22.5+i*1.65 for i in range(8)]:
+ box('roofedge',x,9.31,(connector_glass_lo+connector_glass_hi)/2,.045,.06,connector_glass_hi-connector_glass_lo)
+for z in (connector_glass_lo,connector_glass_hi):
+ box('roofedge',-13.1,9.31,z,19,.06,.055)
 for z in [4+i*.65 for i in range(12)]:
+ if connector_glass_lo<z<connector_glass_hi:continue
  if any(lo<z<hi for lo,hi in window_bands):
   edge=connector_min
   for x in connector_windows:
-   if x-.16>edge:box('stone2',(edge+x-.16)/2,9.493,z,x-.16-edge,.015,.015)
-   edge=x+.16
+   if x-connector_half_width>edge:
+    box('stone2',(edge+x-connector_half_width)/2,9.493,z,x-connector_half_width-edge,.015,.015)
+   edge=x+connector_half_width
   if connector_max>edge:box('stone2',(edge+connector_max)/2,9.493,z,connector_max-edge,.015,.015)
  else:box('stone2',-13.1,9.493,z,20,.015,.015)
 for x in (-23.5,-2.7):
@@ -835,6 +856,16 @@ for i in range(36):
 # The landing begins at the back edge of the last tread, one riser above it.
 landing_top=last_tread+stair_rise
 box('stone',-13.1,3.87,landing_top/2,20,11.46,landing_top)
+# The upper court has a regular stone-paving grid and two darker bands,
+# modeled as shallow inlaid lines; exact tile dimensions are estimated.
+for i in range(1,23):
+ x=-23.1+i*(20/23)
+ box('stone2',x,3.87,landing_top+.004,.012,11.42,.008)
+for i in range(1,10):
+ y=-1.86+i*(11.46/10)
+ box('stone2',-13.1,y,landing_top+.004,19.96,.012,.008)
+for x in (-19.0,-7.2):
+ box('roofjoint',x,3.87,landing_top+.006,.075,11.42,.010)
 
 # Preserve the photo's facade proportions after applying measured section
 # heights.  This width scale is an estimate; it is not a plan measurement.

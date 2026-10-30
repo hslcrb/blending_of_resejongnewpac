@@ -84,7 +84,7 @@ interior = detail_material('Lobby warm limestone', (.72,.70,.64), roughness=.83)
 light = detail_material('Lobby light diffuser', (.95,.88,.70), roughness=.55)
 
 # Low raised, planted beds are deliberately placed rather than scattered.
-beds = [(-61,-23,23,12), (14,-22,25,11), (58,-22,29,11),
+beds = [(-61,-26.5,23,19), (14,-25.5,25,18), (58,-25.5,29,18),
         (8,-14,7,4), (60,-14,7,4), (76,45,5,76)]
 # Keep a small clear patch at the base of the photo-inspired sign below.
 marker_x,marker_y=5.05,-12.50
@@ -134,7 +134,17 @@ tree_positions = [(-69,-23,8.7),(-61,-20,9.3),(-53,-25,8.1),
                   (76,9,10.4),(76,21,11.2),(76,33,10.0),
                   # Photo-based continuation beside the long east elevation.
                   # These positions and heights remain estimates.
-                  (76.1,44,9.5),(76.3,56,10.5),(75.9,69,8.8),(76.2,79,10.2)]
+                  (76.1,44,9.5),(76.3,56,10.5),(75.9,69,8.8),(76.2,79,10.2),
+                  # The supplied front aerial view shows interlocking crowns
+                  # and multiple trunks within each of the three fixed beds.
+                  # Positions and heights are visual estimates, not survey data.
+                  (-66,-18.7,7.5),(-57,-22.5,8.4),(-51.8,-19.0,7.1),
+                  (5.5,-25.0,7.7),(9,-19.1,8.6),(17,-25.0,7.9),(24,-23.8,7.4),
+                  (48,-19.0,7.7),(55.8,-25.0,7.2),(60,-18.5,8.3),
+                  (67,-25.0,7.5),(71,-23.0,7.1),
+                  (-68,-33,7.7),(-59,-32,8.2),(-51.5,-32,7.4),
+                  (4,-32,8.0),(13,-32.5,8.8),(22.5,-32,8.2),
+                  (47,-32,8.3),(56,-32.5,9.0),(65,-31.8,8.6),(70.5,-32,7.5)]
 templates=[]
 for template_id in range(5):
     branches = DetailMesh()
@@ -389,7 +399,10 @@ for i,builder in enumerate(front_foliage):
 # beds.  Their coordinates are chosen within each bed, not scattered buildings.
 shrub_sites=[(-65,-25),(-58,-26),(-56,-19),(7,-23),(17,-20),(23,-25),
              (49,-25),(57,-21),(66,-23),(69,-25),(6,-14),(58,-14),
-             (76,14),(76,27),(75.6,38.5),(76.8,50),(75.5,62),(76.8,74)]
+             (76,14),(76,27),(75.6,38.5),(76.8,50),(75.5,62),(76.8,74),
+             # Low layered planting between larger trunks.
+             (-70,-26),(-62,-25),(-54,-27),(3,-23),(8,-26),(14,-20),
+             (19,-23),(24,-20),(47,-26),(52,-22),(60,-26),(64,-20),(70,-27)]
 shrub_branches=DetailMesh()
 shrub_leaves=[DetailMesh(),DetailMesh(),DetailMesh()]
 for shrub_id,(x,y) in enumerate(shrub_sites):
@@ -412,7 +425,7 @@ for i,builder in enumerate(shrub_leaves):
 # Benches and lighting are aligned with the plaza, with visible feet and slats.
 bench = DetailMesh()
 fittings = DetailMesh()
-for x,y in [(-55,-30),(-45,-30),(7,-29),(19,-29),(49,-29),(62,-29)]:
+for x,y in [(-55,-38),(-45,-38),(7,-36.5),(19,-36.5),(49,-36.5),(62,-36.5)]:
     for j in range(5):
         bench.box((x,y+(j-2)*.10,.56),(2.9,.075,.09))
     for xx in (x-1.05,x+1.05):

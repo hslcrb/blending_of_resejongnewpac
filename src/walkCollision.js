@@ -47,9 +47,9 @@ const WALK_BLOCKS = [
     { minX: -34, maxX: -30.54, minZ: -9.6, maxZ: 15.19 },
     { minX: -2.32, maxX: -2, minZ: -9.6, maxZ: 15.19 },
     // 잔디 화단과 테두리를 사람의 폭만큼 여유 두고 피합니다. / Keep the walker clear of planted beds and edging.
-    { minX: -73.05, maxX: -49.15, minZ: 16.65, maxZ: 29.35 },
-    { minX: 1.15, maxX: 26.85, minZ: 16.15, maxZ: 27.85 },
-    { minX: 43.15, maxX: 72.85, minZ: 16.15, maxZ: 27.85 },
+    { minX: -73.05, maxX: -49.15, minZ: 16.65, maxZ: 36.35 },
+    { minX: 1.15, maxX: 26.85, minZ: 16.15, maxZ: 34.85 },
+    { minX: 43.15, maxX: 72.85, minZ: 16.15, maxZ: 34.85 },
     { minX: 4.15, maxX: 11.85, minZ: 11.65, maxZ: 16.35 },
     { minX: 56.15, maxX: 63.85, minZ: 11.65, maxZ: 16.35 },
     { minX: 73.15, maxX: 78.85, minZ: -83.35, maxZ: -6.65 },

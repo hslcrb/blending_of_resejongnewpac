@@ -30,6 +30,13 @@ test('the extended forecourt is walkable without crossing its front edge', () =>
     assert.equal(canWalk(33.1, 78.1), false);
 });
 
+test('the enlarged front gardens stay protected while the central approach remains open', () => {
+    assert.equal(canWalk(14, 33), false);
+    assert.equal(canWalk(58, 33), false);
+    assert.equal(canWalk(-61, 35), false);
+    assert.equal(canWalk(33, 33), true);
+});
+
 test('rear garden paths stay open while planted islands and the edge are blocked', () => {
     assert.equal(canWalk(8, -132), true);
     assert.equal(canWalk(0, -142), true);
