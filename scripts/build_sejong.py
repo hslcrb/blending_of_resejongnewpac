@@ -322,6 +322,17 @@ def lattice(xmin,xmax,zmin,zmax,y,spacing=.37):
    k+=spacing
 lattice(2,42,5.35,8.15,front-.29)
 for z in (5.28,8.2,9.55,16.25): box('roofedge',cx,front-.36,z,40.5,.24,.16)
+# Behind the projecting pillars, the photographs show dark glazed strips
+# between the fretwork levels and just beneath the soffit.  Model the panes
+# and their vertical mullions instead of leaving the bands as a blank wall.
+# Their number and widths are visual estimates from the exterior photographs.
+for left,right in zip(columns,columns[1:]):
+ bay_start,bay_end=left+.83,right-.83
+ for lo,hi in ((8.28,9.47),(16.33,17.25)):
+  box('glass',(bay_start+bay_end)/2,front-.11,(lo+hi)/2,bay_end-bay_start,.08,hi-lo)
+  for i in range(5):
+   x=bay_start+(bay_end-bay_start)*i/4
+   box('roofedge',x,front-.20,(lo+hi)/2,.05,.20,hi-lo)
 # Ground floor window and door frames.
 for x in [2+i*1.45 for i in range(29)]:
  if not any(left < x < right for left,right in door_ranges):
@@ -488,8 +499,23 @@ for i in range(math.floor((61.4-(-3))/side_pitch)+1):
 roof_front=theatre_y(2.5);roof_back=theatre_y(25)
 roof_base=35.06;roof_peak=37.2
 box('white',cx,(roof_front+roof_back)/2,(29.555+roof_base)/2,46,roof_back-roof_front,roof_base-29.555)
-hip_roof('copper',cx,(roof_front+roof_back)/2,roof_base,roof_peak,46,roof_back-roof_front,30,axis='y')
-hip_seams(cx,(roof_front+roof_back)/2,roof_base,roof_peak,46,roof_back-roof_front,30,16,axis='y')
+# The aerial reference shows a lengthwise ridge and a pale triangular front
+# gable; its height and the hidden rear termination remain photo estimates.
+ridge_length=roof_back-roof_front
+hip_roof('copper',cx,(roof_front+roof_back)/2,roof_base,roof_peak,46,roof_back-roof_front,ridge_length,axis='y')
+hip_seams(cx,(roof_front+roof_back)/2,roof_base,roof_peak,46,roof_back-roof_front,ridge_length,16,axis='y')
+gable=b['white'];n=len(gable.v)
+gable.v.extend([(cx-23,roof_front-.09,roof_base),(cx+23,roof_front-.09,roof_base),
+                (cx,roof_front-.09,roof_peak),(cx-23,roof_front+.09,roof_base),
+                (cx+23,roof_front+.09,roof_base),(cx,roof_front+.09,roof_peak)])
+gable.f.extend([tuple(n+i for i in face) for face in
+                [(0,2,1),(3,4,5),(0,1,4,3),(1,2,5,4),(2,0,3,5)]])
+# Low paired service enclosures sit on the flat apron in front of the gable.
+# Their function and exact dimensions are not identifiable in the photograph.
+for x in (cx-15,cx+15):
+ box('white',x,roof_front-2.05,30.47,13,4.1,1.55)
+ box('dark',x,roof_front-4.11,31.05,12.75,.025,.23)
+ box('white',x,roof_front-2.05,31.29,13.2,4.25,.10)
 
 # Smaller west hall: similar roof and colonnade, prominent central screen.
 annex_start={key:len(builder.v) for key,builder in b.items()}

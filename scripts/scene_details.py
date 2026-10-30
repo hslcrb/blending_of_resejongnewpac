@@ -146,19 +146,25 @@ for template_id in range(5):
     branches.branch(root, root+Vector((.03,-.02,height*.30)), .20,.145, 9)
     branches.branch(root+Vector((.03,-.02,height*.30)), stem_top, .145,.055, 8)
     for arm in range(9):
-        angle=arm*2*math.pi/9+.15*(template_id%3)
+        angle=arm*2*math.pi/9+.15*(template_id%3)+rng.uniform(-.12,.12)
         radial=Vector((math.cos(angle),math.sin(angle),0))
         lateral=Vector((-math.sin(angle),math.cos(angle),0))
         start=root+Vector((.07,-.04,height*(.33+.045*(arm%5))))
-        end=root+radial*(2.0+.18*(arm%4))+Vector((.15,-.08,height*(.64+.055*(arm%5))))
-        branches.branch(start,end,.09,.024,6)
+        end=root+radial*(2.25+.18*(arm%4))+Vector((.15,-.08,height*(.64+.055*(arm%5))))
+        # Break each limb at a gently offset elbow instead of making all the
+        # branches straight spokes. The crown is still an interpretation of
+        # the deciduous trees visible in the supplied plaza photographs.
+        elbow=start.lerp(end,.48)+lateral*rng.uniform(-.25,.25)+Vector((0,0,.18))
+        branches.branch(start,elbow,.09,.056,6)
+        branches.branch(elbow,end,.056,.024,6)
         for fork in range(3):
             end2=end+radial*(.28+.18*fork)+lateral*((fork-1)*.68)+Vector((0,0,.38+.18*fork))
             branches.branch(end,end2,.025,.009,5)
-            for leaf_id in range(140):
-                # Leaves fill the crown along the limbs, not only at twig tips.
-                p=start.lerp(end2, rng.uniform(.40,1.0))
-                p+=radial*rng.uniform(-.35,.55)+lateral*rng.uniform(-.52,.52)+Vector((0,0,rng.uniform(-.32,.60)))
+            for leaf_id in range(160):
+                # Use overlapping volumes around the upper limbs so foliage
+                # fills a continuous, irregular crown rather than thin spokes.
+                p=elbow.lerp(end2, rng.uniform(.12,1.0))
+                p+=radial*rng.uniform(-.45,.60)+lateral*rng.uniform(-.70,.70)+Vector((0,0,rng.uniform(-.40,.68)))
                 direction=(radial*rng.uniform(-1,1)+lateral*rng.uniform(-1,1)+Vector((0,0,rng.uniform(-.5,1))))
                 # Smaller leaves and a higher leaf count avoid the oversized
                 # diamond-like foliage visible at pedestrian distance.
