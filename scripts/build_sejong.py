@@ -17,6 +17,7 @@ mats={
  'stone2':material('밝은 석재 줄눈',(.56,.57,.55)),
  'roof':material('회색 지붕',(.37,.39,.39)),
  'roofedge':material('처마 하부',(.28,.30,.30)),
+ 'copper':material('녹청색 지붕',(.29,.40,.37),.12,.8),
  'dark':material('깊은 그늘',(.075,.09,.095)),
  'glass':material('짙은 유리',(.065,.13,.14),.35,.24),
  'gold':material('청동 격자',(.62,.49,.28),.65,.3),
@@ -45,9 +46,13 @@ b={k:MeshBuilder() for k in mats}
 def box(m,*args):b[m].box(*args)
 def frustum(m,cx,cy,z0,z1,w0,d0,w1,d1):
  b[m].poly([(cx-w0/2,cy-d0/2,z0),(cx+w0/2,cy-d0/2,z0),(cx+w0/2,cy+d0/2,z0),(cx-w0/2,cy+d0/2,z0),(cx-w1/2,cy-d1/2,z1),(cx+w1/2,cy-d1/2,z1),(cx+w1/2,cy+d1/2,z1),(cx-w1/2,cy+d1/2,z1)])
+def hip_roof(m,cx,cy,z0,z1,width,depth,ridge):
+ builder=b[m]; start=len(builder.v)
+ builder.v.extend([(cx-width/2,cy-depth/2,z0),(cx+width/2,cy-depth/2,z0),(cx+width/2,cy+depth/2,z0),(cx-width/2,cy+depth/2,z0),(cx-ridge/2,cy,z1),(cx+ridge/2,cy,z1)])
+ builder.f.extend([tuple(start+i for i in face) for face in [(0,1,5,4),(1,2,5),(2,3,4,5),(3,0,4),(3,2,1,0)]])
 
 # Stone forecourt and paved joints.
-box('ground',0,2,-.24,112,72,.48)
+box('ground',0,8,-.24,112,84,.48)
 for x in range(-56,57,2): box('line',x,-15,.006,.018,38,.012)
 for y in range(-34,5,2): box('line',0,y,.009,112,.018,.012)
 
@@ -77,10 +82,17 @@ for z in [19.15,19.8,20.45,21.1]:
  y=-7.0+(z-18.55)*(1.5/3.1)
  box('stone2',cx,y-.012,z,59,.025,.018)
 # High theatre fly tower behind the hipped roof.
-box('white',cx,24,22.2,36,15,2.2)
-frustum('white',cx,24,23.3,24.3,36,15,25,10)
+box('white',cx,17.5,22.2,36,20,2.2)
+hip_roof('copper',cx,17.5,23.3,25.7,36,20,15)
 box('stone',cx,29.0,25.5,30,8,4.0)
 for z in [23.8+i*.65 for i in range(6)]: box('stone2',cx,24.98,z,30,.02,.015)
+# Lower rear hall, seen beyond the fly tower in the site diagram.
+box('stone',cx,40.5,8.1,34,13,16.2)
+box('roofedge',cx,40.5,16.3,35,14,.45)
+hip_roof('roof',cx,40.5,16.52,19.0,35,14,20)
+for x in [cx-14+i*2 for i in range(15)]:
+ box('glass',x,47.06,8.7,.75,.14,8.2)
+for z in (4.5,12.8):box('stone2',cx,47.15,z,33,.1,.13)
 
 # Six tall rectilinear columns with flared capitals and seams.
 columns=[4,11.2,18.4,25.6,32.8,40]
@@ -170,6 +182,7 @@ for x in [ax-13.8+i*.53 for i in range(53)]:
 for y in [-3+i*.54 for i in range(48)]:
  box('stone2',ax-13.7,y,15.05,2,.16,.30);box('stone2',ax+13.7,y,15.05,2,.16,.30)
 box('white',ax,12,18.4,20,15,1.7)
+hip_roof('copper',ax,12,19.25,20.6,20,15,8)
 box('stone',ax,15.5,20.7,17,9,3.2)
 lattice(ax-9.8,ax+9.8,9.6,12.8,af-.24,.4)
 box('dark',ax,af-.41,7.3,8.4,.2,5.7)
