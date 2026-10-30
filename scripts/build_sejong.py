@@ -333,11 +333,11 @@ for a,q in side_bays:
  box('dark',49.12,(a+q)/2,12.7,.12,q-a,6.1)
 for y in (1,6,11):
  stone_pillar(50,y,0,16.55,1.5,1.55,.18)
- frustum('stone',50,y,16.48,17.25,1.5,1.55,2.2,2.4)
+ curved_capital('stone',50,y,16.48,17.25,1.5,1.55,2.2,2.4)
  box('stone',50,y,17.37,2.2,2.4,.24)
 for y in (35,40.3,45.6):
  stone_pillar(49.4,y,0,15.2,1.5,1.55,.18)
- frustum('stone',49.4,y,15.12,15.85,1.5,1.55,2.2,2.4)
+ curved_capital('stone',49.4,y,15.12,15.85,1.5,1.55,2.2,2.4)
  box('stone',49.4,y,15.96,2.2,2.4,.24)
 # The courtyard-facing west return has its own glazed colonnade; the
 # connecting building hides part of its lower level in the photographs.
@@ -346,7 +346,7 @@ box('dark',-5.12,6.2,12.7,.12,11.6,6.1)
 box('dark',-5.12,6.2,6.7,.12,11.6,2.8)
 for y in (1,6,11):
  stone_pillar(-6,y,0,16.55,1.5,1.55,.18)
- frustum('stone',-6,y,16.48,17.25,1.5,1.55,2.2,2.4)
+ curved_capital('stone',-6,y,16.48,17.25,1.5,1.55,2.2,2.4)
  box('stone',-6,y,17.37,2.2,2.4,.24)
 for z in (4.8,8.3,15.8):box('roofedge',-5.19,6.2,z,.22,11.6,.2)
 for y in [.4+i*.9 for i in range(13)]:box('gold',-5.22,y,3.1,.06,.04,5.7)
@@ -469,12 +469,16 @@ box('stone',ax,10.5,7.0,aw,22,14)
 box('dark',ax,af-.08,7.2,19,.18,12.8)
 box('glass',ax,af-.2,3.1,19,.16,5.6)
 for x in (ax-10.8,ax+10.8):box('stone',x,af-.05,7,3.4,1.7,14)
-for x in (ax-7.3,ax-2.4,ax+2.4,ax+7.3):
+# The two visible front columns flank the screen in the reference photographs.
+# The area behind the screen is obscured and its structure remains an estimate.
+for x in (ax-7.3,ax+7.3):
  box('stone',x,af-.85,.15,1.55,1.7,.30)
  stone_pillar(x,af-.85,.25,13.8,1.15,1.3,.14)
- frustum('stone',x,af-.85,13.72,14.3,1.15,1.3,1.7,1.8)
+ curved_capital('stone',x,af-.85,13.72,14.3,1.15,1.3,1.7,1.8)
  box('stone',x,af-.85,14.4,1.7,1.8,.20)
-box('roofedge',ax,9,14.55,26.5,26.8,.85)
+# The lower stone band narrows towards its underside, as in the oblique photos.
+# Its end levels and upper footprint match the former beam; the slope is estimated.
+frustum('roofedge',ax,9,14.125,14.975,25.7,26.0,26.5,26.8)
 box('dark',ax,9,15.12,28,28,.30)
 frustum('roof',ax,9,15.25,17.55,29,29,27,27)
 box('roofedge',ax,9,17.6,29.2,29.2,.2)

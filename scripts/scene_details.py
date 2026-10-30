@@ -87,15 +87,42 @@ light = detail_material('Lobby light diffuser', (.95,.88,.70), roughness=.55)
 beds = [(-61,-23,23,12), (14,-22,25,11), (58,-22,29,11),
         (8,-14,7,4), (60,-14,7,4), (76,45,5,76)]
 garden = DetailMesh()
+front_garden = DetailMesh()
 edge = DetailMesh()
-for x,y,w,d in beds:
-    garden.box((x,y,.09),(w,d,.18))
+for bed_id,(x,y,w,d) in enumerate(beds):
+    (front_garden if bed_id in (1,2) else garden).box((x,y,.09),(w,d,.18))
     for yy in (y-d/2,y+d/2):
         edge.box((x,yy,.15),(w+.4,.22,.30))
     for xx in (x-w/2,x+w/2):
         edge.box((xx,y,.15),(.22,d,.30))
 garden.finish('Curated garden beds', grass)
 edge.finish('Garden stone edging', curb)
+
+# A subtle original, packed surface variation gives the two broad front beds
+# depth beneath the individual plants.  No reference photo is sampled.
+front_soil=detail_material('Front planting ground',(.25,.37,.17),roughness=.95)
+front_ground=front_garden.finish('Front gardens ground',front_soil)
+front_texture=bpy.data.images.new('Original front garden surface',width=256,height=256,alpha=True)
+front_rng=random.Random(3047)
+front_pixels=[]
+for py in range(256):
+    for px in range(256):
+        broad=.017*math.sin(px*2*math.pi/64)*math.cos(py*2*math.pi/128)
+        fine=front_rng.gauss(0,.006)
+        value=broad+fine
+        front_pixels.extend((linear_to_srgb(.25+value),linear_to_srgb(.37+value*.9),
+                             linear_to_srgb(.17+value*.65),1))
+front_texture.pixels[:]=front_pixels
+front_texture.pack()
+front_uv=front_ground.data.uv_layers.new(name='Garden surface projection')
+for face in front_ground.data.polygons:
+    for index in face.loop_indices:
+        point=front_ground.data.vertices[front_ground.data.loops[index].vertex_index].co
+        front_uv.data[index].uv=(point.x/3,point.y/3)
+front_shader=next(n for n in front_soil.node_tree.nodes if n.type=='BSDF_PRINCIPLED')
+front_node=front_soil.node_tree.nodes.new('ShaderNodeTexImage')
+front_node.image=front_texture
+front_soil.node_tree.links.new(front_node.outputs['Color'],front_shader.inputs['Base Color'])
 
 # An explicit site plan. Each tree's *shape* varies, but its position is fixed.
 tree_positions = [(-69,-23,8.7),(-61,-20,9.3),(-53,-25,8.1),
@@ -210,6 +237,36 @@ for bed_id,(x,y,w,d) in enumerate(beds):
                 groundcover[(col+row+j)%2].leaf(center,direction,length,rng.uniform(.055,.11))
 for i,builder in enumerate(groundcover):
     builder.finish('Layered garden groundcover %d' % i,leaf_mats[i+1])
+
+# Varied low leafy groups fill the two planted beds facing the theatre.  Root
+# sites follow those fixed bed boundaries and leave clearance for tree supports.
+front_foliage=[DetailMesh(),DetailMesh()]
+for bed_id in (1,2):
+    x,y,w,d=beds[bed_id]
+    rng=random.Random(5600+bed_id)
+    columns=int((w-2.4)/2.0)+1
+    rows=int((d-2.4)/2.0)+1
+    for row in range(rows):
+        for col in range(columns):
+            if rng.random()<.16:
+                continue
+            px=x-w/2+1.2+col*(w-2.4)/(columns-1)+rng.uniform(-.35,.35)
+            py=y-d/2+1.2+row*(d-2.4)/(rows-1)+rng.uniform(-.35,.35)
+            if any((px-tx)**2+(py-ty)**2<1.35**2 for tx,ty,_ in tree_positions):
+                continue
+            phase=rng.uniform(0,2*math.pi)
+            for leaf_id in range(36):
+                angle=phase+2*math.pi*leaf_id/36+rng.uniform(-.20,.20)
+                radius=rng.uniform(.04,.28)
+                root=Vector((px+math.cos(angle)*radius,py+math.sin(angle)*radius,.18))
+                direction=Vector((math.cos(angle)*rng.uniform(.35,.8),
+                                  math.sin(angle)*rng.uniform(.35,.8),
+                                  rng.uniform(.45,1.2))).normalized()
+                length=rng.uniform(.28,.54)
+                front_foliage[(row+col+leaf_id)%2].leaf(root+direction*length*.52,
+                                                        direction,length,rng.uniform(.075,.14))
+for i,builder in enumerate(front_foliage):
+    builder.finish('Plaza shrub foliage %d' % (i+3),leaf_mats[i+1])
 
 # Low shrubs form small, intentional groups between trees in the photo-based
 # beds.  Their coordinates are chosen within each bed, not scattered buildings.

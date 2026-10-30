@@ -9,6 +9,8 @@ import './style.css';
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
 const WALK_START = new THREE.Vector3(33.1, 1.7, 27);
+const WALK_SPEED = 2;
+const WALK_FAST_SPEED = 5;
 function groundHeight(x, z) {
     // 목재 무대 세 단은 각각 독립된 면 높이를 가집니다. / Walk on the three nested wooden platforms.
     if (x >= -28.5 && x <= -9.5 && z >= 21.8 && z <= 26.2) return 0.66;
@@ -265,7 +267,10 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             if (!sceneRef.current?.size) return;
             const key = event.key.toLowerCase();
             if (modeNow === 'walk') {
-                if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key)) {
+                if (key === 'shift') {
+                    held.add(key);
+                } else if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key)) {
+                    if (event.shiftKey) held.add('shift');
                     held.add(key);
                     event.preventDefault();
                 }
@@ -419,9 +424,11 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
                     - (held.has('a') || touchHeld.has('left') ? 1 : 0);
                 if (forward || side) {
                     const direction = new THREE.Vector3(-Math.sin(yaw) * forward + Math.cos(yaw) * side, 0, -Math.cos(yaw) * forward - Math.sin(yaw) * side).normalize();
-                    const steps = Math.max(1, Math.ceil(dt * 7 / 0.25));
-                    const dx = direction.x * dt * 7 / steps;
-                    const dz = direction.z * dt * 7 / steps;
+                    // 걷기와 빠른 이동 모두 작은 단위로 나눠 충돌을 확인합니다. / Substep both walking speeds for collision checks.
+                    const speed = held.has('shift') ? WALK_FAST_SPEED : WALK_SPEED;
+                    const steps = Math.max(1, Math.ceil(dt * speed / 0.25));
+                    const dx = direction.x * dt * speed / steps;
+                    const dz = direction.z * dt * speed / steps;
                     for (let i = 0; i < steps; i += 1) {
                         if (canWalk(camera.position.x + dx, camera.position.z)) camera.position.x += dx;
                         if (canWalk(camera.position.x, camera.position.z + dz)) camera.position.z += dz;
@@ -482,7 +489,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
                 onKeyDown={(event) => sceneRef.current?.handleKeyDown(event)}
                 onKeyUp={(event) => sceneRef.current?.handleKeyUp(event)}
                 onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) sceneRef.current?.clearInput(); }}
-                aria-label={mode === 'walk' ? '광장과 로비 걷기. WASD로 이동하고 방향키로 전진과 회전, 화면을 드래그해 둘러봅니다.' : '건축 모형. 드래그 또는 방향키로 회전하고 스크롤로 확대합니다.'}
+                aria-label={mode === 'walk' ? '광장과 로비 걷기. WASD로 이동하고 방향키로 전진과 회전, Shift를 함께 누르면 빠르게 이동합니다. 화면을 드래그해 둘러봅니다.' : '건축 모형. 드래그 또는 방향키로 회전하고 스크롤로 확대합니다.'}
             />
             {mode === 'walk' && (
                 <div className="walk-pad" aria-label="걷기 이동 조작">
@@ -603,7 +610,7 @@ function App() {
                             {mode === 'orbit' && <button type="button" disabled={!ready} onClick={() => setView({ name: 'front' })}>정면 보기</button>}
                             <button type="button" disabled={!ready} onClick={() => mode === 'walk' ? viewerRef.current?.resetWalk() : setView({ name: 'perspective' })}>{mode === 'walk' ? '시작 위치' : '처음 시점'}</button>
                         </div>
-                        <p className="viewer-hint">{mode === 'walk' ? '화면 드래그로 둘러보기 · WASD / 방향키로 이동' : '드래그로 회전 · 오른쪽 드래그로 이동 · 스크롤로 확대'}</p>
+                        <p className="viewer-hint">{mode === 'walk' ? '화면 드래그로 둘러보기 · WASD / 방향키로 이동 · Shift 빠르게' : '드래그로 회전 · 오른쪽 드래그로 이동 · 스크롤로 확대'}</p>
                     </div>
                     <div className="experience-bottom">
                         <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 대극장 로비와 별관 점포까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
