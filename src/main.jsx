@@ -362,7 +362,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         viewerRef.current = sceneRef.current;
 
         const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-        loader.load('/model/sejong.glb', (gltf) => {
+        loader.load('/model/sejong_sitevisit_refined.glb', (gltf) => {
             if (disposed) return;
             model = gltf.scene;
             scene.add(model);

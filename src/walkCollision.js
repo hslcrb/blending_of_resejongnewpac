@@ -15,9 +15,18 @@ const WALK_BLOCKS = [
     { minX: -30, maxX: -7, minZ: -103.2, maxZ: -84 },
     ...[-27.44, -19.12, -10.79, -2.46, 5.87, 14.20, 22.53].map((x) =>
         ({ minX: x - 1.1, maxX: x + 1.1, minZ: -110, maxZ: -107.3 })),
-    // 계단 측면 옹벽을 통해 높이 차를 뛰어넘지 않도록 합니다. / Keep walkers from stepping through stair side walls.
-    { minX: 3.15, maxX: 3.75, minZ: -119.6, maxZ: -103.21 },
-    { minX: 21.1, maxX: 21.7, minZ: -119.6, maxZ: -103.21 },
+    // 새 파빌리온과 정원 벤치의 외곽에 보행자 여유를 둡니다.
+    { minX: 29.05, maxX: 34.35, minZ: -122.89, maxZ: -110.69 },
+    { minX: -51.45, maxX: -48.55, minZ: -139.83, maxZ: -138.44 },
+    { minX: -11.45, maxX: -8.55, minZ: -141.13, maxZ: -139.74 },
+    { minX: 24.55, maxX: 27.45, minZ: -142.13, maxZ: -140.74 },
+    // 새 계단 난간과 상부 착지의 낙차를 막되 양 끝의 동선은 유지합니다.
+    { minX: 11.8, maxX: 21.9, minZ: -114.4, maxZ: -113.5 },
+    { minX: 11.8, maxX: 21.9, minZ: -110.55, maxZ: -109.95 },
+    { minX: 10.85, maxX: 11.35, minZ: -114.08, maxZ: -110.25 },
+    { minX: 3.15, maxX: 3.75, minZ: -110.25, maxZ: -103.21 },
+    { minX: 21.1, maxX: 21.7, minZ: -110.25, maxZ: -103.21 },
+    { minX: 3.75, maxX: 11.15, minZ: -110.55, maxZ: -109.95 },
     { minX: -7, maxX: -3, minZ: -11.4, maxZ: 3.5 },
     { minX: 69, maxX: 73, minZ: -11.4, maxZ: 3.5 },
     // 본관 입면 사이의 다섯 출입구 / Five openings in the main facade.

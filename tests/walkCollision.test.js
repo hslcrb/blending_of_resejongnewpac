@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { canWalk } from '../src/walkCollision.js';
+import { rearGroundHeight } from '../src/rearGround.js';
 
 test('the walker cannot enter the lobby counters and benches', () => {
     // These are the furniture centers in the exported GLB's x/z coordinates.
@@ -50,8 +51,37 @@ test('the rear wing colonnade stays open between pillars and stops at the wall',
     assert.equal(canWalk(-19.12, -108.5), false);
     assert.equal(canWalk(-15, -102.8), false);
     assert.equal(canWalk(2, -105), true);
-    assert.equal(canWalk(3.5, -115), false, 'rear stair side wall');
-    assert.equal(canWalk(10, -115), true, 'rear stair treads');
+    assert.equal(canWalk(3.5, -115), true, 'removed stair side wall');
+    assert.equal(canWalk(21.5, -112), true, 'new stair entrance');
+});
+
+test('the new pavilion and garden benches stop walkers at their footprints', () => {
+    for (const [x, z] of [[31, -116], [-50, -139.2], [-10, -140.4], [26, -141.4]]) {
+        assert.equal(canWalk(x, z), false, `obstacle at ${x}, ${z}`);
+    }
+    assert.equal(canWalk(28.5, -116), true, 'approach beside the pavilion');
+    assert.equal(canWalk(8, -142), true, 'garden path remains open');
+});
+
+test('the stair rails block side access while the end and upper landing stay connected', () => {
+    assert.equal(canWalk(16, -113.9), false, 'outer stone rail');
+    assert.equal(canWalk(16, -110.4), false, 'inner glass rail');
+    let x = 22;
+    let lastHeight = 0;
+    for (let i = 0; i < 104; i += 1) {
+        if (canWalk(x - 0.1, -112)) {
+            x -= 0.1;
+            const height = rearGroundHeight(x, -112) ?? 0;
+            assert.ok(height >= lastHeight && height - lastHeight <= 3.65 / 24 + 1e-8, `height jump at x=${x}`);
+            lastHeight = height;
+        }
+    }
+    assert.ok(x < 11.7 && x > 11.5, `reached top landing at x=${x}`);
+    assert.equal(lastHeight, 3.65);
+    assert.equal(canWalk(11.6, -110.1), true, 'upper landing connection');
+    assert.equal(rearGroundHeight(11.6, -110.1), 3.65);
+    assert.equal(canWalk(11, -110.1), false, 'unprotected edge of upper landing');
+    assert.equal(canWalk(11, -112), false, 'side edge of narrow top landing');
 });
 
 test('the lobby back wall keeps the eye clear of the camera near plane', () => {
