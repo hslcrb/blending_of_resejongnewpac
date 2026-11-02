@@ -114,3 +114,15 @@ test('southern storefront fronts and side walls stop walkers while entry framing
     assert.equal(canWalk(-94, -30, true), true, 'neighbor entry frame');
     assert.equal(canWalk(-92, -20, true), true, 'public path remains open');
 });
+
+test('the connected cafe can be entered, with its counter and tables remaining solid', () => {
+    for (let x = -115; x >= -124.2; x -= 0.1) {
+        assert.equal(canWalk(x, 12, true), true, `cafe entrance and aisle at ${x}`);
+    }
+    assert.equal(canWalk(-118, 10.8, true), false, 'door jamb');
+    assert.equal(canWalk(-125.5, 12, true), false, 'ordering counter');
+    assert.equal(canWalk(-123.46, 4, true), false, 'table');
+    assert.equal(canWalk(-121, 4, true), true, 'aisle beside seating');
+    assert.equal(surroundingsGroundHeight(-120, 12), 0.12, 'cafe floor');
+    assert.equal(surroundingsGroundHeight(-117, 12), null, 'outside floor');
+});

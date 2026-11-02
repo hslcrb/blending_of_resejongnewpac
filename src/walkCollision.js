@@ -42,11 +42,15 @@ const SURROUNDINGS_BLOCKS = [
     // Separate memorial columns keep the spaces between them passable.
     ...Array.from({ length: 23 }, (_, i) => ({ minX: 62.65 + 2 * i, maxX: 63.35 + 2 * i, minZ: 69.5, maxZ: 76.3 })),
     // The southern cafe shell (photo 048); the recessed entrance remains open.
-    { minX: -118.3, maxX: -117.7, minZ: -7.3, maxZ: 10.7 },
-    { minX: -118.3, maxX: -117.7, minZ: 13.5, maxZ: 15.3 },
+    { minX: -118.3, maxX: -117.7, minZ: -7.3, maxZ: 10.95 },
+    { minX: -118.3, maxX: -117.7, minZ: 13.25, maxZ: 15.3 },
     { minX: -128.3, maxX: -127.7, minZ: -7.3, maxZ: 15.3 },
     { minX: -128.3, maxX: -117.7, minZ: -7.3, maxZ: -6.7 },
     { minX: -128.3, maxX: -117.7, minZ: 14.7, maxZ: 15.3 },
+    // Ordering counter and tables inside the connected ground-floor cafe.
+    { minX: -126.63, maxX: -124.36, minZ: 6.45, maxZ: 13.46 },
+    ...[-123.46, -124.88].flatMap((x) => [-3.33, 0.33, 4.0, 7.67].map((z) =>
+        ({ minX: x - 0.71, maxX: x + 0.71, minZ: z - 0.71, maxZ: z + 0.71 }))),
     // Photo 075: preserve the marked doorway and the neighboring entry frame.
     { minX: -94.3, maxX: -93.7, minZ: -22.3, maxZ: -15 },
     { minX: -94.3, maxX: -93.7, minZ: -13.78, maxZ: -10.7 },

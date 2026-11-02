@@ -1,5 +1,6 @@
 // Height overrides for the expanded model; null leaves the original terrain unchanged.
 export function surroundingsGroundHeight(x, z) {
+    if (x >= -128 && x <= -118 && z >= -7 && z <= 15) return 0.12;
     if (x >= -69 && x <= -49.5 && z >= 19.4 && z <= 30.8) return 0.195;
     if (x > -49.5 && x <= -48.6 && z >= 19.4 && z <= 30.8) {
         return 0.195 - (x + 49.5) * (0.185 / 0.9);
