@@ -9,13 +9,20 @@ import { canWalk } from './walkCollision.js';
 import { walkKeyForEvent } from './walkKeys.js';
 import { focusOrbitAt } from './orbitFocus.js';
 import { rearGroundHeight } from './rearGround.js';
+import { surroundingsGroundHeight } from './surroundingsGround.js';
 import './style.css';
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
 const WALK_START = new THREE.Vector3(33.1, 1.7, 27);
 const WALK_SPEED = 2;
 const WALK_FAST_SPEED = 5;
+// Keep the verified expanded model opt-in until the scene and walking routes are reviewed together.
+const SHOW_SURROUNDINGS = new URLSearchParams(window.location.search).get('environment') === 'surroundings';
 function groundHeight(x, z) {
+    if (SHOW_SURROUNDINGS) {
+        const height = surroundingsGroundHeight(x, z);
+        if (height !== null) return height;
+    }
     const rearHeight = rearGroundHeight(x, z);
     if (rearHeight !== null) return rearHeight;
     // 목재 무대 세 단은 각각 독립된 면 높이를 가집니다. / Walk on the three nested wooden platforms.
@@ -194,6 +201,23 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             if (!sceneRef.current?.size || modeNow !== 'orbit') return;
             activePreset = name;
             userAdjusted = false;
+            if (SHOW_SURROUNDINGS) {
+                // The distant street buildings should not hide the center at startup.
+                const presets = {
+                    perspective: { position: [170, 235, 155], target: [0, 4, 5] },
+                    front: { position: [0, 55, 112], target: [0, 8, -35] },
+                    rear: { position: [-100, 115, -170], target: [0, 6, -45] },
+                };
+                const preset = presets[name] || presets.perspective;
+                const damping = controls.enableDamping;
+                controls.enableDamping = false;
+                controls.update();
+                camera.position.fromArray(preset.position);
+                controls.target.fromArray(preset.target);
+                controls.update();
+                controls.enableDamping = damping;
+                return;
+            }
             const { framePoints, center } = sceneRef.current;
             const direction = (name === 'front'
                 ? new THREE.Vector3(0, 0.08, 1)
@@ -362,7 +386,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         viewerRef.current = sceneRef.current;
 
         const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-        loader.load('/model/sejong_sitevisit_refined.glb', (gltf) => {
+        loader.load(SHOW_SURROUNDINGS ? '/model/sejong_surroundings_verified_meshopt.glb' : '/model/sejong_sitevisit_refined.glb', (gltf) => {
             if (disposed) return;
             model = gltf.scene;
             scene.add(model);
@@ -449,8 +473,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
                     const dx = direction.x * dt * speed / steps;
                     const dz = direction.z * dt * speed / steps;
                     for (let i = 0; i < steps; i += 1) {
-                        if (canWalk(camera.position.x + dx, camera.position.z)) camera.position.x += dx;
-                        if (canWalk(camera.position.x, camera.position.z + dz)) camera.position.z += dz;
+                        if (canWalk(camera.position.x + dx, camera.position.z, SHOW_SURROUNDINGS)) camera.position.x += dx;
+                        if (canWalk(camera.position.x, camera.position.z + dz, SHOW_SURROUNDINGS)) camera.position.z += dz;
                     }
                 }
                 camera.position.y = groundHeight(camera.position.x, camera.position.z) + 1.7;

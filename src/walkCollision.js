@@ -1,5 +1,54 @@
 // GLB의 광장과 출입구에 맞춘 보행 범위입니다. / Walkable plaza and entrances from the GLB.
 const WALK_LIMITS = { minX: -75, maxX: 80.6, minZ: -166, maxZ: 78 };
+const SURROUNDINGS_LIMITS = { minX: -160, maxX: 180, minZ: -166, maxZ: 160 };
+// Expanded model: collision dimensions approximate its rendered walls and rails.
+const SURROUNDINGS_BLOCKS = [
+    // Pavilion walls, leaving the garden-side opening clear.
+    { minX: 29.05, maxX: 29.75, minZ: -122.85, maxZ: -120.53 },
+    { minX: 29.05, maxX: 29.75, minZ: -119.57, maxZ: -110.73 },
+    { minX: 33.65, maxX: 34.35, minZ: -122.85, maxZ: -110.73 },
+    { minX: 29.05, maxX: 34.35, minZ: -122.85, maxZ: -122.15 },
+    { minX: 29.05, maxX: 34.35, minZ: -111.43, maxZ: -110.73 },
+    // Haechi sunken court perimeter and stair sides. The stair opens at z=94.
+    { minX: -55.3, maxX: -54.88, minZ: 93.7, maxZ: 108.3 },
+    { minX: -50.45, maxX: -47, minZ: 93.7, maxZ: 94.3 },
+    { minX: -43, maxX: -1.7, minZ: 93.7, maxZ: 94.3 },
+    { minX: -50.7, maxX: -50.15, minZ: 94.3, maxZ: 103.04 },
+    { minX: -47.3, maxX: -46.7, minZ: 94.3, maxZ: 98 },
+    { minX: -43.3, maxX: -42.7, minZ: 94.3, maxZ: 98 },
+    { minX: -45.3, maxX: -44.95, minZ: 98, maxZ: 101 },
+    { minX: -42.7, maxX: -5, minZ: 97.7, maxZ: 98.3 },
+    { minX: -45, maxX: -5, minZ: 100.7, maxZ: 101.3 },
+    { minX: -55.3, maxX: -1.7, minZ: 107.7, maxZ: 108.3 },
+    { minX: -2.3, maxX: -1.7, minZ: 94, maxZ: 108 },
+    // Freedom Hall railings and the closed glass portal at the foot of the steps.
+    { minX: 109.7, maxX: 110.3, minZ: 56.7, maxZ: 61.7 },
+    { minX: 109.7, maxX: 110.3, minZ: 65.3, maxZ: 67.3 },
+    { minX: 110, maxX: 122.3, minZ: 56.7, maxZ: 57.3 },
+    { minX: 110, maxX: 122.3, minZ: 66.7, maxZ: 67.3 },
+    { minX: 121.4, maxX: 122.3, minZ: 57, maxZ: 67 },
+    { minX: 110.3, maxX: 120, minZ: 61.4, maxZ: 61.9 },
+    { minX: 110.3, maxX: 120, minZ: 65.1, maxZ: 65.6 },
+    // Separate memorial columns keep the spaces between them passable.
+    ...Array.from({ length: 23 }, (_, i) => ({ minX: 62.65 + 2 * i, maxX: 63.35 + 2 * i, minZ: 69.5, maxZ: 76.3 })),
+    // The southern cafe shell (photo 048); the recessed entrance remains open.
+    { minX: -118.3, maxX: -117.7, minZ: -7.3, maxZ: 10.7 },
+    { minX: -118.3, maxX: -117.7, minZ: 13.5, maxZ: 15.3 },
+    { minX: -128.3, maxX: -127.7, minZ: -7.3, maxZ: 15.3 },
+    { minX: -128.3, maxX: -117.7, minZ: -7.3, maxZ: -6.7 },
+    { minX: -128.3, maxX: -117.7, minZ: 14.7, maxZ: 15.3 },
+    // Photo 075: preserve the marked doorway and the neighboring entry frame.
+    { minX: -94.3, maxX: -93.7, minZ: -22.3, maxZ: -15 },
+    { minX: -94.3, maxX: -93.7, minZ: -13.78, maxZ: -10.7 },
+    { minX: -104.3, maxX: -103.7, minZ: -22.3, maxZ: -10.7 },
+    { minX: -104.3, maxX: -93.7, minZ: -22.3, maxZ: -21.7 },
+    { minX: -104.3, maxX: -93.7, minZ: -11.3, maxZ: -10.7 },
+    { minX: -94.3, maxX: -93.7, minZ: -26.6, maxZ: -22.3 },
+    { minX: -94.3, maxX: -93.7, minZ: -34.5, maxZ: -33 },
+    { minX: -94.3, maxX: -93.7, minZ: -28.4, maxZ: -26.6 },
+    { minX: -103.3, maxX: -102.7, minZ: -34.5, maxZ: -22.3 },
+    { minX: -103.3, maxX: -93.7, minZ: -34.5, maxZ: -33.9 },
+];
 const WALK_BLOCKS = [
     // 후면 정원의 식재 구역 / Planted islands in the rear garden.
     ...[
@@ -16,7 +65,6 @@ const WALK_BLOCKS = [
     ...[-27.44, -19.12, -10.79, -2.46, 5.87, 14.20, 22.53].map((x) =>
         ({ minX: x - 1.1, maxX: x + 1.1, minZ: -110, maxZ: -107.3 })),
     // 새 파빌리온과 정원 벤치의 외곽에 보행자 여유를 둡니다.
-    { minX: 29.05, maxX: 34.35, minZ: -122.89, maxZ: -110.69 },
     { minX: -51.45, maxX: -48.55, minZ: -139.83, maxZ: -138.44 },
     { minX: -11.45, maxX: -8.55, minZ: -141.13, maxZ: -139.74 },
     { minX: 24.55, maxX: 27.45, minZ: -142.13, maxZ: -140.74 },
@@ -64,7 +112,13 @@ const WALK_BLOCKS = [
     { minX: 73.15, maxX: 78.85, minZ: -83.35, maxZ: -6.65 },
 ];
 
-export function canWalk(x, z) {
-    if (x < WALK_LIMITS.minX || x > WALK_LIMITS.maxX || z < WALK_LIMITS.minZ || z > WALK_LIMITS.maxZ) return false;
+export function canWalk(x, z, surroundings = false) {
+    const limits = surroundings ? SURROUNDINGS_LIMITS : WALK_LIMITS;
+    if (x < limits.minX || x > limits.maxX || z < limits.minZ || z > limits.maxZ) return false;
+    if (!surroundings && x > 29.05 && x < 34.35 && z > -122.89 && z < -110.69) return false;
+    if (surroundings && z > 125 && z < 151 && !((x >= -137.5 && x <= -132.5) || (x >= 152.5 && x <= 157.5))) return false;
+    // Channel edges match the exported mesh; the modeled bridge is at x=151.5..158.5.
+    if (surroundings && x > 24.7 && x < 237.3 && z > 115.1 && z < 117.3 && !(x >= 151.5 && x <= 158.5)) return false;
+    if (surroundings && SURROUNDINGS_BLOCKS.some((box) => x > box.minX && x < box.maxX && z > box.minZ && z < box.maxZ)) return false;
     return !WALK_BLOCKS.some((box) => x > box.minX && x < box.maxX && z > box.minZ && z < box.maxZ);
 }

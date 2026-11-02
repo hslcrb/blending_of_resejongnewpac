@@ -157,7 +157,7 @@ Labels describe visible content, not verified compass directions or dimensions.
 
 ## Priority features
 
-- Glass pavilion: 096, 116–117, 120, 125–128, 137–139. Elongated, low glazed volume in front of the main hall, dark slender mullions, flat roof, large SEJONG lettering, internally lit, entrance at the end; the adjacent luminous S and banners appear temporary.
+- Glass pavilion: 096, 116–117, 120, 125–128, 137–139. Elongated, low glazed volume in front of the main hall, dark slender mullions, flat roof, large SEJONG lettering, internally lit, entrance near the right side of the long glazed face in photo 127 (door mechanism and count unconfirmed); the adjacent luminous S and banners appear temporary.
 - Connecting wing: 092–095, 098, 104, 106, 115, 128, 139, 141. Tall lower colonnade under a wide slab; pale stone square pillars, pale walls, recessed service doors and narrow windows; upper brown masonry with a repeated band of narrow vertical slit windows. External stair climbs diagonally to a lit passage under the elevated wing.
 - Garden and pedestrian paths: 067–071, 080, 083, 086, 094, 097, 099, 102–103, 107–110, 112–119, 123–124, 129, 134–136, 143–144. Paths alternate large gray rectangular stone paving and curved reddish brick paving; planted islands with mature trees, dense low hedges, tall grasses and shrubs; warm globe lamps, low spotlights and suspended strings. Rain creates specular reflections. Tables, benches, heaters, kiosk and temporary enclosures appear in several views.
 - Main hall: 009–012, 056–062, 072, 096, 111, 117, 120, 125–128, 132, 140. Deep projecting layered eaves, closely spaced exposed underslung elements, large pale stone piers with flared/Y-like capitals, dark recessed diagonal lattice and glazed lower entry.
