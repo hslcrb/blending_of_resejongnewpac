@@ -10,14 +10,15 @@ import { walkKeyForEvent } from './walkKeys.js';
 import { focusOrbitAt } from './orbitFocus.js';
 import { rearGroundHeight } from './rearGround.js';
 import { surroundingsGroundHeight } from './surroundingsGround.js';
+import { surroundingsView } from './surroundingsViews.js';
 import './style.css';
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
 const WALK_START = new THREE.Vector3(33.1, 1.7, 27);
 const WALK_SPEED = 2;
 const WALK_FAST_SPEED = 5;
-// Keep the verified expanded model opt-in until the scene and walking routes are reviewed together.
-const SHOW_SURROUNDINGS = new URLSearchParams(window.location.search).get('environment') === 'surroundings';
+// Show the surrounding district by default; retain the original model as a fallback.
+const SHOW_SURROUNDINGS = new URLSearchParams(window.location.search).get('environment') !== 'legacy';
 function groundHeight(x, z) {
     if (SHOW_SURROUNDINGS) {
         const height = surroundingsGroundHeight(x, z);
@@ -203,12 +204,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             userAdjusted = false;
             if (SHOW_SURROUNDINGS) {
                 // The distant street buildings should not hide the center at startup.
-                const presets = {
-                    perspective: { position: [170, 235, 155], target: [0, 4, 5] },
-                    front: { position: [0, 55, 112], target: [0, 8, -35] },
-                    rear: { position: [-100, 115, -170], target: [0, 6, -45] },
-                };
-                const preset = presets[name] || presets.perspective;
+                const preset = surroundingsView(name, camera.aspect);
                 const damping = controls.enableDamping;
                 controls.enableDamping = false;
                 controls.update();
@@ -386,7 +382,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         viewerRef.current = sceneRef.current;
 
         const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-        loader.load(SHOW_SURROUNDINGS ? '/model/sejong_surroundings_verified_meshopt.glb' : '/model/sejong_sitevisit_refined.glb', (gltf) => {
+        loader.load(SHOW_SURROUNDINGS ? '/model/sejong_surroundings_latest.glb' : '/model/sejong_sitevisit_refined.glb', (gltf) => {
             if (disposed) return;
             model = gltf.scene;
             scene.add(model);

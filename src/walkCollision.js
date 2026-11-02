@@ -1,8 +1,18 @@
 // GLB의 광장과 출입구에 맞춘 보행 범위입니다. / Walkable plaza and entrances from the GLB.
 const WALK_LIMITS = { minX: -75, maxX: 80.6, minZ: -166, maxZ: 78 };
-const SURROUNDINGS_LIMITS = { minX: -160, maxX: 180, minZ: -166, maxZ: 160 };
+// The expanded north paving and history watercourse extend to x=240.
+const SURROUNDINGS_LIMITS = { minX: -160, maxX: 239, minZ: -166, maxZ: 160 };
 // Expanded model: collision dimensions approximate its rendered walls and rails.
 const SURROUNDINGS_BLOCKS = [
+    // Covered upper stair passage (photo 145); leave the spaces between columns open.
+    ...[-28, -22.1, -16.2, -10.3].map((x) =>
+        ({ minX: x - 0.675, maxX: x + 0.675, minZ: -1.875, maxZ: -0.525 })),
+    { minX: -29.3, maxX: -5.7, minZ: -9.64, maxZ: -9.04 },
+    // Photo 005/006/071 terrace: preserve paths between tables and umbrella poles.
+    ...[-65, -59.6, -54.2, -48.8, -43.4].flatMap((x) => [22.5, 27.8].map((z) =>
+        ({ minX: x - 0.65, maxX: x + 0.65, minZ: z - 0.65, maxZ: z + 0.65 }))),
+    ...[[-66, 28.2], [-55.1, 28.2], [-68.5, 30.3], [-57, 30.3], [-46, 30.3]].map(([x, z]) =>
+        ({ minX: x - 0.3, maxX: x + 0.3, minZ: z - 0.3, maxZ: z + 0.3 })),
     // Pavilion walls, leaving the garden-side opening clear.
     { minX: 29.05, maxX: 29.75, minZ: -122.85, maxZ: -120.53 },
     { minX: 29.05, maxX: 29.75, minZ: -119.57, maxZ: -110.73 },
@@ -104,7 +114,6 @@ const WALK_BLOCKS = [
     { minX: -34, maxX: -30.54, minZ: -9.6, maxZ: 15.19 },
     { minX: -2.32, maxX: -2, minZ: -9.6, maxZ: 15.19 },
     // 잔디 화단과 테두리를 사람의 폭만큼 여유 두고 피합니다. / Keep the walker clear of planted beds and edging.
-    { minX: -73.05, maxX: -49.15, minZ: 16.65, maxZ: 36.35 },
     { minX: 1.15, maxX: 26.85, minZ: 16.15, maxZ: 34.85 },
     { minX: 43.15, maxX: 72.85, minZ: 16.15, maxZ: 34.85 },
     { minX: 4.15, maxX: 11.85, minZ: 11.65, maxZ: 16.35 },
@@ -120,5 +129,9 @@ export function canWalk(x, z, surroundings = false) {
     // Channel edges match the exported mesh; the modeled bridge is at x=151.5..158.5.
     if (surroundings && x > 24.7 && x < 237.3 && z > 115.1 && z < 117.3 && !(x >= 151.5 && x <= 158.5)) return false;
     if (surroundings && SURROUNDINGS_BLOCKS.some((box) => x > box.minX && x < box.maxX && z > box.minZ && z < box.maxZ)) return false;
+    // The expanded scene paves a portion of the first planted bed for the terrace.
+    const inFirstBed = x > -73.05 && x < -49.15 && z > 16.65 && z < 36.35;
+    const onTerrace = x >= -69 && z >= 19.4 && z <= 30.8;
+    if (inFirstBed && (!surroundings || !onTerrace)) return false;
     return !WALK_BLOCKS.some((box) => x > box.minX && x < box.maxX && z > box.minZ && z < box.maxZ);
 }

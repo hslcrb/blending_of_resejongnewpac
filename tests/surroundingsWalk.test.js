@@ -9,6 +9,28 @@ test('expanded plaza and alley connect to the existing forecourt only for the ex
     assert.equal(canWalk(33, 90), false, 'legacy model keeps its original bounds');
 });
 
+test('the newly paved terrace stays accessible between tables while its remaining garden stays protected', () => {
+    for (let x = -46; x >= -68; x -= 0.1) {
+        assert.equal(canWalk(x, 25, true), true, `open terrace at ${x}`);
+    }
+    assert.equal(canWalk(-65, 22.5, true), false, 'table');
+    assert.equal(canWalk(-66, 28.2, true), false, 'umbrella pole');
+    assert.equal(canWalk(-65, 18, true), false, 'remaining garden');
+    assert.equal(canWalk(-65, 25), false, 'original scene retains the full bed');
+    assert.equal(surroundingsGroundHeight(-65, 25), 0.195, 'paving height');
+    assert.ok(Math.abs(surroundingsGroundHeight(-49.05, 25) - 0.1025) < 1e-8, 'entrance slope midpoint');
+    assert.ok(Math.abs(surroundingsGroundHeight(-48.6, 25) - 0.01) < 1e-8, 'entrance slope foot');
+});
+
+test('the covered passage connects to the main stairs between its columns', () => {
+    for (let z = 15; z >= -8.8; z -= 0.1) {
+        assert.equal(canWalk(-25, z, true), true, `main stair and passage at ${z}`);
+    }
+    assert.equal(canWalk(-22.1, -1.2, true), false, 'passage column');
+    assert.equal(canWalk(-25, -9.34, true), false, 'rear glass wall');
+    assert.equal(canWalk(-25, -1.2), true, 'original scene has no new passage columns');
+});
+
 test('sunken plaza stairs connect the upper plaza to the lower floor without a height jump', () => {
     let last = 0;
     for (let z = 93.7; z <= 104; z += 0.05) {
@@ -77,6 +99,9 @@ test('the history watercourse is blocked except at its modeled bridge and can be
     assert.equal(canWalk(24, 116, true), true, 'path around channel end');
     assert.equal(canWalk(80, 114, true), true, 'near side of channel');
     assert.equal(canWalk(80, 118, true), true, 'far side of channel');
+    assert.equal(canWalk(225, 114, true), true, 'northern portion of the watercourse can be visited');
+    assert.equal(canWalk(238, 116, true), true, 'path around the northern end remains on the paving');
+    assert.equal(canWalk(240, 116, true), false, 'do not walk past the northern paving edge');
 });
 
 test('southern storefront fronts and side walls stop walkers while entry framing remains accessible', () => {
