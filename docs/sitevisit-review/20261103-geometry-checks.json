@@ -1,0 +1,109 @@
+{
+  "working_file": "<로컬 경로>",
+  "source_commit": "a973e74",
+  "continuous_upper_floor": [
+    {
+      "xy": [
+        11.6,
+        112
+      ],
+      "z": 3.65,
+      "object": "Rear stair - top landing connection"
+    },
+    {
+      "xy": [
+        11.6,
+        110.2
+      ],
+      "z": 3.6525,
+      "object": "stone"
+    },
+    {
+      "xy": [
+        11.6,
+        109
+      ],
+      "z": 3.6525,
+      "object": "stone"
+    },
+    {
+      "xy": [
+        11.6,
+        107
+      ],
+      "z": 3.6525,
+      "object": "stone"
+    },
+    {
+      "xy": [
+        11.6,
+        105
+      ],
+      "z": 3.6525,
+      "object": "stone"
+    },
+    {
+      "xy": [
+        11.6,
+        103.1
+      ],
+      "z": 3.65,
+      "object": "Upper passage - shallow landing floor"
+    }
+  ],
+  "remaining_existing_limit": "Upper route meets existing unbroken back wall at y101.601. No through-building route or unseen interior is claimed.",
+  "baluster_seating": [
+    {
+      "lower_embed_m": 0.012,
+      "upper_embed_m": 0.008
+    },
+    {
+      "lower_embed_m": 0.012,
+      "upper_embed_m": 0.008
+    },
+    {
+      "lower_embed_m": 0.012,
+      "upper_embed_m": 0.008
+    },
+    {
+      "lower_embed_m": 0.012,
+      "upper_embed_m": 0.008
+    },
+    {
+      "lower_embed_m": 0.012,
+      "upper_embed_m": 0.008
+    },
+    {
+      "lower_embed_m": 0.012,
+      "upper_embed_m": 0.008
+    }
+  ],
+  "clay_tiles": {
+    "units": 1576,
+    "vertices": 39938,
+    "faces": 23121,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "zero_area_faces": 0
+  },
+  "new_collections": [
+    {
+      "name": "20261103 - photo048 terracotta scale tile detail",
+      "objects": 1
+    },
+    {
+      "name": "20261103 - photo141 hooded path light",
+      "objects": 4
+    },
+    {
+      "name": "20261103 - rear stair service detail",
+      "objects": 44
+    },
+    {
+      "name": "20261103 - upper stair passage ceiling detail",
+      "objects": 6
+    }
+  ],
+  "images_packed": true,
+  "no_source_photo_textures_added": true
+}
