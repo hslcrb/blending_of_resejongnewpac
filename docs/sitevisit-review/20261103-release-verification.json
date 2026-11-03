@@ -1,0 +1,31 @@
+{
+  "verifiedAt": "2026-11-03T08:03:58.448022+00:00",
+  "sourceCommit": "99b8d87",
+  "manifestRevision": "20261103-aerial-shared",
+  "coreBytes": 8668108,
+  "chunks": 26,
+  "sharedBuffers": 3,
+  "uniqueActivePayloadBytes": 27601974,
+  "sourceGeometryObjects": 1330,
+  "decodedBytesIdentical": 93751760,
+  "tests": {
+    "command": "node --test --test-reporter=spec [all tests/*.test.js and scripts/*.test.mjs]",
+    "passed": 50,
+    "failed": 0
+  },
+  "productionBuild": "passed",
+  "distHeadersAndManifestMatch": true,
+  "previousBlenderFilesUnchanged": true,
+  "currentBlender": {
+    "path": "blender_work/20261103/sejong_aerial_streaming_20261103.blend",
+    "bytes": 19203734,
+    "sha256": "7c447c76a580547b2943dff1fa1a2301ef034e2eb60b28ff5ecbe1bd67e310b5"
+  },
+  "attachmentImages": 25,
+  "siteVisitOriginals": 149,
+  "requestRecords": 9,
+  "deployment": "checked separately after Git push",
+  "gitBinaryAttributes": true,
+  "stagedMediaAndModelHashesMatch": true,
+  "stagedBinaryFilesChecked": 56
+}

@@ -1,6 +1,10 @@
 # 2026-11-03 Blender 작업 복사본
 
-열 파일: **`sejong_survey_manual_20261103.blend`**
+최신 파일: **`sejong_aerial_streaming_20261103.blend`**
+
+항공사진에 맞춘 별관 깊이 약 50% 보정, 뒤 정원과 웹용 PBR 베이크, 분할 GLB 내보내기 씬이 추가된 작업본이다. 저장 화면은 `20261103 - aerial proportion review`다. 웹은 `public/model/streaming-manifest.json`으로 연결된다.
+
+이전 상세 작업 파일: **`sejong_survey_manual_20261103.blend`**
 
 - 기준: Git `a973e74`의 `public/model/sejong_surroundings_work.blend`.
 - 원본을 보존하고 복사본을 live Blender MCP에서 수정했다.

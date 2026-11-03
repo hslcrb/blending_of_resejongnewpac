@@ -82,7 +82,7 @@ Blender MCP의 측면 근접 캡처에서 비스듬한 방향으로 어두운 �
 
 ## 웹 뷰어와 조작
 
-React와 Three.js 뷰어는 답사 후 수정한 `public/model/sejong_sitevisit_refined.glb`를 불러온다. 답사 후 개선 사항은 [작업 기록](sitevisit-mcp-20261102.md)에 정리했다. 하늘과 구름은 웹 뷰어의 셰이더에서 만들고, 조명과 그림자도 Three.js 장면에서 설정한다. 건물과 수목이 그림자를 드리우며, 정적인 장면의 그림자 맵은 모델을 불러온 뒤 갱신한다.
+현재 React와 Three.js 뷰어는 `public/model/streaming-manifest.json`의 기본 외형을 먼저 불러오고 가까운 상세 구역을 순서대로 추가한다. `?environment=legacy`와 manifest 오류 시의 이전 단일 GLB 경로도 보존했다. [항공사진 비례와 웹 연결](sitevisit-aerial-web-20261103.md), [공간 로딩](sitevisit-lazy-loading-20261103.md), [이전 답사 작업](sitevisit-mcp-20261102.md)에 범위와 검증을 정리했다. 하늘과 구름은 웹 셰이더로 만들고 조명과 그림자는 Three.js 장면에서 설정한다. 먼 구역은 그림자를 생략하며, 정적 그림자 맵은 모델 추가·표시 상태·조명 영역이 바뀔 때 갱신한다.
 
 Blender 원본에도 자연광 환경을 넣기 위해 하늘과 태양광을 두 가지 시점에서 렌더 시험했으나, 결과가 사진보다 어둡고 지평선이 부자연스러워 적용하지 않았다. 따라서 Blender 파일의 렌더용 하늘과 조명은 여전히 별도로 구성해야 한다.
 

@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { instanceTreeMeshes } from './treeInstances.js';
 import { canWalk } from './walkCollision.js';
 import { walkKeyForEvent } from './walkKeys.js';
@@ -11,6 +9,11 @@ import { focusOrbitAt } from './orbitFocus.js';
 import { rearGroundHeight } from './rearGround.js';
 import { surroundingsGroundHeight } from './surroundingsGround.js';
 import { surroundingsView } from './surroundingsViews.js';
+import { createSpatialModelStreamer, validateStreamManifest } from './modelStreaming.js';
+import { disposeModelResources, shouldCastModelShadow } from './modelResources.js';
+import { createSlowFrameDetector } from './framePerformance.js';
+import { setCampusLayout } from './campusLayout.js';
+import { cameraNearPlane } from './cameraClipping.js';
 import './style.css';
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
@@ -162,7 +165,13 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         let disposed = false;
         let frameId;
         let model;
-        let treeBatch;
+        let coreAsset;
+        let streamer;
+        let viewerVisible = false;
+        let lastSpatialUpdate = -Infinity;
+        let startedLoading = false;
+        const bootRequest = new AbortController();
+        const shadowFocus = new THREE.Vector3(Infinity, Infinity, Infinity);
         let modeNow = 'orbit';
         let activePreset = 'perspective';
         let userAdjusted = false;
@@ -171,8 +180,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         let yaw = 0;
         let pitch = 0.1;
         let lastTime = 0;
-        let performanceStart = 0;
-        let performanceFrames = 0;
+        const slowFrames = createSlowFrameDetector();
         let dragging = null;
         const held = new Set();
         const touchHeld = new Set();
@@ -370,7 +378,12 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         renderer.domElement.addEventListener('pointercancel', pointerEnd);
         renderer.domElement.addEventListener('dblclick', focusOnDoubleClick);
         window.addEventListener('blur', clearInput);
-        document.addEventListener('visibilitychange', clearInput);
+        const onPageVisibility = () => {
+            clearInput();
+            slowFrames.sample(performance.now(), false);
+            streamer?.setPaused(document.hidden || !viewerVisible);
+        };
+        document.addEventListener('visibilitychange', onPageVisibility);
 
         const onContextLost = (event) => {
             event.preventDefault();
@@ -381,18 +394,90 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         sceneRef.current = { fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld };
         viewerRef.current = sceneRef.current;
 
-        const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-        loader.load(SHOW_SURROUNDINGS ? '/model/sejong_surroundings_latest.glb' : '/model/sejong_sitevisit_refined.glb', (gltf) => {
-            if (disposed) return;
-            model = gltf.scene;
+        // 주 건물은 먼저, 주변 세부는 공간별로 내려받습니다. / Load core first and stream spatial detail separately.
+        let loaderPromise;
+        const getLoader = () => {
+            loaderPromise ??= Promise.all([
+                import('three/addons/loaders/GLTFLoader.js'),
+                import('three/addons/libs/meshopt_decoder.module.js'),
+            ]).then(([{ GLTFLoader }, { MeshoptDecoder }]) => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder));
+            return loaderPromise;
+        };
+        const loadGltf = async (url, { signal }) => {
+            const [bytes, loader] = await Promise.all([
+                fetch(url, { signal }).then((response) => {
+                    if (!response.ok) throw new Error(`Model request failed (${response.status})`);
+                    return response.arrayBuffer();
+                }),
+                getLoader(),
+            ]);
+            signal.throwIfAborted();
+            const gltf = await loader.parseAsync(bytes, new URL('.', new URL(url, window.location.href)).href);
+            if (signal.aborted) { disposeModelResources(gltf.scene); signal.throwIfAborted(); }
+            return gltf;
+        };
+        const prepareAsset = (gltf) => {
+            const root = gltf.scene;
+            const anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 4);
+            const sampledTextures = new Set();
+            root.traverse((object) => {
+                if (!object.isMesh) return;
+                object.receiveShadow = true;
+                object.castShadow = false;
+                object.frustumCulled = true;
+                for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
+                    if (!material) continue;
+                    for (const texture of Object.values(material)) {
+                        if (!texture?.isTexture || sampledTextures.has(texture)) continue;
+                        sampledTextures.add(texture);
+                        texture.anisotropy = anisotropy;
+                        texture.needsUpdate = true;
+                    }
+                }
+            });
+            instanceTreeMeshes(root, { animations: gltf.animations });
+            root.updateWorldMatrix(true, true);
+            const casters = [];
+            root.traverse((mesh) => {
+                if (!mesh.isMesh) return;
+                const bounds = new THREE.Box3().setFromObject(mesh);
+                if (shouldCastModelShadow(mesh, bounds)) casters.push({ mesh, bounds });
+            });
+            return {
+                root,
+                setShadows(enabled) { for (const { mesh } of casters) mesh.castShadow = enabled; },
+                updateCoreShadows(point) {
+                    let changed = false;
+                    for (const { mesh, bounds } of casters) {
+                        const enabled = bounds.distanceToPoint(point) <= 75;
+                        if (mesh.castShadow !== enabled) { mesh.castShadow = enabled; changed = true; }
+                    }
+                    return changed;
+                },
+                dispose() { disposeModelResources(root); },
+            };
+        };
+        const installCore = (asset, focusBounds = null) => {
+            coreAsset = asset;
+            model = new THREE.Group();
+            model.name = 'Sejong spatial district';
+            model.add(asset.root);
             scene.add(model);
-            model.updateWorldMatrix(true, true);
             const bounds = new THREE.Box3();
             const framePoints = [];
             const sample = new THREE.Vector3();
-            model.traverse((object) => {
+            if (!focusBounds) asset.root.traverse((object) => {
                 if (!object.isMesh || /^(ground|line)$/i.test(object.name)) return;
-                bounds.union(new THREE.Box3().setFromObject(object));
+                const objectBounds = new THREE.Box3().setFromObject(object);
+                bounds.union(objectBounds);
+                if (SHOW_SURROUNDINGS) {
+                    for (const x of [objectBounds.min.x, objectBounds.max.x]) {
+                        for (const y of [objectBounds.min.y, objectBounds.max.y]) {
+                            for (const z of [objectBounds.min.z, objectBounds.max.z]) framePoints.push(new THREE.Vector3(x, y, z));
+                        }
+                    }
+                    return;
+                }
                 const positions = object.geometry.attributes.position;
                 if (!positions) return;
                 const stride = Math.max(1, Math.floor(positions.count / 20000));
@@ -401,58 +486,96 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
                     framePoints.push(sample.clone());
                 }
             });
+            if (focusBounds) {
+                bounds.min.fromArray(focusBounds.min);
+                bounds.max.fromArray(focusBounds.max);
+                for (const x of [bounds.min.x, bounds.max.x]) {
+                    for (const y of [bounds.min.y, bounds.max.y]) {
+                        for (const z of [bounds.min.z, bounds.max.z]) framePoints.push(new THREE.Vector3(x, y, z));
+                    }
+                }
+            }
             if (bounds.isEmpty()) bounds.setFromObject(model);
             const size = bounds.getSize(new THREE.Vector3());
             const center = bounds.getCenter(new THREE.Vector3());
             const radius = Math.max(size.x, size.y, size.z, 1);
             sun.target.position.copy(center);
-            sun.position.copy(center).add(new THREE.Vector3(radius * 0.55, radius, radius * 0.7));
+            sun.position.copy(center).add(new THREE.Vector3(55, 100, 70));
             const shadowCamera = sun.shadow.camera;
-            shadowCamera.left = -radius * 0.8;
-            shadowCamera.right = radius * 0.8;
-            shadowCamera.top = radius * 0.8;
-            shadowCamera.bottom = -radius * 0.8;
-            shadowCamera.near = radius * 0.1;
-            shadowCamera.far = radius * 3;
+            shadowCamera.left = -75;
+            shadowCamera.right = 75;
+            shadowCamera.top = 75;
+            shadowCamera.bottom = -75;
+            shadowCamera.near = 1;
+            shadowCamera.far = 280;
             shadowCamera.updateProjectionMatrix();
-            model.traverse((object) => {
-                if (!object.isMesh) return;
-                const sourceName = object.userData.name || object.name.replaceAll('_', ' ');
-                object.receiveShadow = true;
-                object.castShadow = /^(stone|terrace_stone|terrace stone|roof|roofedge|copper|white|Individual tree trunks and branching|Deciduous foliage \d+|Tree trunk \d+|Tree foliage \d+ shade \d+|Plaza shrub stems|Plaza shrub foliage \d+)$/i.test(sourceName);
-            });
-            // 공유 수목 형상을 묶어 드로 호출을 줄입니다. / Batch shared trees after framing and shadow setup.
-            treeBatch = instanceTreeMeshes(model, { animations: gltf.animations });
             renderer.shadowMap.needsUpdate = true;
-            camera.near = radius / 1000;
-            camera.far = radius * 100;
+            camera.near = SHOW_SURROUNDINGS ? 0.1 : radius / 1000;
+            camera.far = SHOW_SURROUNDINGS ? 2000 : radius * 100;
             camera.updateProjectionMatrix();
-            controls.minDistance = radius * 0.06;
-            controls.maxDistance = radius * 6;
+            controls.minDistance = SHOW_SURROUNDINGS ? 2.5 : radius * 0.06;
+            controls.maxDistance = SHOW_SURROUNDINGS ? 1000 : radius * 6;
             Object.assign(sceneRef.current, { bounds, framePoints, size, center, radius });
             fitView('perspective');
             onStatusChange('ready');
-        }, undefined, () => {
-            if (!disposed) onStatusChange('error');
-        });
+        };
+        const bootModels = async () => {
+            if (startedLoading || disposed) return;
+            startedLoading = true;
+            try {
+                let manifest = null;
+                if (SHOW_SURROUNDINGS) {
+                    try {
+                        const [response] = await Promise.all([
+                            fetch('/model/streaming-manifest.json', { signal: bootRequest.signal }),
+                            fetch('/model/campus-layout.json', { signal: bootRequest.signal }).then(async (layoutResponse) => {
+                                if (layoutResponse.ok) setCampusLayout(await layoutResponse.json());
+                            }).catch(() => {}),
+                        ]);
+                        if (response.ok) manifest = validateStreamManifest(await response.json());
+                    } catch (error) { if (error.name === 'AbortError') throw error; }
+                }
+                const coreUrl = manifest?.core.url || (SHOW_SURROUNDINGS ? '/model/sejong_surroundings_latest.glb' : '/model/sejong_sitevisit_refined.glb');
+                const gltf = await loadGltf(coreUrl, { signal: bootRequest.signal });
+                if (disposed) { disposeModelResources(gltf.scene); return; }
+                installCore(prepareAsset(gltf), manifest?.focusBounds);
+                if (manifest) {
+                    streamer = createSpatialModelStreamer({
+                        chunks: manifest.chunks,
+                        load: async (url, options) => prepareAsset(await loadGltf(url, options)),
+                        attach: (asset) => { model.add(asset.root); asset.root.updateWorldMatrix(true, true); },
+                        onChange: () => { renderer.shadowMap.needsUpdate = true; },
+                    });
+                    streamer.setPaused(document.hidden || !viewerVisible);
+                    sceneRef.current.getStreamingStats = () => streamer.snapshot();
+                }
+            } catch (error) {
+                if (!disposed && error.name !== 'AbortError') onStatusChange('error');
+            }
+        };
+        // 화면 밖에서는 다운로드와 GPU 렌더링을 쉬게 합니다. / Defer offscreen downloads and pause GPU rendering.
+        const visibilityObserver = typeof IntersectionObserver === 'function' ? new IntersectionObserver(([entry]) => {
+            viewerVisible = entry.isIntersecting;
+            streamer?.setPaused(document.hidden || !viewerVisible);
+            if (viewerVisible) bootModels();
+            else { clearInput(); slowFrames.sample(performance.now(), false); }
+        }, { rootMargin: '320px' }) : null;
+        if (visibilityObserver) visibilityObserver.observe(container);
+        else { viewerVisible = true; bootModels(); }
 
         const animate = (time) => {
             const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.2) : 0;
             lastTime = time;
+            if (!viewerVisible || document.hidden) {
+                slowFrames.sample(time, false);
+                frameId = requestAnimationFrame(animate);
+                return;
+            }
             // 낮은 프레임이 지속되는 기기에서만 해상도를 줄입니다. / Reduce pixel load only when slow frames persist.
-            if (!performanceStart) performanceStart = time;
-            else if (pixelRatio > 0.75 && time - performanceStart > 4000) {
-                performanceFrames += 1;
-                const elapsed = time - performanceStart - 4000;
-                if (elapsed >= 3000) {
-                    if (performanceFrames * 1000 / elapsed < 25) {
-                        pixelRatio = 0.75;
-                        renderer.setPixelRatio(pixelRatio);
-                        renderer.setSize(container.clientWidth, container.clientHeight);
-                    }
-                    performanceStart = time;
-                    performanceFrames = 0;
-                }
+            if (pixelRatio > 0.75 && slowFrames.sample(time)) {
+                pixelRatio = 0.75;
+                renderer.setPixelRatio(pixelRatio);
+                renderer.setSize(container.clientWidth, container.clientHeight);
             }
             if (modeNow === 'walk') {
                 const turn = (held.has('arrowleft') ? 1 : 0) - (held.has('arrowright') ? 1 : 0);
@@ -478,6 +601,25 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             } else {
                 controls.update();
             }
+            if (SHOW_SURROUNDINGS) {
+                const near = cameraNearPlane(modeNow, controls.getDistance());
+                if (Math.abs(camera.near - near) > near * 0.05) {
+                    camera.near = near;
+                    camera.updateProjectionMatrix();
+                }
+            }
+            if (model && time - lastSpatialUpdate >= 250) {
+                lastSpatialUpdate = time;
+                const focus = modeNow === 'walk' ? camera.position : controls.target;
+                streamer?.update(focus, { cameraPosition: camera.position, now: time });
+                if (coreAsset.updateCoreShadows(camera.position)) renderer.shadowMap.needsUpdate = true;
+                if (focus.distanceToSquared(shadowFocus) > 36) {
+                    shadowFocus.copy(focus);
+                    sun.target.position.copy(focus);
+                    sun.position.copy(focus).add(new THREE.Vector3(55, 100, 70));
+                    renderer.shadowMap.needsUpdate = true;
+                }
+            }
             sky.position.copy(camera.position);
             renderer.render(scene, camera);
             frameId = requestAnimationFrame(animate);
@@ -486,8 +628,12 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
 
         return () => {
             disposed = true;
+            bootRequest.abort();
+            streamer?.dispose();
+            setCampusLayout(null);
             cancelAnimationFrame(frameId);
             observer.disconnect();
+            visibilityObserver?.disconnect();
             controls.dispose();
             sky.geometry.dispose();
             sky.material.dispose();
@@ -498,18 +644,10 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             renderer.domElement.removeEventListener('dblclick', focusOnDoubleClick);
             renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
             window.removeEventListener('blur', clearInput);
-            document.removeEventListener('visibilitychange', clearInput);
-            if (model) {
-                treeBatch?.disposeInstances();
-                model.traverse((object) => {
-                    object.geometry?.dispose();
-                    const materials = Array.isArray(object.material) ? object.material : [object.material];
-                    materials.forEach((material) => {
-                        material?.map?.dispose();
-                        material?.dispose();
-                    });
-                });
-            }
+            document.removeEventListener('visibilitychange', onPageVisibility);
+            coreAsset?.dispose();
+            model?.removeFromParent();
+            sun.shadow.dispose();
             renderer.dispose();
             renderer.domElement.remove();
             viewerRef.current = null;

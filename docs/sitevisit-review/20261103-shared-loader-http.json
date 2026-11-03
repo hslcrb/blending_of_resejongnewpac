@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "method": "Installed Three.js GLTFLoader.loadAsync over local HTTP with actual MeshoptDecoder; no WebGL renderer. Timing is diagnostic, not a browser latency benchmark.",
+  "measurements": [
+    {
+      "url": "/model/stream/20261103-campus-planting-center-front.glb",
+      "meshes": 66,
+      "vertices": 806496,
+      "requests": [
+        {
+          "url": "/model/stream/20261103-campus-planting-center-front.glb",
+          "bytes": 7529688,
+          "status": 200
+        }
+      ],
+      "elapsedMs": 76.4088
+    },
+    {
+      "url": "/model/stream-shared/20261103-campus-planting-center-front.glb",
+      "meshes": 66,
+      "vertices": 806496,
+      "requests": [
+        {
+          "url": "/model/stream-shared/20261103-campus-planting-center-front.glb",
+          "bytes": 3335820,
+          "status": 200
+        },
+        {
+          "url": "/model/stream-shared/shared/eaf80c585a521355b9ded2ce3b9f07e5838a50ca5681cabf349eb2cebd25e8e2.bin",
+          "bytes": 2516612,
+          "status": 200
+        },
+        {
+          "url": "/model/stream-shared/shared/b50efc4eaf1d794061d54767f8cc51ba0f8eca571f1507a85ca5b19389a0100a.bin",
+          "bytes": 838096,
+          "status": 200
+        },
+        {
+          "url": "/model/stream-shared/shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin",
+          "bytes": 839410,
+          "status": 200
+        }
+      ],
+      "elapsedMs": 54.393699999999995
+    }
+  ]
+}

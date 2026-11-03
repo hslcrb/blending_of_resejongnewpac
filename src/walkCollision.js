@@ -1,9 +1,13 @@
+import { isCampusPlanting } from './campusLayout.js';
+
 // GLB의 광장과 출입구에 맞춘 보행 범위입니다. / Walkable plaza and entrances from the GLB.
 const WALK_LIMITS = { minX: -75, maxX: 80.6, minZ: -166, maxZ: 78 };
 // The expanded north paving and history watercourse extend to x=240.
 const SURROUNDINGS_LIMITS = { minX: -160, maxX: 239, minZ: -166, maxZ: 160 };
 // Expanded model: collision dimensions approximate its rendered walls and rails.
 const SURROUNDINGS_BLOCKS = [
+    // 항공사진으로 늘린 별관 후반부 / Deeper annex body from the aerial-reference correction.
+    { minX: -72, maxX: -34, minZ: -53.6, maxZ: 4.25 },
     // Covered upper stair passage (photo 145); leave the spaces between columns open.
     ...[-28, -22.1, -16.2, -10.3].map((x) =>
         ({ minX: x - 0.675, maxX: x + 0.675, minZ: -1.875, maxZ: -0.525 })),
@@ -128,6 +132,7 @@ const WALK_BLOCKS = [
 export function canWalk(x, z, surroundings = false) {
     const limits = surroundings ? SURROUNDINGS_LIMITS : WALK_LIMITS;
     if (x < limits.minX || x > limits.maxX || z < limits.minZ || z > limits.maxZ) return false;
+    if (surroundings && isCampusPlanting(x, z)) return false;
     if (!surroundings && x > 29.05 && x < 34.35 && z > -122.89 && z < -110.69) return false;
     if (surroundings && z > 125 && z < 151 && !((x >= -137.5 && x <= -132.5) || (x >= 152.5 && x <= 157.5))) return false;
     // Channel edges match the exported mesh; the modeled bridge is at x=151.5..158.5.

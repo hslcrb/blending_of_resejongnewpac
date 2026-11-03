@@ -10,7 +10,13 @@ export function focusOrbitAt({ camera, controls, model, clientX, clientY, rect }
     );
     const raycaster = new THREE.Raycaster();
     raycaster.setFromCamera(pointer, camera);
-    const hit = raycaster.intersectObject(model, true)[0];
+    const hit = raycaster.intersectObject(model, true).find((candidate) => {
+        for (let object = candidate.object; object; object = object.parent) {
+            if (!object.visible) return false;
+            if (object === model) break;
+        }
+        return true;
+    });
     if (!hit) return false;
 
     const damping = controls.enableDamping;

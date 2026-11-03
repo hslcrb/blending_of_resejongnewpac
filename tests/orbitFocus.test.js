@@ -35,3 +35,14 @@ test('selecting empty sky keeps the camera unchanged', () => {
     assert.deepEqual(camera.position.toArray(), before.toArray());
     assert.deepEqual(controls.target.toArray(), [0, 0, 0]);
 });
+
+test('a hidden retained streaming zone cannot capture double-click focus', () => {
+    const { camera, controls, model, rect, x, y } = setup();
+    const hiddenZone = new THREE.Group();
+    hiddenZone.visible = false;
+    hiddenZone.add(...model.children);
+    model.add(hiddenZone);
+    const before = camera.position.clone();
+    assert.equal(focusOrbitAt({ camera, controls, model, clientX: x, clientY: y, rect }), false);
+    assert.deepEqual(camera.position.toArray(), before.toArray());
+});

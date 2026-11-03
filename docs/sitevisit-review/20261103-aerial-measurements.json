@@ -1,0 +1,22 @@
+{
+  "main_roof_y": [
+    -7.0,
+    110.41851806640625
+  ],
+  "annex_roof_y": [
+    -5.5,
+    52.984535217285156
+  ],
+  "annex_eave_y": [
+    -5.599999904632568,
+    53.209999084472656
+  ],
+  "main_depth": 117.41851806640625,
+  "annex_roof_depth": 58.484535217285156,
+  "annex_eave_depth": 58.809998989105225,
+  "annex_roof_ratio": 0.49808612968704924,
+  "target_ratio": 0.5,
+  "front_entrance_preserved": true,
+  "depth_axis": "Blender Y; Three.js -Z",
+  "measurements_are": "model coordinates, aerial/photo inferred, not surveyed"
+}

@@ -3,6 +3,14 @@ import assert from 'node:assert/strict';
 import { canWalk } from '../src/walkCollision.js';
 import { surroundingsGroundHeight } from '../src/surroundingsGround.js';
 
+test('the aerial-corrected annex depth blocks walking through the new rear half only in the expanded model', () => {
+    for (const [x, z] of [[-70, -30], [-53, -45], [-36, -53.5], [-53, -25]]) {
+        assert.equal(canWalk(x, z, true), false, `new annex body at ${x},${z}`);
+        assert.equal(canWalk(x, z, false), true, `legacy footprint at ${x},${z}`);
+    }
+    assert.equal(canWalk(-53, -54.2, true), true, 'path behind the new annex remains open');
+});
+
 test('expanded plaza and alley connect to the existing forecourt only for the expanded model', () => {
     assert.equal(canWalk(33, 90, true), true);
     assert.equal(canWalk(-85, 25, true), true);

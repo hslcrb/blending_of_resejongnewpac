@@ -1,0 +1,394 @@
+{
+  "version": 1,
+  "mode": "identical-consumer-set buckets",
+  "minSharedBytes": 4096,
+  "minBucketSavings": 65536,
+  "excludeCore": true,
+  "originalManifestSha256": "f59ac4dccb74f37778adc983715b5e3873d3772a8fa0273150c3b4c5f27f7cf7",
+  "originalTotalBytes": 55284184,
+  "outputGlbBytes": 23407856,
+  "sharedBytes": 4194118,
+  "totalUniquePayloadBytes": 27601974,
+  "savedBytes": 27682210,
+  "maxAdditionalRequestsPerGLB": 3,
+  "overfetchBytesExcludingAlignment": 0,
+  "buckets": [
+    {
+      "uri": "shared/eaf80c585a521355b9ded2ce3b9f07e5838a50ca5681cabf349eb2cebd25e8e2.bin",
+      "url": "/model/stream-shared/shared/eaf80c585a521355b9ded2ce3b9f07e5838a50ca5681cabf349eb2cebd25e8e2.bin",
+      "sha256": "eaf80c585a521355b9ded2ce3b9f07e5838a50ca5681cabf349eb2cebd25e8e2",
+      "bytes": 2516612,
+      "consumers": [
+        "campus-planting-center-front",
+        "campus-planting-center-rear",
+        "campus-planting-north-front",
+        "campus-planting-north-rear",
+        "campus-planting-south-front",
+        "campus-planting-south-rear",
+        "west-garden"
+      ],
+      "views": 42,
+      "estimatedRepeatedBytesRemoved": 15099384,
+      "paddingBytes": 48
+    },
+    {
+      "uri": "shared/b50efc4eaf1d794061d54767f8cc51ba0f8eca571f1507a85ca5b19389a0100a.bin",
+      "url": "/model/stream-shared/shared/b50efc4eaf1d794061d54767f8cc51ba0f8eca571f1507a85ca5b19389a0100a.bin",
+      "sha256": "b50efc4eaf1d794061d54767f8cc51ba0f8eca571f1507a85ca5b19389a0100a",
+      "bytes": 838096,
+      "consumers": [
+        "campus-planting-center-front",
+        "campus-planting-center-rear",
+        "campus-planting-north-front",
+        "campus-planting-north-rear",
+        "campus-planting-south-front",
+        "campus-planting-south-rear"
+      ],
+      "views": 14,
+      "estimatedRepeatedBytesRemoved": 4190410,
+      "paddingBytes": 14
+    },
+    {
+      "uri": "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin",
+      "url": "/model/stream-shared/shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin",
+      "sha256": "f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549",
+      "bytes": 839410,
+      "consumers": [
+        "campus-planting-center-front",
+        "campus-planting-center-rear",
+        "campus-planting-north-front",
+        "campus-planting-north-rear",
+        "campus-planting-south-front",
+        "campus-planting-south-rear",
+        "public-planting-0",
+        "public-planting-1",
+        "public-planting-2",
+        "public-planting-3",
+        "public-planting-4"
+      ],
+      "views": 14,
+      "estimatedRepeatedBytesRemoved": 8393960,
+      "paddingBytes": 14
+    }
+  ],
+  "files": [
+    {
+      "id": "core",
+      "url": "/model/stream/20261103-core.glb",
+      "sourceUrl": "/model/stream/20261103-core.glb",
+      "optimized": false,
+      "sourceBytes": 8668108,
+      "bytes": 8668108,
+      "sha256": "d362fcb06214432d71e22acec9df6587d6e0bd6d6e13352f5b2340ff9ee38cf4",
+      "externalRequests": 0
+    },
+    {
+      "id": "cafe-interior",
+      "url": "/model/stream/20261103-cafe-interior.glb",
+      "sourceUrl": "/model/stream/20261103-cafe-interior.glb",
+      "optimized": false,
+      "sourceBytes": 397224,
+      "bytes": 397224,
+      "sha256": "80428eafec4ecf440396d64e17cdccc374156cfd54f8a1ab318cca12d892bc63",
+      "externalRequests": 0
+    },
+    {
+      "id": "cafe-tile-detail",
+      "url": "/model/stream/20261103-cafe-tile-detail.glb",
+      "sourceUrl": "/model/stream/20261103-cafe-tile-detail.glb",
+      "optimized": false,
+      "sourceBytes": 1763128,
+      "bytes": 1763128,
+      "sha256": "641602cb2286e0e756a89aed2e662582f5b09fa19805aed8dac07062915ebaeb",
+      "externalRequests": 0
+    },
+    {
+      "id": "campus-planting-center-front",
+      "url": "/model/stream-shared/20261103-campus-planting-center-front.glb",
+      "sourceUrl": "/model/stream/20261103-campus-planting-center-front.glb",
+      "optimized": true,
+      "sourceBytes": 7529688,
+      "bytes": 3335820,
+      "sha256": "0b4993568862fc25d095216b1ae467596494ab74a76a049b5cc84461532d929f",
+      "externalRequests": 3,
+      "buckets": [
+        "shared/eaf80c585a521355b9ded2ce3b9f07e5838a50ca5681cabf349eb2cebd25e8e2.bin",
+        "shared/b50efc4eaf1d794061d54767f8cc51ba0f8eca571f1507a85ca5b19389a0100a.bin",
+        "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin"
+      ]
+    },
+    {
+      "id": "campus-planting-center-rear",
+      "url": "/model/stream-shared/20261103-campus-planting-center-rear.glb",
+      "sourceUrl": "/model/stream/20261103-campus-planting-center-rear.glb",
+      "optimized": true,
+      "sourceBytes": 7416620,
+      "bytes": 3222748,
+      "sha256": "f5424b2749b75c5017f349ac23cde546eb49c873f6eec24e6be18c20abea06b9",
+      "externalRequests": 3,
+      "buckets": [
+        "shared/eaf80c585a521355b9ded2ce3b9f07e5838a50ca5681cabf349eb2cebd25e8e2.bin",
+        "shared/b50efc4eaf1d794061d54767f8cc51ba0f8eca571f1507a85ca5b19389a0100a.bin",
+        "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin"
+      ]
+    },
+    {
+      "id": "campus-planting-north-front",
+      "url": "/model/stream-shared/20261103-campus-planting-north-front.glb",
+      "sourceUrl": "/model/stream/20261103-campus-planting-north-front.glb",
+      "optimized": true,
+      "sourceBytes": 5215724,
+      "bytes": 1021852,
+      "sha256": "bcf0b31d2c6d447de53daf5c667ec5af7ad482faa3e6f3cfb3bd8487bfc404ef",
+      "externalRequests": 3,
+      "buckets": [
+        "shared/eaf80c585a521355b9ded2ce3b9f07e5838a50ca5681cabf349eb2cebd25e8e2.bin",
+        "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin",
+        "shared/b50efc4eaf1d794061d54767f8cc51ba0f8eca571f1507a85ca5b19389a0100a.bin"
+      ]
+    },
+    {
+      "id": "campus-planting-north-rear",
+      "url": "/model/stream-shared/20261103-campus-planting-north-rear.glb",
+      "sourceUrl": "/model/stream/20261103-campus-planting-north-rear.glb",
+      "optimized": true,
+      "sourceBytes": 4265152,
+      "bytes": 71284,
+      "sha256": "93d94ad8d37c20376d898e812bd7746409bc440b68fc81e3ec10095dd9e51377",
+      "externalRequests": 3,
+      "buckets": [
+        "shared/eaf80c585a521355b9ded2ce3b9f07e5838a50ca5681cabf349eb2cebd25e8e2.bin",
+        "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin",
+        "shared/b50efc4eaf1d794061d54767f8cc51ba0f8eca571f1507a85ca5b19389a0100a.bin"
+      ]
+    },
+    {
+      "id": "campus-planting-south-front",
+      "url": "/model/stream-shared/20261103-campus-planting-south-front.glb",
+      "sourceUrl": "/model/stream/20261103-campus-planting-south-front.glb",
+      "optimized": true,
+      "sourceBytes": 4246972,
+      "bytes": 53104,
+      "sha256": "d3e7f748aa940d5f61d4cd3894d9a201a95df21a714bf777b84893dc2c3d3408",
+      "externalRequests": 3,
+      "buckets": [
+        "shared/b50efc4eaf1d794061d54767f8cc51ba0f8eca571f1507a85ca5b19389a0100a.bin",
+        "shared/eaf80c585a521355b9ded2ce3b9f07e5838a50ca5681cabf349eb2cebd25e8e2.bin",
+        "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin"
+      ]
+    },
+    {
+      "id": "campus-planting-south-rear",
+      "url": "/model/stream-shared/20261103-campus-planting-south-rear.glb",
+      "sourceUrl": "/model/stream/20261103-campus-planting-south-rear.glb",
+      "optimized": true,
+      "sourceBytes": 4255156,
+      "bytes": 61288,
+      "sha256": "ebb256a7718081bdf4aa246018784b14db23b17bc739e05a30f4fa0ccae4b400",
+      "externalRequests": 3,
+      "buckets": [
+        "shared/eaf80c585a521355b9ded2ce3b9f07e5838a50ca5681cabf349eb2cebd25e8e2.bin",
+        "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin",
+        "shared/b50efc4eaf1d794061d54767f8cc51ba0f8eca571f1507a85ca5b19389a0100a.bin"
+      ]
+    },
+    {
+      "id": "east-embassy-detail",
+      "url": "/model/stream/20261103-east-embassy-detail.glb",
+      "sourceUrl": "/model/stream/20261103-east-embassy-detail.glb",
+      "optimized": false,
+      "sourceBytes": 33020,
+      "bytes": 33020,
+      "sha256": "b7d41a48d82fb2e26f83b6d9802bfcda58ebee157f4b549a62051e02d0863eb0",
+      "externalRequests": 0
+    },
+    {
+      "id": "east-kt-detail",
+      "url": "/model/stream/20261103-east-kt-detail.glb",
+      "sourceUrl": "/model/stream/20261103-east-kt-detail.glb",
+      "optimized": false,
+      "sourceBytes": 39048,
+      "bytes": 39048,
+      "sha256": "3f647fa819a9f83a599af359b644e005f5a6cee2f913989059477f0aff9d6fcb",
+      "externalRequests": 0
+    },
+    {
+      "id": "east-kyobo-detail",
+      "url": "/model/stream/20261103-east-kyobo-detail.glb",
+      "sourceUrl": "/model/stream/20261103-east-kyobo-detail.glb",
+      "optimized": false,
+      "sourceBytes": 22568,
+      "bytes": 22568,
+      "sha256": "f52224751bb7a8fc736bbc5b611a3b8ad3a75abbed9d16ccbbdbefc6e0d49b26",
+      "externalRequests": 0
+    },
+    {
+      "id": "east-museum-detail",
+      "url": "/model/stream/20261103-east-museum-detail.glb",
+      "sourceUrl": "/model/stream/20261103-east-museum-detail.glb",
+      "optimized": false,
+      "sourceBytes": 35488,
+      "bytes": 35488,
+      "sha256": "c1e6bf1ba4814cc7b30a670956622c8e246a324ec3d951f7eff5730363f950ef",
+      "externalRequests": 0
+    },
+    {
+      "id": "front-terrace-detail",
+      "url": "/model/stream/20261103-front-terrace-detail.glb",
+      "sourceUrl": "/model/stream/20261103-front-terrace-detail.glb",
+      "optimized": false,
+      "sourceBytes": 1639312,
+      "bytes": 1639312,
+      "sha256": "b31ee5cb07413d116360f9df2383a764f27431b5c8c162ad1e330c1e659ec06e",
+      "externalRequests": 0
+    },
+    {
+      "id": "gratitude-garden",
+      "url": "/model/stream/20261103-gratitude-garden.glb",
+      "sourceUrl": "/model/stream/20261103-gratitude-garden.glb",
+      "optimized": false,
+      "sourceBytes": 154044,
+      "bytes": 154044,
+      "sha256": "a5380328f2816406078c47ac7f8137b52144d26e432f0a0168c3a426f3303a7f",
+      "externalRequests": 0
+    },
+    {
+      "id": "plaza-water-detail",
+      "url": "/model/stream/20261103-plaza-water-detail.glb",
+      "sourceUrl": "/model/stream/20261103-plaza-water-detail.glb",
+      "optimized": false,
+      "sourceBytes": 66776,
+      "bytes": 66776,
+      "sha256": "3a843010b78e777af3aaa752c741bcb63a2a3447d2cb955ed0052a8bab22ba54",
+      "externalRequests": 0
+    },
+    {
+      "id": "public-planting-0",
+      "url": "/model/stream-shared/20261103-public-planting-0.glb",
+      "sourceUrl": "/model/stream/20261103-public-planting-0.glb",
+      "optimized": true,
+      "sourceBytes": 863284,
+      "bytes": 23972,
+      "sha256": "0a08c1e394c61e064dd987cd49bd0f607887e5cd02603707a96527b6f5aae37c",
+      "externalRequests": 1,
+      "buckets": [
+        "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin"
+      ]
+    },
+    {
+      "id": "public-planting-1",
+      "url": "/model/stream-shared/20261103-public-planting-1.glb",
+      "sourceUrl": "/model/stream/20261103-public-planting-1.glb",
+      "optimized": true,
+      "sourceBytes": 860952,
+      "bytes": 21636,
+      "sha256": "968c7c3aa642c85b17ea2b7915d49b27ab6f0af565856ee8bba6c1fd0fed3de0",
+      "externalRequests": 1,
+      "buckets": [
+        "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin"
+      ]
+    },
+    {
+      "id": "public-planting-2",
+      "url": "/model/stream-shared/20261103-public-planting-2.glb",
+      "sourceUrl": "/model/stream/20261103-public-planting-2.glb",
+      "optimized": true,
+      "sourceBytes": 1436688,
+      "bytes": 597368,
+      "sha256": "0fb6ff9535e4febb17e92a6c7b4169847afc404162e5f2dc9383b32fadcca0b6",
+      "externalRequests": 1,
+      "buckets": [
+        "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin"
+      ]
+    },
+    {
+      "id": "public-planting-3",
+      "url": "/model/stream-shared/20261103-public-planting-3.glb",
+      "sourceUrl": "/model/stream/20261103-public-planting-3.glb",
+      "optimized": true,
+      "sourceBytes": 860936,
+      "bytes": 21624,
+      "sha256": "0ca618d373a44b9fcec969fa4b20d307938fbf0487b893ed0888130426c3009a",
+      "externalRequests": 1,
+      "buckets": [
+        "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin"
+      ]
+    },
+    {
+      "id": "public-planting-4",
+      "url": "/model/stream-shared/20261103-public-planting-4.glb",
+      "sourceUrl": "/model/stream/20261103-public-planting-4.glb",
+      "optimized": true,
+      "sourceBytes": 856404,
+      "bytes": 17092,
+      "sha256": "b0654ce4e4453ae91950ad0aee86ad62a4ce12bb8e461843883bba8c79169bd7",
+      "externalRequests": 1,
+      "buckets": [
+        "shared/f6131fcb2e95dd9bd6b9ffc90617dbd77fdacdf00f4ed452ef76db9f6f19e549.bin"
+      ]
+    },
+    {
+      "id": "rear-garden-detail",
+      "url": "/model/stream/20261103-rear-garden-detail.glb",
+      "sourceUrl": "/model/stream/20261103-rear-garden-detail.glb",
+      "optimized": false,
+      "sourceBytes": 818520,
+      "bytes": 818520,
+      "sha256": "7a20d084627c41b63f45b4346bc6ca85c733c1d20bb4dc400f584a2b75efdee5",
+      "externalRequests": 0
+    },
+    {
+      "id": "rear-stair-detail",
+      "url": "/model/stream/20261103-rear-stair-detail.glb",
+      "sourceUrl": "/model/stream/20261103-rear-stair-detail.glb",
+      "optimized": false,
+      "sourceBytes": 519580,
+      "bytes": 519580,
+      "sha256": "2ff42a02e96e9395faa9735f66970bfd4ee257577ea462c72cbeaaf3e6a35606",
+      "externalRequests": 0
+    },
+    {
+      "id": "south-alley",
+      "url": "/model/stream/20261103-south-alley.glb",
+      "sourceUrl": "/model/stream/20261103-south-alley.glb",
+      "optimized": false,
+      "sourceBytes": 5600,
+      "bytes": 5600,
+      "sha256": "9c3dbeffbc25555c04302092990754554e6467414874c24481b11ebe394be1fa",
+      "externalRequests": 0
+    },
+    {
+      "id": "sunken-court",
+      "url": "/model/stream/20261103-sunken-court.glb",
+      "sourceUrl": "/model/stream/20261103-sunken-court.glb",
+      "optimized": false,
+      "sourceBytes": 420400,
+      "bytes": 420400,
+      "sha256": "8f400165691e582f995909612ae84cf4138efc07fc3ae3a67349dbe636247f56",
+      "externalRequests": 0
+    },
+    {
+      "id": "west-garden",
+      "url": "/model/stream-shared/20261103-west-garden.glb",
+      "sourceUrl": "/model/stream/20261103-west-garden.glb",
+      "optimized": true,
+      "sourceBytes": 2850424,
+      "bytes": 333884,
+      "sha256": "22a9c39e309bed900b3787c2be64e6155f2628704206268ac8da45dcd65c2e64",
+      "externalRequests": 1,
+      "buckets": [
+        "shared/eaf80c585a521355b9ded2ce3b9f07e5838a50ca5681cabf349eb2cebd25e8e2.bin"
+      ]
+    },
+    {
+      "id": "yellow-shop-detail",
+      "url": "/model/stream/20261103-yellow-shop-detail.glb",
+      "sourceUrl": "/model/stream/20261103-yellow-shop-detail.glb",
+      "optimized": false,
+      "sourceBytes": 43368,
+      "bytes": 43368,
+      "sha256": "48f3d5e18fad4ff2b575fa036c7e0a175f79448efbbaefdf1dd203ac3c7e6767",
+      "externalRequests": 0
+    }
+  ]
+}

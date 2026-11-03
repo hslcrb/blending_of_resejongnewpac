@@ -13,6 +13,8 @@ npm run dev
 
 `npm run build`는 Cloudflare Pages에 배포할 `dist` 디렉터리를 만듭니다. `main` 브랜치의 변경은 GitHub에 연결된 Cloudflare Pages에서 빌드합니다.
 
-현재 Blender 작업본은 `public/model/sejong_sitevisit_refined.blend`, 웹 뷰어용 모델은 `public/model/sejong_sitevisit_refined.glb`입니다. 기존 `sejong.blend`와 `sejong.glb`는 원본으로 보존합니다. `scripts/build_sejong.py`는 이전 모델을 재생성하며 답사 후 Blender MCP로 직접 수정한 내용은 포함하지 않습니다. 본관 좌우 부조는 사진에서 추출한 이미지를 사용하지 않고 직접 만든 얕은 형태이며 세부는 해석을 포함합니다. 별관 화면과 현수막도 직접 제작한 벡터 그래픽을 사용합니다.
+현재 Blender 작업본은 `blender_work/20261103/sejong_aerial_streaming_20261103.blend`입니다. 이전 작업본과 `public/model/`의 원본들은 보존했습니다. 웹은 `public/model/streaming-manifest.json`의 기본 외형을 먼저 불러오고, 거리와 화면 크기에 맞춰 정원·실내·주변 상세 GLB를 추가로 받습니다. 반복되는 수목 형상은 공유 버퍼 3개로 재사용합니다. `?environment=legacy`는 이전 단일 모델을 유지합니다.
 
-사진 원본과 요청 기록은 [제작 브리프](docs/brief.md)에, 구현 범위·조작법·재생성 방법과 한계는 [구현 기록](docs/implementation.md)에, 답사 후 변경은 [작업 기록](docs/sitevisit-mcp-20261102.md)에 정리했습니다. 걷기 모드의 로비는 실내 사진으로 검증된 복원이 아니라 가상의 해석입니다.
+항공사진을 참고해 별관 지붕의 앞뒤 길이를 본관의 약 50%로 늘리고 뒤 정원에 굽은 화단·벽돌 보행 공간과 수목을 보강했습니다. 이 비례와 위치는 사진에 따른 근사이며 실측값이 아닙니다. `scripts/build_sejong.py`는 이전 모델을 재생성하므로 현재 MCP 수정본을 덮어쓰는 용도로 사용하지 마세요. 부조·화면·현수막과 새 포장·석재 무늬는 직접 제작했으며 사진에서 잘라 쓰지 않았습니다.
+
+사진 원본과 요청 기록은 [제작 브리프](docs/brief.md)와 [요청 원문](docs/references/user-requests-verbatim.md)에, 답사 149장 검토와 수작업 상세는 [11월 3일 기록](docs/sitevisit-mcp-20261103.md)에 정리했습니다. [항공 비례와 웹 연결](docs/sitevisit-aerial-web-20261103.md), [GLB 검증](docs/sitevisit-review/20261103-glb-verification.md), [웹 공간 로딩](docs/sitevisit-lazy-loading-20261103.md)에 이번 변경의 구현·검증 범위를 기록했습니다. 걷기 모드의 로비와 가려진 실내는 사진으로 완전히 검증된 복원이 아니라 해석을 포함합니다.

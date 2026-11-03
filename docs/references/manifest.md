@@ -28,3 +28,6 @@
 | [additional/image-9.png](additional/image-9.png) | 1555476 | `a8eb564bbdcc36da8b2563f008d5e7aa2b1950e9fef381ac4707bf139fa0d655` |
 | [additional/image-10.png](additional/image-10.png) | 422722 | `aae89a7de78c85a54269fb9db0d99a87b8fdb4d16ac4aff0dca4cf3e6c3d7dbe` |
 | [additional/image-11.png](additional/image-11.png) | 1074069 | `5d6845550444c1cb359fcb900044e54af20eb15f35950a32ab088fd6af351104` |
+| [user-media/20261103-aerial.png](user-media/20261103-aerial.png) | 725887 | `37c51061aabd1afefc16bb13e8cdf5c2a3b5509bce2de0cd739c88626d76a4c5` |
+
+2026-11-03 항공사진 추가 후, 기존 첨부 24개와 새 항공사진 1개를 사용자 원본 경로와 다시 해시 대조했다. [원본 경로·파일 보존 감사](archive-audit-20261103.json), [사용자 요청 원문 전체 기록](user-requests-verbatim.md)을 참고한다. 답사 원본 149개는 저장소 `20261101답사/`에 별도로 보존되어 있다.
