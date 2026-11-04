@@ -5,12 +5,12 @@ test('the lobby connects to the auditorium only through its central doorway',()=
  assert.equal(canEnterTheatre(0,29.8,0,30.2),true);
  assert.equal(canEnterTheatre(8,29.8,8,30.2),false);
  assert.equal(canEnterTheatre(0,0,0,-2),true);
- assert.equal(canEnterTheatre(0,43,0,44),false);
+ assert.equal(canEnterTheatre(0,60,0,61),false);
 });
 test('walking is bounded by the building and lobby columns',()=>{
  assert.equal(stepInside({x:0,z:38},{x:0,z:38.2}).z,38.2);
  assert.deepEqual(stepInside({x:10,z:34},{x:10,z:34.6}),{x:10,z:34});
- assert.deepEqual(stepInside({x:0,z:42.8},{x:0,z:43.5}),{x:0,z:42.8});
+ assert.deepEqual(stepInside({x:0,z:59.8},{x:0,z:60.5}),{x:0,z:59.8});
 });
 test('nearest seat respects distance and seated view follows the provided seat height',()=>{
  const seats=[{id:'A',position:[1,0,6]},{id:'B',position:[3,1,6],eyeHeight:1.08}];

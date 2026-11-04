@@ -1,9 +1,9 @@
 // 1층 로비와 층별 객석의 보행 경계입니다. / Walk boundaries for the lobby and seating levels.
-const columns = [-10,10].flatMap(x => [34,39].map(z => ({x,z})));
+const columns = [-10,10].flatMap(x => [34,40,46,52,58].map(z => ({x,z})));
 export function canEnterTheatre(x,z,nextX,nextZ,level=1) {
  if (![x,z,nextX,nextZ].every(Number.isFinite)) return false;
  if(level===2||level===3) { const arc=.01*nextX*nextX;return Math.abs(nextX)<=15.4 && nextZ>=19.25+arc && nextZ<=29+arc; }
- if (Math.abs(nextX)>15.4 || nextZ < -20 || nextZ > 43) return false;
+ if (Math.abs(nextX)>15.4 || nextZ < -20 || nextZ > 60) return false;
  if (((z<30 && nextZ>=30)||(z>=30 && nextZ<30)) && Math.abs((x+nextX)/2)>3.5) return false;
  return !columns.some(c => Math.abs(nextX-c.x)<0.8 && Math.abs(nextZ-c.z)<0.8);
 }
