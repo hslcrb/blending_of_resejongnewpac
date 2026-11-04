@@ -36,3 +36,8 @@ test('취소·실패는 캐시를 오염시키지 않고 다음 요청을 다시
  const abort=new AbortController();abort.abort();await assert.rejects(source.query({layers:['temples'],signal:abort.signal}),{name:'AbortError'});
  await assert.rejects(source.query({layers:['unknown']}),/찾지 못했습니다/);
 });
+test('전국 레이어 묶음은 타일의 전체 기록과 일치하고 전국 조회를 20회로 줄인다',async()=>{
+ for(const layer of m.layers){const byId=new Map(layer.shards.flatMap(s=>readShard(s).features).map(f=>[f.id,f]));const overview=readShard(layer.overview);assert.equal(overview.features.length,layer.sourceCount);assert.equal(byId.size,overview.features.length);for(const f of overview.features)assert.deepEqual(f,byId.get(f.id));}
+ let requests=[];const source=createNationalMapSource({fetcher:async url=>{requests.push(url);return new Response(readFileSync('public'+url),{status:200})}});
+ const result=await source.query({layers:m.layers.map(l=>l.id),bounds:[-500000,-500000,1000000,1500000]});assert.equal(result.length,7431);assert.ok(requests.length<=21,`requests: ${requests.length}`);
+});

@@ -47,7 +47,13 @@ export function createNationalMapSource({ fetcher = fetch, maxCache = 24 } = {})
         const index=await manifest(signal), byId=new Map(index.layers.map(value=>[value.id,value]));
         const ids=[...new Set(layers)];
         for(const id of ids) if(!byId.has(id)) throw new Error(`지도 레이어를 찾지 못했습니다: ${id}`);
-        const selected=ids.flatMap(id=>byId.get(id).shards).filter(value=>value.bbox ? (!bounds || overlaps(value.bbox,bounds)) : includeUnlocated);
+        const selected=ids.flatMap(id=>{
+            const layer=byId.get(id);
+            const shards=layer.shards.filter(value=>value.bbox ? (!bounds || overlaps(value.bbox,bounds)) : includeUnlocated);
+            // Fetch the consolidated layer only when the viewport covers its entire extent.
+            const allVisible=!bounds || (layer.overview?.bbox && bounds[0]<=layer.overview.bbox[0] && bounds[1]<=layer.overview.bbox[1] && bounds[2]>=layer.overview.bbox[2] && bounds[3]>=layer.overview.bbox[3]);
+            return allVisible && shards.length>1 && layer.overview ? [layer.overview] : shards;
+        });
         const results=new Array(selected.length);let cursor=0;
         async function worker(){for(;;){throwIfAborted(signal);const i=cursor++;if(i>=selected.length)return;results[i]=await shard(selected[i],signal);}}
         await Promise.all(Array.from({length:Math.min(4,selected.length)},worker));

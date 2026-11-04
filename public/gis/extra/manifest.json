@@ -411,7 +411,20 @@
           "uncompressedBytes": 434,
           "sha256": "ca1a7ad41cc5f34b932ca90fa87c2303b6d9d32a3901c70ba5cd12f9b153502f"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/graticule/overview.json.gz",
+        "bbox": [
+          -163576.2,
+          -67839.3,
+          707319.2,
+          1184883.2
+        ],
+        "count": 23,
+        "bytes": 3932,
+        "uncompressedBytes": 12238,
+        "sha256": "14ee1b9714404cd3e610a615468c35667f5eba7322d3784354a2eeb731bbaf0f"
+      }
     },
     {
       "id": "express-rail",
@@ -711,7 +724,20 @@
           "uncompressedBytes": 1644,
           "sha256": "a1860691405e917665448c042734a9e7ed64df1cc3265c57106743a900a0d72d"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/express-rail/overview.json.gz",
+        "bbox": [
+          143899.7,
+          240052.8,
+          410981.0,
+          575584.7
+        ],
+        "count": 285,
+        "bytes": 29730,
+        "uncompressedBytes": 209989,
+        "sha256": "8a2e314bf144a71319028790efcddef7b6fc7adba816cb1c5328e2a4cdda1d17"
+      }
     },
     {
       "id": "airports",
@@ -930,7 +956,20 @@
           "uncompressedBytes": 830,
           "sha256": "fd4d54fbedcb14393efb37a245dac34a3518f14826cc46c50cc9322b862c0607"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/airports/overview.json.gz",
+        "bbox": [
+          143651.9,
+          102052.0,
+          418293.7,
+          608098.5
+        ],
+        "count": 14,
+        "bytes": 1335,
+        "uncompressedBytes": 5176,
+        "sha256": "11bf6e03e73de92363a0ae6e0e9d5cabae34a3f2501b64a3eb83311367dd3d60"
+      }
     },
     {
       "id": "metro-city-halls",
@@ -1120,7 +1159,20 @@
           "uncompressedBytes": 910,
           "sha256": "f3ebfdf31a877c68e53d4042195d82a211169d5294aa11df431140cf28189c39"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/metro-city-halls/overview.json.gz",
+        "bbox": [
+          174012.0,
+          284844.9,
+          409614.9,
+          551893.2
+        ],
+        "count": 8,
+        "bytes": 1603,
+        "uncompressedBytes": 6677,
+        "sha256": "2a7de5f50d68a2d3cf3f976631e470fbedb61e6ec0dca7301a378ef061bff889"
+      }
     },
     {
       "id": "national-border",
@@ -1174,7 +1226,20 @@
           "uncompressedBytes": 1635,
           "sha256": "87d18ec4da05dfbe33b85bb3f680080e78bbb4423de5217005430cabfcc628f4"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/national-border/overview.json.gz",
+        "bbox": [
+          -51155.0,
+          801436.2,
+          541066.2,
+          1183988.6
+        ],
+        "count": 2,
+        "bytes": 5375,
+        "uncompressedBytes": 12479,
+        "sha256": "4cc60230ef8d3e766007d9d66714658bf66c140818685e7f797f086418fd8e41"
+      }
     },
     {
       "id": "national-parks",
@@ -1457,7 +1522,20 @@
           "uncompressedBytes": 3988,
           "sha256": "b5614a37108f090dc20520fb4205b1ba82cdb2b06d82f322040af45b6fa04260"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/national-parks/overview.json.gz",
+        "bbox": [
+          29248.7,
+          78142.6,
+          428674.6,
+          633311.3
+        ],
+        "count": 23,
+        "bytes": 30248,
+        "uncompressedBytes": 76234,
+        "sha256": "6f63ba26bd7f21094193c4f5b7bc73c0640b5daaafb584f7128b07bcb13db13f"
+      }
     },
     {
       "id": "provincial-halls",
@@ -1681,7 +1759,20 @@
           "uncompressedBytes": 935,
           "sha256": "4c8176b7fac944824ff0e943c5601d9f65e00bd7c997a3e7c05c7fca59767054"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/provincial-halls/overview.json.gz",
+        "bbox": [
+          150926.5,
+          99578.4,
+          354060.7,
+          587514.0
+        ],
+        "count": 9,
+        "bytes": 1832,
+        "uncompressedBytes": 7487,
+        "sha256": "74f2ce9dbdacf43f95315dd777807dd83ab024e89d72e813d4568a93280f9c3a"
+      }
     },
     {
       "id": "lighthouses",
@@ -2087,7 +2178,20 @@
           "uncompressedBytes": 443,
           "sha256": "b075fa2dd524da1579f055e7eff0015b27c975698f995173af86b1cf57e61b2a"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/lighthouses/overview.json.gz",
+        "bbox": [
+          -9601.1,
+          57829.0,
+          624630.9,
+          800034.0
+        ],
+        "count": 69,
+        "bytes": 3544,
+        "uncompressedBytes": 23286,
+        "sha256": "13fc9f0cdf4bce7865f99ef2868323a3117ee99f60e8b7ac16b7432b2a4af6e8"
+      }
     },
     {
       "id": "temples",
@@ -2527,7 +2631,20 @@
           "uncompressedBytes": 1723,
           "sha256": "96f948ac35265bd987e8ae9f53efb35ee566992c186d49208c596ef3b30782f8"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/temples/overview.json.gz",
+        "bbox": [
+          80651.0,
+          68919.3,
+          431469.6,
+          877493.9
+        ],
+        "count": 268,
+        "bytes": 11745,
+        "uncompressedBytes": 87224,
+        "sha256": "007a3d3cfb71782b2578c19e4563838aacc4a3b8863e4c6556da754e23699826"
+      }
     },
     {
       "id": "mountains",
@@ -3103,7 +3220,20 @@
           "uncompressedBytes": 428,
           "sha256": "e20cc73723852f15324673275fbf67381c944f8a0334ddbac1bf8b5c64eb652f"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/mountains/overview.json.gz",
+        "bbox": [
+          -8304.0,
+          87911.0,
+          538897.0,
+          1147787.5
+        ],
+        "count": 182,
+        "bytes": 8454,
+        "uncompressedBytes": 60105,
+        "sha256": "bbff6af16646ddf155d15cda0c6c41c7a73c690fa3cf8057da9cf8566d30365c"
+      }
     },
     {
       "id": "ski-resorts",
@@ -3361,7 +3491,20 @@
           "uncompressedBytes": 3407,
           "sha256": "ebddb204bda10b582c4b638b38109e6e8aa30b10c8859abedf82e558dbebc5fe"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/ski-resorts/overview.json.gz",
+        "bbox": [
+          221757.2,
+          316691.5,
+          380209.0,
+          581004.3
+        ],
+        "count": 23,
+        "bytes": 4210,
+        "uncompressedBytes": 28616,
+        "sha256": "a4ca89f94c16b5ef38b4bddcf93b0eec475d1930e3e4b1e32ae336a5303b4c19"
+      }
     },
     {
       "id": "municipal-halls",
@@ -3725,7 +3868,20 @@
           "uncompressedBytes": 1733,
           "sha256": "c665dc61bb894d6b6f60d10c39a8349bfea5870a5e6f737f68cd4608877f77ad"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/municipal-halls/overview.json.gz",
+        "bbox": [
+          144383.5,
+          73517.6,
+          411225.0,
+          624170.0
+        ],
+        "count": 77,
+        "bytes": 11175,
+        "uncompressedBytes": 63111,
+        "sha256": "b7d2c48477b3c567ea3c081661fa10d7d983e0e2010c8bb8ca50635041f628b1"
+      }
     },
     {
       "id": "watercourses",
@@ -4408,7 +4564,20 @@
           "uncompressedBytes": 418,
           "sha256": "ddc5bf99d2a3192af1232d5bcd9d96f2d23bdc67849b3e9d7c2b6631643df7f5"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/watercourses/overview.json.gz",
+        "bbox": [
+          -28064.2,
+          199659.5,
+          504994.4,
+          1160585.5
+        ],
+        "count": 847,
+        "bytes": 393778,
+        "uncompressedBytes": 1148874,
+        "sha256": "129e370247ab7f737295897fa2581a6d81145fa9a4cf904ac3780a5046f9d6c3"
+      }
     },
     {
       "id": "rail",
@@ -4776,7 +4945,20 @@
           "uncompressedBytes": 2258,
           "sha256": "802c2e6f6ffa9f37b3d518c390555f23295fe56715a8e8e25b1654ecb7cd214c"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/rail/overview.json.gz",
+        "bbox": [
+          143894.2,
+          240059.6,
+          416053.7,
+          628600.7
+        ],
+        "count": 549,
+        "bytes": 60137,
+        "uncompressedBytes": 407141,
+        "sha256": "b2baf8213e5c1ea2b1105f1bfd3012b87991c1e1f4102ebb9e7f87b0d8da0919"
+      }
     },
     {
       "id": "traditional-temples",
@@ -5225,7 +5407,20 @@
           "uncompressedBytes": 996,
           "sha256": "dbd59d70ff7288cbcf477498880b178eeb4a42da1919dfebe0c139535ba87c7e"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/traditional-temples/overview.json.gz",
+        "bbox": [
+          99677.9,
+          72650.5,
+          430170.9,
+          645548.5
+        ],
+        "count": 983,
+        "bytes": 120225,
+        "uncompressedBytes": 875635,
+        "sha256": "6228046b51c50e00b352a4cf4d65d7b466ff9af641c4f24f3ef1f91d96df06f9"
+      }
     },
     {
       "id": "metro-boundaries",
@@ -5704,7 +5899,20 @@
           "uncompressedBytes": 1528,
           "sha256": "12bfaad9129b630f391a81f555970e61b6c7ce11b75456b8b90e392b823503fb"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/metro-boundaries/overview.json.gz",
+        "bbox": [
+          -8157.3,
+          144310.6,
+          485585.7,
+          1118335.7
+        ],
+        "count": 81,
+        "bytes": 27579,
+        "uncompressedBytes": 81449,
+        "sha256": "2d5e52ddf6f6d9f84c240528b26feaa776d96d49e8e4ce45fb860344b2f2b72d"
+      }
     },
     {
       "id": "ports",
@@ -6093,7 +6301,20 @@
           "uncompressedBytes": 1408,
           "sha256": "84b47593fe34f1326e5b58f55e28d09385213cca6cbd1ff4fa4a4db996c06c44"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/ports/overview.json.gz",
+        "bbox": [
+          224.7,
+          68083.6,
+          547371.3,
+          731871.6
+        ],
+        "count": 129,
+        "bytes": 6082,
+        "uncompressedBytes": 41778,
+        "sha256": "7e116c76cfcd15e6fb4d39734df34309955a3ff051272eaf6e0ea9291921240a"
+      }
     },
     {
       "id": "beaches",
@@ -6431,7 +6652,20 @@
           "uncompressedBytes": 442,
           "sha256": "2a68cca24a7b25f0e0f84987943225758941429b21367bfb9a375729a03ffeeb"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/beaches/overview.json.gz",
+        "bbox": [
+          93290.7,
+          68569.0,
+          531910.4,
+          653761.8
+        ],
+        "count": 71,
+        "bytes": 3658,
+        "uncompressedBytes": 24656,
+        "sha256": "9513b8da0cf822686631bf15fac3b23b8b2fbe95d8301975255e7c5d2a37f4a9"
+      }
     },
     {
       "id": "coastlines",
@@ -7309,7 +7543,20 @@
           "uncompressedBytes": 578,
           "sha256": "1af4b507ef85de107cd01bacc4b2e127aad601d9d47b6a4066cae0a4d9772b11"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/coastlines/overview.json.gz",
+        "bbox": [
+          -161366.9,
+          -65127.9,
+          706819.9,
+          1184552.0
+        ],
+        "count": 3081,
+        "bytes": 516880,
+        "uncompressedBytes": 1885592,
+        "sha256": "9811dae0a67a5379d515d92cd67b6caf112d833e1c4cde0ed33123886ed899a9"
+      }
     },
     {
       "id": "administrative-boundaries",
@@ -8009,7 +8256,20 @@
           "uncompressedBytes": 3443,
           "sha256": "2ff346dfcd82418498bc31100e1ffcab8ef5ac93aa39991c3fd2c4b03b655256"
         }
-      ]
+      ],
+      "overview": {
+        "url": "/gis/extra/administrative-boundaries/overview.json.gz",
+        "bbox": [
+          -30533.9,
+          75870.5,
+          474691.3,
+          1149412.7
+        ],
+        "count": 710,
+        "bytes": 104333,
+        "uncompressedBytes": 387331,
+        "sha256": "cd6a4523d94d76dbd56cf9431f03aaf9a460e6cda9bff18a655ac4eaaec0ca11"
+      }
     }
   ],
   "existing": [

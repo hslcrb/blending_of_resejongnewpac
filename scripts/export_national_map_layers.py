@@ -85,8 +85,12 @@ def main():
    relative=f'{slug}/{filename}';boxes=[f['bbox'] for f in features if f['bbox']]
    value=save(output/relative,{'type':'FeatureCollection','crs':{'type':'name','properties':{'name':TARGET}},'features':features})
    shards.append({'url':f'/gis/extra/{relative}','tile':list(key) if key else None,'bbox':union(boxes) if boxes else None,'count':len(features),**value})
+  all_features=[f for key in sorted(groups,key=lambda k:(k is None,k or (0,0))) for f in groups[key]]
+  all_boxes=[f['bbox'] for f in all_features if f['bbox']]
+  overview_name=f'{slug}/overview.json.gz'
+  overview={'url':f'/gis/extra/{overview_name}','bbox':union(all_boxes) if all_boxes else None,'count':len(all_features),**save(output/overview_name,{'type':'FeatureCollection','crs':{'type':'name','properties':{'name':TARGET}},'features':all_features})}
   entries.append({'id':slug,'name':name,'sourceCount':total,'locatedCount':located,'unlocatedCount':unlocated,'geometryType':geom_type,
-   'sourceCRS':original.GetName(),'sourceEPSG':original.GetAuthorityCode(None),'toleranceMetres':tolerance,'fieldSchema':schema,'redactions':dict(redactions),'shards':shards})
+   'sourceCRS':original.GetName(),'sourceEPSG':original.GetAuthorityCode(None),'toleranceMetres':tolerance,'fieldSchema':schema,'redactions':dict(redactions),'shards':shards,'overview':overview})
   print('EXPORTED',name,total,'unlocated',unlocated,'shards',len(shards),flush=True)
  manifest={'version':1,'crs':TARGET,'wgs84':'EPSG:4326','coordinates':'[동쪽, 북쪽] 미터; anchorWgs84=[경도, 위도]','tileSizeMetres':TILE,
   'scale':'사용자 제공 소축척 개요도; 원본 정확 축척·촬영일 미확인, 지적·법정 경계 판정 불가',
