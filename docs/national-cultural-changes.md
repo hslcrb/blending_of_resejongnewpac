@@ -8,7 +8,7 @@
 
 ## 브라우저 데이터 형식
 
-`public/data/national-cultural-changes.geojson`은 269,556바이트 GeoJSON FeatureCollection이다. 각 `Feature.id`와 `properties.sourceFid`는 원본 SHP 행 번호이며 `properties.fields`에 `A0`부터 `A30`까지 원본 31개 필드를 **문자열 또는 null**로 둔다. 문자열 `"0"`은 결측이 아니다. 값 안에 `*`가 포함된 숫자 필드는 DBF의 범위 초과 표기이므로 값을 계산에 사용하지 않고 `원본 범위 초과`와 함께 원문을 보여준다. 실제 후보 중 A27 132개, A15 111개, A17 111개, A18 112개, A16 27개, A26 2개에 별표가 있다. 어떤 필드도 부동소수점으로 변환하지 않았다.
+`public/data/national-cultural-changes.geojson`은 269,555바이트 GeoJSON FeatureCollection이다. 각 `Feature.id`와 `properties.sourceFid`는 원본 SHP 행 번호이며 `properties.fields`에 `A0`부터 `A30`까지 원본 31개 필드를 **문자열 또는 null**로 둔다. 문자열 `"0"`은 결측이 아니다. 값 안에 `*`가 포함된 숫자 필드는 DBF의 범위 초과 표기이므로 값을 계산에 사용하지 않고 `원본 범위 초과`와 함께 원문을 보여준다. 실제 후보 중 A27 132개, A15 111개, A17 111개, A18 112개, A16 27개, A26 2개에 별표가 있다. 어떤 필드도 부동소수점으로 변환하지 않았다.
 
 주요 필드: A4 법정동명, A5 지번, A8 용도 코드, A9 용도명, A16 높이, A24 건물명, A26·A27 지상·지하층 수, A28 데이터 생성·변경일, A29 변경 유형, A30 시군구 코드. A0~A28 명칭은 유사한 [국가교통DB 보고서의 GIS 건물 필드 표](https://www.ktdb.go.kr/DATA/pblcte/20250805093928585.pdf)를 참조했으나 원본의 명세 버전과 일치하는지는 미확인이다. A29·A30은 제공된 변경 자료의 내용에서 파악한 이름이다. 텍스트 렌더링은 HTML 문자열 연결 대신 안전한 텍스트 노드를 사용한다.
 
@@ -39,3 +39,5 @@ node --test tests/national-cultural-data.test.mjs
 ```
 
 SHP·SHX·DBF·PRJ·CST 파일은 원래 순서와 동일한 이름으로 함께 있어야 한다. DBF 원문은 EUC-KR로 엄격하게 읽고 필요하면 CP949를 엄격 적용하며, 둘 다 불가능하면 실패한다. 좌우 패딩 공백·끝의 NUL을 제거하고 내부 NUL은 보존한다. 소스 파일 해시, 파일별 크기와 검출된 확장 문자·오버플로는 manifest에 기록한다. 2026-11-04 실행에서 후보 전체 347건의 31필드가 원본 DBF와 일치하고 대표점이 원본 도형 내부에 있음을 별도 스크립트로 검증했다. 원본 SHP와 DBF는 대용량이므로 저장소에 복사하지 않았다.
+
+2026-11-04: Windows의 자동 줄바꿈으로 파일 SHA가 Git 저장 바이트와 달랐던 문제를 수정했다. 생성기는 GeoJSON과 manifest를 UTF-8 및 LF 바이트로 직접 기록하고, Git 속성도 두 파일의 LF 체크아웃을 지정한다. 현재 GeoJSON SHA-256은 `ad41e4fad4d898ff06043dea91ff7d9592b8d335178a9a3311eb22a60c7d44bc`이며, 테스트는 작업 사본과 Git blob의 바이트 및 manifest 해시를 비교한다. 347건의 내용은 바뀌지 않았다.

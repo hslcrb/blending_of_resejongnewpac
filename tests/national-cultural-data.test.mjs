@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
@@ -25,4 +26,17 @@ test("change candidates retain source fields and exclude deletions", () => {
       assert.ok(feature.geometry.coordinates.every(Number.isFinite));
     }
   }
+});
+
+// Git의 정규화된 바이트와 배포 체크아웃이 동일해야 합니다.
+// A checkout must match both the Git blob and the recorded digest.
+test("UTF-8 LF data checksum matches the Git blob on every platform", () => {
+  const attrs = execFileSync("git", ["check-attr", "eol", "--", "public/data/national-cultural-changes.geojson", "public/data/national-cultural-manifest.json"], { encoding: "utf8" });
+  assert.equal(attrs.split("\n").filter(line => line.endsWith("eol: lf")).length, 2);
+  const stored = execFileSync("git", ["show", "HEAD:public/data/national-cultural-changes.geojson"]);
+  assert.equal(createHash("sha256").update(stored).digest("hex"), manifest.output.sha256);
+  assert.equal(bytes.length, manifest.output.bytes);
+  assert.deepEqual(bytes, stored);
+  assert.equal(bytes[bytes.length - 1], 10);
+  assert.notEqual(bytes[bytes.length - 2], 13);
 });

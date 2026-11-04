@@ -238,3 +238,8 @@ button:disabled { cursor: not-allowed; opacity: .5; }
 .map-attribution { position:absolute; z-index:3; right:8px; bottom:8px; max-width:min(65%, 520px); padding:5px 8px; background:#fffffff0; color:#173c39; border-radius:6px; font-size:16px; line-height:1.35; }
 .map-attribution[hidden] { display:none; }
 @media(max-width:600px) { .map-attribution { bottom:55px; max-width:80%; font-size:16px; } }
+
+/* [외부 사이트 내장 / Embedded experience] */
+.app-shell.embedded .site-header, .app-shell.embedded .intro, .app-shell.embedded .site-footer { display:none; }
+.app-shell.embedded .main-content { padding-top:12px; }
+.app-shell.embedded { min-height:0; }

@@ -21,6 +21,7 @@ import { createBuildingExplorer } from './area/building-explorer.ts';
 import { useBuildingInformation, BuildingInformationPanel } from './area/BuildingInformation.jsx';
 import NationalCulturalExplorer from './NationalCulturalExplorer.jsx';
 import { createBasemapLayer } from './basemapLayer.js';
+import { createEmbedBridge } from './embedBridge.js';
 import { latLonTo5186, geoToWorld } from './mapProjection.js';
 import './style.css';
 
@@ -838,6 +839,12 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
 }
 
 function App() {
+    const embedded = new URLSearchParams(window.location.search).get('embed') === '1';
+    useEffect(() => {
+        if (!embedded || window.parent === window) return undefined;
+        const root = document.querySelector('.app-shell.embedded');
+        return root ? createEmbedBridge({ root, parent: window.parent }) : undefined;
+    }, [embedded]);
     const [status, setStatus] = useState('loading');
     const [area, setArea] = useState('local');
     const [areaStatus, setAreaStatus] = useState('');
@@ -897,7 +904,7 @@ function App() {
     };
 
     return (
-        <div className="app-shell">
+        <div className={`app-shell${embedded ? ' embedded' : ''}`}>
             <header className="site-header">
                 <a className="brand" href="#top" aria-label="세종문화회관 건축 산책 처음으로">
                     <span className="brand-mark" aria-hidden="true"><span /></span>
