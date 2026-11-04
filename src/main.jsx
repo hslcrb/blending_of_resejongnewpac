@@ -23,10 +23,16 @@ import NationalCulturalExplorer from './NationalCulturalExplorer.jsx';
 import { createBasemapLayer, groundFootprint } from './basemapLayer.js';
 import { createGeographyLayer } from './geographyLayer.js';
 import GeographyInformation from './GeographyInformation.jsx';
+import { createNationalMapSource } from './nationalMapLayers.js';
+import { createNationalMapRenderer, groundBoundsFromCamera } from './nationalMapRenderer.js';
+import { NationalMapInformation } from './NationalMapInformation.jsx';
+import { NationalMapControls } from './NationalMapControls.jsx';
 import { ALL_ADMIN_REGIONS, regionCodeFromName, regionCodeFromBuilding } from './geographyView.js';
 import { createEmbedBridge } from './embedBridge.js';
 import { latLonTo5186, geoToWorld, worldToGeo } from './mapProjection.js';
 import './style.css';
+
+const EMPTY_NATIONAL_LAYERS = Object.freeze([]);
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
 const WALK_START = new THREE.Vector3(33.1, 1.7, 27);
@@ -90,11 +96,11 @@ function MoveButton({ direction, label, symbol, setHeld }) {
     );
 }
 
-function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange, area, sight, magnifier, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, mapProvider, onMapStatus, locationRequest, boundaries, allRegions, onGeographyStatus, overviewRequest }) {
+function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange, area, sight, magnifier, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, mapProvider, onMapStatus, locationRequest, boundaries, allRegions, onGeographyStatus, overviewRequest, nationalSource, nationalLayers, onNationalStatus }) {
     const containerRef = useRef(null);
     const sceneRef = useRef(null);
-    const requestedTools = useRef({ area, sight, magnifier, mapProvider, locationRequest, boundaries, allRegions });
-    requestedTools.current = { area, sight, magnifier, mapProvider, locationRequest, boundaries, allRegions };
+    const requestedTools = useRef({ area, sight, magnifier, mapProvider, locationRequest, boundaries, allRegions, nationalLayers });
+    requestedTools.current = { area, sight, magnifier, mapProvider, locationRequest, boundaries, allRegions, nationalLayers };
 
     useEffect(() => {
         const container = containerRef.current;
@@ -312,6 +318,35 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         let coreAsset;
         let streamer;
         let viewerVisible = false;
+        // [백지도 시설·지형 / National overview points and boundaries]
+        // 기존 지면 절두체와 동일한 범위를 사용하고 숨겨진 화면에서는 요청을 취소합니다.
+        // Reuse the ground footprint and cancel requests while the viewer is hidden.
+        const national = createNationalMapRenderer({scene,camera,source:nationalSource,height:0.12,onStatus:onNationalStatus});
+        let nationalTimer=0, lastNationalTime=0;
+        const lastNationalPosition=new THREE.Vector3(Infinity,Infinity,Infinity), lastNationalDirection=new THREE.Vector3();
+        const nationalBounds = () => {
+            const footprint=groundFootprint(camera,0.12);
+            if(footprint.length<3)return groundBoundsFromCamera(camera,areaNow,0.12);
+            const coords=footprint.map(p=>worldToGeo(areaNow,p.x,p.z));
+            return [Math.min(...coords.map(p=>p.easting)),Math.min(...coords.map(p=>p.northing)),Math.max(...coords.map(p=>p.easting)),Math.max(...coords.map(p=>p.northing))];
+        };
+        const setNationalOptions = () => {
+            if(disposed)return Promise.resolve(false);
+            const enabled=viewerVisible && !document.hidden && (requestedTools.current.sight || requestedTools.current.magnifier);
+            return national.update({layers:enabled ? requestedTools.current.nationalLayers : [],bounds:enabled ? nationalBounds() : undefined,mode:areaNow,sight:enabled && requestedTools.current.sight});
+        };
+        const scheduleNational = () => {
+            window.clearTimeout(nationalTimer);
+            if(disposed || !viewerVisible || document.hidden || !(requestedTools.current.sight || requestedTools.current.magnifier))return;
+            nationalTimer=window.setTimeout(()=>void setNationalOptions().catch(()=>{}),300);
+        };
+        controls.addEventListener('end',scheduleNational);
+        const inspectNational = value => {
+            if(!value)return Promise.resolve([]);
+            const bounds=nationalBounds(),metresPerPixel=Math.max(bounds[2]-bounds[0],bounds[3]-bounds[1])/Math.max(1,container.clientWidth);
+            const radius=Math.min(25000,Math.max(75,metresPerPixel*8));
+            return national.inspectAt({easting:value.easting,northing:value.northing,radius});
+        };
         let lastSpatialUpdate = -Infinity;
         let startedLoading = false;
         const bootRequest = new AbortController();
@@ -345,6 +380,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             if (modeNow === 'orbit' && sceneRef.current?.size && !userAdjusted && !gestureActive) {
                 sceneRef.current.fitView(activePreset);
             }
+            scheduleNational();
         };
         const observer = new ResizeObserver(resize);
         observer.observe(container);
@@ -442,6 +478,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
                     fitView('perspective');
                 }
             }
+            scheduleNational();
         };
 
         const handleKeyDown = (event) => {
@@ -528,6 +565,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             slowFrames.sample(performance.now(), false);
             streamer?.setPaused(document.hidden || !viewerVisible);
             if (!document.hidden) { refreshSky(); void refreshWeather(); }
+            void setNationalOptions().catch(()=>{});
         };
         document.addEventListener('visibilitychange', onPageVisibility);
 
@@ -564,7 +602,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             detail.rotation.y = next === 'seoul' ? SEJONG_IN_SEOUL.rotationY : 0;
             detail.position.set(next === 'seoul' ? SEJONG_IN_SEOUL.x : 0, 0, next === 'seoul' ? SEJONG_IN_SEOUL.z : 0);
             detail.updateMatrixWorld(true);
-            refreshSky(); resetArea(); explorer?.modeChanged();
+            refreshSky(); resetArea(); explorer?.modeChanged(); scheduleNational();
             void geography?.setMode(next); scheduleGeographyRegion();
             if (next === 'local') { onAreaStatus('세종문화회관과 광화문 주변'); return true; }
             onAreaStatus('서울 전역을 불러오고 있습니다.');
@@ -598,7 +636,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             controls.target.set(position.x, 0, position.z);
             camera.position.set(position.x + 600, 1100, position.z + 800);
             controls.minDistance = 40; controls.update();
-            userAdjusted = true;
+            userAdjusted = true; scheduleNational();
             if (!locationMarker) {
                 locationMarker = new THREE.Mesh(new THREE.SphereGeometry(35, 16, 12), new THREE.MeshBasicMaterial({color:0xe24527}));
                 scene.add(locationMarker);
@@ -617,9 +655,10 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             camera.position.set(0,2000000,450000);controls.minDistance=400;controls.maxDistance=4000000;
             camera.updateProjectionMatrix();controls.update();
             basemap?.update(camera,{width:container.clientWidth,height:container.clientHeight,mode:'seoul'});
+            scheduleNational();
             onAreaStatus('전국 행정동과 문화시설 후보 · 건물 개별 자료는 서울 범위입니다.');
         };
-        sceneRef.current = { fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, showNational, setGeographyOptions, inspectGeography, retryGeography: () => geography?.retry(), setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center() };
+        sceneRef.current = { fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, showNational, setGeographyOptions, inspectGeography, retryGeography: () => geography?.retry(), setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center(), setNationalOptions, refreshNational: scheduleNational, inspectNational, retryNational: () => setNationalOptions() };
         viewerRef.current = sceneRef.current;
 
         // 주 건물은 먼저, 주변 세부는 공간별로 내려받습니다. / Load core first and stream spatial detail separately.
@@ -692,7 +731,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             model.userData.inspectionModel = true;
             model.add(asset.root);
             detail.add(model);
-            explorer = createBuildingExplorer({host:container,element:renderer.domElement,camera,controls,detail,city:() => city,mode:() => areaNow,draw:() => {},onStart,onInspection,onState:onInspectionState,onProjection,geographyLabels:() => geographicLabels});
+            explorer = createBuildingExplorer({host:container,element:renderer.domElement,camera,controls,detail,city:() => city,mode:() => areaNow,draw:() => {},onStart,onInspection,onState:onInspectionState,onProjection,geographyLabels:() => [...geographicLabels,...national.getLabels()]});
             explorer.configure(requestedTools.current.sight, requestedTools.current.magnifier);
             const bounds = new THREE.Box3();
             const framePoints = [];
@@ -793,6 +832,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             streamer?.setPaused(document.hidden || !viewerVisible);
             if (viewerVisible) bootModels();
             else { clearInput(); slowFrames.sample(performance.now(), false); }
+            void setNationalOptions().catch(()=>{});
         }, { rootMargin: '320px' }) : null;
         if (visibilityObserver) visibilityObserver.observe(container);
         else { viewerVisible = true; bootModels(); }
@@ -835,6 +875,13 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             } else {
                 controls.update();
             }
+            if (modeNow === 'walk' && time - lastNationalTime >= 1200 && (requestedTools.current.sight || requestedTools.current.magnifier)) {
+                lastNationalTime=time;
+                const direction=camera.getWorldDirection(new THREE.Vector3());
+                if(camera.position.distanceToSquared(lastNationalPosition)>100 || direction.dot(lastNationalDirection)<0.97) {
+                    lastNationalPosition.copy(camera.position);lastNationalDirection.copy(direction);scheduleNational();
+                }
+            }
             if (SHOW_SURROUNDINGS) {
                 const near = areaNow === 'seoul' ? Math.max(30, controls.getDistance() / 4000) : cameraNearPlane(modeNow, controls.getDistance());
                 if (Math.abs(camera.near - near) > near * 0.05) {
@@ -872,6 +919,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             window.clearInterval(weatherTimer);
             streamer?.dispose();
             explorer?.dispose();
+            window.clearTimeout(nationalTimer);controls.removeEventListener('end',scheduleNational);national.dispose();
             window.clearTimeout(regionTimer);controls.removeEventListener('end',scheduleGeographyRegion);geography?.dispose();
             basemap?.dispose(); mapCredit.remove();
             if (locationMarker) { locationMarker.geometry.dispose(); locationMarker.material.dispose(); locationMarker.removeFromParent(); }
@@ -898,16 +946,17 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             renderer.domElement.remove();
             viewerRef.current = null;
         };
-    }, [onStatusChange, onWeatherChange, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, onMapStatus, onGeographyStatus, viewerRef]);
+    }, [onStatusChange, onWeatherChange, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, onMapStatus, onGeographyStatus, nationalSource, onNationalStatus, viewerRef]);
 
     useEffect(() => { sceneRef.current?.setAreaView(area); }, [area]);
     useEffect(() => { sceneRef.current?.setMapProvider(mapProvider); }, [mapProvider]);
     useEffect(() => { if (locationRequest) void sceneRef.current?.focusLocation(locationRequest); }, [locationRequest]);
     useEffect(() => { sceneRef.current?.setTools(sight, magnifier); }, [sight, magnifier]);
+    useEffect(() => { void sceneRef.current?.setNationalOptions().catch(()=>{}); }, [nationalLayers, sight, magnifier, area]);
     useEffect(() => { void sceneRef.current?.setGeographyOptions(boundaries && (sight || magnifier || mapProvider !== null), allRegions); }, [area, boundaries, allRegions, sight, magnifier, mapProvider]);
     useEffect(() => { if (overviewRequest) sceneRef.current?.showNational(); }, [overviewRequest]);
     useEffect(() => { sceneRef.current?.setMode(mode); }, [mode]);
-    useEffect(() => { sceneRef.current?.fitView(view.name); }, [view]);
+    useEffect(() => { sceneRef.current?.fitView(view.name); sceneRef.current?.refreshNational(); }, [view]);
 
     return (
         <>
@@ -948,6 +997,39 @@ function App() {
     const [sight, setSight] = useState(false);
     const [magnifier, setMagnifier] = useState(false);
     const info = useBuildingInformation();
+    const nationalSourceRef=useRef(null);
+    if(!nationalSourceRef.current)nationalSourceRef.current=createNationalMapSource();
+    const nationalSource=nationalSourceRef.current;
+    const [nationalManifest,setNationalManifest]=useState(null),[nationalManifestAttempt,setNationalManifestAttempt]=useState(0);
+    const [nationalManifestState,setNationalManifestState]=useState({state:'idle'}),[nationalSelection,setNationalSelection]=useState(null);
+    const [nationalStatus,setNationalStatus]=useState({state:'idle',message:''}),[nationalHits,setNationalHits]=useState(null),[nationalInspectState,setNationalInspectState]=useState({state:'idle'});
+    const [unlocatedHits,setUnlocatedHits]=useState(null),[unlocatedState,setUnlocatedState]=useState({state:'idle',message:''});
+    const unlocatedAbort=useRef(null),nationalActive=sight||magnifier;
+    const onNationalStatus=useCallback(value=>setNationalStatus(value),[]);
+    useEffect(()=>{
+        if(!nationalActive || nationalManifest)return undefined;
+        const abort=new AbortController();setNationalManifestState({state:'loading'});
+        nationalSource.manifest(abort.signal).then(value=>{
+            if(abort.signal.aborted)return;
+            setNationalManifest(value);setNationalSelection(previous=>previous===null?value.layers.map(layer=>layer.id):previous);setNationalManifestState({state:'ready'});
+        }).catch(()=>{if(!abort.signal.aborted)setNationalManifestState({state:'error'});});
+        return ()=>abort.abort();
+    },[nationalActive,nationalManifest,nationalManifestAttempt,nationalSource]);
+    useEffect(()=>{
+        if(!nationalActive){unlocatedAbort.current?.abort();setUnlocatedHits(null);setUnlocatedState({state:'idle',message:''});nationalSource.clearCache();}
+        return ()=>{};
+    },[nationalActive,nationalSource]);
+    useEffect(()=>()=>{unlocatedAbort.current?.abort();nationalSource.clearCache();},[nationalSource]);
+    const showUnlocated=useCallback(async()=>{
+        unlocatedAbort.current?.abort();const abort=new AbortController();unlocatedAbort.current=abort;
+        setUnlocatedState({state:'loading',message:'위치 미기재 원본을 불러오고 있습니다.'});
+        try {
+            const records=await nationalSource.query({layers:['ski-resorts'],includeUnlocated:true,signal:abort.signal});
+            if(abort.signal.aborted)return;
+            const missing=records.filter(feature=>!feature.geometry).map(feature=>({feature,distance:null,contains:false}));
+            setUnlocatedHits(missing);setUnlocatedState({state:'ready',message:`위치가 없는 원본 ${missing.length}건`});
+        } catch {if(!abort.signal.aborted)setUnlocatedState({state:'error',message:'위치 미기재 원본을 불러오지 못했습니다. 다시 눌러 주세요.'});}
+    },[nationalSource]);
     const [projection, setProjection] = useState('');
     const [mapProvider, setMapProvider] = useState('ground');
     const [mapStatus, setMapStatus] = useState({failed:0});
@@ -972,6 +1054,22 @@ function App() {
     const ready = status === 'ready';
     const fullscreenAvailable = document.fullscreenEnabled && typeof document.documentElement.requestFullscreen === 'function';
     const geographyVisible = boundaries && (sight || magnifier || mapProvider !== null);
+    // 선택이 바뀌면 오래된 결과를 지우되 화면 밖으로 스크롤할 때는 마지막 결과를 보존합니다.
+    // Clear stale selections but preserve the last result while the viewer is offscreen.
+    useEffect(()=>{setNationalHits(null);setNationalInspectState({state:'idle'});},[info.inspection,nationalSelection]);
+    useEffect(()=>{
+        if(!nationalActive || !info.inspection || !nationalSelection?.length) {
+            setNationalHits(null);setNationalInspectState({state:'idle'});return undefined;
+        }
+        if(nationalStatus.state!=='ready')return undefined;
+        let active=true;setNationalInspectState({state:'loading'});
+        Promise.resolve(viewerRef.current?.inspectNational(info.inspection)).then(hits=>{
+            if(!active)return;
+            if(hits===null || hits===undefined){setNationalHits(null);setNationalInspectState({state:'idle'});return;}
+            setNationalHits(hits);setNationalInspectState({state:'ready'});
+        }).catch(()=>{if(active){setNationalHits(null);setNationalInspectState({state:'error'});}});
+        return ()=>{active=false;};
+    },[info.inspection,nationalActive,nationalSelection,nationalStatus.state,area]);
     useEffect(() => {
         if (!geographyVisible || !info.inspection) { setGeographyInspection(null); setGeographyInspectionState({state:'idle'}); return undefined; }
         let active=true;
@@ -1078,6 +1176,7 @@ function App() {
                             if (next) {setMode('orbit');setArea('seoul');setOverviewRequest(value=>value+1);}
                         }}>전국 행정동 전체 보기</button>
                     </div>
+                    <NationalMapControls active={nationalActive} manifest={nationalManifest} manifestState={nationalManifestState} onManifestRetry={()=>setNationalManifestAttempt(value=>value+1)} selected={nationalSelection||EMPTY_NATIONAL_LAYERS} onSelection={setNationalSelection} status={nationalStatus} onRetry={()=>void viewerRef.current?.retryNational().catch(()=>{})} onUnlocated={()=>void showUnlocated()} unlocatedState={unlocatedState} />
                     <p className="area-tool-state" role="status" aria-live="polite">{areaStatus}</p>
                     {areaStatus.includes('서울 격자를 불러오지 못했습니다') && <button type="button" onClick={() => viewerRef.current?.setAreaView('seoul')}>서울 격자 다시 불러오기</button>}
                     <p className="area-tool-state" role="status" aria-live="polite">{info.inspectionState.message}</p>
@@ -1091,7 +1190,7 @@ function App() {
                         {allRegions && <p>전국 행정동 3,559개를 불러옵니다. 전체 보기는 기기의 메모리를 많이 사용할 수 있습니다. 서울 개별 건물 자료는 전국 전체가 아닙니다.</p>}
                     </div>}
                     <div className="view-frame">
-                        <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} onWeatherChange={setWeather} area={area} sight={sight} magnifier={magnifier} onAreaStatus={setAreaStatus} onStart={info.onStart} onInspection={info.onInspection} onInspectionState={info.onState} onProjection={setProjection} mapProvider={mapProvider} onMapStatus={onMapStatus} locationRequest={locationRequest} boundaries={boundaries} allRegions={allRegions} onGeographyStatus={onGeographyStatus} overviewRequest={overviewRequest} />
+                        <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} onWeatherChange={setWeather} area={area} sight={sight} magnifier={magnifier} onAreaStatus={setAreaStatus} onStart={info.onStart} onInspection={info.onInspection} onInspectionState={info.onState} onProjection={setProjection} mapProvider={mapProvider} onMapStatus={onMapStatus} locationRequest={locationRequest} boundaries={boundaries} allRegions={allRegions} onGeographyStatus={onGeographyStatus} overviewRequest={overviewRequest} nationalSource={nationalSource} nationalLayers={nationalSelection||EMPTY_NATIONAL_LAYERS} onNationalStatus={onNationalStatus} />
                         {status !== 'ready' && (
                             <div className="viewer-status" role="status">
                                 <span>{status === 'loading' ? '건축 모델을 불러오는 중입니다.' : '모델을 불러오지 못했습니다.'}</span>
@@ -1113,6 +1212,8 @@ function App() {
                     </div>
                     {(sight || info.inspection) && <BuildingInformationPanel sight={sight} inspection={info.inspection} onSelectBuilding={info.onSelectBuilding} />}
                     {geographyVisible && (sight || magnifier || geographyInspection) && <GeographyInformation inspection={geographyInspection} state={geographyInspectionState} />}
+                    {nationalActive && nationalManifest && (sight || info.inspection) && <NationalMapInformation hits={nationalHits||[]} status={nationalInspectState.state==='loading' ? '선택 지점의 원본 지형·시설을 조회하고 있습니다.' : nationalInspectState.state==='error' ? '선택 지점의 원본 정보를 불러오지 못했습니다.' : ''} />}
+                    {nationalActive && unlocatedHits && <NationalMapInformation title="위치 미기재 스키장 원본" hits={unlocatedHits} status="원본에서 좌표가 빠진 3건 · 지도에 점을 만들지 않았습니다." />}
                     <div className="experience-bottom">
                         <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 대극장 로비와 별관 점포까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
                         <p className="model-note">서울 시간 {seoulTime} · {weather ? `김포공항 구름 관측 ${observedTime}` : '기상 관측을 가져오지 못해 구름은 임의로 표시합니다.'}<br />김포공항은 광화문과 기상이 다를 수 있습니다. <a href="https://aviationweather.gov/data/api/">NOAA 항공기상 관측</a></p>

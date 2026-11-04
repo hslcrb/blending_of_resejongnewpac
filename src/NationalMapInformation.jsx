@@ -5,12 +5,12 @@ import './national-map-information.css';
 // [지도 원본 속성 / Source map attributes]
 // 사용자가 선택한 후보의 모든 필드와 지리 좌표의 한계를 표시합니다.
 // Expose every field of selected features and explain the coordinate limitations.
-export function NationalMapInformation({ hits = [], status = '' }) {
+export function NationalMapInformation({ hits = [], status = '', title = '백지도 · 지형과 시설 정보' }) {
     const [page,setPage]=useState(0);
     useEffect(()=>setPage(0),[hits]);
     const pages=Math.max(1,Math.ceil(hits.length/3)), current=Math.min(page,pages-1);
-    return <section className="national-map-info" aria-label="백지도 지형과 시설 정보">
-        <h2>백지도 · 지형과 시설 정보</h2>
+    return <section className="national-map-info" aria-label={title}>
+        <h2>{title}</h2>
         <p>사용자가 제공한 소축척 원본입니다. 제작 시점과 이용 허가가 확인되지 않았으며 위치·시설의 현재 상태와 다를 수 있습니다.</p>
         <p role="status" aria-live="polite">{status || `선택 지점 주변 ${hits.length.toLocaleString('ko-KR')}건 · ${current+1} / ${pages}쪽`}</p>
         {hits.length===0 && <p>돋보기로 지도나 지면을 선택하면 가까운 시설과 지형의 원본 속성이 표시됩니다.</p>}
