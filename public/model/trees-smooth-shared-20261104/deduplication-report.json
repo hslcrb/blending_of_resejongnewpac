@@ -1,0 +1,429 @@
+{
+  "version": 1,
+  "mode": "identical-consumer-set buckets",
+  "minSharedBytes": 4096,
+  "minBucketSavings": 65536,
+  "excludeCore": true,
+  "originalManifestSha256": "9112dcfdde970c0c7ca2a6490054cb83e8665a65d04ca06df4fd8497950c22b2",
+  "originalTotalBytes": 54151272,
+  "outputGlbBytes": 23246380,
+  "sharedBytes": 4005907,
+  "totalUniquePayloadBytes": 27252287,
+  "savedBytes": 26898985,
+  "maxAdditionalRequestsPerGLB": 4,
+  "overfetchBytesExcludingAlignment": 0,
+  "buckets": [
+    {
+      "uri": "shared/4066817ce7f7fe1f24ae882facc19b28bf29884a1d5282f9397c76b46bbcbd93.bin",
+      "url": "/model/trees-smooth-shared-20261104/shared/4066817ce7f7fe1f24ae882facc19b28bf29884a1d5282f9397c76b46bbcbd93.bin",
+      "sha256": "4066817ce7f7fe1f24ae882facc19b28bf29884a1d5282f9397c76b46bbcbd93",
+      "bytes": 2340363,
+      "consumers": [
+        "campus-planting-center-front",
+        "campus-planting-center-rear",
+        "campus-planting-north-front",
+        "campus-planting-north-rear",
+        "campus-planting-south-front",
+        "campus-planting-south-rear",
+        "west-garden"
+      ],
+      "views": 30,
+      "estimatedRepeatedBytesRemoved": 14041992,
+      "paddingBytes": 31
+    },
+    {
+      "uri": "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin",
+      "url": "/model/trees-smooth-shared-20261104/shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin",
+      "sha256": "a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9",
+      "bytes": 105264,
+      "consumers": [
+        "campus-planting-center-front",
+        "campus-planting-center-rear",
+        "campus-planting-north-front",
+        "campus-planting-north-rear",
+        "campus-planting-south-front",
+        "campus-planting-south-rear",
+        "public-planting-0",
+        "public-planting-1",
+        "public-planting-2",
+        "public-planting-3",
+        "public-planting-4",
+        "west-garden"
+      ],
+      "views": 4,
+      "estimatedRepeatedBytesRemoved": 1157849,
+      "paddingBytes": 5
+    },
+    {
+      "uri": "shared/e482e354474a67cd2725f0c5a7f27570d65495499c0b0f36cdcdd227607c7b3e.bin",
+      "url": "/model/trees-smooth-shared-20261104/shared/e482e354474a67cd2725f0c5a7f27570d65495499c0b0f36cdcdd227607c7b3e.bin",
+      "sha256": "e482e354474a67cd2725f0c5a7f27570d65495499c0b0f36cdcdd227607c7b3e",
+      "bytes": 780096,
+      "consumers": [
+        "campus-planting-center-front",
+        "campus-planting-center-rear",
+        "campus-planting-north-front",
+        "campus-planting-north-rear",
+        "campus-planting-south-front",
+        "campus-planting-south-rear"
+      ],
+      "views": 10,
+      "estimatedRepeatedBytesRemoved": 3900405,
+      "paddingBytes": 15
+    },
+    {
+      "uri": "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin",
+      "url": "/model/trees-smooth-shared-20261104/shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin",
+      "sha256": "ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82",
+      "bytes": 780184,
+      "consumers": [
+        "campus-planting-center-front",
+        "campus-planting-center-rear",
+        "campus-planting-north-front",
+        "campus-planting-north-rear",
+        "campus-planting-south-front",
+        "campus-planting-south-rear",
+        "public-planting-0",
+        "public-planting-1",
+        "public-planting-2",
+        "public-planting-3",
+        "public-planting-4"
+      ],
+      "views": 10,
+      "estimatedRepeatedBytesRemoved": 7801780,
+      "paddingBytes": 6
+    }
+  ],
+  "files": [
+    {
+      "id": "core",
+      "url": "/model/stream/20261103-core.glb",
+      "sourceUrl": "/model/stream/20261103-core.glb",
+      "optimized": false,
+      "sourceBytes": 8668108,
+      "bytes": 8668108,
+      "sha256": "d362fcb06214432d71e22acec9df6587d6e0bd6d6e13352f5b2340ff9ee38cf4",
+      "externalRequests": 0
+    },
+    {
+      "id": "cafe-interior",
+      "url": "/model/stream/20261103-cafe-interior.glb",
+      "sourceUrl": "/model/stream/20261103-cafe-interior.glb",
+      "optimized": false,
+      "sourceBytes": 397224,
+      "bytes": 397224,
+      "sha256": "80428eafec4ecf440396d64e17cdccc374156cfd54f8a1ab318cca12d892bc63",
+      "externalRequests": 0
+    },
+    {
+      "id": "cafe-tile-detail",
+      "url": "/model/stream/20261103-cafe-tile-detail.glb",
+      "sourceUrl": "/model/stream/20261103-cafe-tile-detail.glb",
+      "optimized": false,
+      "sourceBytes": 1763128,
+      "bytes": 1763128,
+      "sha256": "641602cb2286e0e756a89aed2e662582f5b09fa19805aed8dac07062915ebaeb",
+      "externalRequests": 0
+    },
+    {
+      "id": "campus-planting-center-front",
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-center-front.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-campus-planting-center-front.glb",
+      "optimized": true,
+      "sourceBytes": 7320176,
+      "bytes": 3314628,
+      "sha256": "d765dc46748391edc6d4768b7ae12ba91d01dd803ca1aa4342c17bda575343df",
+      "externalRequests": 4,
+      "buckets": [
+        "shared/4066817ce7f7fe1f24ae882facc19b28bf29884a1d5282f9397c76b46bbcbd93.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin",
+        "shared/e482e354474a67cd2725f0c5a7f27570d65495499c0b0f36cdcdd227607c7b3e.bin",
+        "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin"
+      ]
+    },
+    {
+      "id": "campus-planting-center-rear",
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-center-rear.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-campus-planting-center-rear.glb",
+      "optimized": true,
+      "sourceBytes": 7207072,
+      "bytes": 3201524,
+      "sha256": "6b92f5c33f682dd12611998a0ec830df4ec228d9c6b45b4618ced8df928edb98",
+      "externalRequests": 4,
+      "buckets": [
+        "shared/4066817ce7f7fe1f24ae882facc19b28bf29884a1d5282f9397c76b46bbcbd93.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin",
+        "shared/e482e354474a67cd2725f0c5a7f27570d65495499c0b0f36cdcdd227607c7b3e.bin",
+        "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin"
+      ]
+    },
+    {
+      "id": "campus-planting-north-front",
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-north-front.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-campus-planting-north-front.glb",
+      "optimized": true,
+      "sourceBytes": 5006248,
+      "bytes": 1000700,
+      "sha256": "8cc8a582dc1204d6a9cfb2fa2b9898dbbc51b3b0b12fbe8a7079238bffe3088c",
+      "externalRequests": 4,
+      "buckets": [
+        "shared/4066817ce7f7fe1f24ae882facc19b28bf29884a1d5282f9397c76b46bbcbd93.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin",
+        "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin",
+        "shared/e482e354474a67cd2725f0c5a7f27570d65495499c0b0f36cdcdd227607c7b3e.bin"
+      ]
+    },
+    {
+      "id": "campus-planting-north-rear",
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-north-rear.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-campus-planting-north-rear.glb",
+      "optimized": true,
+      "sourceBytes": 4055632,
+      "bytes": 50112,
+      "sha256": "bdfef4ec93b9e435fb540f0c9ad0a172d9eff1d7fe2e2e1584ef6a1eeb0e6edc",
+      "externalRequests": 4,
+      "buckets": [
+        "shared/4066817ce7f7fe1f24ae882facc19b28bf29884a1d5282f9397c76b46bbcbd93.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin",
+        "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin",
+        "shared/e482e354474a67cd2725f0c5a7f27570d65495499c0b0f36cdcdd227607c7b3e.bin"
+      ]
+    },
+    {
+      "id": "campus-planting-south-front",
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-south-front.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-campus-planting-south-front.glb",
+      "optimized": true,
+      "sourceBytes": 4037476,
+      "bytes": 31952,
+      "sha256": "2dd9ac7a3fd999ee504bef3ae513cddd8a59e53897d1a0565460a4bc0c12ef3f",
+      "externalRequests": 4,
+      "buckets": [
+        "shared/e482e354474a67cd2725f0c5a7f27570d65495499c0b0f36cdcdd227607c7b3e.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin",
+        "shared/4066817ce7f7fe1f24ae882facc19b28bf29884a1d5282f9397c76b46bbcbd93.bin",
+        "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin"
+      ]
+    },
+    {
+      "id": "campus-planting-south-rear",
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-south-rear.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-campus-planting-south-rear.glb",
+      "optimized": true,
+      "sourceBytes": 4045648,
+      "bytes": 40124,
+      "sha256": "b420d7f3771df25b12172ad92b31c73eb3ba0d15ad7508104dfb2a4405d94b53",
+      "externalRequests": 4,
+      "buckets": [
+        "shared/4066817ce7f7fe1f24ae882facc19b28bf29884a1d5282f9397c76b46bbcbd93.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin",
+        "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin",
+        "shared/e482e354474a67cd2725f0c5a7f27570d65495499c0b0f36cdcdd227607c7b3e.bin"
+      ]
+    },
+    {
+      "id": "east-embassy-detail",
+      "url": "/model/stream/20261103-east-embassy-detail.glb",
+      "sourceUrl": "/model/stream/20261103-east-embassy-detail.glb",
+      "optimized": false,
+      "sourceBytes": 33020,
+      "bytes": 33020,
+      "sha256": "b7d41a48d82fb2e26f83b6d9802bfcda58ebee157f4b549a62051e02d0863eb0",
+      "externalRequests": 0
+    },
+    {
+      "id": "east-kt-detail",
+      "url": "/model/stream/20261103-east-kt-detail.glb",
+      "sourceUrl": "/model/stream/20261103-east-kt-detail.glb",
+      "optimized": false,
+      "sourceBytes": 39048,
+      "bytes": 39048,
+      "sha256": "3f647fa819a9f83a599af359b644e005f5a6cee2f913989059477f0aff9d6fcb",
+      "externalRequests": 0
+    },
+    {
+      "id": "east-kyobo-detail",
+      "url": "/model/stream/20261103-east-kyobo-detail.glb",
+      "sourceUrl": "/model/stream/20261103-east-kyobo-detail.glb",
+      "optimized": false,
+      "sourceBytes": 22568,
+      "bytes": 22568,
+      "sha256": "f52224751bb7a8fc736bbc5b611a3b8ad3a75abbed9d16ccbbdbefc6e0d49b26",
+      "externalRequests": 0
+    },
+    {
+      "id": "east-museum-detail",
+      "url": "/model/stream/20261103-east-museum-detail.glb",
+      "sourceUrl": "/model/stream/20261103-east-museum-detail.glb",
+      "optimized": false,
+      "sourceBytes": 35488,
+      "bytes": 35488,
+      "sha256": "c1e6bf1ba4814cc7b30a670956622c8e246a324ec3d951f7eff5730363f950ef",
+      "externalRequests": 0
+    },
+    {
+      "id": "front-terrace-detail",
+      "url": "/model/stream/20261103-front-terrace-detail.glb",
+      "sourceUrl": "/model/stream/20261103-front-terrace-detail.glb",
+      "optimized": false,
+      "sourceBytes": 1639312,
+      "bytes": 1639312,
+      "sha256": "b31ee5cb07413d116360f9df2383a764f27431b5c8c162ad1e330c1e659ec06e",
+      "externalRequests": 0
+    },
+    {
+      "id": "gratitude-garden",
+      "url": "/model/stream/20261103-gratitude-garden.glb",
+      "sourceUrl": "/model/stream/20261103-gratitude-garden.glb",
+      "optimized": false,
+      "sourceBytes": 154044,
+      "bytes": 154044,
+      "sha256": "a5380328f2816406078c47ac7f8137b52144d26e432f0a0168c3a426f3303a7f",
+      "externalRequests": 0
+    },
+    {
+      "id": "plaza-water-detail",
+      "url": "/model/stream/20261103-plaza-water-detail.glb",
+      "sourceUrl": "/model/stream/20261103-plaza-water-detail.glb",
+      "optimized": false,
+      "sourceBytes": 66776,
+      "bytes": 66776,
+      "sha256": "3a843010b78e777af3aaa752c741bcb63a2a3447d2cb955ed0052a8bab22ba54",
+      "externalRequests": 0
+    },
+    {
+      "id": "public-planting-0",
+      "url": "/model/trees-smooth-shared-20261104/20261104-public-planting-0.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-public-planting-0.glb",
+      "optimized": true,
+      "sourceBytes": 905960,
+      "bytes": 20712,
+      "sha256": "8cb43fba7c00cababb1fc3ca40bb4c15eb0f047ac03eda22624aac412bf2abf5",
+      "externalRequests": 2,
+      "buckets": [
+        "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin"
+      ]
+    },
+    {
+      "id": "public-planting-1",
+      "url": "/model/trees-smooth-shared-20261104/20261104-public-planting-1.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-public-planting-1.glb",
+      "optimized": true,
+      "sourceBytes": 903624,
+      "bytes": 18380,
+      "sha256": "431ffe116bea6bb076262aed97780b7f693344022fdd86fd57f4ef370960895c",
+      "externalRequests": 2,
+      "buckets": [
+        "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin"
+      ]
+    },
+    {
+      "id": "public-planting-2",
+      "url": "/model/trees-smooth-shared-20261104/20261104-public-planting-2.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-public-planting-2.glb",
+      "optimized": true,
+      "sourceBytes": 1479360,
+      "bytes": 594108,
+      "sha256": "30ed3793f04330708841194a422988bb8813d2548c55798814188f550c3de56d",
+      "externalRequests": 2,
+      "buckets": [
+        "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin"
+      ]
+    },
+    {
+      "id": "public-planting-3",
+      "url": "/model/trees-smooth-shared-20261104/20261104-public-planting-3.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-public-planting-3.glb",
+      "optimized": true,
+      "sourceBytes": 903608,
+      "bytes": 18364,
+      "sha256": "13af88b918707eff2b4a4cacfa4add4494bf0e00179371392172e26974430960",
+      "externalRequests": 2,
+      "buckets": [
+        "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin"
+      ]
+    },
+    {
+      "id": "public-planting-4",
+      "url": "/model/trees-smooth-shared-20261104/20261104-public-planting-4.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-public-planting-4.glb",
+      "optimized": true,
+      "sourceBytes": 899080,
+      "bytes": 13832,
+      "sha256": "42ff82ce2b1225ef4e145651d2e1ae2a8b7c83d4469116657acb952a53677d10",
+      "externalRequests": 2,
+      "buckets": [
+        "shared/ce04ac58b079664cca2ba67eff59c8b625c22fcf4cbf1a62e12fa23ede9e0a82.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin"
+      ]
+    },
+    {
+      "id": "rear-garden-detail",
+      "url": "/model/stream/20261103-rear-garden-detail.glb",
+      "sourceUrl": "/model/stream/20261103-rear-garden-detail.glb",
+      "optimized": false,
+      "sourceBytes": 818520,
+      "bytes": 818520,
+      "sha256": "7a20d084627c41b63f45b4346bc6ca85c733c1d20bb4dc400f584a2b75efdee5",
+      "externalRequests": 0
+    },
+    {
+      "id": "rear-stair-detail",
+      "url": "/model/stream/20261103-rear-stair-detail.glb",
+      "sourceUrl": "/model/stream/20261103-rear-stair-detail.glb",
+      "optimized": false,
+      "sourceBytes": 519580,
+      "bytes": 519580,
+      "sha256": "2ff42a02e96e9395faa9735f66970bfd4ee257577ea462c72cbeaaf3e6a35606",
+      "externalRequests": 0
+    },
+    {
+      "id": "south-alley",
+      "url": "/model/stream/20261103-south-alley.glb",
+      "sourceUrl": "/model/stream/20261103-south-alley.glb",
+      "optimized": false,
+      "sourceBytes": 5600,
+      "bytes": 5600,
+      "sha256": "9c3dbeffbc25555c04302092990754554e6467414874c24481b11ebe394be1fa",
+      "externalRequests": 0
+    },
+    {
+      "id": "sunken-court",
+      "url": "/model/stream/20261103-sunken-court.glb",
+      "sourceUrl": "/model/stream/20261103-sunken-court.glb",
+      "optimized": false,
+      "sourceBytes": 420400,
+      "bytes": 420400,
+      "sha256": "8f400165691e582f995909612ae84cf4138efc07fc3ae3a67349dbe636247f56",
+      "externalRequests": 0
+    },
+    {
+      "id": "west-garden",
+      "url": "/model/trees-smooth-shared-20261104/20261104-west-garden.glb",
+      "sourceUrl": "/model/trees-20261104/20261104-west-garden.glb",
+      "optimized": true,
+      "sourceBytes": 2761204,
+      "bytes": 315760,
+      "sha256": "c7d1422f4dd06c59fb49ce39813f5e7f87856b9363c87fde8ae53deeeb67078f",
+      "externalRequests": 2,
+      "buckets": [
+        "shared/4066817ce7f7fe1f24ae882facc19b28bf29884a1d5282f9397c76b46bbcbd93.bin",
+        "shared/a1e62389ddcc6b6435cc282ed70bc512a444b2865df5822dd2c97fdbc44efce9.bin"
+      ]
+    },
+    {
+      "id": "yellow-shop-detail",
+      "url": "/model/stream/20261103-yellow-shop-detail.glb",
+      "sourceUrl": "/model/stream/20261103-yellow-shop-detail.glb",
+      "optimized": false,
+      "sourceBytes": 43368,
+      "bytes": 43368,
+      "sha256": "48f3d5e18fad4ff2b575fa036c7e0a175f79448efbbaefdf1dd203ac3c7e6767",
+      "externalRequests": 0
+    }
+  ]
+}
