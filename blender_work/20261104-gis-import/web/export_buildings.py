@@ -2,9 +2,12 @@
 from osgeo import ogr, gdal
 from pathlib import Path
 from collections import Counter, defaultdict
-import argparse, gzip, json, math, shutil
+import argparse, gzip, json, math, sys, tempfile
 
-ROOT = Path(__file__).resolve().parents[2]
+IMPORT_ROOT = Path(__file__).resolve().parents[1]
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(IMPORT_ROOT))
+from gis_paths import RUN_ROOT, is_scratch, new_directory
 FIELDS = [f'A{i}' for i in range(29)]
 SIZE = 1000
 
@@ -27,8 +30,8 @@ def polygons(geom, tile_e, tile_n):
     return result
 
 def run(source, output, work, limit):
-    if output.exists() or work.exists(): raise RuntimeError('Refusing to overwrite output or temporary directory')
-    output.mkdir(parents=True); work.mkdir(parents=True)
+    if output.exists() or not work.is_dir() or not is_scratch(work): raise RuntimeError('Refusing unsafe output or temporary directory')
+    output.mkdir(parents=True, exist_ok=False)
     gdal.SetConfigOption('SHAPE_ENCODING','CP949')
     ds=ogr.Open(str(source),0)
     if ds is None: raise RuntimeError('Cannot open source')
@@ -77,12 +80,15 @@ def run(source, output, work, limit):
             zipped.write(b']}')
         manifest['tiles'].append([e,n,counts[key],dest.stat().st_size])
     (output/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf8')
-    resolved=work.resolve(); allowed=(ROOT/'gis-sejong'/'web').resolve()
-    if allowed not in resolved.parents or resolved.name!='metadata-work': raise RuntimeError('Unexpected temporary path')
-    shutil.rmtree(resolved)
     print(json.dumps({'records':manifest['totalRecords'],'read':manifest['totalRead'],'omitted':omitted,'tiles':len(manifest['tiles']),'bytes':sum(t[3] for t in manifest['tiles']),'maxSpanMeters':manifest['maxSpanMeters']}))
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(); parser.add_argument('source',type=Path);parser.add_argument('--limit',type=int,default=0);parser.add_argument('--sample',action='store_true'); args=parser.parse_args()
-    out=ROOT/'v5'/'public'/'area'/('buildings-sample' if args.sample else 'buildings')
-    run(args.source,out,ROOT/'gis-sejong'/'web'/'metadata-work',args.limit)
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('source',type=Path);parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--limit',type=int,default=0);args=parser.parse_args()
+    if args.limit < 0: parser.error('--limit must be non-negative')
+    out=new_directory(args.output)
+    with tempfile.TemporaryDirectory(prefix='metadata-',dir=RUN_ROOT) as name:
+        work=Path(name).resolve()
+        if not is_scratch(work) or work.parent != RUN_ROOT.resolve(): raise RuntimeError('Unsafe temporary directory')
+        run(args.source,out,work,args.limit)

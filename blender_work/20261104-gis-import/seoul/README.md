@@ -18,6 +18,6 @@ Blender 색상은 셀 안의 높이 근거를 보여 준다. 푸른 회색은 �
 
 ## 재생성과 검증
 
-`aggregate_seoul.py`는 QGIS Python으로 원본 SHP를 읽어 압축 집계를 생성한다. 원본 경로와 출력 경로를 인자로 받는다. `build_seoul_overview.py`는 `blender -b --python build_seoul_overview.py`처럼 백그라운드 모드에서만 실행해 집계에서 모델을 만든다. 열린 작업 장면을 바꾸지 않도록 일반 Blender 창에서는 실행을 거부한다. 기존 모델을 덮어쓰므로 재생성 전 별도 폴더에 사본을 준비한다. `export_qgis.py`는 같은 집계로 GeoPackage와 프로젝트를 만들며 기존 GeoPackage 덮어쓰기를 거부한다.
+`aggregate_seoul.py`는 QGIS Python으로 원본 SHP를 읽어 압축 집계를 생성한다. 원본 경로와 출력 경로를 인자로 받는다. `build_seoul_overview.py`는 백그라운드 Blender에서 `.gis-runs`의 새 `.blend`에만 모델을 만든다. `export_qgis.py`는 같은 집계로 `.gis-runs`의 새 폴더에 GeoPackage와 상대경로 프로젝트를 만들며 기존 결과 덮어쓰기를 거부한다. 정확한 인자와 검증은 [재생성 절차](../REPRODUCTION.md)를 따른다.
 
 검증: 집계와 GeoPackage의 123,626개 셀·695,751개 건물·25개 구 및 높이 분류별 수량이 일치했다. QGIS Python으로 프로젝트를 다시 열어 유효 레이어, EPSG:5186과 셀 수를 확인했다. Blender MCP에서 25개 구 메시의 셀·건물 수, 유한 좌표, 카메라 표시와 저장 상태를 확인했다. 정확한 개별 건물 모델이나 지리 정합의 검증은 아니다.

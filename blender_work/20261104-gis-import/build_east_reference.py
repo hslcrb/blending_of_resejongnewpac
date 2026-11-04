@@ -1,7 +1,13 @@
 """Add a non-rendering east-side footprint comparison to the working scene."""
 import bpy, json
 from pathlib import Path
-ROOT = Path(bpy.data.filepath).resolve().parent
+import sys
+IMPORT_ROOT=Path(__file__).resolve().parent
+sys.dont_write_bytecode = True
+sys.path.insert(0,str(IMPORT_ROOT))
+from gis_blender import open_scene_job,save_new_scene
+_, target = open_scene_job(__doc__)
+ROOT = IMPORT_ROOT
 NAME = 'GIS - eastern footprints comparison (hidden)'
 if bpy.data.collections.get(NAME):
     raise RuntimeError('Eastern reference collection already exists')
@@ -29,3 +35,5 @@ for feature in data['features']:
 col.hide_render = True; col.hide_viewport = True
 col['note'] = 'Provisional registration; comparison outlines lifted to z=130m, not real elevation.'
 print('Created', len(col.objects), 'east reference outlines')
+
+save_new_scene(target)
