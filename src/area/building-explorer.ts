@@ -140,7 +140,7 @@ export function createBuildingExplorer(options: {
             const width = host.clientWidth, height = host.clientHeight;
             if (overlay.width !== width || overlay.height !== height) { overlay.width = width; overlay.height = height; reservedAt = 0; }
             context.clearRect(0, 0, width, height);
-            if (!sight) { overlay.dataset.geographyLabels = "0"; return; }
+            if (!sight) { overlay.dataset.geographyLabels = "0"; overlay.dataset.nationalLabels = "0"; return; }
             // 지도 출처·조작부와도 이름이 겹치지 않도록 화면 영역을 예약합니다.
             // Reserve attribution and controls as well as previously drawn labels.
             if (performance.now() - reservedAt > 500 || !reservedAt) {
@@ -152,16 +152,16 @@ export function createBuildingExplorer(options: {
                 reservedAt = performance.now();
             }
             const occupied: { left: number; top: number; right: number; bottom: number }[] = [...reserved];
-            let geographicCount = 0;
+            let geographicCount = 0, nationalCount = 0;
             const geographicNames = new Set<string>();
             // 행정구역과 건물 이름은 같은 화면 공간에서 겹치지 않도록 배치합니다.
             // Place administrative and building labels in the same collision space.
             const distance = controls.getDistance();
-            const priority = distance > 400000 ? ["province"] : distance > 120000 ? ["province", "district-detail"] : ["district-detail", "admin-detail", "province"];
+            const priority = distance > 400000 ? ["province", "national-feature"] : distance > 120000 ? ["province", "national-feature", "district-detail"] : ["district-detail", "admin-detail", "national-feature", "province"];
             const geography = geographyLabels?.() || [];
             const point = new THREE.Vector3();
             for (const category of priority) for (const label of geography) {
-                if (label.category !== category || geographicCount >= 36 || geographicNames.has(`${category}:${label.name}`)) continue;
+                if (label.category !== category || geographicCount >= 36 || (category === "national-feature" && nationalCount >= 16) || geographicNames.has(`${category}:${label.name}`)) continue;
                 if (Math.abs(label.x - controls.target.x) > distance * 2 || Math.abs(label.z - controls.target.z) > distance * 2) continue;
                 point.set(label.x, 4, label.z).project(camera);
                 if (point.z < -1 || point.z > 1 || Math.abs(point.x) > 1 || Math.abs(point.y) > 1) continue;
@@ -178,11 +178,12 @@ export function createBuildingExplorer(options: {
                     if (!occupied.some(other => candidate.left < other.right + 4 && candidate.right + 4 > other.left && candidate.top < other.bottom + 4 && candidate.bottom + 4 > other.top)) {rect = candidate;break;}
                 }
                 if (!rect) continue;
-                occupied.push(rect); geographicNames.add(`${category}:${label.name}`); geographicCount++;
+                occupied.push(rect); geographicNames.add(`${category}:${label.name}`); geographicCount++; if (category === "national-feature") nationalCount++;
                 context.fillStyle = "rgba(28, 47, 43, .9)"; context.fillRect(rect.left, rect.top, textWidth, cardHeight);
                 context.fillStyle = "#fff4c7"; context.fillText(text, rect.left + 8, rect.top + 18, textWidth - 16);
             }
-            overlay.dataset.geographyLabels = String(geographicCount);
+            overlay.dataset.geographyLabels = String(geographicCount - nationalCount);
+            overlay.dataset.nationalLabels = String(nationalCount);
             if (distance > 6000) return;
             let labels = 0;
             for (const building of features) {

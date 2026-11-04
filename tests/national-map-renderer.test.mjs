@@ -52,3 +52,8 @@ test('레이어 로딩 오류를 보고하고 refresh로 재시도한다',async(
  await assert.rejects(renderer.update({layers:['temples']}),/offline/);assert.equal(status.at(-1),'error');assert.equal(scene.children[0].children.length,0);
  assert.equal(await renderer.refresh(),true);assert.equal(status.at(-1),'ready');assert.ok(scene.children[0].children.some(o=>o.isPoints));renderer.dispose();
 });
+test('시설명과 공원명은 기존 지도 레이블과 함께 배치할 후보로 노출된다',async()=>{
+ const scene=new THREE.Scene(),renderer=createNationalMapRenderer({scene,camera:new THREE.PerspectiveCamera(),source:{query:async()=>[point,poly,line]}});
+ await renderer.update({layers:['temples','national-parks','rail'],mode:'seoul',sight:true});const labels=renderer.getLabels();assert.ok(labels.some(x=>x.name==='검사 사찰'));assert.ok(labels.some(x=>x.name==='검사 공원'));assert.ok(labels.every(x=>x.category==='national-feature'));
+ renderer.setSight(false);assert.deepEqual(renderer.getLabels(),[]);renderer.dispose();
+});

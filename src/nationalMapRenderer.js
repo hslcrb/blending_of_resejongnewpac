@@ -60,7 +60,7 @@ const worldToGeo = (mode,x,z) => mode==='local' ? [197897+z,552531+x] : [200000+
 // A horizon ray is conservatively extended to the camera's finite far plane.
 export function groundBoundsFromCamera(camera,mode='seoul',height=2) {
     if(!camera||!['local','seoul'].includes(mode))throw new Error('카메라 좌표 모드가 올바르지 않습니다.');
-    camera.updateMatrixWorld();const raycaster=new THREE.Raycaster(),limit=Math.min(Number.isFinite(camera.far)?camera.far:1000000,1000000);
+    camera.updateMatrixWorld();const raycaster=new THREE.Raycaster(),limit=Math.min(Number.isFinite(camera.far)?camera.far:6000000,6000000);
     const coords=[];
     for(const x of [-1,0,1])for(const y of [-1,0,1]) {
         raycaster.setFromCamera(new THREE.Vector2(x,y),camera);
@@ -96,18 +96,20 @@ export function createNationalMapRenderer({scene,camera,host=null,controls=null,
     const ownsSource=!source;source ||= createNationalMapSource();
     if(!scene||!camera)throw new Error('지도 장면과 카메라가 필요합니다.');
     const group=new THREE.Group();group.name='백지도 부가 레이어';scene.add(group);
-    let destroyed=false,sequence=0,inspectSequence=0,request=null,inspectRequest=null,features=[],layerIds=[],mode='seoul',sight=false,refreshTimer=null;
+    let destroyed=false,sequence=0,inspectSequence=0,request=null,inspectRequest=null,features=[],labels=[],layerIds=[],mode='seoul',sight=false,refreshTimer=null;
     let overlay=null,ctx=null;
     if(host) {
         overlay=document.createElement('canvas');overlay.className='national-map-labels';overlay.setAttribute('aria-hidden','true');
         Object.assign(overlay.style,{position:'absolute',inset:'0',width:'100%',height:'100%',pointerEvents:'none'});
         host.appendChild(overlay);ctx=overlay.getContext('2d');
     }
-    function clearGeometry(){freeObjects(group);features=[];if(ctx)ctx.clearRect(0,0,overlay.width,overlay.height);}
+    function clearGeometry(){freeObjects(group);features=[];labels=[];if(ctx)ctx.clearRect(0,0,overlay.width,overlay.height);}
     function build(data) {
         const pointBuckets=new Map(),lineBuckets=new Map();
         for(const f of data) {
             const g=f.geometry;if(!g)continue;const id=idOf(f);
+            const fields=f.properties?.fields||{},hasName=['TEXTSTRING','사찰명','공항명','NPK_NM','RAILLINE_N'].some(key=>fields[key]!==null&&fields[key]!==undefined&&String(fields[key]).trim());
+            if(hasName && f.bbox){const xy=g.type==='Point'?g.coordinates:[(f.bbox[0]+f.bbox[2])/2,(f.bbox[1]+f.bbox[3])/2];const p=pointFor(mode,xy);labels.push({x:p.x,z:p.z,name:describeNationalFeature(f).name,category:'national-feature'});}
             if(g.type==='Point'||g.type==='MultiPoint') {
                 const list=pointBuckets.get(id)||[];pointBuckets.set(id,list);
                 const coords=g.type==='Point'?[g.coordinates]:g.coordinates;
@@ -132,7 +134,7 @@ export function createNationalMapRenderer({scene,camera,host=null,controls=null,
         request?.abort();inspectRequest?.abort();const token=++sequence;inspectSequence++;
         request=new AbortController();const current=request;layerIds=[...new Set(layers)];mode=nextMode;sight=!!nextSight;
         clearGeometry();draw();
-        if(!layerIds.length){onStatus({state:'idle',message:''});return true;}
+        if(!layerIds.length){if(ownsSource)source.clearCache();onStatus({state:'idle',message:''});return true;}
         onStatus({state:'loading',message:'백지도 부가 레이어를 불러오고 있습니다.'});
         try {
             const queryBounds=bounds ?? groundBoundsFromCamera(camera,mode,height);
@@ -186,5 +188,5 @@ export function createNationalMapRenderer({scene,camera,host=null,controls=null,
     const refresh=()=>update({layers:layerIds,mode,sight});
     const scheduleRefresh=()=>{clearTimeout(refreshTimer);refreshTimer=setTimeout(()=>void refresh().catch(()=>{}),250);};
     controls?.addEventListener('end',scheduleRefresh);
-    return {update,refresh,inspectAt,paint,setSight(value){sight=!!value;paint();draw();},dispose(){if(destroyed)return;destroyed=true;sequence++;inspectSequence++;request?.abort();inspectRequest?.abort();clearTimeout(refreshTimer);controls?.removeEventListener('end',scheduleRefresh);clearGeometry();group.removeFromParent();overlay?.remove();if(ownsSource)source.clearCache();draw();}};
+    return {update,refresh,inspectAt,paint,getLabels(){return sight?labels:[];},setSight(value){sight=!!value;paint();draw();},dispose(){if(destroyed)return;destroyed=true;sequence++;inspectSequence++;request?.abort();inspectRequest?.abort();clearTimeout(refreshTimer);controls?.removeEventListener('end',scheduleRefresh);clearGeometry();group.removeFromParent();overlay?.remove();if(ownsSource)source.clearCache();draw();}};
 }

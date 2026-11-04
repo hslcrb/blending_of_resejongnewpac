@@ -1,0 +1,15 @@
+/* [백지도 범주와 출처 / Overview layer controls and provenance] */
+.national-map-controls { display:grid; gap:10px; margin:12px 2px; color:#315f5b; line-height:1.5; min-width:0; }
+.national-map-controls p { margin:0; }
+.national-map-controls details { border:1px solid #cde5df; border-radius:12px; background:#f5fbf9; padding:10px 14px; }
+.national-map-controls summary { cursor:pointer; font-weight:700; }
+.national-map-controls button { width:fit-content; min-height:44px; border:1px solid #9bcac1; border-radius:9px; padding:8px 14px; background:#fff; color:#245f5a; font:inherit; cursor:pointer; }
+.national-map-controls button:disabled { opacity:.5; cursor:not-allowed; }
+.national-map-controls :is(button,input,summary):focus-visible { outline:3px solid #167992; outline-offset:2px; }
+.national-map-controls fieldset { border:0; margin:12px 0 0; padding:0; }
+.national-map-controls legend { font-weight:700; margin-bottom:8px; }
+.national-map-options { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr)); gap:6px 14px; }
+.national-map-options label { display:flex; align-items:flex-start; gap:8px; min-width:0; padding:5px 0; overflow-wrap:anywhere; }
+.national-map-options input { width:19px; height:19px; flex:none; margin-top:3px; }
+.national-map-options small { color:#567b79; }
+.national-map-bulk { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
