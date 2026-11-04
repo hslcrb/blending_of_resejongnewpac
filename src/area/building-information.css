@@ -1,0 +1,23 @@
+/* [건물 정보 탐색 / Building information browsing] */
+.building-info { display:grid; gap:16px; margin-block:24px; padding:24px; border:1px solid #cbe4df; border-radius:20px; background:#f7fcfb; color:#193443; line-height:1.6; min-width:0; }
+.building-info h2,.building-info h3,.building-info p { margin:0; }
+.building-info header { display:grid; gap:8px; }
+.building-info label { display:grid; gap:6px; font-weight:600; min-width:0; }
+.building-info input,.building-info select { width:100%; min-width:0; padding:10px 12px; border:1px solid #97bbb5; border-radius:8px; background:white; color:inherit; font:inherit; }
+.building-info button { border:1px solid #9bcac1; border-radius:9px; padding:9px 14px; background:#fff; color:#245f5a; font:inherit; cursor:pointer; }
+.building-info button[aria-pressed='true'] { background:#d7eee7; border-color:#6ca89b; font-weight:700; }
+.building-info button:disabled { opacity:.5; cursor:not-allowed; }
+.building-info :is(button,input,select):focus-visible { outline:3px solid #167992; outline-offset:2px; }
+.building-info-search { display:flex; flex-wrap:wrap; align-items:end; gap:10px; }
+.building-info-search label { flex:1 1 260px; }
+.building-info-controls { display:flex; flex-wrap:wrap; gap:8px; }
+.building-info-results { display:grid; gap:6px; max-height:20rem; overflow:auto; margin:0; padding-inline-start:1.5rem; }
+.building-info-results button { text-align:left; white-space:normal; overflow-wrap:anywhere; }
+.building-info-list { display:grid; gap:18px; max-height:48rem; overflow:auto; }
+.building-info-card { min-width:0; padding:16px; border-radius:12px; background:#eaf5f2; }
+.building-info-card dl { display:grid; gap:8px; margin:16px 0; }
+.building-info-card dl>div { display:grid; grid-template-columns:minmax(9rem,13rem) minmax(0,1fr); gap:12px; }
+.building-info-card dt { color:#486d70; }
+.building-info-card dd { margin:0; overflow-wrap:anywhere; }
+@media(max-width:480px) { .building-info { padding:16px; } .building-info-card dl>div { grid-template-columns:1fr; gap:0; } }
+.building-info, .building-info * { box-sizing:border-box; }
