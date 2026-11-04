@@ -22,3 +22,9 @@ python -B -m unittest tests/grand_theatre_contract_test.py
 렌더를 생략하려면 `--source` 경로 뒤에 `--no-render`를 추가한다. 기본 미리보기는 800×450, 8 samples, 2 threads다. [객석에서 무대로](grand-theatre-preview-20261104.png), [무대에서 객석으로](grand-theatre-auditorium-20261104.png)를 검토했다. 테스트는 좌석 ID와 층, 출입구·상태 노드, GLB의 유효한 헤더·내장 텍스처·실내만 포함한 노드 구성을 확인한다.
 
 영사막 전면 UV는 0..1 범위로 전체 영상을 한 번 표시한다. glTF 좌표에 맞춰 Three.js VideoTexture는 flipY=false로 사용한다. 2·3층은 각각 6.4m·11.0m에서 시작해 줄마다 0.12m씩 높아지고, 마지막 줄 뒤에는 각 높이 7.12m·11.72m의 통로가 있다.
+
+추가 브라우저 검증: PLAYWRIGHT_PATH에 Playwright 설치 경로를 지정하고 `node tests/grand_theatre_video_browser.cjs`를 실행한다. 실제 HTMLVideoElement의 네 색상 모서리를 Three.js VideoTexture로 재생해 스크린 GLB의 네 모서리와 방향을 검증했다. 검증 결과 readyState=4, 빨강·초록·파랑·노랑 각 모서리 정상.
+
+착석 눈높이는 바닥에서 1.4m다. 의자 등받이의 최고점 약 1.15m와 앞줄 단차를 고려한 시점으로, 기준 의자 표면을 뚫지 않도록 한다.
+
+중앙 중간 열 1-12-20에 앉은 [웹 시점 캡처](grand-theatre-seat-view-20261104.png)를 확인했다. 앞좌석 등받이는 화면 아래쪽에 남고 무대를 가리지 않는다. 캡처 후 Playwright 좌석 라벨 재조회가 타임아웃되어 그 자동화 절차의 전체 성공으로 기록하지 않는다.

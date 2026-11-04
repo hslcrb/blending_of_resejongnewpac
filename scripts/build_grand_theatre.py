@@ -135,7 +135,7 @@ def seating(level,rows,start_y,base_height,step):
    for name,start in beginnings.items():
     for i in range(start,len(b[name].v)):
      vx,vy,vz=b[name].v[i];dx=vx-x;dy=vy-y;b[name].v[i]=(x+c*dx-s*dy,y+s*dx+c*dy,vz)
-   seats.append({'id':f'{level}-{row+1:02d}-{col+22:02d}','level':level,'row':row+1,'position':[round(x,3),round(z,3),round(-y,3)],'eyeHeight':1.08,'lookAt':[0,5,0]})
+   seats.append({'id':f'{level}-{row+1:02d}-{col+22:02d}','level':level,'row':row+1,'position':[round(x,3),round(z,3),round(-y,3)],'eyeHeight':1.4,'lookAt':[0,5,0]})
 seating(1,24,3.3,0,.085)
 # Layered, gently curved balcony rails and seats overlooking the floor.
 for level,height in ((2,6.4),(3,11.0)):

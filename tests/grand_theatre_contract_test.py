@@ -19,6 +19,7 @@ class GrandTheatreContractTest(unittest.TestCase):
             self.assertEqual(len(seat['position']), 3)
             self.assertGreaterEqual(seat['position'][1], 0)
             self.assertGreater(seat['position'][2], 0)
+            self.assertGreater(seat['eyeHeight'], 1.15, '착석 시 눈높이는 앞줄 등받이 상단보다 높아야 한다')
 
     def test_transition_and_interactive_nodes_have_contract(self):
         self.assertEqual(self.layout['coordinates'], 'three-y-up-meters')
