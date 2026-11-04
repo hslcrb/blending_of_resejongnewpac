@@ -21,3 +21,16 @@ test('audio and media resources are restored when disposed', async()=>{
  await m.play(); assert.equal(resumed,1);m.setEffects(true);m.update();assert.ok(light.intensity>2);
  m.dispose();assert.equal(screen.material,original);assert.equal(light.intensity,2);assert.equal(disposed,2);assert.equal(removed,2);assert.ok(paused>0);
 });
+
+test('spatial sound comes from the actual screen geometry centre', async()=>{
+ let sound, texture;
+ const video={addEventListener(){},removeEventListener(){},play:async()=>{},pause(){},load(){},removeAttribute(){}};
+ class Listener {constructor(){this.context={resume:async()=>{}}}}
+ class Audio {constructor(){sound=this;this.position={set(x,y,z){Object.assign(this,{x,y,z});}};this.panner={}} setMediaElementSource(){return this} setRefDistance(){return this} setRolloffFactor(){return this} setVolume(){return this} disconnect(){} }
+ class Analyser {} class Texture {constructor(){texture=this} dispose(){}} class Material {dispose(){}}
+ const THREE={AudioListener:Listener,PositionalAudio:Audio,AudioAnalyser:Analyser,VideoTexture:Texture,MeshBasicMaterial:Material};
+ const geometry={computeBoundingBox(){this.boundingBox={getCenter(position){position.set(0,6.75,-1.12)}}}};
+ const screen={geometry,material:{},add(){},remove(){}},camera={add(){},remove(){}};
+ const media=createTheatreMedia({THREE,camera,screen,videoFactory:()=>video});
+ assert.deepEqual([sound.position.x,sound.position.y,sound.position.z],[0,6.75,-1.12]);assert.equal(texture.flipY,false);media.dispose();geometry.boundingBox={getCenter(position){position.set(0,0,0)}};const centred=createTheatreMedia({THREE,camera,screen,videoFactory:()=>video});assert.deepEqual([sound.position.x,sound.position.y,sound.position.z],[0,0,0]);centred.dispose();
+});

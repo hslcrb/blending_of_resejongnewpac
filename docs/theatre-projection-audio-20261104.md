@@ -13,3 +13,5 @@ ffmpeg -i source_media/one-day-more-original.mp4 -vf 'scale=-2:720' -c:v libx264
 무대 화면에 Three.js `PositionalAudio`를 연결하고 청취자는 카메라에 부착한다. Web Audio의 HRTF 공간화를 이용하므로 헤드폰에서 방향 차이를 들을 수 있지만, 실제 대극장의 측정된 잔향이나 임펄스 응답을 재현한 것은 아니다. 무대효과는 선택적으로 주파수 분석기의 현재 에너지에 따라 전달한 조명의 강도를 부드럽게 조절하며, 끄거나 정지하면 원래 강도로 복원한다. 재생 속도·소리·조명은 모두 같은 영상에 연결된다. 모듈 종료 시 화면 재질과 조명, 영상 리소스 및 음원을 정리한다.
 
 검증: `node --test tests/theatre-media.test.js`와 Chrome/Playwright `tests/theatre-media-browser.cjs`에서 실제 720p 영상 프레임의 재생, HRTF panner, 실행 중 AudioContext, 오디오 변화에 따른 조명 및 자원 정리를 확인했다. 테스트 서버는 `npm run dev -- --port 3178`이다.
+
+GLB의 UV 방향에 맞춰 영상 텍스처는 flipY=false로 사용한다. 음원 위치는 화면 메시의 로컬 bounding box 중심으로 계산하므로 정점이 오브젝트 원점에 모여 있지 않은 모델에서도 스크린 중심에서 재생된다.
