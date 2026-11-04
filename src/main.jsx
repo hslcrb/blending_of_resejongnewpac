@@ -1,3 +1,4 @@
+import NationalBuildingChanges from './NationalBuildingChanges.jsx';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import * as THREE from 'three';
@@ -1268,6 +1269,7 @@ function App() {
                             <span className="hint-touch">{mode === 'walk' ? '화면을 밀어 둘러보기 · 방향 버튼으로 이동' : '한 손가락으로 회전 · 두 손가락으로 이동과 확대'}</span>
                         </p>
                     </div>
+                    <NationalBuildingChanges inspection={info.inspection} active={sight || magnifier || Boolean(info.inspection)} sight={sight} />
                     {(sight || info.inspection || info.keepPanel) && <BuildingInformationPanel sight={sight} inspection={info.inspection} outsideSeoul={geographyInspection?.insideSeoul === false} onSelectBuilding={info.onSelectBuilding} />}
                     {geographyVisible && (sight || magnifier || geographyInspection) && <GeographyInformation inspection={geographyInspection} state={geographyInspectionState} />}
                     {nationalActive && nationalManifest && (sight || info.inspection) && <NationalMapInformation hits={nationalHits||[]} status={nationalInspectState.state==='loading' ? '선택 지점의 원본 지형·시설을 조회하고 있습니다.' : nationalInspectState.state==='error' ? '선택 지점의 원본 정보를 불러오지 못했습니다.' : ''} />}
