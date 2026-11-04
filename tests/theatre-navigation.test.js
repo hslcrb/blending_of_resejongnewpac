@@ -29,3 +29,17 @@ test('a visitor cannot walk through the seat itself',()=>{
  assert.deepEqual(stepInside({x:0,z:6},{x:.9,z:6},[seat]),{x:0,z:6});
  assert.deepEqual(stepInside({x:0,z:6},{x:.2,z:6},[seat]),{x:.2,z:6});
 });
+
+test('upper balcony walking stays on the selected tier',()=>{
+ assert.equal(canEnterTheatre(0,26,0,28,2),true);
+ assert.equal(canEnterTheatre(0,20,0,18,2),false);
+ assert.ok(theatreFloorHeight(28,0,2)>7);
+ assert.ok(theatreFloorHeight(28,0,3)>11);
+});
+
+test('clicking a seat behind a wall is rejected while its own surface is accepted',async()=>{
+ const {seatVisible}=await import('../src/theatreNavigation.js');
+ assert.equal(seatVisible(20,8),false);
+ assert.equal(seatVisible(20,19.7),true);
+ assert.equal(seatVisible(20,undefined),true);
+});

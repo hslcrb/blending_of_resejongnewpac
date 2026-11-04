@@ -2,7 +2,7 @@ import React,{useEffect,useRef,useState} from 'react';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {createLobby} from './theatreLobby.js';
-import {stepInside,nearestSeat,seatEyePosition,theatreFloorHeight} from './theatreNavigation.js';
+import {stepInside,nearestSeat,seatEyePosition,theatreFloorHeight,seatVisible} from './theatreNavigation.js';
 import {createTheatreMedia} from './theatreMedia.js';
 import {createEmbedBridge} from './embedBridge.js';
 import './theatreExperience.css';
@@ -23,7 +23,7 @@ export default function TheatreExperience(){
  const [currentTime,setCurrentTime]=useState(0),[duration,setDuration]=useState(0);
  useEffect(()=>{if(!embedded || window.parent===window)return;return createEmbedBridge({root:root.current,parent:window.parent});},[embedded]);
  useEffect(()=>{
-  let disposed=false,frame=0,readyModel=null,seatMesh=null,media=null,stageObjects={},walkSeats=[],standing=null,last=performance.now(),lastProgress=0,pointer=null;
+  let disposed=false,frame=0,readyModel=null,seatMesh=null,media=null,stageObjects={},walkSeats=[],standing=null,walkLevel=1,last=performance.now(),lastProgress=0,pointer=null;
   const keys=controls.current;const renderer=new THREE.WebGLRenderer({canvas:canvas.current,antialias:true,powerPreference:'high-performance'});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.18;
   const scene=new THREE.Scene();scene.background=new THREE.Color(0x161318);
@@ -38,28 +38,28 @@ export default function TheatreExperience(){
   const observer=new ResizeObserver(resize);observer.observe(canvas.current);resize();
   const setLook=(y,p)=>{yaw=y;pitch=Math.max(-1.1,Math.min(1.1,p));camera.rotation.set(pitch,yaw,0);};
   const faceStage=()=>{const direction=new THREE.Vector3(0,5,0).sub(camera.position);setLook(Math.atan2(-direction.x,-direction.z),Math.atan2(direction.y,Math.hypot(direction.x,direction.z)));};
-  const stand=()=>{if(!standing)return;camera.position.copy(standing);standing=null;setSitting('');};
-  const go=place=>{const p=PLACES[place];if(!p)return;standing=null;setSitting('');camera.position.set(p[0],p[1]+1.7,p[2]);setLook(place==='backstage'?Math.PI:0,0);setStatus({lobby:'1층 로비',auditorium:'객석 입구',stage:'대극장 무대',backstage:'무대 뒤편'}[place]);};
-  const sit=seat=>{if(!seat)return;if(!standing)standing=camera.position.clone();const p=seatEyePosition(seat);camera.position.set(p.x,p.y,p.z);faceStage();setSitting(`${seat.level}층 ${seat.row}열 · ${seat.id}`);setSeatId(seat.id);setStatus('선택한 좌석에 앉았습니다.');};
+  const stand=()=>{if(!standing)return;const seat=standing;walkLevel=seat.level;const [sx,,z]=seat.position;const x=[-8.4,0,8.4].reduce((best,a)=>Math.abs(a-sx)<Math.abs(best-sx)?a:best,0);camera.position.set(x,theatreFloorHeight(z,x,walkLevel)+1.7,z);standing=null;setSitting('');};
+  const go=place=>{const p=PLACES[place];if(!p)return;standing=null;walkLevel=1;setSitting('');camera.position.set(p[0],p[1]+1.7,p[2]);setLook(place==='backstage'?Math.PI:0,0);setStatus({lobby:'1층 로비',auditorium:'객석 입구',stage:'대극장 무대',backstage:'무대 뒤편'}[place]);};
+  const sit=seat=>{if(!seat)return;standing=seat;const p=seatEyePosition(seat);camera.position.set(p.x,p.y,p.z);faceStage();setSitting(`${seat.level}층 ${seat.row}열 · ${seat.id}`);setSeatId(seat.id);setStatus('선택한 좌석에 앉았습니다.');};
   const setStageScene=value=>{if(stageObjects.curtain)stageObjects.curtain.visible=value==='curtain';if(stageObjects.shell)stageObjects.shell.visible=value==='shell';if(stageObjects.screen)stageObjects.screen.visible=value==='projection';};
   const key=(e,down)=>{if(e.target instanceof Element && e.target.closest('button,input,select,textarea,a'))return;const k=e.code;if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','ShiftLeft','ShiftRight'].includes(k)){e.preventDefault();if(down)keys.add(k);else keys.delete(k);}};
   const down=e=>key(e,true),up=e=>key(e,false),blur=()=>keys.clear();window.addEventListener('keydown',down);window.addEventListener('keyup',up);window.addEventListener('blur',blur);
   const onPointerDown=e=>{if(e.button!==0 && e.pointerType==='mouse')return;pointer={id:e.pointerId,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY,moved:false};canvas.current.setPointerCapture(e.pointerId);canvas.current.focus();};
   const onPointerMove=e=>{if(!pointer||pointer.id!==e.pointerId)return;const dx=e.clientX-pointer.x,dy=e.clientY-pointer.y;pointer.x=e.clientX;pointer.y=e.clientY;if(Math.hypot(e.clientX-pointer.startX,e.clientY-pointer.startY)>5)pointer.moved=true;if(pointer.moved)setLook(yaw-dx*.0035,pitch-dy*.003);};
-  const onPointerUp=e=>{if(!pointer||pointer.id!==e.pointerId)return;const click=!pointer.moved;pointer=null;if(!click||!seatMesh)return;const rect=canvas.current.getBoundingClientRect();const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),camera);const hit=ray.intersectObject(seatMesh)[0];if(hit && Number.isInteger(hit.instanceId)){const seat=seatMesh.userData.seats[hit.instanceId];sit(seat);}};
+  const onPointerUp=e=>{if(!pointer||pointer.id!==e.pointerId)return;const click=!pointer.moved;pointer=null;if(!click||!seatMesh)return;const rect=canvas.current.getBoundingClientRect();const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),camera);const hit=ray.intersectObject(seatMesh)[0];if(hit && Number.isInteger(hit.instanceId)){const solid=ray.intersectObjects([readyModel,lobby.group].filter(Boolean),true)[0];if(seatVisible(hit.distance,solid?.distance)){const seat=seatMesh.userData.seats[hit.instanceId];sit(seat);}} };
   const node=canvas.current;node.addEventListener('pointerdown',onPointerDown);node.addEventListener('pointermove',onPointerMove);node.addEventListener('pointerup',onPointerUp);node.addEventListener('pointercancel',onPointerUp);
   const tick=now=>{if(disposed)return;frame=requestAnimationFrame(tick);const dt=Math.min(.05,(now-last)/1000);last=now;
    if(!standing){let forward=0,side=0;if(keys.has('KeyW')||keys.has('ArrowUp')||keys.has('forward'))forward++;if(keys.has('KeyS')||keys.has('ArrowDown')||keys.has('back'))forward--;if(keys.has('KeyA')||keys.has('ArrowLeft')||keys.has('left'))side--;if(keys.has('KeyD')||keys.has('ArrowRight')||keys.has('right'))side++;
-    if(forward||side){const len=Math.hypot(forward,side),speed=(keys.has('ShiftLeft')||keys.has('ShiftRight')?4:2.2)*dt;forward=forward/len*speed;side=side/len*speed;const dx=-Math.sin(yaw)*forward+Math.cos(yaw)*side,dz=-Math.cos(yaw)*forward-Math.sin(yaw)*side;let next=stepInside({x:camera.position.x,z:camera.position.z},{x:camera.position.x+dx,z:camera.position.z},walkSeats);camera.position.x=next.x;next=stepInside({x:camera.position.x,z:camera.position.z},{x:camera.position.x,z:camera.position.z+dz},walkSeats);camera.position.z=next.z;camera.position.y=theatreFloorHeight(camera.position.z)+1.7;}}
+    if(forward||side){const len=Math.hypot(forward,side),speed=(keys.has('ShiftLeft')||keys.has('ShiftRight')?4:2.2)*dt;forward=forward/len*speed;side=side/len*speed;const dx=-Math.sin(yaw)*forward+Math.cos(yaw)*side,dz=-Math.cos(yaw)*forward-Math.sin(yaw)*side;let next=stepInside({x:camera.position.x,z:camera.position.z},{x:camera.position.x+dx,z:camera.position.z},walkSeats,walkLevel);camera.position.x=next.x;next=stepInside({x:camera.position.x,z:camera.position.z},{x:camera.position.x,z:camera.position.z+dz},walkSeats,walkLevel);camera.position.z=next.z;camera.position.y=theatreFloorHeight(camera.position.z,camera.position.x,walkLevel)+1.7;}}
    if(media){media.update();if(!media.video.paused && now-lastProgress>=500){lastProgress=now;setCurrentTime(media.video.currentTime||0);setDuration(Number.isFinite(media.video.duration)?media.video.duration:0);}}
    renderer.render(scene,camera);
   };
-  engine.current={go,stand,sit,near:()=>seatMesh?nearestSeat(seatMesh.userData.seats.filter(s=>s.level===1),camera.position.x,camera.position.z,2):null,setStage:setStageScene,getMedia:()=>media};
+  engine.current={go,stand,sit,near:()=>seatMesh?nearestSeat(seatMesh.userData.seats.filter(s=>s.level===walkLevel),camera.position.x,camera.position.z,2):null,setStage:setStageScene,getMedia:()=>media};
   Promise.all([new GLTFLoader().loadAsync(MODEL),fetch(LAYOUT).then(r=>{if(!r.ok)throw new Error(`좌석 자료 ${r.status}`);return r.json();})]).then(([gltf,layout])=>{
    if(disposed){disposeScene(gltf.scene);return;}readyModel=gltf.scene;scene.add(readyModel);
    const curtain=readyModel.getObjectByName('GrandCurtain'),shell=readyModel.getObjectByName('GrandAcousticShell'),screen=readyModel.getObjectByName('GrandProjectionScreen');stageObjects={curtain,shell,screen};
    const items=(layout.seats||[]).filter(s=>Array.isArray(s.position));if(!items.length||!screen||!curtain||!shell)throw new Error('좌석 또는 무대 구성 자료가 없습니다.');
-   walkSeats=items.filter(s=>s.level===1);setSeats(items);setSeatId(items[0].id);
+   walkSeats=items;setSeats(items);setSeatId(items[0].id);
    const geometry=new THREE.BoxGeometry(.65,1.05,.75),material=new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false,colorWrite:false});seatMesh=new THREE.InstancedMesh(geometry,material,items.length);seatMesh.name='SeatSelectionTargets';seatMesh.userData.seats=items;seatMesh.frustumCulled=false;const matrix=new THREE.Matrix4();items.forEach((seat,i)=>{const [x,y,z]=seat.position;matrix.makeTranslation(x,y+.55,z);seatMesh.setMatrixAt(i,matrix);});scene.add(seatMesh);
    setStageScene('curtain');try{media=createTheatreMedia({THREE,camera,screen,effectLights,onStatus:message=>{if(!disposed){setMediaStatus(message);if(message==='영상이 끝났습니다.')setPlaying(false);}}});}catch(error){setMediaStatus('공간 음향을 준비하지 못했습니다. 브라우저 오디오 설정을 확인해 주세요.');}
    setLoaded(true);setStatus('1층 로비에서 시작합니다. 화면을 끌어 둘러보고 W·A·S·D 또는 이동 버튼으로 걸어보세요.');
