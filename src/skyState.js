@@ -30,3 +30,40 @@ export function cloudFractionFromMetar(report) {
         .filter(code => Object.hasOwn(amount, code)).map(code => amount[code]);
     return values.length ? Math.max(...values) : null;
 }
+
+// [서울 밤하늘 / Seoul night sky]
+// 달의 저정밀 궤도로 시각에 따른 방위·고도와 밝은 면을 근사합니다.
+// Low-precision lunar orbit: suitable for visualisation, not an ephemeris.
+export function moonPosition(date, mode = 'local') {
+    const radians = Math.PI / 180;
+    const days = date.getTime() / 86400000 - 10957.5;
+    const meanLongitude = (218.316 + 13.176396 * days) * radians;
+    const anomaly = (134.963 + 13.064993 * days) * radians;
+    const argument = (93.272 + 13.229350 * days) * radians;
+    const longitude = meanLongitude + 6.289 * radians * Math.sin(anomaly);
+    const latitude = 5.128 * radians * Math.sin(argument);
+    const obliquity = 23.4393 * radians;
+    const rightAscension = Math.atan2(Math.sin(longitude) * Math.cos(obliquity) - Math.tan(latitude) * Math.sin(obliquity), Math.cos(longitude));
+    const declination = Math.asin(Math.sin(latitude) * Math.cos(obliquity) + Math.cos(latitude) * Math.sin(obliquity) * Math.sin(longitude));
+    const hourAngle = (280.16 + 360.9856235 * days + LONGITUDE) * radians - rightAscension;
+    const elevation = Math.asin(Math.sin(LATITUDE) * Math.sin(declination) + Math.cos(LATITUDE) * Math.cos(declination) * Math.cos(hourAngle));
+    const azimuth = (Math.atan2(Math.sin(hourAngle), Math.cos(hourAngle) * Math.sin(LATITUDE) - Math.tan(declination) * Math.cos(LATITUDE)) + Math.PI + 2 * Math.PI) % (2 * Math.PI);
+    const direction = sunDirection({ azimuth, elevation }, mode);
+    const sun = sunDirection(seoulSolarPosition(date), mode);
+    const cosElongation = Math.max(-1, Math.min(1, sun.x*direction.x + sun.y*direction.y + sun.z*direction.z));
+    return { elevation, azimuth, direction, illumination: (1 - cosElongation) / 2 };
+}
+
+export function lightingForSun(elevation, cloudAmount = 0) {
+    const t = Math.max(0, Math.min(1, (elevation + 0.12) / 0.32));
+    const daylight = t * t * (3 - 2 * t);
+    const cloud = Math.max(0, Math.min(1, cloudAmount));
+    return {
+        daylight,
+        ambient: 0.67 + 0.73 * daylight,
+        sun: Math.max(0, Math.sin(elevation)) * 2.3 * (1 - 0.55 * cloud),
+        fill: 0.44 + 0.28 * daylight,
+        facade: (1 - daylight) * 420,
+        basemap: 0.5 + 0.5 * daylight,
+    };
+}

@@ -15,7 +15,8 @@ import { disposeModelResources, shouldCastModelShadow } from './modelResources.j
 import { createSlowFrameDetector } from './framePerformance.js';
 import { setCampusLayout } from './campusLayout.js';
 import { cameraNearPlane } from './cameraClipping.js';
-import { seoulSolarPosition, sunDirection, cloudFractionFromMetar } from './skyState.js';
+import { seoulSolarPosition, sunDirection, cloudFractionFromMetar, moonPosition, lightingForSun } from './skyState.js';
+import { createSkyMaterial, createCampusNightLights } from './skyVisual.js';
 import { createCityLayer, disposeCityLayer } from './cityLayer.js';
 import { SEJONG_IN_SEOUL } from './area/coordinates.ts';
 import { createBuildingExplorer } from './area/building-explorer.ts';
@@ -141,46 +142,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         // 절차적 하늘을 시점 중심에 두어 회전과 이동에 공간감을 더합니다. / Camera-centered sky with soft procedural clouds.
         const sky = new THREE.Mesh(
             new THREE.SphereGeometry(500, 32, 20),
-            new THREE.ShaderMaterial({
-                side: THREE.BackSide,
-                depthWrite: false,
-                uniforms: { sunDir: { value: new THREE.Vector3(0, 1, 0) }, daylight: { value: 1 }, cloudAmount: { value: 0.15 } },
-                vertexShader: `varying vec3 vDirection;
-                    void main() {
-                        vDirection = position;
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                    }`,
-                fragmentShader: `varying vec3 vDirection;
-                    uniform vec3 sunDir;
-                    uniform float daylight;
-                    uniform float cloudAmount;
-                    float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
-                    float noise(vec2 p) {
-                        vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
-                        return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + 1.0), f.x), f.y);
-                    }
-                    float fbm(vec2 p) {
-                        float value = 0.0; float weight = 0.5;
-                        for (int i = 0; i < 3; i++) { value += noise(p) * weight; p = p * 2.03 + 7.4; weight *= 0.5; }
-                        return value;
-                    }
-                    void main() {
-                        vec3 d = normalize(vDirection);
-                        float elevation = clamp(d.y * 0.65 + 0.45, 0.05, 1.0);
-                        vec3 dayColor = mix(vec3(0.46, 0.72, 0.90), vec3(0.10, 0.37, 0.72), pow(elevation, 0.65));
-                        vec3 nightColor = mix(vec3(0.025, 0.045, 0.085), vec3(0.008, 0.018, 0.05), pow(elevation, 0.65));
-                        vec3 color = mix(nightColor, dayColor, daylight);
-                        vec2 clouds = d.xz / (max(d.y + 0.45, 0.05) + 0.32) * 1.65;
-                        float cloud = smoothstep(0.48, 0.69, fbm(clouds + vec2(3.5, 1.8)));
-                        cloud *= smoothstep(-0.55, -0.15, d.y) * cloudAmount;
-                        color = mix(color, mix(vec3(0.07, 0.09, 0.13), vec3(1.0, 0.99, 0.97), daylight), cloud);
-                        float sunlight = pow(max(dot(d, normalize(sunDir)), 0.0), 128.0);
-                        color += vec3(0.45, 0.36, 0.23) * sunlight * daylight;
-                        gl_FragColor = vec4(color, 1.0);
-                        #include <tonemapping_fragment>
-                        #include <colorspace_fragment>
-                    }`,
-            }),
+            createSkyMaterial(),
         );
         sky.frustumCulled = false; sky.renderOrder = -10;
         scene.add(sky);
@@ -201,22 +163,28 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         let basemap = null;
         const skyAbort = new AbortController();
         const solarVector = new THREE.Vector3(0, 1, 0);
-        let observedCloud = null, weatherSequence = 0;
+        let observedCloud = null, weatherSequence = 0, nightLights = null;
         // [서울 시각과 관측 하늘 / Seoul time and observed sky]
         // 현장과 다른 김포공항 관측임을 화면에 밝히고, 실패 시 임의 구름으로 대체합니다.
         // Identify the nearby airport observation and fall back visibly when it is unavailable.
         const refreshSky = () => {
-            const solar = seoulSolarPosition(new Date());
+            const now = new Date();
+            const solar = seoulSolarPosition(now);
             const direction = sunDirection(solar, areaNow);
+            const moon = moonPosition(now, areaNow);
+            const lighting = lightingForSun(solar.elevation, observedCloud ?? 0);
             solarVector.set(direction.x, direction.y, direction.z);
-            const day = THREE.MathUtils.smoothstep(solar.elevation, -0.12, 0.2);
             sky.material.uniforms.sunDir.value.copy(solarVector);
-            sky.material.uniforms.daylight.value = day;
+            sky.material.uniforms.moonDir.value.set(moon.direction.x, moon.direction.y, moon.direction.z);
+            sky.material.uniforms.moonIllumination.value = moon.illumination;
+            sky.material.uniforms.starRotation.value = (now.getTime() / 86164090 * Math.PI * 2) % (Math.PI * 2);
+            sky.material.uniforms.daylight.value = lighting.daylight;
             sky.material.uniforms.cloudAmount.value = observedCloud ?? 0.15;
-            basemap?.setBrightness(0.35 + 0.65 * day);
-            ambient.intensity = 0.32 + 0.98 * day;
-            sun.intensity = Math.max(0, Math.sin(solar.elevation)) * 2.3 * (1 - 0.55 * (observedCloud ?? 0));
-            fill.intensity = 0.24 + 0.46 * day;
+            basemap?.setBrightness(lighting.basemap);
+            ambient.intensity = lighting.ambient;
+            sun.intensity = lighting.sun;
+            fill.intensity = lighting.fill;
+            nightLights?.setIntensity(lighting.facade);
             sun.position.copy(sun.target.position).addScaledVector(solarVector, 140);
             renderer.shadowMap.needsUpdate = true;
         };
@@ -246,6 +214,9 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         let model;
         const detail = new THREE.Group();
         scene.add(detail);
+        nightLights = createCampusNightLights();
+        detail.add(nightLights.group);
+        refreshSky();
         let city = null, cityPromise = null, areaSequence = 0, focusSequence = 0, explorer = null;
         let locationMarker = null, nationalBuildingFeatures = [];
         const mapCredit = document.createElement('div');
@@ -1186,7 +1157,7 @@ function App() {
                     <div className="intro-main">
                         <p className="eyebrow"><span /> SEJONG CENTER FOR THE PERFORMING ARTS</p>
                         <h1 id="page-title">도시의 중심에서,<br /><em>건축을 걷다.</em></h1>
-                        <p className="intro-copy">익숙한 광장의 풍경을 새로운 시선으로.<br />세종문화회관의 외관을 가까이에서 둘러보세요.</p>
+                        <p className="intro-copy">익숙한 광장의 풍경을 새로운 시선으로.<br />세종문화회관의 외관을 가까이에서 둘러보세요.</p><a className="theatre-entry" href={embedded ? "?theatre=1&embed=1" : "?theatre=1"}>대극장 내부 입장 <span aria-hidden="true">→</span></a>
                     </div>
                     <div className="intro-aside">
                         <span className="aside-number">건축 산책</span>
@@ -1279,7 +1250,7 @@ function App() {
                     {nationalActive && unlocatedHits && <NationalMapInformation title="위치 미기재 스키장 원본" hits={unlocatedHits} status="원본에서 좌표가 빠진 3건 · 지도에 점을 만들지 않았습니다." />}
                     <div className="experience-bottom">
                         <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 대극장 로비와 별관 점포까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
-                        <p className="model-note">서울 시간 {seoulTime} · {weather ? `김포공항 구름 관측 ${observedTime}` : '기상 관측을 가져오지 못해 구름은 임의로 표시합니다.'}<br />김포공항은 광화문과 기상이 다를 수 있습니다. <a href="https://aviationweather.gov/data/api/">NOAA 항공기상 관측</a></p>
+                        <p className="model-note">서울 시간 {seoulTime} · {weather ? `김포공항 구름 관측 ${observedTime}` : '기상 관측을 가져오지 못해 구름은 임의로 표시합니다.'}<br />김포공항은 광화문과 기상이 다를 수 있습니다. 달의 위치는 근사이며 별은 연출입니다. <a href="https://aviationweather.gov/data/api/">NOAA 항공기상 관측</a></p>
                     </div>
                 </section>
                 <NationalCulturalExplorer onSelectLocation={selectNational} />
@@ -1289,4 +1260,5 @@ function App() {
     );
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+const TheatreExperience = React.lazy(() => import('./TheatreExperience.jsx'));
+createRoot(document.getElementById('root')).render(new URLSearchParams(window.location.search).get('theatre') === '1' ? <React.Suspense fallback={<p>대극장 체험을 불러오고 있습니다.</p>}><TheatreExperience /></React.Suspense> : <App />);

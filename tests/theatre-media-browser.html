@@ -1,0 +1,7 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><body><button id="play">영상 재생</button><button id="effects">무대효과</button><canvas id="canvas"></canvas><script type="module">
+import * as THREE from 'three';import {createTheatreMedia} from '../src/theatreMedia.js';
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(50,1,.1,100);camera.position.set(0,0,10);const screen=new THREE.Mesh(new THREE.PlaneGeometry(8,4.5),new THREE.MeshBasicMaterial());scene.add(screen);const light=new THREE.PointLight(0xffffff,2);scene.add(light);const renderer=new THREE.WebGLRenderer({canvas:document.querySelector('canvas')});renderer.setSize(300,300);
+window.statusLog=[];window.media=createTheatreMedia({THREE,camera,screen,effectLights:[light],onStatus:s=>window.statusLog.push(s)});window.light=light;window.panner=screen.children[0].panner;window.audioContext=screen.children[0].context;
+document.querySelector('#play').onclick=()=>window.media.play().catch(()=>{});document.querySelector('#effects').onclick=()=>window.media.setEffects(true);
+function frame(){window.media.update();renderer.render(scene,camera);requestAnimationFrame(frame)}frame();
+</script></body></html>
