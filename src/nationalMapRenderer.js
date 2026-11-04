@@ -49,7 +49,7 @@ export function describeNationalFeature(feature) {
         anchorWgs84:feature.properties?.anchorWgs84 || null,
         fields:Object.entries(values).map(([name,value])=>({name,value:value===null||value===undefined||value===''?'미기재':String(value)}))};
 }
-const COLORS={temples:0xffc95a,'traditional-temples':0xffb64d,mountains:0x84c486,airports:0x71b5e6,ports:0x59c8e4,beaches:0x86d6e8,lighthouses:0xffc981,'national-parks':0x6bc17e,'national-border':0xf6ae98,'administrative-boundaries':0xf5d88b,'metro-boundaries':0xf5c167,coastlines:0x7dd7e2,watercourses:0x69b8ee,rail:0xcbb4ed,'express-rail':0xb999e5,graticule:0xcad8df};
+const COLORS={expressway:0xffa877,national:0xece1bf,local:0xdecbaa,temples:0xffc95a,'traditional-temples':0xffb64d,mountains:0x84c486,airports:0x71b5e6,ports:0x59c8e4,beaches:0x86d6e8,lighthouses:0xffc981,'national-parks':0x6bc17e,'national-border':0xf6ae98,'administrative-boundaries':0xf5d88b,'metro-boundaries':0xf5c167,coastlines:0x7dd7e2,watercourses:0x69b8ee,rail:0xcbb4ed,'express-rail':0xb999e5,graticule:0xcad8df};
 const colorFor = id => COLORS[id] ?? 0xf1cc83;
 const idOf = f => String(f.id || '').split(':')[0];
 const pointFor = (mode,xy) => mode==='local' ? toSejongWorld(xy) : toSeoulWorld(xy);
