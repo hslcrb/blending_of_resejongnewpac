@@ -253,3 +253,6 @@ button:disabled { cursor: not-allowed; opacity: .5; }
 
 .embedded-theatre-entry{margin-top:0;min-height:3rem;white-space:nowrap}
 .app-shell.embedded .experience-controls{flex-wrap:wrap}
+
+/* [지도 체험 이동 / Navigate between the walk and map] */
+.route-entry{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.65rem .95rem;border:1px solid #376965;border-radius:.5rem;color:#24534f;background:#fff;font-size:1rem;font-weight:700;text-decoration:none;white-space:nowrap}.route-entry:hover{background:#e4f3ee}.route-entry:focus-visible{outline:3px solid #427c88;outline-offset:3px}.experience-controls{flex-wrap:wrap}
