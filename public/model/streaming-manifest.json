@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": "20261103-aerial-shared",
+  "revision": "20261104-connected-trees-shared-v1",
   "focusBounds": {
     "min": [
       -78,
@@ -77,8 +77,8 @@
     },
     {
       "id": "campus-planting-center-front",
-      "url": "/model/stream-shared/20261103-campus-planting-center-front.glb",
-      "bytes": 3335820,
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-center-front.glb",
+      "bytes": 3314628,
       "objects": 66,
       "bounds": {
         "min": [
@@ -88,8 +88,8 @@
         ],
         "max": [
           78.45705,
-          10.90378,
-          37.37748
+          10.47532,
+          37.74823
         ]
       },
       "loadDistance": 50,
@@ -99,19 +99,19 @@
     },
     {
       "id": "campus-planting-center-rear",
-      "url": "/model/stream-shared/20261103-campus-planting-center-rear.glb",
-      "bytes": 3222748,
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-center-rear.glb",
+      "bytes": 3201524,
       "objects": 85,
       "bounds": {
         "min": [
           -69.24618,
           0.09516,
-          -165.73691
+          -166.36989
         ],
         "max": [
           74.32401,
-          11.76782,
-          -120.3947
+          11.09915,
+          -119.97104
         ]
       },
       "loadDistance": 50,
@@ -121,19 +121,19 @@
     },
     {
       "id": "campus-planting-north-front",
-      "url": "/model/stream-shared/20261103-campus-planting-north-front.glb",
-      "bytes": 1021852,
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-north-front.glb",
+      "bytes": 1000700,
       "objects": 92,
       "bounds": {
         "min": [
           2.09185,
           0.17735,
-          -49.28867
+          -49.6083
         ],
         "max": [
-          81.36002,
-          11.29914,
-          37.24986
+          81.69494,
+          10.89075,
+          37.60402
         ]
       },
       "loadDistance": 50,
@@ -143,19 +143,19 @@
     },
     {
       "id": "campus-planting-north-rear",
-      "url": "/model/stream-shared/20261103-campus-planting-north-rear.glb",
-      "bytes": 71284,
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-north-rear.glb",
+      "bytes": 50112,
       "objects": 95,
       "bounds": {
         "min": [
-          24.02163,
+          23.59315,
           0.15716,
-          -165.16199
+          -165.6627
         ],
         "max": [
-          81.33905,
-          12.17157,
-          -51.55243
+          81.56874,
+          11.6358,
+          -50.988
         ]
       },
       "loadDistance": 50,
@@ -165,19 +165,19 @@
     },
     {
       "id": "campus-planting-south-front",
-      "url": "/model/stream-shared/20261103-campus-planting-south-front.glb",
-      "bytes": 53104,
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-south-front.glb",
+      "bytes": 31952,
       "objects": 45,
       "bounds": {
         "min": [
-          -72.92814,
+          -73.1671,
           0.1778,
-          14.15006
+          13.66774
         ],
         "max": [
-          -46.65869,
-          9.36033,
-          37.9684
+          -46.01861,
+          9.05954,
+          38.39803
         ]
       },
       "loadDistance": 50,
@@ -187,19 +187,19 @@
     },
     {
       "id": "campus-planting-south-rear",
-      "url": "/model/stream-shared/20261103-campus-planting-south-rear.glb",
-      "bytes": 61288,
+      "url": "/model/trees-smooth-shared-20261104/20261104-campus-planting-south-rear.glb",
+      "bytes": 40124,
       "objects": 60,
       "bounds": {
         "min": [
-          -72.86548,
+          -73.82093,
           0.15716,
-          -166.29181
+          -167.29597
         ],
         "max": [
-          -34.54938,
-          11.85855,
-          -120.52682
+          -34.21731,
+          11.57476,
+          -119.80552
         ]
       },
       "loadDistance": 50,
@@ -363,19 +363,19 @@
     },
     {
       "id": "public-planting-0",
-      "url": "/model/stream-shared/20261103-public-planting-0.glb",
-      "bytes": 23972,
+      "url": "/model/trees-smooth-shared-20261104/20261104-public-planting-0.glb",
+      "bytes": 20712,
       "objects": 60,
       "bounds": {
         "min": [
-          -191.28915,
+          -191.66298,
           0.10759,
-          81.6548
+          81.58582
         ],
         "max": [
-          -83.9774,
-          10.05377,
-          158.67844
+          -83.67651,
+          9.81255,
+          159.01311
         ]
       },
       "loadDistance": 45,
@@ -385,19 +385,19 @@
     },
     {
       "id": "public-planting-1",
-      "url": "/model/stream-shared/20261103-public-planting-1.glb",
-      "bytes": 21636,
+      "url": "/model/trees-smooth-shared-20261104/20261104-public-planting-1.glb",
+      "bytes": 18380,
       "objects": 50,
       "bounds": {
         "min": [
-          -82.28915,
+          -82.66298,
           0.10759,
-          81.92451
+          81.81859
         ],
         "max": [
-          1.72525,
-          10.05377,
-          158.67844
+          2.01969,
+          9.81255,
+          159.01311
         ]
       },
       "loadDistance": 45,
@@ -407,8 +407,8 @@
     },
     {
       "id": "public-planting-2",
-      "url": "/model/stream-shared/20261103-public-planting-2.glb",
-      "bytes": 597368,
+      "url": "/model/trees-smooth-shared-20261104/20261104-public-planting-2.glb",
+      "bytes": 594108,
       "objects": 52,
       "bounds": {
         "min": [
@@ -418,8 +418,8 @@
         ],
         "max": [
           225.11,
-          9.37135,
-          158.35658
+          9.14669,
+          158.71446
         ]
       },
       "loadDistance": 45,
@@ -429,19 +429,19 @@
     },
     {
       "id": "public-planting-3",
-      "url": "/model/stream-shared/20261103-public-planting-3.glb",
-      "bytes": 21624,
+      "url": "/model/trees-smooth-shared-20261104/20261104-public-planting-3.glb",
+      "bytes": 18364,
       "objects": 50,
       "bounds": {
         "min": [
-          77.17131,
+          76.87413,
           0.10759,
-          81.6548
+          81.58582
         ],
         "max": [
-          160.90907,
-          10.05377,
-          158.67844
+          161.19087,
+          9.81255,
+          159.01311
         ]
       },
       "loadDistance": 45,
@@ -451,19 +451,19 @@
     },
     {
       "id": "public-planting-4",
-      "url": "/model/stream-shared/20261103-public-planting-4.glb",
-      "bytes": 17092,
+      "url": "/model/trees-smooth-shared-20261104/20261104-public-planting-4.glb",
+      "bytes": 13832,
       "objects": 30,
       "bounds": {
         "min": [
-          170.96901,
+          170.54063,
           0.10759,
-          81.6548
+          81.58582
         ],
         "max": [
-          217.0226,
-          10.05377,
-          158.04314
+          217.32349,
+          9.81255,
+          158.37881
         ]
       },
       "loadDistance": 45,
@@ -561,18 +561,18 @@
     },
     {
       "id": "west-garden",
-      "url": "/model/stream-shared/20261103-west-garden.glb",
-      "bytes": 333884,
+      "url": "/model/trees-smooth-shared-20261104/20261104-west-garden.glb",
+      "bytes": 315760,
       "objects": 77,
       "bounds": {
         "min": [
-          -76.1875,
+          -76.59969,
           0.004,
           -115
         ],
         "max": [
           -28.9,
-          10.24376,
+          9.51878,
           -55
         ]
       },
