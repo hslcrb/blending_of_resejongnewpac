@@ -1,0 +1,206 @@
+{
+  "version": 1,
+  "referenceDate": "2026-10-01",
+  "crs": "EPSG:4326",
+  "coordinateOrder": "[longitude, latitude]",
+  "boundaryType": "administrative-dong, not legal-dong or cadastral",
+  "attribution": "출처: 국가데이터처 통계지리정보서비스(SGIS, https://sgis.kostat.go.kr); 가공: vuski/admdongkor(https://github.com/vuski/admdongkor), CC BY 4.0; 추가 가공: 광역별 분할 및 서울 자치구 경계 병합.",
+  "license": {
+    "derived": "CC BY 4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/",
+    "dataLicense": "https://github.com/vuski/admdongkor/blob/d5d5a821c8de6cc337d47eeca604d7af76271c9b/LICENSE-DATA"
+  },
+  "source": {
+    "provider": "vuski/admdongkor; upstream Statistics Korea SGIS",
+    "url": "https://raw.githubusercontent.com/vuski/admdongkor/d5d5a821c8de6cc337d47eeca604d7af76271c9b/ver20261001/HangJeongDong_ver20261001.geojson",
+    "commit": "d5d5a821c8de6cc337d47eeca604d7af76271c9b",
+    "sha256": "843ece3a0b3429742cd4a1b699cc13987a88b5e5401f382e7fdaaa194ea5e605",
+    "featureCount": 3559
+  },
+  "transformation": "Split original feature collection by sido; Seoul districts dissolved from constituent administrative-dong polygons without simplification.",
+  "regions": [
+    {
+      "code": "11",
+      "name": "서울특별시",
+      "count": 427,
+      "file": "regions/11.geojson.gz"
+    },
+    {
+      "code": "12",
+      "name": "전남광주통합특별시",
+      "count": 393,
+      "file": "regions/12.geojson.gz"
+    },
+    {
+      "code": "26",
+      "name": "부산광역시",
+      "count": 206,
+      "file": "regions/26.geojson.gz"
+    },
+    {
+      "code": "27",
+      "name": "대구광역시",
+      "count": 150,
+      "file": "regions/27.geojson.gz"
+    },
+    {
+      "code": "28",
+      "name": "인천광역시",
+      "count": 158,
+      "file": "regions/28.geojson.gz"
+    },
+    {
+      "code": "30",
+      "name": "대전광역시",
+      "count": 82,
+      "file": "regions/30.geojson.gz"
+    },
+    {
+      "code": "31",
+      "name": "울산광역시",
+      "count": 55,
+      "file": "regions/31.geojson.gz"
+    },
+    {
+      "code": "36",
+      "name": "세종특별자치시",
+      "count": 25,
+      "file": "regions/36.geojson.gz"
+    },
+    {
+      "code": "41",
+      "name": "경기도",
+      "count": 602,
+      "file": "regions/41.geojson.gz"
+    },
+    {
+      "code": "43",
+      "name": "충청북도",
+      "count": 153,
+      "file": "regions/43.geojson.gz"
+    },
+    {
+      "code": "44",
+      "name": "충청남도",
+      "count": 208,
+      "file": "regions/44.geojson.gz"
+    },
+    {
+      "code": "47",
+      "name": "경상북도",
+      "count": 321,
+      "file": "regions/47.geojson.gz"
+    },
+    {
+      "code": "48",
+      "name": "경상남도",
+      "count": 305,
+      "file": "regions/48.geojson.gz"
+    },
+    {
+      "code": "50",
+      "name": "제주특별자치도",
+      "count": 43,
+      "file": "regions/50.geojson.gz"
+    },
+    {
+      "code": "51",
+      "name": "강원특별자치도",
+      "count": 188,
+      "file": "regions/51.geojson.gz"
+    },
+    {
+      "code": "52",
+      "name": "전북특별자치도",
+      "count": 243,
+      "file": "regions/52.geojson.gz"
+    }
+  ],
+  "assets": {
+    "regions/11.geojson.gz": {
+      "features": 427,
+      "bytes": 206492,
+      "sha256": "250fd10c8acff49a4629746c4156deefef86ed692c3fa3d13782e72e0a0d1b2b"
+    },
+    "regions/12.geojson.gz": {
+      "features": 393,
+      "bytes": 1706749,
+      "sha256": "f55a22d1e3aecf476b127d916225cf5afd99c0dce8d380183d5b0395075d71ac"
+    },
+    "regions/26.geojson.gz": {
+      "features": 206,
+      "bytes": 150901,
+      "sha256": "b84ab61e83b53c5099ef791a7b1584bdf2552c8421b46bdfab11756fc35735c5"
+    },
+    "regions/27.geojson.gz": {
+      "features": 150,
+      "bytes": 195402,
+      "sha256": "0ccc09c75ad8f1e1b6876e2ebf46350f7b71e28f32bbc3d7a57509d3c513749f"
+    },
+    "regions/28.geojson.gz": {
+      "features": 158,
+      "bytes": 191331,
+      "sha256": "826226071cf7305fa8e95e2d117ce8723625089e8941b924084c1220a2f92441"
+    },
+    "regions/30.geojson.gz": {
+      "features": 82,
+      "bytes": 69203,
+      "sha256": "4b68236094b992fba6a7904b3a12a88612b9065a734d5e1f7a777e06f22defdf"
+    },
+    "regions/31.geojson.gz": {
+      "features": 55,
+      "bytes": 117553,
+      "sha256": "626de0eb32932fc79e80f0008d4324980af88a52ae9a93b9eb3b9b32407ab287"
+    },
+    "regions/36.geojson.gz": {
+      "features": 25,
+      "bytes": 56874,
+      "sha256": "7dd3942536d3e06a4f186b8b4a3b292c8b00ca735f82aef3a1f74031910b5377"
+    },
+    "regions/41.geojson.gz": {
+      "features": 602,
+      "bytes": 1178746,
+      "sha256": "ba5d7152fae9d8d3af1e19e34f6fec4a90e3cc349dc62b61963e295da3811109"
+    },
+    "regions/43.geojson.gz": {
+      "features": 153,
+      "bytes": 605030,
+      "sha256": "7e5415cbf0dd034fdca21c6f375df59b2b2750dd52bcc358eec716c3af48b064"
+    },
+    "regions/44.geojson.gz": {
+      "features": 208,
+      "bytes": 776975,
+      "sha256": "c2e3e43983cf226e9824b11afdd6b90e611180c0ae824ee0833273e9fa76ae47"
+    },
+    "regions/47.geojson.gz": {
+      "features": 321,
+      "bytes": 1646491,
+      "sha256": "33d6ce3eda66bd2f30db133c5fd30270d50ecdc37623f05de8d7f652808e67fa"
+    },
+    "regions/48.geojson.gz": {
+      "features": 305,
+      "bytes": 1264328,
+      "sha256": "2f5c64cb74acbec903301351066b16592b78c51f8f6c78f759ab6aee3a0adf3f"
+    },
+    "regions/50.geojson.gz": {
+      "features": 43,
+      "bytes": 132620,
+      "sha256": "e229ffb712b305baa45ed59d62f21d056eee1617a3004e8d748e99aa31347dbf"
+    },
+    "regions/51.geojson.gz": {
+      "features": 188,
+      "bytes": 957229,
+      "sha256": "64caaed34eb3bddf1e4ae6dee925a3af7b20dcfdabba0a9f7427f4ca8f638172"
+    },
+    "regions/52.geojson.gz": {
+      "features": 243,
+      "bytes": 819946,
+      "sha256": "4bf361b92a2ce3c81e4fd4ec5ce03588a3d459f24b9d5c1e8abce4d709ab3b61"
+    },
+    "seoul-districts.geojson.gz": {
+      "features": 25,
+      "bytes": 66140,
+      "sha256": "da75249eb9b1b0f90eda9daf91306e73852fd034833eed0eb3d6de2150d8ba05"
+    }
+  }
+}
