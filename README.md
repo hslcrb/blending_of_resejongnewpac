@@ -18,3 +18,9 @@ npm run dev
 항공사진을 참고해 별관 지붕의 앞뒤 길이를 본관의 약 50%로 늘리고 뒤 정원에 굽은 화단·벽돌 보행 공간과 수목을 보강했습니다. 이 비례와 위치는 사진에 따른 근사이며 실측값이 아닙니다. `scripts/build_sejong.py`는 이전 모델을 재생성하므로 현재 MCP 수정본을 덮어쓰는 용도로 사용하지 마세요. 부조·화면·현수막과 새 포장·석재 무늬는 직접 제작했으며 사진에서 잘라 쓰지 않았습니다.
 
 사진 원본과 요청 기록은 [제작 브리프](docs/brief.md)와 [요청 원문](docs/references/user-requests-verbatim.md)에, 답사 149장 검토와 수작업 상세는 [11월 3일 기록](docs/sitevisit-mcp-20261103.md)에 정리했습니다. [항공 비례와 웹 연결](docs/sitevisit-aerial-web-20261103.md), [GLB 검증](docs/sitevisit-review/20261103-glb-verification.md), [웹 공간 로딩](docs/sitevisit-lazy-loading-20261103.md)에 이번 변경의 구현·검증 범위를 기록했습니다. 걷기 모드의 로비와 가려진 실내는 사진으로 완전히 검증된 복원이 아니라 해석을 포함합니다.
+
+## 서울 시각과 기상 관측
+
+웹 하늘은 서울 시각·날짜를 이용한 [NOAA 태양 위치 근사식](https://gml.noaa.gov/grad/solcalc/solareqns.PDF)으로 1분마다 바뀐다. 구름 밀도는 [NOAA 항공기상 API](https://aviationweather.gov/data/api/)의 김포공항(RKSS) 최신 관측 범주를 이용하며, 공항과 광화문의 위치가 다르므로 현장 기상과 일치한다고 주장하지 않는다. 관측 시각을 화면에 표시하고, 2시간보다 오래된 관측이나 요청 실패는 알 수 없는 상태로 처리해 임의 구름 사용을 밝힌다.
+
+NOAA API는 브라우저 CORS를 지원하지 않아 Cloudflare Pages Function `/api/weather`가 단일 공항 관측을 가져온다. 10분 캐시로 요청을 줄이고 오래된 응답은 제공하지 않는다. Vite 개발 서버에는 Pages Function이 없으므로 로컬 화면은 기상 실패 대체 상태가 정상이다. 실제 운영 경로와 날씨 출처 응답은 배포 후 별도 확인한다. 과거 프로젝트의 Blender 파일은 `blender_work/20261104-gis-import/sky/README.md`에 기록된 24시간 키프레임과 수동 실행 스크립트를 보존한다.
