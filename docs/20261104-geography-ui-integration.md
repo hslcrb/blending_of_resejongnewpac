@@ -17,3 +17,5 @@
 - `GEOGRAPHY_EVIDENCE_PATH`를 지정하면 전국 시점의 3D 캔버스를 저장한다. 이 이미지는 경계와 레이블 확인용으로, 모의 지면 타일을 썼기 때문에 실제 지도나 위성사진을 입증하지 않는다.
 
 최종 운영용 Vite 빌드는 성공했고 전체 Node 검사 82개가 통과했다. 첫 전체 검사에서는 독립 worktree의 sparse checkout에 기상 API 파일이 없어 1개가 실패했으며 `/functions/`를 추가한 뒤 모두 통과했다. 전국 화면 시각 검토에서 한반도 북부와 제주를 포함하도록 카메라를 조정하고 중복 광역명과 출처·조작부 겹침을 줄였다. `geography-integration.png`는 외부 타일을 모의 응답한 검증 이미지다.
+
+최신 main `1d5a7b1`과 통합할 때 로딩 전 문화시설 위치 선택 요청의 객체·필드, 늦은 위치 응답 차단, 카메라 크기 보존, 격자 실패 시 후보 위치 표시·재시도, 오래된 기상 응답 차단을 함께 보존했다. `location-pending-browser.cjs`, `grid-failure-browser.cjs`, `weather-race-browser.cjs`를 통합된 운영 빌드에서 실행해 통과했다. 이 회귀 검사에는 `node -r ./tests/mock-external-map.cjs`로 지도 타일 요청을 모의 처리해 공용 OSM 서버를 자동 탐색하지 않았다.
