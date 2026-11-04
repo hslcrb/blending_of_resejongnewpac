@@ -1,6 +1,7 @@
 import importlib.util
 from pathlib import Path
 import unittest
+import tempfile
 
 path = Path(__file__).resolve().parents[1] / "scripts" / "build_national_cultural.py"
 spec = importlib.util.spec_from_file_location("national_cultural", path)
@@ -23,6 +24,16 @@ class SourceValueTests(unittest.TestCase):
         self.assertEqual((value, fallback), ("똠", True))
         with self.assertRaises(UnicodeDecodeError):
             module.decode_field(b"\xff")
+
+    def test_json_bytes_are_utf8_and_lf_on_any_platform(self):
+        with tempfile.TemporaryDirectory() as temp:
+            target = Path(temp) / "value.json"
+            module.write_json_bytes(target, {"건물": "서울"})
+            self.assertEqual(target.read_bytes(), '{"건물":"서울"}\n'.encode("utf-8"))
+            module.write_json_bytes(target, {"건물": "서울"}, indent=2)
+            actual = target.read_bytes()
+            self.assertTrue(actual.endswith(b"}\n"))
+            self.assertNotIn(b"\r", actual)
 
     def test_candidate_excludes_deletions_and_unknown_actions(self):
         fields = {"A8": "05000", "A9": "문화및집회시설", "A29": "U"}
