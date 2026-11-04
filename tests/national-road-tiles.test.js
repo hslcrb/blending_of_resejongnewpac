@@ -16,3 +16,19 @@ test('failed tile aborts other pending tiles',async()=>{
  const fetcher=async(url,{signal}={})=>{if(url.endsWith('manifest.json'))return new Response(JSON.stringify(index2));if(url.endsWith('fail.gz'))return new Response('',{status:503});return new Promise((resolve,reject)=>{signal.addEventListener('abort',()=>{stopped=true;reject(new DOMException('aborted','AbortError'));},{once:true});});};
  await assert.rejects(createNationalRoadSource({fetcher}).query({layers:['national'],bounds:[0,0,1,1]}),/503/);assert.equal(stopped,true);
 });
+test('canceling one query does not cancel another query for the same shard',async()=>{
+ let release;const waiting=new Promise(r=>release=r);const fetcher=async(url,{signal}={})=>{if(url.endsWith('manifest.json'))return new Response(JSON.stringify(index));await Promise.race([waiting,new Promise((_,reject)=>signal.addEventListener('abort',()=>reject(new DOMException('aborted','AbortError')),{once:true}))]);return new Response(JSON.stringify({type:'FeatureCollection',features:[feature]}));};
+ const src=createNationalRoadSource({fetcher});const c=new AbortController();const first=src.query({layers:['national'],bounds:[0,0,20,20],signal:c.signal});const second=src.query({layers:['national'],bounds:[0,0,20,20]});await new Promise(r=>setTimeout(r,20));c.abort();await assert.rejects(first,{name:'AbortError'});release();assert.deepEqual(await second,[feature]);
+});
+test('reads real gzip road tiles with unchanged FIDs and fields',async()=>{
+ const {readFile}=await import('node:fs/promises');const {join}=await import('node:path');
+ const fetcher=async url=>new Response(await readFile(join(process.cwd(),'public',url)));
+ const source=createNationalRoadSource({fetcher});const data=await source.query({layers:['expressway','national','local'],bounds:[190000,545000,205000,560000]});
+ assert.ok(data.length>0);assert.ok(data.every(f=>f.id.endsWith(`:${f.properties.fid}`)&&Object.hasOwn(f.properties.fields,'ROAD_NAME')));
+});
+test('existing renderer displays and inspects actual road data',async()=>{
+ const {readFile}=await import('node:fs/promises');const {join}=await import('node:path');const THREE=await import('three');const {createNationalMapRenderer}=await import('../src/nationalMapRenderer.js');
+ const source=createNationalRoadSource({fetcher:async url=>new Response(await readFile(join(process.cwd(),'public',url)))});const scene=new THREE.Scene();const camera=new THREE.PerspectiveCamera();let hits=[];
+ const view=createNationalMapRenderer({scene,camera,source,onInspect:v=>{hits=v;}});const bounds=[195000,550000,200000,555000];assert.equal(await view.update({layers:['expressway','national','local'],bounds,mode:'seoul'}),true);
+ const group=scene.getObjectByName('백지도 부가 레이어');assert.ok(group.children.length>0);const features=await source.query({layers:['national'],bounds});const geometry=features.find(f=>f.geometry?.coordinates?.length)?.geometry;const coords=geometry.type==='LineString'?geometry.coordinates[0]:geometry.coordinates[0][0];await view.inspectAt({easting:coords[0],northing:coords[1],radius:1});assert.ok(hits.length>0);view.dispose();
+});
