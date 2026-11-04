@@ -299,13 +299,21 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         };
         const inspectGeography = async value => {
             if (!geography || !value || disposed) return null;
-            geographyQueries++;
+            geographyQueries++;window.clearTimeout(regionTimer);
             try {
-                await syncGeographyRegion(value.easting,value.northing);
+                // 문화시설 좌표는 모형 로딩 전에도 서울 좌표축으로 독립 조회합니다.
+                // National candidate coordinates use the Seoul GIS axes even before the model loads.
+                const queryMode=value.context==='national-location'?'seoul':areaNow;
+                if (value.context==='national-location' && value.regionCode && !requestedTools.current.allRegions) {
+                    ++regionGeneration;
+                    const codes=[...new Set([...viewportRegions,value.regionCode])].sort();
+                    const key=codes.join(',');if(key!==regionKey){regionKey=key;await geography.setRegions(codes);}
+                } else await syncGeographyRegion(value.easting,value.northing);
                 if (disposed) return null;
-                const target = geoToWorld(areaNow,value.easting,value.northing), radius = areaNow === 'local' ? 75 : 150;
-                const hits = await geography.query({...target,mode:areaNow,radius});
-                return {hits,radius};
+                const target = geoToWorld(queryMode,value.easting,value.northing), radius = queryMode === 'local' ? 75 : 150;
+                const hits = await geography.query({...target,mode:queryMode,radius});
+                const insideSeoul = hits.some(hit => hit.category==='district-detail' && hit.contains);
+                return {hits,radius,insideSeoul};
             } finally {geographyQueries--;}
         };
         refreshSky();
@@ -619,7 +627,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             basemap?.update(camera,{width:container.clientWidth,height:container.clientHeight,mode:'seoul'});
             onAreaStatus('전국 행정동과 문화시설 후보 · 건물 개별 자료는 서울 범위입니다.');
         };
-        sceneRef.current = { fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, showNational, setGeographyOptions, inspectGeography, retryGeography: () => geography?.retry(), setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center() };
+        sceneRef.current = { fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, showNational, setGeographyOptions, inspectGeography, cancelPendingFocus: () => {focusSequence++;regionGeneration++;window.clearTimeout(regionTimer);}, retryGeography: () => geography?.retry(), setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center() };
         viewerRef.current = sceneRef.current;
 
         // 주 건물은 먼저, 주변 세부는 공간별로 내려받습니다. / Load core first and stream spatial detail separately.
@@ -947,7 +955,9 @@ function App() {
     const [areaStatus, setAreaStatus] = useState('');
     const [sight, setSight] = useState(false);
     const [magnifier, setMagnifier] = useState(false);
-    const info = useBuildingInformation();
+    const viewerRef = useRef(null);
+    const cancelPendingFocus = useCallback(() => viewerRef.current?.cancelPendingFocus(), []);
+    const info = useBuildingInformation({onSelectionStart:cancelPendingFocus});
     const [projection, setProjection] = useState('');
     const [mapProvider, setMapProvider] = useState('ground');
     const [mapStatus, setMapStatus] = useState({failed:0});
@@ -957,7 +967,7 @@ function App() {
     const [locationRequest, setLocationRequest] = useState(null);
     const onMapStatus = useCallback(value => setMapStatus(value), []);
     const onGeographyStatus = useCallback(value => setGeographyStatus(value), []);
-    const selectNational = useCallback(value => { setMode('orbit'); setArea('seoul'); setMapProvider('ground'); setLocationRequest({coordinates:value.coordinates,fields:value.fields}); experienceRef.current?.scrollIntoView({behavior:'smooth',block:'start'}); }, []);
+    const selectNational = useCallback(value => { info.selectLocation(value.coordinates,value.fields); setMode('orbit'); setArea('seoul'); setMapProvider('ground'); setLocationRequest({coordinates:value.coordinates,fields:value.fields}); experienceRef.current?.scrollIntoView({behavior:'smooth',block:'start'}); }, [info.selectLocation]);
     const [weather, setWeather] = useState(null);
     const [clock, setClock] = useState(() => new Date());
     useEffect(() => { const timer = window.setInterval(() => setClock(new Date()), 60000); return () => window.clearInterval(timer); }, []);
@@ -968,14 +978,13 @@ function App() {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [fullscreenError, setFullscreenError] = useState('');
     const experienceRef = useRef(null);
-    const viewerRef = useRef(null);
     const ready = status === 'ready';
     const fullscreenAvailable = document.fullscreenEnabled && typeof document.documentElement.requestFullscreen === 'function';
     const geographyVisible = boundaries && (sight || magnifier || mapProvider !== null);
     useEffect(() => {
         if (!geographyVisible || !info.inspection) { setGeographyInspection(null); setGeographyInspectionState({state:'idle'}); return undefined; }
         let active=true;
-        setGeographyInspectionState({state:'loading'});
+        setGeographyInspection(null);setGeographyInspectionState({state:'loading'});
         Promise.resolve(viewerRef.current?.inspectGeography(info.inspection)).then(value => {
             if (active && value) {setGeographyInspection(value);setGeographyInspectionState({state:'ready'});}
         }).catch(() => {if (active) {setGeographyInspection(null);setGeographyInspectionState({state:'error'});}});
@@ -1064,8 +1073,8 @@ function App() {
                     </div>
                     {fullscreenError && <p className="fullscreen-error" role="alert">{fullscreenError}</p>}
                     <div className="area-toolbox" role="group" aria-label="지도와 건물 정보">
-                        <button type="button" aria-pressed={area === 'local'} disabled={!ready} onClick={() => setArea('local')}>광화문 주변</button>
-                        <button type="button" aria-pressed={area === 'seoul'} disabled={!ready} onClick={() => { setMode('orbit'); setArea('seoul'); }}>서울 전역</button>
+                        <button type="button" aria-pressed={area === 'local'} disabled={!ready} onClick={() => {info.resetSelection();setArea('local');}}>광화문 주변</button>
+                        <button type="button" aria-pressed={area === 'seoul'} disabled={!ready} onClick={() => { info.resetSelection();setMode('orbit');setArea('seoul'); }}>서울 전역</button>
                         <button type="button" aria-pressed={magnifier} disabled={!ready} onClick={() => { setMode('orbit'); setMagnifier(value => !value); }}>돋보기</button>
                         <button type="button" aria-pressed={sight} disabled={!ready} onClick={() => setSight(value => !value)}>전시천리안 (全視千里眼)</button>
                         <button type="button" disabled={!ready} onClick={() => { info.resetSelection(); viewerRef.current?.inspectCenter(); }}>현재 중심 건물 조회</button>
@@ -1081,6 +1090,7 @@ function App() {
                     <p className="area-tool-state" role="status" aria-live="polite">{areaStatus}</p>
                     {areaStatus.includes('서울 격자를 불러오지 못했습니다') && <button type="button" onClick={() => viewerRef.current?.setAreaView('seoul')}>서울 격자 다시 불러오기</button>}
                     <p className="area-tool-state" role="status" aria-live="polite">{info.inspectionState.message}</p>
+                    {info.inspectionState.state==='error' && info.inspection?.context==='national-location' && <button type="button" onClick={info.retryLocation}>선택 위치 건물 정보 다시 불러오기</button>}
                     <p className="area-tool-state" role="status" aria-live="polite">{projection}</p>
                     {mapStatus.failed > 0 && <p className="area-tool-state" role="status">지도 일부를 불러오지 못했습니다. <button type="button" onClick={() => viewerRef.current?.retryMap()}>지도 다시 불러오기</button></p>}
                     {geographyVisible && <div className="geography-summary">
@@ -1111,7 +1121,7 @@ function App() {
                             <span className="hint-touch">{mode === 'walk' ? '화면을 밀어 둘러보기 · 방향 버튼으로 이동' : '한 손가락으로 회전 · 두 손가락으로 이동과 확대'}</span>
                         </p>
                     </div>
-                    {(sight || info.inspection) && <BuildingInformationPanel sight={sight} inspection={info.inspection} onSelectBuilding={info.onSelectBuilding} />}
+                    {(sight || info.inspection || info.keepPanel) && <BuildingInformationPanel sight={sight} inspection={info.inspection} outsideSeoul={geographyInspection?.insideSeoul === false} onSelectBuilding={info.onSelectBuilding} />}
                     {geographyVisible && (sight || magnifier || geographyInspection) && <GeographyInformation inspection={geographyInspection} state={geographyInspectionState} />}
                     <div className="experience-bottom">
                         <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 대극장 로비와 별관 점포까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
