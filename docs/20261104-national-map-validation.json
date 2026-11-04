@@ -1,0 +1,126 @@
+{
+  "sourceSha256": "cd5c34ced00cff5af0446261a8fa48db95b876dc2b86b7965b2278327cbb53df",
+  "records": 7434,
+  "results": [
+    {
+      "layer": "경위도",
+      "records": 23,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "고속철도",
+      "records": 285,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "공항",
+      "records": 14,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "광역시청",
+      "records": 8,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "국가경계",
+      "records": 2,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "국립공원 경계",
+      "records": 23,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "도청",
+      "records": 9,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "등대",
+      "records": 69,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "사찰",
+      "records": 268,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "산",
+      "records": 182,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "스키장",
+      "records": 23,
+      "unlocated": 3,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "시청",
+      "records": 77,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "실폭하천",
+      "records": 847,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "일반철도",
+      "records": 549,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "전통사찰_수정필요",
+      "records": 983,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "특별광역자치시도경계",
+      "records": 81,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "항구",
+      "records": 129,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "해수욕장",
+      "records": 71,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "해안선",
+      "records": 3081,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    },
+    {
+      "layer": "행정경계",
+      "records": 710,
+      "unlocated": 0,
+      "invalidOutputGeometries": 0
+    }
+  ]
+}
