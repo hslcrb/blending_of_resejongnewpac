@@ -19,3 +19,7 @@ test('USNO 2026-11-04 서울 달 방위·고도의 저정밀 기준과 2도 이�
  const moon=moonPosition(new Date('2026-11-04T21:00:00Z'),'local');
  assert.ok(Math.abs(moon.elevation*180/Math.PI-36.0464)<2);assert.ok(Math.abs(moon.azimuth*180/Math.PI-120.4056)<2);assert.ok(Math.abs(moon.illumination-.19)<.05);
 });
+test('달 방향은 회관과 서울 좌표계의 북쪽을 유지한다',()=>{
+ const date=new Date('2026-11-04T21:00:00Z');const local=moonPosition(date,'local').direction;const seoul=moonPosition(date,'seoul').direction;
+ assert.ok(Math.abs(seoul.x-local.z)<1e-12);assert.ok(Math.abs(seoul.z+local.x)<1e-12);assert.equal(seoul.y,local.y);
+});
