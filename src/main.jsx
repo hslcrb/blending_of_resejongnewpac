@@ -18,6 +18,10 @@ import { seoulSolarPosition, sunDirection, cloudFractionFromMetar } from './skyS
 import { createCityLayer, disposeCityLayer } from './cityLayer.js';
 import { SEJONG_IN_SEOUL } from './area/coordinates.ts';
 import { createBuildingExplorer } from './area/building-explorer.ts';
+import { useBuildingInformation, BuildingInformationPanel } from './area/BuildingInformation.jsx';
+import NationalCulturalExplorer from './NationalCulturalExplorer.jsx';
+import { createBasemapLayer } from './basemapLayer.js';
+import { latLonTo5186, geoToWorld } from './mapProjection.js';
 import './style.css';
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
@@ -82,11 +86,11 @@ function MoveButton({ direction, label, symbol, setHeld }) {
     );
 }
 
-function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange, area, sight, magnifier, onAreaStatus, onStart, onInspection, onInspectionState, onProjection }) {
+function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange, area, sight, magnifier, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, mapProvider, onMapStatus, locationRequest }) {
     const containerRef = useRef(null);
     const sceneRef = useRef(null);
-    const requestedTools = useRef({ area, sight, magnifier });
-    requestedTools.current = { area, sight, magnifier };
+    const requestedTools = useRef({ area, sight, magnifier, mapProvider });
+    requestedTools.current = { area, sight, magnifier, mapProvider };
 
     useEffect(() => {
         const container = containerRef.current;
@@ -177,6 +181,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
 
         let disposed = false;
         let areaNow = 'local';
+        let basemap = null;
         const skyAbort = new AbortController();
         const solarVector = new THREE.Vector3(0, 1, 0);
         let observedCloud = null;
@@ -191,6 +196,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             sky.material.uniforms.sunDir.value.copy(solarVector);
             sky.material.uniforms.daylight.value = day;
             sky.material.uniforms.cloudAmount.value = observedCloud ?? 0.15;
+            basemap?.setBrightness(0.35 + 0.65 * day);
             ambient.intensity = 0.32 + 0.98 * day;
             sun.intensity = Math.max(0, Math.sin(solar.elevation)) * 2.3 * (1 - 0.55 * (observedCloud ?? 0));
             fill.intensity = 0.24 + 0.46 * day;
@@ -223,6 +229,12 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         const detail = new THREE.Group();
         scene.add(detail);
         let city = null, cityPromise = null, areaSequence = 0, explorer = null;
+        let locationMarker = null;
+        const mapCredit = document.createElement('div');
+        mapCredit.className = 'map-attribution'; container.appendChild(mapCredit);
+        basemap = createBasemapLayer({ scene, attributionElement: mapCredit, height: -0.4, onStatus: onMapStatus });
+        basemap.setProvider(requestedTools.current.mapProvider);
+        refreshSky();
         let coreAsset;
         let streamer;
         let viewerVisible = false;
@@ -496,7 +508,24 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             }
         };
         const setTools = (show, inspect) => explorer?.configure(show, inspect);
-        sceneRef.current = { fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, inspectCenter: () => explorer?.center() };
+        const focusLocation = async (coordinates) => {
+            if (!model || !Array.isArray(coordinates) || coordinates.length !== 2 || !coordinates.every(Number.isFinite)) return;
+            await setAreaView('seoul');
+            if (disposed || areaNow !== 'seoul') return;
+            const {easting, northing} = latLonTo5186(coordinates[0], coordinates[1]);
+            const position = geoToWorld('seoul', easting, northing);
+            controls.target.set(position.x, 0, position.z);
+            camera.position.set(position.x + 600, 1100, position.z + 800);
+            controls.minDistance = 40; controls.update();
+            if (!locationMarker) {
+                locationMarker = new THREE.Mesh(new THREE.SphereGeometry(35, 16, 12), new THREE.MeshBasicMaterial({color:0xe24527}));
+                scene.add(locationMarker);
+            }
+            locationMarker.position.set(position.x, 40, position.z);
+            onAreaStatus('문화시설 변경 후보의 대표 위치 · 실제 출입구와 다를 수 있습니다.');
+            basemap?.update(camera, {width:container.clientWidth,height:container.clientHeight,mode:areaNow});
+        };
+        sceneRef.current = { fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center() };
         viewerRef.current = sceneRef.current;
 
         // 주 건물은 먼저, 주변 세부는 공간별로 내려받습니다. / Load core first and stream spatial detail separately.
@@ -724,6 +753,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
                 const localFocus = detail.worldToLocal(focus.clone());
                 const localCamera = detail.worldToLocal(camera.position.clone());
                 streamer?.update(localFocus, { cameraPosition: localCamera, now: time });
+                basemap?.update(camera, {width:container.clientWidth,height:container.clientHeight,mode:areaNow});
                 if (coreAsset.updateCoreShadows(localCamera)) renderer.shadowMap.needsUpdate = true;
                 if (focus.distanceToSquared(shadowFocus) > 36) {
                     shadowFocus.copy(focus);
@@ -747,6 +777,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             window.clearInterval(weatherTimer);
             streamer?.dispose();
             explorer?.dispose();
+            basemap?.dispose(); mapCredit.remove();
+            if (locationMarker) { locationMarker.geometry.dispose(); locationMarker.material.dispose(); locationMarker.removeFromParent(); }
             if (city) disposeCityLayer(city);
             setCampusLayout(null);
             cancelAnimationFrame(frameId);
@@ -770,9 +802,11 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             renderer.domElement.remove();
             viewerRef.current = null;
         };
-    }, [onStatusChange, onWeatherChange, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, viewerRef]);
+    }, [onStatusChange, onWeatherChange, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, onMapStatus, viewerRef]);
 
     useEffect(() => { sceneRef.current?.setAreaView(area); }, [area]);
+    useEffect(() => { sceneRef.current?.setMapProvider(mapProvider); }, [mapProvider]);
+    useEffect(() => { if (locationRequest) void sceneRef.current?.focusLocation(locationRequest.coordinates); }, [locationRequest]);
     useEffect(() => { sceneRef.current?.setTools(sight, magnifier); }, [sight, magnifier]);
     useEffect(() => { sceneRef.current?.setMode(mode); }, [mode]);
     useEffect(() => { sceneRef.current?.fitView(view.name); }, [view]);
@@ -809,13 +843,13 @@ function App() {
     const [areaStatus, setAreaStatus] = useState('');
     const [sight, setSight] = useState(false);
     const [magnifier, setMagnifier] = useState(false);
-    const [inspection, setInspection] = useState(null);
-    const [inspectionState, setInspectionState] = useState('');
+    const info = useBuildingInformation();
     const [projection, setProjection] = useState('');
-    const selectionToken = useRef(0);
-    const onStart = useCallback(kind => { if (kind === 'click') selectionToken.current++; return selectionToken.current; }, []);
-    const onInspection = useCallback((value, token) => { if (token === selectionToken.current) setInspection(value); }, []);
-    const onInspectionState = useCallback((value, token) => { if (token === undefined || token === selectionToken.current) setInspectionState(value.message); }, []);
+    const [mapProvider, setMapProvider] = useState('ground');
+    const [mapStatus, setMapStatus] = useState({failed:0});
+    const [locationRequest, setLocationRequest] = useState(null);
+    const onMapStatus = useCallback(value => setMapStatus(value), []);
+    const selectNational = useCallback(value => { setMode('orbit'); setArea('seoul'); setMapProvider('ground'); setLocationRequest({coordinates:value.coordinates}); experienceRef.current?.scrollIntoView({behavior:'smooth',block:'start'}); }, []);
     const [weather, setWeather] = useState(null);
     const [clock, setClock] = useState(() => new Date());
     useEffect(() => { const timer = window.setInterval(() => setClock(new Date()), 60000); return () => window.clearInterval(timer); }, []);
@@ -916,13 +950,17 @@ function App() {
                         <button type="button" aria-pressed={area === 'seoul'} disabled={!ready} onClick={() => { setMode('orbit'); setArea('seoul'); }}>서울 전역</button>
                         <button type="button" aria-pressed={magnifier} disabled={!ready} onClick={() => { setMode('orbit'); setMagnifier(value => !value); }}>돋보기</button>
                         <button type="button" aria-pressed={sight} disabled={!ready} onClick={() => setSight(value => !value)}>전시천리안 (全視千里眼)</button>
-                        <button type="button" disabled={!ready} onClick={() => viewerRef.current?.inspectCenter()}>현재 중심 건물 조회</button>
+                        <button type="button" disabled={!ready} onClick={() => { info.resetSelection(); viewerRef.current?.inspectCenter(); }}>현재 중심 건물 조회</button>
+                        <button type="button" aria-pressed={mapProvider === 'ground'} onClick={() => setMapProvider('ground')}>지면지도</button>
+                        <button type="button" aria-pressed={mapProvider === 'satellite'} onClick={() => setMapProvider('satellite')}>위성지도</button>
+                        <button type="button" aria-pressed={mapProvider === null} onClick={() => setMapProvider(null)}>지도 끄기</button>
                     </div>
                     <p className="area-tool-state" role="status" aria-live="polite">{areaStatus}</p>
-                    <p className="area-tool-state" role="status" aria-live="polite">{inspectionState}</p>
+                    <p className="area-tool-state" role="status" aria-live="polite">{info.inspectionState.message}</p>
                     <p className="area-tool-state" role="status" aria-live="polite">{projection}</p>
+                    {mapStatus.failed > 0 && <p className="area-tool-state" role="status">지도 일부를 불러오지 못했습니다. <button type="button" onClick={() => viewerRef.current?.retryMap()}>지도 다시 불러오기</button></p>}
                     <div className="view-frame">
-                        <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} onWeatherChange={setWeather} area={area} sight={sight} magnifier={magnifier} onAreaStatus={setAreaStatus} onStart={onStart} onInspection={onInspection} onInspectionState={onInspectionState} onProjection={setProjection} />
+                        <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} onWeatherChange={setWeather} area={area} sight={sight} magnifier={magnifier} onAreaStatus={setAreaStatus} onStart={info.onStart} onInspection={info.onInspection} onInspectionState={info.onState} onProjection={setProjection} mapProvider={mapProvider} onMapStatus={onMapStatus} locationRequest={locationRequest} />
                         {status !== 'ready' && (
                             <div className="viewer-status" role="status">
                                 <span>{status === 'loading' ? '건축 모델을 불러오는 중입니다.' : '모델을 불러오지 못했습니다.'}</span>
@@ -942,12 +980,13 @@ function App() {
                             <span className="hint-touch">{mode === 'walk' ? '화면을 밀어 둘러보기 · 방향 버튼으로 이동' : '한 손가락으로 회전 · 두 손가락으로 이동과 확대'}</span>
                         </p>
                     </div>
-                    {inspection && <p className="area-tool-state">선택 주변 {inspection.hits.length.toLocaleString('ko-KR')}건 · 상세 정보 연결 중</p>}
+                    {(sight || info.inspection) && <BuildingInformationPanel sight={sight} inspection={info.inspection} onSelectBuilding={info.onSelectBuilding} />}
                     <div className="experience-bottom">
                         <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 대극장 로비와 별관 점포까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
                         <p className="model-note">서울 시간 {seoulTime} · {weather ? `김포공항 구름 관측 ${observedTime}` : '기상 관측을 가져오지 못해 구름은 임의로 표시합니다.'}<br />김포공항은 광화문과 기상이 다를 수 있습니다. <a href="https://aviationweather.gov/data/api/">NOAA 항공기상 관측</a></p>
                     </div>
                 </section>
+                <NationalCulturalExplorer onSelectLocation={selectNational} />
             </main>
             <footer className="site-footer"><span>SEJONG CENTER</span><span>건축을 바라보는 새로운 시선</span></footer>
         </div>
