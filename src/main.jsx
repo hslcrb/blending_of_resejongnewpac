@@ -185,7 +185,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         let basemap = null;
         const skyAbort = new AbortController();
         const solarVector = new THREE.Vector3(0, 1, 0);
-        let observedCloud = null;
+        let observedCloud = null, weatherSequence = 0;
         // [서울 시각과 관측 하늘 / Seoul time and observed sky]
         // 현장과 다른 김포공항 관측임을 화면에 밝히고, 실패 시 임의 구름으로 대체합니다.
         // Identify the nearby airport observation and fall back visibly when it is unavailable.
@@ -205,17 +205,18 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             renderer.shadowMap.needsUpdate = true;
         };
         const refreshWeather = async () => {
+            const serial = ++weatherSequence;
             try {
                 const response = await fetch('/api/weather', { signal: skyAbort.signal });
                 if (!response.ok) throw new Error('weather unavailable');
                 const report = await response.json();
                 const amount = cloudFractionFromMetar(report);
                 if (amount === null || !Number.isFinite(Date.parse(report.observedAt))) throw new Error('unknown clouds');
-                if (disposed) return;
+                if (disposed || serial !== weatherSequence) return;
                 observedCloud = amount;
                 onWeatherChange({ observedAt: report.observedAt, temperature: report.temperature });
             } catch {
-                if (disposed) return;
+                if (disposed || serial !== weatherSequence) return;
                 observedCloud = null;
                 onWeatherChange(null);
             }
