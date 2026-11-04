@@ -2,6 +2,7 @@ import React,{useEffect,useRef,useState} from 'react';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {createLobby} from './theatreLobby.js';
+import {theatreExposure} from './theatreLighting.js';
 import {stepInside,nearestSeat,seatEyePosition,theatreFloorHeight,seatVisible} from './theatreNavigation.js';
 import {createTheatreMedia} from './theatreMedia.js';
 import {createEmbedBridge} from './embedBridge.js';
@@ -59,6 +60,7 @@ export default function TheatreExperience(){
    if(!standing){let forward=0,side=0;if(keys.has('KeyW')||keys.has('ArrowUp')||keys.has('forward'))forward++;if(keys.has('KeyS')||keys.has('ArrowDown')||keys.has('back'))forward--;if(keys.has('KeyA')||keys.has('ArrowLeft')||keys.has('left'))side--;if(keys.has('KeyD')||keys.has('ArrowRight')||keys.has('right'))side++;
     if(forward||side){const len=Math.hypot(forward,side),speed=(keys.has('ShiftLeft')||keys.has('ShiftRight')?4:2.2)*dt;forward=forward/len*speed;side=side/len*speed;const dx=-Math.sin(yaw)*forward+Math.cos(yaw)*side,dz=-Math.cos(yaw)*forward-Math.sin(yaw)*side;let next=stepInside({x:camera.position.x,z:camera.position.z},{x:camera.position.x+dx,z:camera.position.z},walkSeats,walkLevel);camera.position.x=next.x;next=stepInside({x:camera.position.x,z:camera.position.z},{x:camera.position.x,z:camera.position.z+dz},walkSeats,walkLevel);camera.position.z=next.z;camera.position.y=theatreFloorHeight(camera.position.z,camera.position.x,walkLevel)+1.7;}}
    if(media){media.update();if(!media.video.paused && now-lastProgress>=500){lastProgress=now;setCurrentTime(media.video.currentTime||0);setDuration(Number.isFinite(media.video.duration)?media.video.duration:0);}}
+   renderer.toneMappingExposure=theatreExposure(camera.position.z);
    renderer.render(scene,camera);
   };
   engine.current={go,stand,sit,near:()=>seatMesh?nearestSeat(seatMesh.userData.seats.filter(s=>s.level===walkLevel),camera.position.x,camera.position.z,2):null,setStage:setStageScene,getMedia:()=>media};

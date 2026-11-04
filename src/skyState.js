@@ -60,9 +60,9 @@ export function lightingForSun(elevation, cloudAmount = 0) {
     const cloud = Math.max(0, Math.min(1, cloudAmount));
     return {
         daylight,
-        ambient: 0.67 + 0.73 * daylight,
+        ambient: 0.82 + 0.58 * daylight,
         sun: Math.max(0, Math.sin(elevation)) * 2.3 * (1 - 0.55 * cloud),
-        fill: 0.44 + 0.28 * daylight,
+        fill: 0.56 + 0.16 * daylight,
         facade: (1 - daylight) * 420,
         basemap: 0.5 + 0.5 * daylight,
     };
