@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><body style="margin:0"><script type="module">
+import * as THREE from 'three';
+import {createGeographyLayer} from '../src/geographyLayer.js';
+const params=new URLSearchParams(location.search),mode=params.get('mode')||'local';
+const renderer=new THREE.WebGLRenderer({antialias:false,preserveDrawingBuffer:true});renderer.setSize(700,700);renderer.setPixelRatio(1);renderer.outputColorSpace=THREE.SRGBColorSpace;document.body.appendChild(renderer.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0);
+const wide=mode==='national',target=new THREE.Vector3(0,0,wide?-50000:0);
+const camera=new THREE.PerspectiveCamera(45,1,1,wide?5000000:20000);camera.position.set(target.x,wide?1700000:5000,target.z+(wide?0:2500));camera.up.set(0,0,-1);camera.lookAt(target);camera.updateMatrixWorld(true);
+const cover=new THREE.Mesh(new THREE.PlaneGeometry(4000000,4000000),new THREE.MeshBasicMaterial({color:0,side:THREE.DoubleSide}));cover.rotation.x=-Math.PI/2;cover.position.y=100;scene.add(cover);
+const statuses=[];const layer=createGeographyLayer({scene,invalidate:()=>renderer.render(scene,camera),onStatus:s=>statuses.push(s)});
+await layer.setMode(mode);if(wide)await layer.setRegions(['11','26']);await layer.setVisible(true);renderer.render(scene,camera);
+window.__layer=layer;window.__statuses=statuses;
+window.__pixels=(depth)=>{layer.group.traverse(o=>{if(o.isLineSegments)o.material.depthTest=depth});renderer.render(scene,camera);const gl=renderer.getContext(),p=new Uint8Array(700*700*4);gl.readPixels(0,0,700,700,gl.RGBA,gl.UNSIGNED_BYTE,p);let n=0;for(let i=0;i<p.length;i+=4)if(p[i]+p[i+1]+p[i+2]>60)n++;return n};
+</script></body></html>

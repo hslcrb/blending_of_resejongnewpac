@@ -1,0 +1,34 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {gunzipSync} from 'node:zlib';
+import * as THREE from 'three';
+import {createGeographyLayer} from '../src/geographyLayer.js';
+import {latLonTo5186,geoToWorld} from '../src/mapProjection.js';
+
+const files={national:'public/gis/national-admin.json.gz',seoul:'public/gis/seoul-ground.json.gz',seoulDistricts:'public/gis/admin-dong/seoul-districts.geojson.gz','dong:11':'public/gis/admin-dong/regions/11.geojson.gz','dong:26':'public/gis/admin-dong/regions/26.geojson.gz'};
+test('real QGIS source renders tens of thousands of lines in batches and supports Seoul inspection',async()=>{
+ const scene=new THREE.Scene(),requested=[],statuses=[];
+ const layer=createGeographyLayer({scene,onStatus:s=>statuses.push(s),loadDataset:async key=>{requested.push(key);return JSON.parse(gunzipSync(readFileSync(files[key])));}});
+ await layer.setMode('national');await layer.setVisible(true);assert.deepEqual(requested,['national']);
+ await layer.setMode('local');assert.deepEqual(requested,['national','seoul','seoulDistricts','dong:11']);
+ let lines=[];layer.group.traverse(child=>{if(child.isLineSegments)lines.push(child)});
+ assert.ok(lines.length<=9);assert.ok(lines.length>=7);
+ const vertices=lines.reduce((sum,line)=>sum+line.geometry.attributes.position.count,0);assert.ok(vertices>100000,`vertices ${vertices}`);
+ assert.ok(lines.every(line=>line.material.depthTest===false && line.material.depthWrite===false));
+ const hits=await layer.query({mode:'local',x:0,z:0,radius:150});
+ assert.ok(hits.some(hit=>hit.feature.properties.fields.MNG_NAM==='서울특별시'&&hit.contains));
+ assert.ok(hits.some(hit=>hit.category==='roads'));
+ assert.ok(hits.some(hit=>hit.category==='district-detail' && hit.feature.properties.name==='종로구' && hit.contains));
+ assert.ok(hits.some(hit=>hit.category==='admin-detail' && hit.feature.properties.adm_nm.includes('종로구') && hit.contains && hit.source.crs==='EPSG:4326'));
+ const labels=layer.getLabels({mode:'local'});assert.ok(labels.some(label=>label.name==='종로구'));assert.ok(labels.some(label=>label.name.includes('종로구')));
+ const sample=lines[0].geometry.attributes.position, p=new THREE.Vector3(sample.getX(0),sample.getY(0),sample.getZ(0));
+ const local=p.clone().applyMatrix4(layer.group.matrixWorld);await layer.setMode('seoul');const seoul=p.clone().applyMatrix4(layer.group.matrixWorld);
+ assert.ok(Math.abs(local.x-(-seoul.z-2531))<0.02 && Math.abs(local.z-(seoul.x+2103))<0.02);
+ assert.ok(statuses.some(s=>s.state==='ready'&&s.loaded.includes('seoul')));
+ await layer.setMode('national');await layer.setRegions(['26']);
+ const g=latLonTo5186(129.0756,35.1796),pBusan=geoToWorld('seoul',g.easting,g.northing);
+ const busan=await layer.query({mode:'national',...pBusan,radius:0});
+ assert.ok(busan.some(hit=>hit.category==='admin-detail' && hit.feature.properties.sidonm==='부산광역시' && hit.contains));
+ layer.dispose();assert.equal(scene.children.includes(layer.group),false);
+});
