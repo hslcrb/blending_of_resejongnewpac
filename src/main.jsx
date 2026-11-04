@@ -241,7 +241,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         const detail = new THREE.Group();
         scene.add(detail);
         let city = null, cityPromise = null, areaSequence = 0, focusSequence = 0, explorer = null;
-        let locationMarker = null;
+        let locationMarker = null, nationalBuildingFeatures = [];
         const mapCredit = document.createElement('div');
         mapCredit.className = 'map-attribution'; container.appendChild(mapCredit);
         basemap = createBasemapLayer({ scene, attributionElement: mapCredit, height: -0.4, onStatus: onMapStatus });
@@ -665,9 +665,9 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             camera.updateProjectionMatrix();controls.update();
             basemap?.update(camera,{width:container.clientWidth,height:container.clientHeight,mode:'seoul'});
             scheduleNational();
-            onAreaStatus('전국 행정동과 문화시설 후보 · 건물 개별 자료는 서울 범위입니다.');
+            onAreaStatus('전국 행정동과 문화시설 후보 · 전국 건물 변경분과 서울 건물 자료');
         };
-        sceneRef.current = { fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, showNational, setGeographyOptions, inspectGeography, cancelPendingFocus: () => {focusSequence++;regionGeneration++;window.clearTimeout(regionTimer);}, retryGeography: () => geography?.retry(), setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center(), setNationalOptions, refreshNational: scheduleNational, inspectNational, retryNational: () => setNationalOptions() };
+        sceneRef.current = { setNationalBuildingFeatures: value => { nationalBuildingFeatures = value; explorer?.setChangeFeatures(value); }, fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, showNational, setGeographyOptions, inspectGeography, cancelPendingFocus: () => {focusSequence++;regionGeneration++;window.clearTimeout(regionTimer);}, retryGeography: () => geography?.retry(), setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center(), setNationalOptions, refreshNational: scheduleNational, inspectNational, retryNational: () => setNationalOptions() };
         viewerRef.current = sceneRef.current;
 
         // 주 건물은 먼저, 주변 세부는 공간별로 내려받습니다. / Load core first and stream spatial detail separately.
@@ -741,6 +741,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             model.add(asset.root);
             detail.add(model);
             explorer = createBuildingExplorer({host:container,element:renderer.domElement,camera,controls,detail,city:() => city,mode:() => areaNow,draw:() => {},onStart,onInspection,onState:onInspectionState,onProjection,geographyLabels:() => [...geographicLabels,...national.getLabels()]});
+            explorer.setChangeFeatures(nationalBuildingFeatures);
             explorer.configure(requestedTools.current.sight, requestedTools.current.magnifier);
             const bounds = new THREE.Box3();
             const framePoints = [];
@@ -1008,6 +1009,7 @@ function App() {
     const viewerRef = useRef(null);
     const cancelPendingFocus = useCallback(() => viewerRef.current?.cancelPendingFocus(), []);
     const info = useBuildingInformation({onSelectionStart:cancelPendingFocus});
+    const onNationalBuildingFeatures = useCallback(features => viewerRef.current?.setNationalBuildingFeatures(features), []);
     const nationalSourceRef=useRef(null);
     if(!nationalSourceRef.current)nationalSourceRef.current=createNationalMapSource();
     const nationalSource=nationalSourceRef.current;
@@ -1221,7 +1223,7 @@ function App() {
                             <span className="hint-touch">{mode === 'walk' ? '화면을 밀어 둘러보기 · 방향 버튼으로 이동' : '한 손가락으로 회전 · 두 손가락으로 이동과 확대'}</span>
                         </p>
                     </div>
-                    <NationalBuildingChanges inspection={info.inspection} active={sight || magnifier || Boolean(info.inspection)} sight={sight} />
+                    <NationalBuildingChanges inspection={info.inspection} active={sight || magnifier || Boolean(info.inspection)} sight={sight} onFeaturesChange={onNationalBuildingFeatures} />
                     {(sight || info.inspection || info.keepPanel) && <BuildingInformationPanel sight={sight} inspection={info.inspection} outsideSeoul={geographyInspection?.insideSeoul === false} onSelectBuilding={info.onSelectBuilding} />}
                     {geographyVisible && (sight || magnifier || geographyInspection) && <GeographyInformation inspection={geographyInspection} state={geographyInspectionState} />}
                     {nationalActive && nationalManifest && (sight || info.inspection) && <NationalMapInformation hits={nationalHits||[]} status={nationalInspectState.state==='loading' ? '선택 지점의 원본 지형·시설을 조회하고 있습니다.' : nationalInspectState.state==='error' ? '선택 지점의 원본 정보를 불러오지 못했습니다.' : ''} />}

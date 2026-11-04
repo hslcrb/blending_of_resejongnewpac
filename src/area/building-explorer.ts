@@ -1,9 +1,11 @@
 import * as THREE from "three";
+import { loadNationalBuildingPoints } from "../nationalBuildingPoints.js";
 import type { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { BuildingStore, buildingAddress } from "./building-store";
+import { BuildingStore } from "./building-store";
 import { geoToWorld, nearbyBuildings, worldToGeo } from "./buildings";
 import type { AreaMode, Building, BuildingHit } from "./buildings";
 
+type ChangeBuilding = Pick<Building, "id" | "easting" | "northing" | "fields">;
 export type Inspection = { hits: BuildingHit[]; easting: number; northing: number; kind: "click" | "view"; visibleCount?: number };
 export type InspectionState = { state: "idle" | "loading" | "ready" | "error"; message: string; kind?: "click" | "view" };
 
@@ -27,6 +29,9 @@ export function createBuildingExplorer(options: {
     const context = overlay.getContext("2d")!;
     let sight = false, magnifier = false, destroyed = false, sequence = 0, clickPending = false;
     let features: Building[] = [];
+    let changeFeatures: ChangeBuilding[] = [];
+    let changePoints: THREE.Points | null = null, changeLocalPoints: THREE.Points | null = null;
+    let changePromise: Promise<void> | null = null, changePointCount = 0, changeError = false;
     let points: THREE.Points | null = null;
     let localPoints: THREE.Points | null = null;
     let pointPromise: Promise<void> | null = null;
@@ -37,7 +42,24 @@ export function createBuildingExplorer(options: {
     const raycaster = new THREE.Raycaster();
     const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
-    const reportProjection = () => onProjection(mode() === "local" ? "건물 위치 695,753건 중 광화문 범위를 투사 중 · 좌표 이상치 2건은 서울 범위 밖" : "건물 위치 695,753건 투사 중 · 좌표 이상치 2건은 서울 범위 밖");
+    const reportProjection = () => onProjection(`${mode() === "local" ? "서울 건물 중 광화문 범위" : "서울 건물 위치 695,753건"} · ${changeError ? "전국 변경 위치를 불러오지 못했습니다. 전시천리안을 다시 켜 주세요." : changePoints ? `분홍색 전국 변경 건물 ${changePointCount.toLocaleString("ko-KR")}건 · 확대해 이름과 지번을 확인하고 돋보기로 상세 조회` : "전국 변경 건물 위치를 불러오는 중"}`);
+    // 전국 변경분은 중심점만 불러오고 속성은 선택 주변 타일에서 가져옵니다.
+    // Load compact nationwide centroids; detailed fields remain in selected tiles.
+    const loadChangePoints = () => {
+        if (changePoints || changePromise) return;
+        changeError = false;
+        changePromise = loadNationalBuildingPoints(abort.signal).then(data => {
+            if (destroyed) return;
+            const make = (positions: Float32Array, name: string) => {
+                const geometry = new THREE.BufferGeometry(); geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+                const material = new THREE.PointsMaterial({ color: 0xe965d3, size: 2.5, sizeAttenuation: false, depthTest: false, transparent: true, opacity: .8 });
+                const result = new THREE.Points(geometry, material); result.name = name; result.frustumCulled = false; result.renderOrder = 1001; detail.parent!.add(result); return result;
+            };
+            changePoints = make(data.seoul, "전국 건물 변경 위치"); changeLocalPoints = make(data.local, "광화문 건물 변경 위치");
+            changePointCount = data.count; changePoints.visible = sight && mode() === "seoul"; changeLocalPoints.visible = sight && mode() === "local";
+            if (sight) reportProjection(); draw();
+        }).catch(() => { if (!destroyed) { changeError = true; if (sight) reportProjection(); } }).finally(() => { changePromise = null; });
+    };
     const loadPoints = () => {
         if (points) { points.visible = sight && mode() === "seoul"; if (localPoints) localPoints.visible = sight && mode() === "local"; return; }
         if (pointPromise) return;
@@ -129,18 +151,21 @@ export function createBuildingExplorer(options: {
             overlay.hidden = !sight;
             element.style.cursor = magnifier ? "crosshair" : "";
             if (sight) {
+                loadChangePoints();
+                if (changePoints) changePoints.visible = mode() === "seoul"; if (changeLocalPoints) changeLocalPoints.visible = mode() === "local";
                 if (points) { points.visible = mode() === "seoul"; if (localPoints) localPoints.visible = mode() === "local"; reportProjection(); draw(); }
                 else loadPoints();
                 schedule();
-            } else { sequence++; clickPending = false; if (points) points.visible = false; if (localPoints) localPoints.visible = false; onProjection(""); window.clearTimeout(timer); features = []; draw(); }
+            } else { sequence++; clickPending = false; if (points) points.visible = false; if (localPoints) localPoints.visible = false; if (changePoints) changePoints.visible = false; if (changeLocalPoints) changeLocalPoints.visible = false; onProjection(""); window.clearTimeout(timer); features = []; draw(); }
         },
+        setChangeFeatures(next: ChangeBuilding[]) { changeFeatures = next; draw(); },
         center: atCenter,
-        modeChanged() { if (points) points.visible = sight && mode() === "seoul"; if (localPoints) localPoints.visible = sight && mode() === "local"; if (points && sight) reportProjection(); schedule(); },
+        modeChanged() { if (changePoints) changePoints.visible = sight && mode() === "seoul"; if (changeLocalPoints) changeLocalPoints.visible = sight && mode() === "local"; if (points) points.visible = sight && mode() === "seoul"; if (localPoints) localPoints.visible = sight && mode() === "local"; if (points && sight) reportProjection(); schedule(); },
         paint() {
             const width = host.clientWidth, height = host.clientHeight;
             if (overlay.width !== width || overlay.height !== height) { overlay.width = width; overlay.height = height; reservedAt = 0; }
             context.clearRect(0, 0, width, height);
-            if (!sight) { overlay.dataset.geographyLabels = "0"; overlay.dataset.nationalLabels = "0"; return; }
+            if (!sight) { overlay.dataset.geographyLabels = "0"; overlay.dataset.nationalLabels = "0"; overlay.dataset.changeLabels = "0"; return; }
             // 지도 출처·조작부와도 이름이 겹치지 않도록 화면 영역을 예약합니다.
             // Reserve attribution and controls as well as previously drawn labels.
             if (performance.now() - reservedAt > 500 || !reservedAt) {
@@ -184,9 +209,12 @@ export function createBuildingExplorer(options: {
             }
             overlay.dataset.geographyLabels = String(geographicCount - nationalCount);
             overlay.dataset.nationalLabels = String(nationalCount);
+            overlay.dataset.changeLabels = "0";
             if (distance > 6000) return;
-            let labels = 0;
-            for (const building of features) {
+            let labels = 0, changeLabels = 0;
+            let buildingIndex = 0;
+            for (const building of [...changeFeatures, ...features]) {
+                const isChange = buildingIndex++ < changeFeatures.length;
                 const point = geoToWorld(mode(), building.easting, building.northing);
                 if (mode() === "local" && (point.x < -210 || point.x > 240 || point.z < -200 || point.z > 260)) continue;
                 const rawHeight = building.fields[16];
@@ -194,14 +222,14 @@ export function createBuildingExplorer(options: {
                 const projected = new THREE.Vector3(point.x, h + 2, point.z).project(camera);
                 if (projected.z < -1 || projected.z > 1 || Math.abs(projected.x) > 1 || Math.abs(projected.y) > 1) continue;
                 const x = (projected.x + 1) * width / 2, y = (1 - projected.y) * height / 2;
-                context.fillStyle = "#f7d549"; context.fillRect(x - 2, y - 2, 4, 4);
+                context.fillStyle = isChange ? "#e965d3" : "#f7d549"; context.fillRect(x - 2, y - 2, 4, 4);
                 if (labels >= 25) continue;
-                const address = buildingAddress(building);
+                const address = [building.fields[4], building.fields[5]].filter(value => value !== null && value !== "").join(" ") || "주소 미기재";
                 const name = String(building.fields[24] || "건물");
                 const use = String(building.fields[9] || "용도 미기재");
                 const floors = typeof building.fields[26] === "number" && building.fields[26] > 0 ? `${building.fields[26]}층` : "층수 미기재";
                 const heightInfo = typeof rawHeight === "number" && rawHeight > 0 ? `${rawHeight}m` : "높이 미기재";
-                const lines = [name, address, `${use} · ${floors} · ${heightInfo}`].map(line => line.length > 23 ? line.slice(0, 22) + "…" : line);
+                const lines = (isChange ? [`${name} · 변경분`, address] : [name, address, `${use} · ${floors} · ${heightInfo}`]).map(line => line.length > 23 ? line.slice(0, 22) + "…" : line);
                 context.font = "16px sans-serif";
                 const textWidth = Math.min(260, Math.max(...lines.map(line => context.measureText(line).width)) + 12);
                 const cardHeight = lines.length * 20 + 8;
@@ -209,11 +237,12 @@ export function createBuildingExplorer(options: {
                 const top = Math.max(0, Math.min(height - cardHeight, y - cardHeight));
                 const rect = { left, top, right: left + textWidth, bottom: top + cardHeight };
                 if (occupied.some(other => rect.left < other.right + 4 && rect.right + 4 > other.left && rect.top < other.bottom + 4 && rect.bottom + 4 > other.top)) continue;
-                occupied.push(rect); labels++;
+                occupied.push(rect); labels++; if (isChange) changeLabels++;
                 context.fillStyle = "rgba(20, 22, 22, .88)"; context.fillRect(left, top, textWidth, cardHeight);
                 context.fillStyle = "#ffffff";
                 lines.forEach((line, index) => context.fillText(line, left + 6, top + 19 + index * 20, 248));
             }
+            overlay.dataset.changeLabels = String(changeLabels);
         },
         dispose() {
             destroyed = true; sequence++; abort.abort(); window.clearTimeout(timer);
@@ -221,6 +250,7 @@ export function createBuildingExplorer(options: {
             controls.removeEventListener("end", schedule); overlay.remove();
             if (points) { detail.remove(points); points.geometry.dispose(); (points.material as THREE.Material).dispose(); }
             if (localPoints) { detail.remove(localPoints); localPoints.geometry.dispose(); (localPoints.material as THREE.Material).dispose(); }
+            for (const entry of [changePoints, changeLocalPoints]) if (entry) { entry.removeFromParent(); entry.geometry.dispose(); (entry.material as THREE.Material).dispose(); }
         },
     };
 }
