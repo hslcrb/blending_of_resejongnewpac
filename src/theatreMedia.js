@@ -9,11 +9,11 @@ export function createTheatreMedia({THREE,camera,screen,effectLights=[],onStatus
  if(!THREE||!camera||!screen) throw new Error('영사 화면과 카메라가 필요합니다.');
  const video=videoFactory();video.preload='metadata';video.playsInline=true;video.crossOrigin='anonymous';video.src=src;
  const originalMaterial=screen.material;
- const texture=new THREE.VideoTexture(video);texture.colorSpace=THREE.SRGBColorSpace;
+ const texture=new THREE.VideoTexture(video);texture.colorSpace=THREE.SRGBColorSpace;texture.flipY=false;
  const material=new THREE.MeshBasicMaterial({map:texture,side:THREE.DoubleSide,toneMapped:false});
  screen.material=material;
  const listener=new THREE.AudioListener();camera.add(listener);
- const audio=new THREE.PositionalAudio(listener);audio.setMediaElementSource(video);audio.setRefDistance(12);audio.setRolloffFactor(0.8);audio.setVolume(0.8);audio.panner.panningModel='HRTF';screen.add(audio);
+ const audio=new THREE.PositionalAudio(listener);audio.setMediaElementSource(video);audio.setRefDistance(12);audio.setRolloffFactor(0.8);audio.setVolume(0.8);audio.panner.panningModel='HRTF';if(screen.geometry){if(!screen.geometry.boundingBox)screen.geometry.computeBoundingBox();screen.geometry.boundingBox?.getCenter(audio.position);}screen.add(audio);
  const analyser=new THREE.AudioAnalyser(audio,256);
  const bases=effectLights.map(light=>light.intensity);
  let enabled=false,level=0,disposed=false;
