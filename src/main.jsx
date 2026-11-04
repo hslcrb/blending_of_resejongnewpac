@@ -493,7 +493,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             detail.position.set(next === 'seoul' ? SEJONG_IN_SEOUL.x : 0, 0, next === 'seoul' ? SEJONG_IN_SEOUL.z : 0);
             detail.updateMatrixWorld(true);
             refreshSky(); resetArea(); explorer?.modeChanged();
-            if (next === 'local') { onAreaStatus('세종문화회관과 광화문 주변'); return; }
+            if (next === 'local') { onAreaStatus('세종문화회관과 광화문 주변'); return true; }
             onAreaStatus('서울 전역을 불러오고 있습니다.');
             try {
                 if (!cityPromise) cityPromise = fetch('/area/seoul-grid.json', {signal:bootRequest.signal}).then(async response => {
@@ -506,16 +506,18 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
                 if (disposed) { disposeCityLayer(loaded); return; }
                 if (!city) { city = loaded; scene.add(city); }
                 city.visible = areaNow === 'seoul';
-                if (serial === areaSequence && areaNow === 'seoul') onAreaStatus('서울 전역과 광화문 주변');
+                if (serial === areaSequence && areaNow === 'seoul') { onAreaStatus('서울 전역과 광화문 주변'); return true; }
+                return false;
             } catch (error) {
-                if (!disposed && serial === areaSequence && error.name !== 'AbortError') onAreaStatus('서울 전역을 불러오지 못했습니다. 다시 선택해 주세요.');
+                if (!disposed && serial === areaSequence && error.name !== 'AbortError') onAreaStatus('서울 격자를 불러오지 못했습니다. 다시 불러와 주세요.');
+                return false;
             }
         };
         const setTools = (show, inspect) => explorer?.configure(show, inspect);
         const focusLocation = async (coordinates) => {
             if (!model || !Array.isArray(coordinates) || coordinates.length !== 2 || !coordinates.every(Number.isFinite)) return;
             const serial = ++focusSequence;
-            await setAreaView('seoul', true);
+            const gridReady = await setAreaView('seoul', true);
             if (disposed || areaNow !== 'seoul' || serial !== focusSequence) return;
             const {easting, northing} = latLonTo5186(coordinates[0], coordinates[1]);
             const position = geoToWorld('seoul', easting, northing);
@@ -528,7 +530,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
                 scene.add(locationMarker);
             }
             locationMarker.position.set(position.x, 40, position.z);
-            onAreaStatus('문화시설 변경 후보의 대표 위치 · 실제 출입구와 다를 수 있습니다.');
+            onAreaStatus(gridReady ? '문화시설 변경 후보의 대표 위치 · 실제 출입구와 다를 수 있습니다.' : '서울 격자를 불러오지 못했습니다. 후보 위치는 지도에 표시합니다.');
             basemap?.update(camera, {width:container.clientWidth,height:container.clientHeight,mode:areaNow});
         };
         sceneRef.current = { fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center() };
@@ -969,6 +971,7 @@ function App() {
                         <button type="button" aria-pressed={mapProvider === null} onClick={() => setMapProvider(null)}>지도 끄기</button>
                     </div>
                     <p className="area-tool-state" role="status" aria-live="polite">{areaStatus}</p>
+                    {areaStatus.includes('서울 격자를 불러오지 못했습니다') && <button type="button" onClick={() => viewerRef.current?.setAreaView('seoul')}>서울 격자 다시 불러오기</button>}
                     <p className="area-tool-state" role="status" aria-live="polite">{info.inspectionState.message}</p>
                     <p className="area-tool-state" role="status" aria-live="polite">{projection}</p>
                     {mapStatus.failed > 0 && <p className="area-tool-state" role="status">지도 일부를 불러오지 못했습니다. <button type="button" onClick={() => viewerRef.current?.retryMap()}>지도 다시 불러오기</button></p>}
