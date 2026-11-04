@@ -1,0 +1,5 @@
+const {chromium}=require('playwright');const assert=require('node:assert/strict');
+(async()=>{const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH||'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',args:['--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader']});try{
+ const page=await browser.newPage({viewport:{width:600,height:360}}),errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&/shader|WebGLProgram/i.test(m.text()))errors.push(m.text())});await page.goto((process.env.AREA_TEST_ORIGIN||'http://127.0.0.1:3158')+'/tests/sky-visual-fixture.html');await page.waitForFunction(()=>typeof window.captureSky==='function');
+ const results=await page.evaluate(()=>({night:window.captureSky(0,0),day:window.captureSky(1,0)}));assert.ok(results.night.maximum>100,'달과 별이 실제로 밝게 그려져야 한다');assert.ok(results.day.mean>results.night.mean*2,'낮 하늘이 밤보다 밝아야 한다');assert.deepEqual(errors,[]);console.log('PASS: 독립 WebGL 밤하늘·달과 낮 하늘',results);
+}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});

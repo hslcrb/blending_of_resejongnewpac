@@ -1,0 +1,15 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><link rel="icon" href="data:,"><style>body {margin:0} canvas{display:block}</style></head><body><script type="module">
+import * as THREE from '/node_modules/three/build/three.module.js';
+import {createSkyMaterial} from '/src/skyVisual.js';
+const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setSize(600,360);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;document.body.appendChild(renderer.domElement);
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(60,600/360,.1,1000),material=createSkyMaterial();
+material.uniforms.sunDir.value.set(0,-1,0);material.uniforms.moonDir.value.set(.15,.4,-.9).normalize();material.uniforms.moonIllumination.value=.8;material.uniforms.daylight.value=0;material.uniforms.cloudAmount.value=0;scene.add(new THREE.Mesh(new THREE.SphereGeometry(500,32,20),material));camera.lookAt(0,.35,-1);
+window.captureSky = (daylight,cloudAmount) => {
+ material.uniforms.daylight.value=daylight; material.uniforms.cloudAmount.value=cloudAmount; renderer.render(scene,camera);
+ const gl=renderer.getContext(), pixels=new Uint8Array(600*360*4);gl.readPixels(0,0,600,360,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
+ let sum=0,maximum=0;for(let i=0;i<pixels.length;i+=4){const luminance=(pixels[i]+pixels[i+1]+pixels[i+2])/3;sum+=luminance;maximum=Math.max(maximum,luminance)}
+ return {mean:sum/(600*360),maximum};
+};
+window.captureSky(0,0);
+
+</script></body></html>
