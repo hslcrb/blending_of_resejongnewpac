@@ -13,7 +13,7 @@ npm run dev
 
 `npm run build`는 Cloudflare Pages에 배포할 `dist` 디렉터리를 만듭니다. `main` 브랜치의 변경은 GitHub에 연결된 Cloudflare Pages에서 빌드합니다.
 
-현재 Blender 작업본은 `blender_work/20261103/sejong_aerial_streaming_20261103.blend`입니다. 이전 작업본과 `public/model/`의 원본들은 보존했습니다. 웹은 `public/model/streaming-manifest.json`의 기본 외형을 먼저 불러오고, 거리와 화면 크기에 맞춰 정원·실내·주변 상세 GLB를 추가로 받습니다. 반복되는 수목 형상은 공유 버퍼 3개로 재사용합니다. `?environment=legacy`는 이전 단일 모델을 유지합니다.
+현재 Blender 작업본은 수목과 서울 하늘을 포함한 `blender_work/20261104-live-sky/blender_work/20261104/sejong_trees_connected_20261104.blend`입니다. 이전 작업본과 `public/model/`의 원본들은 보존했습니다. 23개 원본에 대응하는 하늘 사본과 수동 실시간 실행 방법은 `docs/blender-weather-sky-20261104.md`에 기록했습니다. 웹은 `public/model/streaming-manifest.json`의 기본 외형을 먼저 불러오고, 거리와 화면 크기에 맞춰 정원·실내·주변 상세 GLB를 추가로 받습니다. 반복되는 수목 형상은 공유 버퍼 3개로 재사용합니다. `?environment=legacy`는 이전 단일 모델을 유지합니다.
 
 항공사진을 참고해 별관 지붕의 앞뒤 길이를 본관의 약 50%로 늘리고 뒤 정원에 굽은 화단·벽돌 보행 공간과 수목을 보강했습니다. 이 비례와 위치는 사진에 따른 근사이며 실측값이 아닙니다. `scripts/build_sejong.py`는 이전 모델을 재생성하므로 현재 MCP 수정본을 덮어쓰는 용도로 사용하지 마세요. 부조·화면·현수막과 새 포장·석재 무늬는 직접 제작했으며 사진에서 잘라 쓰지 않았습니다.
 
@@ -23,7 +23,7 @@ npm run dev
 
 웹 하늘은 서울 시각·날짜를 이용한 [NOAA 태양 위치 근사식](https://gml.noaa.gov/grad/solcalc/solareqns.PDF)으로 1분마다 바뀐다. 구름 밀도는 [NOAA 항공기상 API](https://aviationweather.gov/data/api/)의 김포공항(RKSS) 최신 관측 범주를 이용하며, 공항과 광화문의 위치가 다르므로 현장 기상과 일치한다고 주장하지 않는다. 관측 시각을 화면에 표시하고, 2시간보다 오래된 관측이나 요청 실패는 알 수 없는 상태로 처리해 임의 구름 사용을 밝힌다.
 
-NOAA API는 브라우저 CORS를 지원하지 않아 Cloudflare Pages Function `/api/weather`가 단일 공항 관측을 가져온다. 10분 캐시로 요청을 줄이고 오래된 응답은 제공하지 않는다. Vite 개발 서버에는 Pages Function이 없으므로 로컬 화면은 기상 실패 대체 상태가 정상이다. 실제 운영 경로와 날씨 출처 응답은 배포 후 별도 확인한다. 과거 프로젝트의 Blender 파일은 `blender_work/20261104-gis-import/sky/README.md`에 기록된 24시간 키프레임과 수동 실행 스크립트를 보존한다.
+NOAA API는 브라우저 CORS를 지원하지 않아 Cloudflare Pages Function `/api/weather`가 단일 공항 관측을 가져온다. 10분 캐시로 요청을 줄이고 오래된 응답은 제공하지 않는다. Vite 개발 서버에는 Pages Function이 없으므로 로컬 화면은 기상 실패 대체 상태가 정상이다. 2026-11-04 운영 경로에서 실제 관측 시각과 응답을 확인했다. 과거 프로젝트의 Blender 파일은 `blender_work/20261104-gis-import/sky/README.md`에 기록된 24시간 키프레임과 수동 실행 스크립트를 보존한다.
 
 ## 세종·서울·다른 지역 둘러보기
 
@@ -36,3 +36,7 @@ NOAA API는 브라우저 CORS를 지원하지 않아 Cloudflare Pages Function `
 `/explore/?embed=1`은 같은 3D 서비스와 전국 후보 목록을 유지하면서 중복 사이트 머리글·소개·바닥글만 숨긴다. 리뉴얼 사이트에서 iframe의 제목과 전체 화면 권한을 제공하고, 직접 열기 링크도 둔다. 사용자 조작·데이터 요청은 이 서비스의 원본 URL을 사용한다.
 
 내장 모드에서는 `sejong3d:height` 버전 1 메시지로 콘텐츠 높이를 리뉴얼 운영 출처에 알린다. 부모는 메시지 출처·발신 프레임·정수 높이 범위를 검증한다. 개발용 로컬 출처도 별도 허용하며 사용자 데이터는 전송하지 않는다.
+
+## 자동 배포 운영
+
+두 사이트는 각각 Cloudflare Pages의 Git 연동을 사용하며 `main` 커밋이 운영 배포를 시작한다. 이번 작업 브랜치의 미리보기(`feat/20261104-*`, `fix/20261104-*`, `docs/20261104-*`, `chore/20261104-*`, `test/20261104-*`)만 제외하고 다른 브랜치의 기존 미리보기는 유지한다. GitHub Actions는 추가하지 않았다. 푸시와 실제 운영 배포 성공은 구분해 확인한다.
