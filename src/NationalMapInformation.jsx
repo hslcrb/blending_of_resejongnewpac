@@ -18,7 +18,7 @@ export function NationalMapInformation({ hits = [], status = '', title = '백지
             const data=describeNationalFeature(feature);
             return <article key={feature.id} className="national-map-info-card"><h3>{data.name}</h3>
                 <p>{data.layer} · {contains ? '선택 지점 포함' : Number.isFinite(distance) ? `선택 지점에서 약 ${Math.round(distance).toLocaleString('ko-KR')}m` : '위치 미기재'}</p>
-                <p>{data.anchorWgs84 ? `경도 ${data.anchorWgs84[0]}, 위도 ${data.anchorWgs84[1]}${feature.geometry?.type==='Point' ? '' : ' (도형 범위 중심)'}` : '좌표 미기재'}</p>
+                <p>{data.anchorWgs84 ? `경도 ${data.anchorWgs84[0]}, 위도 ${data.anchorWgs84[1]}${feature.geometry?.type==='Point' ? '' : ' (도형 범위 중심)'}` : feature.bbox?.length===4 && feature.bbox.every(Number.isFinite) ? `EPSG:5186 도형 범위 ${feature.bbox.map(value=>Math.round(value).toLocaleString('ko-KR')).join(' / ')}m` : '좌표 미기재'}</p>
                 <dl>{data.fields.map(field=><div key={field.name}><dt>{field.name}</dt><dd>{field.value}</dd></div>)}</dl>
                 <p>원본 레이어 ID {data.id}</p></article>;
         })}</div>
