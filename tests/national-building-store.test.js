@@ -37,3 +37,16 @@ test('중단된 위치 요청은 진행 타일을 취소하고 실패 결과를 
  const p=s.around(10000.2,5000,{radius:0,signal:controller.signal});await new Promise(r=>setTimeout(r,0));controller.abort();
  await assert.rejects(p,error=>error.name==='AbortError');assert.equal(pending,1);
 });
+
+test('원본 정밀도 예외 폴리곤으로 매우 작은 건물 내부를 검색한다',async()=>{
+ const exact=[[[[0.01,0.01,0.09,0.01,0.09,0.09,0.01,0.09,0.01,0.01]]]];
+ const tiny=[99,0,0,[[[0,0,0,0,0,0,0,0,0,0]]],fields,{precision:'source',polygons:exact[0]}];
+ const fetcher=async url=>url.endsWith('manifest.json')?Response.json({...manifest,tiles:[[0,0,1,600,'hash']]}):new Response(gzipSync(Buffer.from(JSON.stringify({tile:[0,0],records:[tiny]}))));
+ const result=await new NationalBuildingStore({fetcher}).around(0.005,0.005,{radius:0});assert.equal(result.hits.length,1);assert.equal(result.hits[0].contains,true);assert.equal(result.hits[0].building.id,99);
+});
+
+test('실제 초소형 FID 15479의 정밀 폴리곤 내부를 찾는다',async()=>{
+ const {readFile}=await import('node:fs/promises');const {join}=await import('node:path');
+ const store=new NationalBuildingStore({fetcher:async url=>new Response(await readFile(join(process.cwd(),'public',url)))});
+ const result=await store.around(284587.485302,422308.1085755,{radius:0});assert.ok(result.hits.some(hit=>hit.building.id===15479&&hit.contains));
+});
