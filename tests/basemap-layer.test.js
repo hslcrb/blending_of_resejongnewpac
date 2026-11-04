@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { createBasemapLayer, groundFootprint } from '../src/basemapLayer.js';
+import { worldToGeo, grid5186ToLatLon, lonLatToTile } from '../src/mapProjection.js';
 
 function camera() {
     const c = new THREE.PerspectiveCamera(45, 1, 1, 1200);
@@ -69,4 +70,35 @@ test('late image after disposal is closed and a sky-only view requests nothing',
     layer.update(camera(),{width:500,height:500,mode:'local'});await flush();assert.ok(resolvers.length>0);
     layer.dispose();for(const resolve of resolvers)resolve({close(){closed++}});await flush();
     assert.equal(closed,resolvers.length);assert.equal(layer.group.children.length,0);
+});
+
+
+test('wide national view clips to Korea and tessellates low-zoom tiles', async () => {
+    const scene=new THREE.Scene(), credit={textContent:'',hidden:true};
+    const urls=[];
+    const layer=createBasemapLayer({scene,attributionElement:credit,loadImage:async url=>{urls.push(url);return {close(){}}}});
+    const c=new THREE.PerspectiveCamera(45,1,100,5000000);
+    c.position.set(0,1700000,-50000);c.up.set(0,0,-1);c.lookAt(0,0,-50000);c.updateMatrixWorld(true);
+    layer.setProvider('satellite');layer.update(c,{width:800,height:800,mode:'seoul'});await flush();await flush();
+    assert.ok(urls.length>0 && urls.length<=24,`national request count ${urls.length}`);
+    assert.ok(layer.group.children.some(mesh=>mesh.geometry.attributes.position.count>4), 'large tiles need curved reprojection mesh');
+    for(const mesh of layer.group.children) {
+      const pos=mesh.geometry.attributes.position, uv=mesh.geometry.attributes.uv;
+      for(let i=0;i<pos.count;i++) {
+        assert.ok(Number.isFinite(pos.getX(i)) && Number.isFinite(pos.getZ(i)));
+        assert.ok(uv.getX(i)>=-0.00001 && uv.getX(i)<=1.00001 && uv.getY(i)>=-0.00001 && uv.getY(i)<=1.00001);
+        const [,z,x,y]=mesh.name.match(/(\d+)\/(\d+)\/(\d+)$/).map(Number);
+        const g=worldToGeo('seoul',pos.getX(i),pos.getZ(i)),ll=grid5186ToLatLon(g.easting,g.northing);
+        const t=lonLatToTile(ll.lon,ll.lat,z);
+        assert.ok(Math.abs(uv.getX(i)-(t.x-x))<0.001 && Math.abs(uv.getY(i)-(1-(t.y-y)))<0.001);
+
+      }
+    }
+    const before=urls.length;
+    const distant=new THREE.PerspectiveCamera(45,1,1,3000);
+    distant.position.set(2000000,500,-50000);distant.up.set(0,0,-1);distant.lookAt(2000000,0,-50000);distant.updateMatrixWorld(true);
+    layer.update(distant,{width:800,height:800,mode:'seoul'});await flush();
+    assert.equal(urls.length,before,'outside peninsula must not fetch tiles');
+    assert.equal(layer.group.children.length,0,'old visible tiles must be released');
+    layer.dispose();
 });
