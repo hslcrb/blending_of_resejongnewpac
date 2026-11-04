@@ -17,6 +17,9 @@ export const BASEMAP_PROVIDERS = Object.freeze({
     },
 });
 const MAX_TILES = 24, MAX_CONCURRENT = 4, MIN_ZOOM = 3;
+// 한반도 전체와 주변 여백 / Korean peninsula with surrounding margin.
+const GEO_BOUNDS = {west:120, south:29, east:135, north:44};
+const GRID_BOUNDS = {west:-550000, south:-450000, east:1050000, north:1350000};
 
 // [보이는 지면 / Visible ground footprint]
 // 절두체의 12개 변과 지면의 교차로 화면에 들어오는 다각형을 구한다.
@@ -61,17 +64,40 @@ function intersectsTile(polygon, x, y) {
     }
     return p.length >= 3;
 }
+function clipBounds(polygon, bounds) {
+    let p=polygon;
+    for (const [axis,bound,greater] of [['x',bounds.west,true],['x',bounds.east,false],['y',bounds.south,true],['y',bounds.north,false]]) {
+        if (!p.length) return [];
+        p=clipPolygon(p,axis,bound,greater);
+    }
+    return p;
+}
+function densify(polygon, step) {
+    const result=[];
+    for (let i=0;i<polygon.length;i++) {
+        const a=polygon[i],b=polygon[(i+1)%polygon.length];
+        const count=Math.max(1,Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/step));
+        for(let j=0;j<count;j++) {const t=j/count;result.push({x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t});}
+    }
+    return result;
+}
 function getVisibleTiles(footprint, mode, width, maxZoom) {
-    const geo=footprint.map(({x,z})=>worldToGeo(mode,x,z));
-    const longLat=geo.map(({easting,northing})=>grid5186ToLatLon(easting,northing));
-    if (longLat.some(p=>!Number.isFinite(p.lon)||!Number.isFinite(p.lat)||p.lon < 120||p.lon > 135||p.lat < 30||p.lat > 43)) return [];
-    const east=geo.map(p=>p.easting), north=geo.map(p=>p.northing);
+    const worldGeo=footprint.map(({x,z})=>worldToGeo(mode,x,z));
+    const east=worldGeo.map(p=>p.easting), north=worldGeo.map(p=>p.northing);
     const metres=Math.max(Math.max(...east)-Math.min(...east),Math.max(...north)-Math.min(...north),1);
-    const lat=longLat.reduce((v,p)=>v+p.lat,0)/longLat.length;
+    // 먼저 안전한 투영 범위로 자른 뒤 50km 이하 간격으로 경계를 보간한다.
+    // Clip the planar frustum before inverse projection; densify edges for wide views.
+    const grid=clipBounds(worldGeo.map(p=>({x:p.easting,y:p.northing})),GRID_BOUNDS);
+    if(grid.length<3) return [];
+    const ll=densify(grid,50000).map(p=>grid5186ToLatLon(p.x,p.y));
+    if(ll.some(p=>!Number.isFinite(p.lon)||!Number.isFinite(p.lat))) return [];
+    const geographic=clipBounds(ll.map(p=>({x:p.lon,y:p.lat})),GEO_BOUNDS);
+    if(geographic.length<3) return [];
+    const lat=geographic.reduce((v,p)=>v+p.y,0)/geographic.length;
     const target=metres/Math.max(width,1);
     let zoom=Math.max(MIN_ZOOM,Math.min(maxZoom,Math.round(Math.log2(156543.033928 * Math.cos(lat*Math.PI/180)/target))));
     for (;zoom>=MIN_ZOOM;zoom--) {
-        const poly=longLat.map(p=>lonLatToTile(p.lon,p.lat,zoom));
+        const poly=geographic.map(p=>lonLatToTile(p.x,p.y,zoom));
         const x1=Math.floor(Math.min(...poly.map(p=>p.x))), x2=Math.floor(Math.max(...poly.map(p=>p.x)));
         const y1=Math.floor(Math.min(...poly.map(p=>p.y))), y2=Math.floor(Math.max(...poly.map(p=>p.y)));
         if ((x2-x1+1)*(y2-y1+1)>MAX_TILES*4) continue;
@@ -84,18 +110,34 @@ function getVisibleTiles(footprint, mode, width, maxZoom) {
 }
 
 function makeGeometry(tile, mode, height) {
-    const vertices=[], uvs=[];
-    for (const [dx,dy,u,v] of [[0,0,0,1],[1,0,1,1],[0,1,0,0],[1,1,1,0]]) {
-        const ll=tileToLonLat(tile.x+dx,tile.y+dy,tile.z);
-        const grid=latLonTo5186(ll.lon,ll.lat), world=geoToWorld(mode,grid.easting,grid.northing);
-        vertices.push(world.x,height,world.z); uvs.push(u,v);
+    const nw=tileToLonLat(tile.x,tile.y,tile.z),se=tileToLonLat(tile.x+1,tile.y+1,tile.z);
+    const west=Math.max(GEO_BOUNDS.west,nw.lon),east=Math.min(GEO_BOUNDS.east,se.lon);
+    const north=Math.min(GEO_BOUNDS.north,nw.lat),south=Math.max(GEO_BOUNDS.south,se.lat);
+    if(west>=east||south>=north) throw new Error('표시 범위 밖의 타일입니다.');
+    // 저배율의 큰 사각형은 위경도 곡률을 따라 분할해 TM 투영 오차를 줄인다.
+    // Subdivide large tiles to follow projection curvature at national scale.
+    const nx=Math.max(1,Math.min(32,Math.ceil((east-west)/0.25)));
+    const ny=Math.max(1,Math.min(32,Math.ceil((north-south)/0.25)));
+    const vertices=[],uvs=[],indices=[];
+    for(let iy=0;iy<=ny;iy++) {
+        const lat=north+(south-north)*iy/ny;
+        for(let ix=0;ix<=nx;ix++) {
+            const lon=west+(east-west)*ix/nx;
+            const grid=latLonTo5186(lon,lat),world=geoToWorld(mode,grid.easting,grid.northing),uv=lonLatToTile(lon,lat,tile.z);
+            vertices.push(world.x,height,world.z);uvs.push(uv.x-tile.x,1-(uv.y-tile.y));
+        }
+    }
+    for(let iy=0;iy<ny;iy++) for(let ix=0;ix<nx;ix++) {
+        const a=iy*(nx+1)+ix,b=a+1,c=a+nx+1,d=c+1;
+        indices.push(a,c,b,b,c,d);
     }
     const geometry=new THREE.BufferGeometry();
     geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));
     geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));
-    geometry.setIndex([0,2,1,1,2,3]); geometry.computeVertexNormals();
+    geometry.setIndex(indices);geometry.computeVertexNormals();
     return geometry;
 }
+
 async function defaultLoadImage(url, signal) {
     const response=await fetch(url,{mode:'cors',signal,credentials:'omit'});
     if (!response.ok) throw new Error(`타일 요청 실패: ${response.status}`);
