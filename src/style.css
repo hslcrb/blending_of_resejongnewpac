@@ -228,3 +228,13 @@ button:disabled { cursor: not-allowed; opacity: .5; }
     }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* [서울 3D 도구 / Seoul 3D tools] */
+.area-toolbox { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0; }
+.area-toolbox button { min-height:44px; padding:8px 15px; border:1px solid #cde5df; border-radius:12px; background:#f4fbf9; color:#24534f; cursor:pointer; font-size:16px; }
+.area-toolbox button[aria-pressed='true'] { background:#b9e3d7; font-weight:700; }
+.area-tool-state { margin:6px 2px; color:#315f5b; font-size:16px; line-height:1.5; }
+.viewer-canvas canvas.area-projection { position:absolute; inset:0; pointer-events:none; }
+.map-attribution { position:absolute; z-index:3; right:8px; bottom:8px; max-width:min(65%, 520px); padding:5px 8px; background:#fffffff0; color:#173c39; border-radius:6px; font-size:16px; line-height:1.35; }
+.map-attribution[hidden] { display:none; }
+@media(max-width:600px) { .map-attribution { bottom:55px; max-width:80%; font-size:16px; } }

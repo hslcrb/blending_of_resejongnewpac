@@ -18,9 +18,10 @@ export function seoulSolarPosition(date) {
     const azimuth = (Math.atan2(Math.sin(hourAngle), Math.cos(hourAngle) * Math.sin(LATITUDE) - Math.tan(decl) * Math.cos(LATITUDE)) + Math.PI) % (2 * Math.PI);
     return { azimuth, elevation };
 }
-export function sunDirection({ azimuth, elevation }) {
+export function sunDirection({ azimuth, elevation }, mode = 'local') {
     const horizontal = Math.cos(elevation);
-    return { x: Math.cos(azimuth) * horizontal, y: Math.sin(elevation), z: Math.sin(azimuth) * horizontal };
+    const north = Math.cos(azimuth) * horizontal, east = Math.sin(azimuth) * horizontal;
+    return mode === 'seoul' ? { x: east, y: Math.sin(elevation), z: -north } : { x: north, y: Math.sin(elevation), z: east };
 }
 export function cloudFractionFromMetar(report) {
     if (!report) return null;
