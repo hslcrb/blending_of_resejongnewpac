@@ -246,8 +246,8 @@
   },
   "output": {
     "file": "national-cultural-changes.geojson",
-    "bytes": 269556,
-    "sha256": "06b4d2cb4073244fb41b3ef1c5985229fd54f18b2f7b6883e6650c5c5f91386c"
+    "bytes": 269555,
+    "sha256": "ad41e4fad4d898ff06043dea91ff7d9592b8d335178a9a3311eb22a60c7d44bc"
   },
   "note": "Change records only; candidates are not a verified inventory of operating cultural venues."
 }

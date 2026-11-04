@@ -78,6 +78,14 @@ def is_candidate(fields):
             and (fields.get("A8") in {"05000", "Z5000"} or CULTURE in name or ASSEMBLY in name))
 
 
+def write_json_bytes(path, value, indent=None):
+    # Always serialize exact UTF-8 LF bytes, independent of platform newline rules.
+    options = {"ensure_ascii": False, "indent": indent}
+    if indent is None:
+        options["separators"] = (",", ":")
+    path.write_bytes((json.dumps(value, **options) + "\n").encode("utf-8"))
+
+
 def sha256(path):
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -156,7 +164,7 @@ def convert(source, output):
     output.mkdir(parents=True, exist_ok=True)
     data_path = output / "national-cultural-changes.geojson"
     data = {"type": "FeatureCollection", "features": features}
-    data_path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+    write_json_bytes(data_path, data)
     inputs = {}
     for suffix in (".shp", ".shx", ".dbf", ".prj", ".cst"):
         path = source.with_suffix(suffix)
@@ -175,7 +183,7 @@ def convert(source, output):
         "output": {"file": data_path.name, "bytes": data_path.stat().st_size, "sha256": sha256(data_path)},
         "note": "Change records only; candidates are not a verified inventory of operating cultural venues."
     }
-    (output / "national-cultural-manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    write_json_bytes(output / "national-cultural-manifest.json", manifest, indent=2)
     print(json.dumps({"candidates": len(features), "actions": dict(actions),
                       "nullGeometry": len(null_geometries), "invalidGeometry": len(invalid_geometries),
                       "outsideCoarseBounds": len(outside_bounds), "outputBytes": data_path.stat().st_size}, ensure_ascii=False))
