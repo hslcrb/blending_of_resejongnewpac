@@ -90,8 +90,8 @@ function MoveButton({ direction, label, symbol, setHeld }) {
 function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange, area, sight, magnifier, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, mapProvider, onMapStatus, locationRequest }) {
     const containerRef = useRef(null);
     const sceneRef = useRef(null);
-    const requestedTools = useRef({ area, sight, magnifier, mapProvider });
-    requestedTools.current = { area, sight, magnifier, mapProvider };
+    const requestedTools = useRef({ area, sight, magnifier, mapProvider, locationRequest });
+    requestedTools.current = { area, sight, magnifier, mapProvider, locationRequest };
 
     useEffect(() => {
         const container = containerRef.current;
@@ -229,7 +229,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         let model;
         const detail = new THREE.Group();
         scene.add(detail);
-        let city = null, cityPromise = null, areaSequence = 0, explorer = null;
+        let city = null, cityPromise = null, areaSequence = 0, focusSequence = 0, explorer = null;
         let locationMarker = null;
         const mapCredit = document.createElement('div');
         mapCredit.className = 'map-attribution'; container.appendChild(mapCredit);
@@ -480,12 +480,14 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
                 camera.updateProjectionMatrix(); fitView('perspective');
             }
         };
-        const setAreaView = async (next) => {
+        const setAreaView = async (next, preserveFocus = false) => {
             if (!model) return;
+            if (!preserveFocus) focusSequence++;
             const serial = ++areaSequence;
             areaNow = next;
             if (modeNow === 'walk') setMode('orbit');
             if (city) city.visible = next === 'seoul';
+            if (locationMarker) locationMarker.visible = next === 'seoul';
             detail.rotation.y = next === 'seoul' ? SEJONG_IN_SEOUL.rotationY : 0;
             detail.position.set(next === 'seoul' ? SEJONG_IN_SEOUL.x : 0, 0, next === 'seoul' ? SEJONG_IN_SEOUL.z : 0);
             detail.updateMatrixWorld(true);
@@ -511,13 +513,15 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         const setTools = (show, inspect) => explorer?.configure(show, inspect);
         const focusLocation = async (coordinates) => {
             if (!model || !Array.isArray(coordinates) || coordinates.length !== 2 || !coordinates.every(Number.isFinite)) return;
-            await setAreaView('seoul');
-            if (disposed || areaNow !== 'seoul') return;
+            const serial = ++focusSequence;
+            await setAreaView('seoul', true);
+            if (disposed || areaNow !== 'seoul' || serial !== focusSequence) return;
             const {easting, northing} = latLonTo5186(coordinates[0], coordinates[1]);
             const position = geoToWorld('seoul', easting, northing);
             controls.target.set(position.x, 0, position.z);
             camera.position.set(position.x + 600, 1100, position.z + 800);
             controls.minDistance = 40; controls.update();
+            userAdjusted = true;
             if (!locationMarker) {
                 locationMarker = new THREE.Mesh(new THREE.SphereGeometry(35, 16, 12), new THREE.MeshBasicMaterial({color:0xe24527}));
                 scene.add(locationMarker);
@@ -655,7 +659,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             controls.maxDistance = SHOW_SURROUNDINGS ? 1000 : radius * 6;
             Object.assign(sceneRef.current, { bounds, framePoints, size, center, radius });
             fitView('perspective');
-            if (requestedTools.current.area !== 'local') void setAreaView(requestedTools.current.area);
+            if (requestedTools.current.area === 'seoul' && requestedTools.current.locationRequest) void focusLocation(requestedTools.current.locationRequest.coordinates);
+            else if (requestedTools.current.area !== 'local') void setAreaView(requestedTools.current.area);
             else onAreaStatus('세종문화회관과 광화문 주변');
             onStatusChange('ready');
         };
