@@ -261,6 +261,19 @@ export function createGeographyLayer({scene,onStatus=()=>{},invalidate=()=>{},lo
         hits.sort((a,b)=>Number(b.contains)-Number(a.contains)||a.distance-b.distance);
         return hits.slice(0,Math.max(0,limit));
     }
+    async function getProvinceNames(bounds) {
+        if(destroyed)return [];
+        if(!bounds||![bounds.minE,bounds.minN,bounds.maxE,bounds.maxN].every(Number.isFinite)||bounds.minE>bounds.maxE||bounds.minN>bounds.maxN)throw new Error('유효한 지도 범위가 필요합니다.');
+        await ensure('national');
+        if(errors.has('national'))throw new Error('전국 백지도를 불러오지 못했습니다.');
+        const names=new Set();
+        for(const record of datasets.get('national')?.records||[]) {
+            const b=record.bounds;
+            if(record.category!=='province'||b.maxE<bounds.minE||b.minE>bounds.maxE||b.maxN<bounds.minN||b.minN>bounds.maxN)continue;
+            const name=record.feature.properties?.fields?.MNG_NAM;if(name)names.add(name);
+        }
+        return [...names];
+    }
     function getLabels({mode:labelMode=mode,categories:requested=['district-detail','admin-detail'],bounds=null,limit=Infinity}={}) {
         if(destroyed||limit<=0)return [];
         const active=new Set([...regions,...(labelMode==='national'?[]:['11'])]),selected=new Set(requested),labels=[];
@@ -284,5 +297,5 @@ export function createGeographyLayer({scene,onStatus=()=>{},invalidate=()=>{},lo
         for(const controller of controllers.values())controller.abort();
         for(const dataset of datasets.values())disposeDataset(dataset);datasets.clear();scene.remove(group);invalidate();
     }
-    return {group,setVisible,setMode,setCategories,setRegions,query,getLabels,addDataset,removeDataset,retry,dispose};
+    return {group,setVisible,setMode,setCategories,setRegions,query,getLabels,getProvinceNames,addDataset,removeDataset,retry,dispose};
 }

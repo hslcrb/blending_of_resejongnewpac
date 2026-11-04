@@ -243,3 +243,9 @@ button:disabled { cursor: not-allowed; opacity: .5; }
 .app-shell.embedded .site-header, .app-shell.embedded .intro, .app-shell.embedded .site-footer { display:none; }
 .app-shell.embedded .main-content { padding-top:12px; }
 .app-shell.embedded { min-height:0; }
+
+/* [경계 출처와 상태 / Boundary attribution and status] */
+.geography-summary { margin:8px 2px 14px; color:#315f5b; }
+.geography-summary p { margin:6px 0; font-size:16px; line-height:1.5; }
+.geography-summary a { color:#174d47; text-decoration:underline; overflow-wrap:anywhere; }
+.geography-summary button { min-height:44px; padding:8px 14px; font-size:16px; border:1px solid #a8c7be; background:#fff; border-radius:10px; }

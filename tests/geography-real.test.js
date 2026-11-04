@@ -11,6 +11,8 @@ test('real QGIS source renders tens of thousands of lines in batches and support
  const scene=new THREE.Scene(),requested=[],statuses=[];
  const layer=createGeographyLayer({scene,onStatus:s=>statuses.push(s),loadDataset:async key=>{requested.push(key);return JSON.parse(gunzipSync(readFileSync(files[key])));}});
  await layer.setMode('national');await layer.setVisible(true);assert.deepEqual(requested,['national']);
+ const covering=await layer.getProvinceNames({minE:190000,minN:540000,maxE:220000,maxN:565000});
+ assert.ok(covering.includes('서울특별시')&&covering.includes('경기도'));
  await layer.setMode('local');assert.deepEqual(requested,['national','seoul','seoulDistricts','dong:11']);
  let lines=[];layer.group.traverse(child=>{if(child.isLineSegments)lines.push(child)});
  assert.ok(lines.length<=9);assert.ok(lines.length>=7);

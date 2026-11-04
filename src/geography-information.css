@@ -1,0 +1,14 @@
+/* [행정·지면 정보 / Administrative and ground information] */
+.geography-info { margin:20px 0; padding:22px; border-radius:16px; background:#f3f8f6; color:#183a36; overflow-wrap:anywhere; }
+.geography-info h2 { margin:0 0 10px; font-size:22px; }
+.geography-info h3 { margin:0 0 8px; font-size:20px; }
+.geography-info p { font-size:16px; line-height:1.6; }
+.geography-info a { color:#174d47; text-decoration:underline; }
+.geography-info-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:12px; }
+.geography-info-list article { min-width:0; background:#fff; border-radius:12px; padding:16px; }
+.geography-info-list dl { margin:0; }
+.geography-info-list dl div { display:grid; grid-template-columns:minmax(6rem, 35%) minmax(0,1fr); gap:8px; padding:5px 0; font-size:16px; }
+.geography-info-list dt { color:#4b6561; }
+.geography-info-list dd { margin:0; overflow-wrap:anywhere; }
+.geography-info-pages { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:12px; }
+.geography-info-pages button { min-height:44px; padding:8px 14px; font-size:16px; border:1px solid #a8c7be; background:white; border-radius:10px; }

@@ -15,8 +15,9 @@ export function createBuildingExplorer(options: {
     detail: THREE.Group; city: () => THREE.Group | null; mode: () => AreaMode; draw: () => void;
     onStart: (kind: "click" | "view") => number; onInspection: (result: Inspection, token: number) => void; onState: (state: InspectionState, token?: number) => void;
     onProjection: (message: string) => void;
+    geographyLabels?: () => { x: number; z: number; name: string; category: string }[];
 }) {
-    const { host, element, camera, controls, detail, city, mode, draw, onStart, onInspection, onState, onProjection } = options;
+    const { host, element, camera, controls, detail, city, mode, draw, onStart, onInspection, onState, onProjection, geographyLabels } = options;
     const abort = new AbortController();
     const store = new BuildingStore(abort.signal);
     const overlay = document.createElement("canvas");
@@ -30,6 +31,8 @@ export function createBuildingExplorer(options: {
     let localPoints: THREE.Points | null = null;
     let pointPromise: Promise<void> | null = null;
     let timer = 0;
+    let reservedAt = 0, reserved: {left:number;top:number;right:number;bottom:number}[] = [];
+    const frame = host.closest(".view-frame");
     let down: { x: number; y: number } | null = null;
     const raycaster = new THREE.Raycaster();
     const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
@@ -135,10 +138,52 @@ export function createBuildingExplorer(options: {
         modeChanged() { if (points) points.visible = sight && mode() === "seoul"; if (localPoints) localPoints.visible = sight && mode() === "local"; if (points && sight) reportProjection(); schedule(); },
         paint() {
             const width = host.clientWidth, height = host.clientHeight;
-            if (overlay.width !== width || overlay.height !== height) { overlay.width = width; overlay.height = height; }
+            if (overlay.width !== width || overlay.height !== height) { overlay.width = width; overlay.height = height; reservedAt = 0; }
             context.clearRect(0, 0, width, height);
-            if (!sight || controls.getDistance() > 6000) return;
-            const occupied: { left: number; top: number; right: number; bottom: number }[] = [];
+            if (!sight) { overlay.dataset.geographyLabels = "0"; return; }
+            // 지도 출처·조작부와도 이름이 겹치지 않도록 화면 영역을 예약합니다.
+            // Reserve attribution and controls as well as previously drawn labels.
+            if (performance.now() - reservedAt > 500 || !reservedAt) {
+                const origin = host.getBoundingClientRect(); reserved = [];
+                for (const element of frame?.querySelectorAll(".map-attribution, .viewer-label, .view-actions, .viewer-hint") || []) {
+                    const box = element.getBoundingClientRect();
+                    if (box.width && box.height) reserved.push({left:box.left-origin.left,top:box.top-origin.top,right:box.right-origin.left,bottom:box.bottom-origin.top});
+                }
+                reservedAt = performance.now();
+            }
+            const occupied: { left: number; top: number; right: number; bottom: number }[] = [...reserved];
+            let geographicCount = 0;
+            const geographicNames = new Set<string>();
+            // 행정구역과 건물 이름은 같은 화면 공간에서 겹치지 않도록 배치합니다.
+            // Place administrative and building labels in the same collision space.
+            const distance = controls.getDistance();
+            const priority = distance > 400000 ? ["province"] : distance > 120000 ? ["province", "district-detail"] : ["district-detail", "admin-detail", "province"];
+            const geography = geographyLabels?.() || [];
+            const point = new THREE.Vector3();
+            for (const category of priority) for (const label of geography) {
+                if (label.category !== category || geographicCount >= 36 || geographicNames.has(`${category}:${label.name}`)) continue;
+                if (Math.abs(label.x - controls.target.x) > distance * 2 || Math.abs(label.z - controls.target.z) > distance * 2) continue;
+                point.set(label.x, 4, label.z).project(camera);
+                if (point.z < -1 || point.z > 1 || Math.abs(point.x) > 1 || Math.abs(point.y) > 1) continue;
+                const x = (point.x + 1) * width / 2, y = (1 - point.y) * height / 2;
+                const text = category === "admin-detail" ? label.name.split(" ").slice(-1)[0] : label.name;
+                context.font = "16px sans-serif";
+                const textWidth = Math.min(220, context.measureText(text).width + 16), cardHeight = 26;
+                const placements = [[0,0],[0,-30],[0,30],[textWidth/2+8,0],[-textWidth/2-8,0],[0,-60]];
+                let rect: {left:number;top:number;right:number;bottom:number} | null = null;
+                for (const [dx,dy] of placements) {
+                    const left = Math.max(0, Math.min(width - textWidth, x - textWidth / 2 + dx));
+                    const top = Math.max(0, Math.min(height - cardHeight, y - cardHeight / 2 + dy));
+                    const candidate = {left, top, right:left + textWidth, bottom:top + cardHeight};
+                    if (!occupied.some(other => candidate.left < other.right + 4 && candidate.right + 4 > other.left && candidate.top < other.bottom + 4 && candidate.bottom + 4 > other.top)) {rect = candidate;break;}
+                }
+                if (!rect) continue;
+                occupied.push(rect); geographicNames.add(`${category}:${label.name}`); geographicCount++;
+                context.fillStyle = "rgba(28, 47, 43, .9)"; context.fillRect(rect.left, rect.top, textWidth, cardHeight);
+                context.fillStyle = "#fff4c7"; context.fillText(text, rect.left + 8, rect.top + 18, textWidth - 16);
+            }
+            overlay.dataset.geographyLabels = String(geographicCount);
+            if (distance > 6000) return;
             let labels = 0;
             for (const building of features) {
                 const point = geoToWorld(mode(), building.easting, building.northing);

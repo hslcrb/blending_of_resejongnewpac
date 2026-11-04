@@ -13,6 +13,8 @@ test('lazy layers render in two scene axes and query geometry with original fiel
  assert.deepEqual(requests,[]);assert.equal(layer.group.visible,false);
  await layer.setVisible(true);
  assert.deepEqual(requests.sort(),['dong:11','national','seoul','seoulDistricts']);
+ assert.deepEqual(await layer.getProvinceNames({minE:197850,minN:552450,maxE:197900,maxN:552500}),['서울특별시']);
+ assert.deepEqual(await layer.getProvinceNames({minE:100000,minN:100000,maxE:101000,maxN:101000}),[]);
  const lines=[];layer.group.traverse(o=>{if(o.isLineSegments)lines.push(o)});
  assert.equal(lines.length,2);assert.ok(lines.every(l=>l.material.depthTest===false && l.material.depthWrite===false));
  let hits=await layer.query({mode:'local',x:0,z:0,radius:25});
