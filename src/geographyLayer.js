@@ -172,10 +172,18 @@ function candidates(dataset,e,n,radius) {
 export function createGeographyLayer({scene,onStatus=()=>{},invalidate=()=>{},loadDataset=defaultLoadDataset,height=0.08}={}) {
     if(!scene)throw new Error('지도 레이어에 scene이 필요합니다.');
     const group=new THREE.Group();group.name='GIS 행정·지면 경계';group.visible=false;scene.add(group);
-    const datasets=new Map(),pending=new Map(),errors=new Map(),controllers=new Map();
-    let visible=false,mode='local',categories=null,destroyed=false,lastStatus='',regions=new Set();
+    const datasets=new Map(),pending=new Map(),errors=new Map(),controllers=new Map(),waiters=new Map();
+    let visible=false,mode='local',categories=null,destroyed=false,lastStatus='',regions=new Set(),viewGeneration=0;
     const activeRegions=()=>new Set([...regions,...(mode==='national'?[]:['11'])]);
-    const required=()=>[...new Set(['national',...(mode==='national'?[]:['seoul']),...(activeRegions().has('11')?['seoulDistricts']:[]),...[...activeRegions()].map(code=>`dong:${code}`)])];
+    const keysFor=(range,active,filter)=>{
+        const available=['national',...(range==='national'?[]:['seoul']),...(active.has('11')?['seoulDistricts']:[]),...[...active].map(code=>`dong:${code}`)];
+        if(!filter)return [...new Set(available)];
+        const intersects=types=>types.some(type=>filter.has(type));
+        return [...new Set(available.filter(key=>key==='national'?intersects(['province','district']):
+            key==='seoul'?intersects(['admin','water','roads','rail']):
+            key==='seoulDistricts'?filter.has('district-detail'):filter.has('admin-detail')))];
+    };
+    const required=()=>keysFor(mode,activeRegions(),categories);
     const inMode=dataset=>dataset.modes.includes(mode)&&(!dataset.region||activeRegions().has(dataset.region));
     function report() {
         const needed=required(),failed=needed.filter(k=>errors.has(k)),loaded=needed.filter(k=>datasets.has(k));
@@ -206,33 +214,76 @@ export function createGeographyLayer({scene,onStatus=()=>{},invalidate=()=>{},lo
         const dataset=datasets.get(id);if(!dataset)return;
         disposeDataset(dataset);datasets.delete(id);updateGroups();
     }
+    // [공유 질의와 배경 로딩 / Shared queries and background loading]
+    // 범위가 바뀌어도 이미 질의가 사용하는 요청은 유지하고, 그 외 자원은 해제한다.
+    // Retain requests held by active queries; cancel and dispose other stale resources.
+    function prune() {
+        if(destroyed)return;
+        const needed=new Set(visible?required():[]);
+        const keep=key=>needed.has(key)||(waiters.get(key)||0)>0;
+        for(const [key,entry] of pending) if(!keep(key)) {
+            pending.delete(key);controllers.delete(key);entry.controller.abort();
+        }
+        for(const [key,dataset] of datasets) if((key==='national'||key==='seoul'||key==='seoulDistricts'||key.startsWith('dong:'))&&!keep(key)) {
+            disposeDataset(dataset);datasets.delete(key);
+        }
+        for(const key of errors.keys())if(!keep(key))errors.delete(key);
+    }
+    function hold(keys) {
+        for(const key of keys)waiters.set(key,(waiters.get(key)||0)+1);
+        return ()=>{
+            for(const key of keys){const count=(waiters.get(key)||0)-1;if(count>0)waiters.set(key,count);else waiters.delete(key);}
+            prune();if(!destroyed)updateGroups();
+        };
+    }
     function ensure(key) {
         if(destroyed||datasets.has(key)||errors.has(key))return Promise.resolve();
-        if(pending.has(key))return pending.get(key);
-        const controller=new AbortController();controllers.set(key,controller);errors.delete(key);report();
-        const promise=Promise.resolve().then(()=>loadDataset(key,controller.signal)).then(data=>{
+        if(pending.has(key))return pending.get(key).promise;
+        const controller=new AbortController(),entry={controller,promise:null};
+        controllers.set(key,controller);errors.delete(key);report();
+        entry.promise=Promise.resolve().then(()=>loadDataset(key,controller.signal)).then(data=>{
             if(destroyed||controller.signal.aborted)return;
             const region=key==='seoulDistricts'?'11':key.startsWith('dong:')?key.slice(5):null;
             const category=key==='seoulDistricts'?'district-detail':key.startsWith('dong:')?'admin-detail':undefined;
             addDataset(key,data,{category,region,indexed:key==='seoul'||Boolean(region),modes:key==='seoul'?['local','seoul']:['local','seoul','national']});
         }).catch(error=>{
             if(!destroyed&&!controller.signal.aborted)errors.set(key,error);
-        }).finally(()=>{pending.delete(key);controllers.delete(key);if(!destroyed)report();});
-        pending.set(key,promise);return promise;
+        }).finally(()=>{
+            if(pending.get(key)===entry){pending.delete(key);controllers.delete(key);}
+            if(!destroyed)report();
+        });
+        pending.set(key,entry);return entry.promise;
     }
-    async function ensureAll(keys) {for(let i=0;i<keys.length&&!destroyed;i+=3)await Promise.all(keys.slice(i,i+3).map(ensure));}
-    async function loadRequired() {await ensureAll(required());if(!destroyed)updateGroups();}
-    async function setVisible(next) {if(destroyed)return;visible=Boolean(next);updateGroups();if(visible)await loadRequired();}
+    async function ensureAll(keys,valid=()=>true) {
+        for(let i=0;i<keys.length&&!destroyed&&valid();i+=3)await Promise.all(keys.slice(i,i+3).map(ensure));
+    }
+    async function loadRequired() {
+        const generation=viewGeneration,keys=required();
+        await ensureAll(keys,()=>visible&&generation===viewGeneration);
+        if(!destroyed&&visible&&generation===viewGeneration)updateGroups();
+    }
+    async function setVisible(next) {
+        if(destroyed)return;
+        next=Boolean(next);if(visible!==next){visible=next;viewGeneration++;prune();}
+        updateGroups();if(visible)await loadRequired();
+    }
     async function setMode(next) {
         if(destroyed)return;
         if(!['local','seoul','national'].includes(next))throw new Error('알 수 없는 지도 범위입니다.');
-        mode=next;updateGroups();if(visible)await loadRequired();
+        if(mode!==next){mode=next;viewGeneration++;prune();}
+        updateGroups();if(visible)await loadRequired();
     }
-    function setCategories(next) {if(destroyed)return;categories=next==null?null:new Set(next);updateGroups();}
+    function setCategories(next) {
+        if(destroyed)return;
+        categories=next==null?null:new Set(next);viewGeneration++;prune();updateGroups();
+        if(visible)void loadRequired();
+    }
     async function setRegions(next) {
         if(destroyed)return;
         if(!Array.isArray(next)||next.some(code=>!/^\d{2}$/.test(code)))throw new Error('광역 지역 코드는 두 자리 문자열이어야 합니다.');
-        regions=new Set(next);updateGroups();if(visible)await loadRequired();
+        const updated=new Set(next),changed=updated.size!==regions.size||[...updated].some(code=>!regions.has(code));
+        if(changed){regions=updated;viewGeneration++;prune();}
+        updateGroups();if(visible)await loadRequired();
     }
     async function retry() {if(destroyed)return;for(const key of required())errors.delete(key);await loadRequired();}
     async function query({x,z,mode:queryMode=mode,radius=100,limit=Infinity,categories:queryCategories}={}) {
@@ -241,38 +292,44 @@ export function createGeographyLayer({scene,onStatus=()=>{},invalidate=()=>{},lo
         const coordinateMode=queryMode==='national'?'seoul':queryMode;
         const {easting:e,northing:n}=worldToGeo(coordinateMode,x,z);
         const active=new Set([...regions,...(queryMode==='national'?[]:['11'])]);
-        const keys=[...new Set(['national',...(queryMode==='national'?[]:['seoul']),...(active.has('11')?['seoulDistricts']:[]),...[...active].map(code=>`dong:${code}`)])];
-        await ensureAll(keys);
-        if(destroyed)return [];
-        const failed=keys.filter(key=>errors.has(key));
-        if(failed.length)throw new Error(`지도 자료를 불러오지 못했습니다: ${failed.join(', ')}`);
         const filter=queryCategories?new Set(queryCategories):categories;
-        const hits=[];
-        for(const dataset of datasets.values()) {
-            if(!dataset.modes.includes(queryMode)||(dataset.region&&!active.has(dataset.region)))continue;
-            for(const record of candidates(dataset,e,n,radius)) {
-                if(filter&&!filter.has(record.category))continue;
-                const b=record.bounds;if(e<b.minE-radius||e>b.maxE+radius||n<b.minN-radius||n>b.maxN+radius)continue;
-                const contains=polygonContains(record.geometry,e,n);
-                const distance=contains?0:pathDistance(record.paths,e,n);
-                if(distance<=radius)hits.push({feature:record.feature,category:record.category,contains,distance,dataset:dataset.id,source:dataset.source});
+        const keys=keysFor(queryMode,active,filter),release=hold(keys);
+        try {
+            await ensureAll(keys);
+            if(destroyed)return [];
+            const failed=keys.filter(key=>errors.has(key));
+            if(failed.length)throw new Error(`지도 자료를 불러오지 못했습니다: ${failed.join(', ')}`);
+            const hits=[];
+            for(const dataset of datasets.values()) {
+                if(!dataset.modes.includes(queryMode)||(dataset.region&&!active.has(dataset.region)))continue;
+                for(const record of candidates(dataset,e,n,radius)) {
+                    if(filter&&!filter.has(record.category))continue;
+                    const b=record.bounds;if(e<b.minE-radius||e>b.maxE+radius||n<b.minN-radius||n>b.maxN+radius)continue;
+                    const contains=polygonContains(record.geometry,e,n);
+                    const distance=contains?0:pathDistance(record.paths,e,n);
+                    if(distance<=radius)hits.push({feature:record.feature,category:record.category,contains,distance,dataset:dataset.id,source:dataset.source});
+                }
             }
-        }
-        hits.sort((a,b)=>Number(b.contains)-Number(a.contains)||a.distance-b.distance);
-        return hits.slice(0,Math.max(0,limit));
+            hits.sort((a,b)=>Number(b.contains)-Number(a.contains)||a.distance-b.distance);
+            return hits.slice(0,Math.max(0,limit));
+        } finally {release();}
     }
     async function getProvinceNames(bounds) {
         if(destroyed)return [];
         if(!bounds||![bounds.minE,bounds.minN,bounds.maxE,bounds.maxN].every(Number.isFinite)||bounds.minE>bounds.maxE||bounds.minN>bounds.maxN)throw new Error('유효한 지도 범위가 필요합니다.');
-        await ensure('national');
-        if(errors.has('national'))throw new Error('전국 백지도를 불러오지 못했습니다.');
-        const names=new Set();
-        for(const record of datasets.get('national')?.records||[]) {
-            const b=record.bounds;
-            if(record.category!=='province'||b.maxE<bounds.minE||b.minE>bounds.maxE||b.maxN<bounds.minN||b.minN>bounds.maxN)continue;
-            const name=record.feature.properties?.fields?.MNG_NAM;if(name)names.add(name);
-        }
-        return [...names];
+        const release=hold(['national']);
+        try {
+            await ensure('national');
+            if(destroyed)return [];
+            if(errors.has('national'))throw new Error('전국 백지도를 불러오지 못했습니다.');
+            const names=new Set();
+            for(const record of datasets.get('national')?.records||[]) {
+                const b=record.bounds;
+                if(record.category!=='province'||b.maxE<bounds.minE||b.minE>bounds.maxE||b.maxN<bounds.minN||b.minN>bounds.maxN)continue;
+                const name=record.feature.properties?.fields?.MNG_NAM;if(name)names.add(name);
+            }
+            return [...names];
+        } finally {release();}
     }
     function getLabels({mode:labelMode=mode,categories:requested=['district-detail','admin-detail'],bounds=null,limit=Infinity}={}) {
         if(destroyed||limit<=0)return [];

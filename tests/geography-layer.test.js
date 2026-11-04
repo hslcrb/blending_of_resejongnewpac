@@ -50,3 +50,60 @@ test('pending data arriving after disposal is ignored',async()=>{
  layer.dispose();for(const resolve of pending)resolve(data([polygon]));await opening;
  assert.equal(scene.children.includes(layer.group),false);assert.equal(layer.group.children.length,0);
 });
+
+test('시도 전용 질의는 다른 행정동 오류와 무관하지만 전체 질의와 표시 오류는 유지된다',async()=>{
+ const scene=new THREE.Scene(),statuses=[];
+ const layer=createGeographyLayer({scene,onStatus:s=>statuses.push(s),loadDataset:async key=>{if(key==='dong:41')throw new Error('offline');return data(key==='national'?[polygon]:[]);}});
+ await layer.setMode('national');await layer.setRegions(['41']);await layer.setVisible(true);
+ const hits=await layer.query({mode:'national',x:-2103,z:-2531,radius:0,categories:['province']});
+ assert.equal(hits.length,1);assert.equal(hits[0].category,'province');
+ await assert.rejects(layer.query({mode:'national',x:-2103,z:-2531,radius:0}),/dong:41/);
+ assert.equal(statuses.at(-1).state,'error');assert.deepEqual(statuses.at(-1).failed,['dong:41']);layer.dispose();
+});
+
+test('전국 로딩을 취소하면 진행 중 요청을 중단하고 나머지 요청을 시작하지 않는다',async()=>{
+ const scene=new THREE.Scene(),requests=[];let release,aborted=[];
+ const gate=new Promise(resolve=>release=resolve);
+ const layer=createGeographyLayer({scene,loadDataset:async (key,signal)=>{requests.push(key);if(key.startsWith('dong:')){signal.addEventListener('abort',()=>aborted.push(key));await gate;}return data([polygon]);}});
+ await layer.setMode('national');await layer.setVisible(true);
+ const opening=layer.setRegions(['11','12','26','27','28','30','31','36','41','43','44','47','48','50','51','52']);
+ await new Promise(r=>setTimeout(r,0));await layer.setRegions([]);release();await opening;
+ assert.ok(aborted.includes('dong:11'));assert.ok(requests.filter(x=>x.startsWith('dong:')).length<16);
+ assert.ok(!layer.group.children.some(g=>g.name.startsWith('GIS dong:')));layer.dispose();
+});
+
+test('공유 중인 개별 질의는 표시 권역 변경에도 살아남고 완료 후 해제된다',async()=>{
+ const scene=new THREE.Scene();let release,signal,disposed=0,requests=[];
+ const gate=new Promise(resolve=>release=resolve);
+ const layer=createGeographyLayer({scene,loadDataset:async (key,s)=>{requests.push(key);if(key==='dong:41'){signal=s;await gate;}return data(key==='dong:41'?[polygon]:[]);}});
+ layer.group.addEventListener('childadded',e=>{if(e.child.name==='GIS dong:41')e.child.traverse(o=>{if(o.isLineSegments)o.geometry.addEventListener('dispose',()=>disposed++);});});
+ await layer.setMode('national');await layer.setVisible(true);
+ const opening=layer.setRegions(['41']);await new Promise(r=>setTimeout(r,0));
+ const query=layer.query({mode:'national',x:-2103,z:-2531,radius:0,categories:['admin-detail']});
+ await layer.setRegions([]);assert.equal(signal.aborted,false);
+ release();const hits=await query;await opening;
+ assert.equal(requests.filter(x=>x==='dong:41').length,1);assert.equal(hits.length,1);
+ assert.ok(!layer.group.children.some(g=>g.name==='GIS dong:41'));assert.ok(disposed>0);layer.dispose();
+});
+
+test('취소된 느린 요청 뒤 같은 지역을 다시 켜면 새 요청과 결과가 유지된다',async()=>{
+ let release,firstSignal,calls=0;const gate=new Promise(resolve=>release=resolve);
+ const layer=createGeographyLayer({scene:new THREE.Scene(),loadDataset:async (key,signal)=>{if(key==='dong:41'){calls++;if(calls===1){firstSignal=signal;await gate;}}return data(key==='dong:41'?[polygon]:[]);}});
+ await layer.setMode('national');await layer.setVisible(true);
+ const old=layer.setRegions(['41']);await new Promise(r=>setTimeout(r,0));await layer.setRegions([]);assert.equal(firstSignal.aborted,true);
+ await layer.setRegions(['41']);assert.equal(calls,2);release();await old;
+ const hits=await layer.query({mode:'national',x:-2103,z:-2531,radius:0,categories:['admin-detail']});
+ assert.equal(hits.length,1);assert.ok(layer.group.children.some(g=>g.name==='GIS dong:41'));layer.dispose();
+});
+
+test('행정동 질의는 지면도로 실패를 무시하되 지면이 포함된 종합 질의는 실패한다',async()=>{
+ const statuses=[],layer=createGeographyLayer({scene:new THREE.Scene(),onStatus:s=>statuses.push(s),loadDataset:async key=>{
+  if(key==='seoul')throw new Error('roads unavailable');return data(key==='dong:11'?[polygon]:[]);
+ }});
+ await layer.setVisible(true);
+ const admin=await layer.query({mode:'local',x:0,z:0,radius:0,categories:['admin-detail']});
+ assert.equal(admin.length,1);assert.equal(admin[0].category,'admin-detail');
+ await assert.rejects(layer.query({mode:'local',x:0,z:0,radius:0,categories:['roads','admin-detail']}),/seoul/);
+ assert.equal(statuses.at(-1).state,'error');assert.ok(statuses.at(-1).failed.includes('seoul'));
+ layer.dispose();
+});
