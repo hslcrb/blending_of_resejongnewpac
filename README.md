@@ -13,7 +13,7 @@ npm run dev
 
 `npm run build`는 Cloudflare Pages에 배포할 `dist` 디렉터리를 만듭니다. `main` 브랜치의 변경은 GitHub에 연결된 Cloudflare Pages에서 빌드합니다.
 
-현재 Blender 작업본은 수목과 서울 하늘을 포함한 `blender_work/20261104-live-sky/blender_work/20261104/sejong_trees_connected_20261104.blend`입니다. 이전 작업본과 `public/model/`의 원본들은 보존했습니다. 23개 원본에 대응하는 하늘 사본과 수동 실시간 실행 방법은 `docs/blender-weather-sky-20261104.md`에 기록했습니다. 웹은 `public/model/streaming-manifest.json`의 기본 외형을 먼저 불러오고, 거리와 화면 크기에 맞춰 정원·실내·주변 상세 GLB를 추가로 받습니다. 반복되는 수목 형상은 공유 버퍼 3개로 재사용합니다. `?environment=legacy`는 이전 단일 모델을 유지합니다.
+현재 Blender 작업본은 수목과 서울 하늘을 포함한 `blender_work/20261104-live-sky/blender_work/20261104/sejong_trees_connected_20261104.blend`입니다. 이전 작업본과 `public/model/`의 원본들은 보존했습니다. Windows에서 `open-seoul-sky.cmd`를 실행하면 이 사본과 실시간 하늘이 함께 시작됩니다. 23개 원본에 대응하는 하늘 사본과 실행 방법은 `docs/blender-weather-sky-20261104.md`에 기록했습니다. 웹은 `public/model/streaming-manifest.json`의 기본 외형을 먼저 불러오고, 거리와 화면 크기에 맞춰 정원·실내·주변 상세 GLB를 추가로 받습니다. 반복되는 수목 형상은 공유 버퍼 3개로 재사용합니다. `?environment=legacy`는 이전 단일 모델을 유지합니다.
 
 항공사진을 참고해 별관 지붕의 앞뒤 길이를 본관의 약 50%로 늘리고 뒤 정원에 굽은 화단·벽돌 보행 공간과 수목을 보강했습니다. 이 비례와 위치는 사진에 따른 근사이며 실측값이 아닙니다. `scripts/build_sejong.py`는 이전 모델을 재생성하므로 현재 MCP 수정본을 덮어쓰는 용도로 사용하지 마세요. 부조·화면·현수막과 새 포장·석재 무늬는 직접 제작했으며 사진에서 잘라 쓰지 않았습니다.
 

@@ -30,3 +30,9 @@ t = bpy.app.driver_namespace.pop('seoul_weather_live_timer', None); t and bpy.ap
 낮과 밤 및 가상 흐림 비교는 `scripts/render_blender_weather_sky.py`로 만든 `20261104-sky-midnight.png`, `20261104-sky-noon.png`, `20261104-sky-noon-overcast.png`다. 가상 흐림 이미지는 API가 관측한 상태로 주장하지 않는다. 비교는 Blender 5.2 EEVEE에서 만든 기술 검증이며 모든 장면이나 기기의 시각 결과를 보장하지 않는다.
 
 태양 방위·고도는 [NOAA Solar Calculation Details](https://gml.noaa.gov/grad/solcalc/solareqns.PDF)의 근사식을 사용한다. 구름 관측은 [Aviation Weather Center Data API](https://aviationweather.gov/data/api/)의 METAR를 운영 서비스가 제한적으로 중계한다. 외부 응답이 실패하거나 오래된 경우를 위와 같이 따로 표시한다.
+
+## 한 번에 열기
+
+Windows에서는 저장소의 `open-seoul-sky.cmd`를 실행하면 최신 수목·하늘 Blender 사본을 열고 실시간 시각·기상 스크립트를 자동 시작한다. 다른 23개 하늘 적용 사본은 `python -B scripts/open_blender_sky.py "blender_work/20261104-gis-import/seoul/seoul_buildings_overview.blend"`처럼 `blender_work/20261104-live-sky` 기준 상대 경로를 전달한다. Blender 설치 경로가 자동으로 발견되지 않으면 `BLENDER_BIN`에 실행 파일 경로를 지정한다. 이 실행기는 프로젝트의 하늘 적용 사본만 허용하며 Blender의 전역 자동 실행 설정을 변경하지 않는다. 일반적인 파일 열기를 사용하면 앞서 설명한 대로 내장 스크립트를 직접 실행해야 한다.
+
+2026-11-04 열린 Blender MCP 세션에서 이전 서울 장면에 미저장 변경이 없음을 확인하고 같은 서울 장면의 하늘 적용 사본으로 전환했다. 실시간 타이머가 등록됐고 `RKSS 관측 (현장 관측 아님)`과 관측 시각이 실제 표시되는 것을 확인했다.
