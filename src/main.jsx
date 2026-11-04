@@ -14,6 +14,7 @@ import { disposeModelResources, shouldCastModelShadow } from './modelResources.j
 import { createSlowFrameDetector } from './framePerformance.js';
 import { setCampusLayout } from './campusLayout.js';
 import { cameraNearPlane } from './cameraClipping.js';
+import { seoulSolarPosition, sunDirection, cloudFractionFromMetar } from './skyState.js';
 import './style.css';
 
 // GLB의 광장, 정문과 로비에 맞춘 보행 범위입니다. / Walkable plaza, entrance and lobby from the GLB.
@@ -78,7 +79,7 @@ function MoveButton({ direction, label, symbol, setHeld }) {
     );
 }
 
-function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
+function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange }) {
     const containerRef = useRef(null);
     const sceneRef = useRef(null);
 
@@ -117,12 +118,16 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             new THREE.ShaderMaterial({
                 side: THREE.BackSide,
                 depthWrite: false,
+                uniforms: { sunDir: { value: new THREE.Vector3(0, 1, 0) }, daylight: { value: 1 }, cloudAmount: { value: 0.15 } },
                 vertexShader: `varying vec3 vDirection;
                     void main() {
                         vDirection = position;
                         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
                     }`,
                 fragmentShader: `varying vec3 vDirection;
+                    uniform vec3 sunDir;
+                    uniform float daylight;
+                    uniform float cloudAmount;
                     float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
                     float noise(vec2 p) {
                         vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
@@ -136,13 +141,15 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
                     void main() {
                         vec3 d = normalize(vDirection);
                         float elevation = clamp(d.y * 0.65 + 0.45, 0.05, 1.0);
-                        vec3 color = mix(vec3(0.46, 0.72, 0.90), vec3(0.10, 0.37, 0.72), pow(elevation, 0.65));
+                        vec3 dayColor = mix(vec3(0.46, 0.72, 0.90), vec3(0.10, 0.37, 0.72), pow(elevation, 0.65));
+                        vec3 nightColor = mix(vec3(0.025, 0.045, 0.085), vec3(0.008, 0.018, 0.05), pow(elevation, 0.65));
+                        vec3 color = mix(nightColor, dayColor, daylight);
                         vec2 clouds = d.xz / (max(d.y + 0.45, 0.05) + 0.32) * 1.65;
                         float cloud = smoothstep(0.48, 0.69, fbm(clouds + vec2(3.5, 1.8)));
-                        cloud *= smoothstep(-0.55, -0.15, d.y) * 0.62;
-                        color = mix(color, vec3(1.0, 0.99, 0.97), cloud);
-                        float sunlight = pow(max(dot(d, normalize(vec3(0.45, 0.65, 0.6))), 0.0), 16.0);
-                        color += vec3(0.13, 0.11, 0.075) * sunlight;
+                        cloud *= smoothstep(-0.55, -0.15, d.y) * cloudAmount;
+                        color = mix(color, mix(vec3(0.07, 0.09, 0.13), vec3(1.0, 0.99, 0.97), daylight), cloud);
+                        float sunlight = pow(max(dot(d, normalize(sunDir)), 0.0), 128.0);
+                        color += vec3(0.45, 0.36, 0.23) * sunlight * daylight;
                         gl_FragColor = vec4(color, 1.0);
                         #include <tonemapping_fragment>
                         #include <colorspace_fragment>
@@ -151,7 +158,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         );
         sky.frustumCulled = false;
         scene.add(sky);
-        scene.add(new THREE.HemisphereLight(0xffffff, 0xb3c2bd, 1.3));
+        const ambient = new THREE.HemisphereLight(0xffffff, 0xb3c2bd, 1.3);
+        scene.add(ambient);
         const sun = new THREE.DirectionalLight(0xfff7e9, 1.8);
         sun.castShadow = true;
         sun.shadow.mapSize.set(1024, 1024);
@@ -163,6 +171,47 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         scene.add(fill);
 
         let disposed = false;
+        const skyAbort = new AbortController();
+        const solarVector = new THREE.Vector3(0, 1, 0);
+        let observedCloud = null;
+        // [서울 시각과 관측 하늘 / Seoul time and observed sky]
+        // 현장과 다른 김포공항 관측임을 화면에 밝히고, 실패 시 임의 구름으로 대체합니다.
+        // Identify the nearby airport observation and fall back visibly when it is unavailable.
+        const refreshSky = () => {
+            const solar = seoulSolarPosition(new Date());
+            const direction = sunDirection(solar);
+            solarVector.set(direction.x, direction.y, direction.z);
+            const day = THREE.MathUtils.smoothstep(solar.elevation, -0.12, 0.2);
+            sky.material.uniforms.sunDir.value.copy(solarVector);
+            sky.material.uniforms.daylight.value = day;
+            sky.material.uniforms.cloudAmount.value = observedCloud ?? 0.15;
+            ambient.intensity = 0.32 + 0.98 * day;
+            sun.intensity = Math.max(0, Math.sin(solar.elevation)) * 2.3 * (1 - 0.55 * (observedCloud ?? 0));
+            fill.intensity = 0.24 + 0.46 * day;
+            sun.position.copy(sun.target.position).addScaledVector(solarVector, 140);
+            renderer.shadowMap.needsUpdate = true;
+        };
+        const refreshWeather = async () => {
+            try {
+                const response = await fetch('/api/weather', { signal: skyAbort.signal });
+                if (!response.ok) throw new Error('weather unavailable');
+                const report = await response.json();
+                const amount = cloudFractionFromMetar(report);
+                if (amount === null || !Number.isFinite(Date.parse(report.observedAt))) throw new Error('unknown clouds');
+                if (disposed) return;
+                observedCloud = amount;
+                onWeatherChange({ observedAt: report.observedAt, temperature: report.temperature });
+            } catch {
+                if (disposed) return;
+                observedCloud = null;
+                onWeatherChange(null);
+            }
+            refreshSky();
+        };
+        refreshSky();
+        void refreshWeather();
+        const skyTimer = window.setInterval(refreshSky, 60000);
+        const weatherTimer = window.setInterval(refreshWeather, 600000);
         let frameId;
         let model;
         let coreAsset;
@@ -382,6 +431,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             clearInput();
             slowFrames.sample(performance.now(), false);
             streamer?.setPaused(document.hidden || !viewerVisible);
+            if (!document.hidden) { refreshSky(); void refreshWeather(); }
         };
         document.addEventListener('visibilitychange', onPageVisibility);
 
@@ -500,7 +550,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             const center = bounds.getCenter(new THREE.Vector3());
             const radius = Math.max(size.x, size.y, size.z, 1);
             sun.target.position.copy(center);
-            sun.position.copy(center).add(new THREE.Vector3(55, 100, 70));
+            sun.position.copy(center).addScaledVector(solarVector, 140);
             const shadowCamera = sun.shadow.camera;
             shadowCamera.left = -75;
             shadowCamera.right = 75;
@@ -616,7 +666,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
                 if (focus.distanceToSquared(shadowFocus) > 36) {
                     shadowFocus.copy(focus);
                     sun.target.position.copy(focus);
-                    sun.position.copy(focus).add(new THREE.Vector3(55, 100, 70));
+                    sun.position.copy(focus).addScaledVector(solarVector, 140);
                     renderer.shadowMap.needsUpdate = true;
                 }
             }
@@ -629,6 +679,9 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
         return () => {
             disposed = true;
             bootRequest.abort();
+            skyAbort.abort();
+            window.clearInterval(skyTimer);
+            window.clearInterval(weatherTimer);
             streamer?.dispose();
             setCampusLayout(null);
             cancelAnimationFrame(frameId);
@@ -652,7 +705,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
             renderer.domElement.remove();
             viewerRef.current = null;
         };
-    }, [onStatusChange, viewerRef]);
+    }, [onStatusChange, onWeatherChange, viewerRef]);
 
     useEffect(() => { sceneRef.current?.setMode(mode); }, [mode]);
     useEffect(() => { sceneRef.current?.fitView(view.name); }, [view]);
@@ -685,6 +738,11 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange }) {
 
 function App() {
     const [status, setStatus] = useState('loading');
+    const [weather, setWeather] = useState(null);
+    const [clock, setClock] = useState(() => new Date());
+    useEffect(() => { const timer = window.setInterval(() => setClock(new Date()), 60000); return () => window.clearInterval(timer); }, []);
+    const seoulTime = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hour12: false }).format(clock);
+    const observedTime = weather ? new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(weather.observedAt)) : null;
     const [mode, setMode] = useState('orbit');
     const [view, setView] = useState({ name: 'perspective' });
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -776,7 +834,7 @@ function App() {
                     </div>
                     {fullscreenError && <p className="fullscreen-error" role="alert">{fullscreenError}</p>}
                     <div className="view-frame">
-                        <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} />
+                        <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} onWeatherChange={setWeather} />
                         {status !== 'ready' && (
                             <div className="viewer-status" role="status">
                                 <span>{status === 'loading' ? '건축 모델을 불러오는 중입니다.' : '모델을 불러오지 못했습니다.'}</span>
@@ -798,7 +856,7 @@ function App() {
                     </div>
                     <div className="experience-bottom">
                         <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 대극장 로비와 별관 점포까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
-                        <p className="model-note">사진과 대극장 단면을 참고한 모델입니다.<br />일부 비례와 세부는 추정입니다.</p>
+                        <p className="model-note">서울 시간 {seoulTime} · {weather ? `김포공항 구름 관측 ${observedTime}` : '기상 관측을 가져오지 못해 구름은 임의로 표시합니다.'}<br />김포공항은 광화문과 기상이 다를 수 있습니다. <a href="https://aviationweather.gov/data/api/">NOAA 항공기상 관측</a></p>
                     </div>
                 </section>
             </main>
