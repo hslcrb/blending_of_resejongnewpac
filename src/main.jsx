@@ -1,3 +1,4 @@
+import { isMapRoute, mapLink, exploreLink } from './experienceRoutes.js';
 import NationalBuildingChanges from './NationalBuildingChanges.jsx';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -995,6 +996,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
 }
 
 function App() {
+    const mapMode = isMapRoute(window.location.pathname);
     const embedded = new URLSearchParams(window.location.search).get('embed') === '1';
     useEffect(() => {
         if (!embedded || window.parent === window) return undefined;
@@ -1054,9 +1056,9 @@ function App() {
         } catch {if(!abort.signal.aborted)setUnlocatedState({state:'error',message:'위치 미기재 원본을 불러오지 못했습니다. 다시 눌러 주세요.'});}
     },[nationalSource]);
     const [projection, setProjection] = useState('');
-    const [mapProvider, setMapProvider] = useState('ground');
+    const [mapProvider, setMapProvider] = useState(mapMode ? 'ground' : null);
     const [mapStatus, setMapStatus] = useState({failed:0});
-    const [boundaries, setBoundaries] = useState(true), [allRegions, setAllRegions] = useState(false), [overviewRequest, setOverviewRequest] = useState(0);
+    const [boundaries, setBoundaries] = useState(mapMode), [allRegions, setAllRegions] = useState(false), [overviewRequest, setOverviewRequest] = useState(0);
     const [geographyStatus, setGeographyStatus] = useState({state:'idle',loaded:[],failed:[],total:0});
     const [geographyInspection, setGeographyInspection] = useState(null), [geographyInspectionState, setGeographyInspectionState] = useState({state:'idle'}), [geographyAttempt,setGeographyAttempt] = useState(0);
     const [locationRequest, setLocationRequest] = useState(null);
@@ -1173,6 +1175,7 @@ function App() {
                             <div><small>EXPLORE IN 3D</small><h2 id="viewer-title">세종문화회관 둘러보기</h2></div>
                         </div>
                         <div className="experience-controls">
+                            {mapMode ? <a className="route-entry" href={exploreLink(embedded)}>회관·광화문 보기</a> : <a className="route-entry" href={mapLink()} target={embedded ? "_blank" : undefined} rel={embedded ? "noopener noreferrer" : undefined}>지도·전시천리안</a>}
                             {embedded && <a className="theatre-entry embedded-theatre-entry" href="?theatre=1&embed=1">대극장 내부 입장 <span aria-hidden="true">→</span></a>}
                             <div className="mode-switch" role="group" aria-label="둘러보기 방식">
                                 <button type="button" aria-pressed={mode === 'orbit'} disabled={!ready} onClick={() => setMode('orbit')}><span aria-hidden="true">◉</span> 모형 보기</button>
@@ -1192,6 +1195,7 @@ function App() {
                         </div>
                     </div>
                     {fullscreenError && <p className="fullscreen-error" role="alert">{fullscreenError}</p>}
+                    {mapMode && <>
                     <div className="area-toolbox" role="group" aria-label="지도와 건물 정보">
                         <button type="button" aria-pressed={area === 'local'} disabled={!ready} onClick={() => {info.resetSelection();setArea('local');}}>광화문 주변</button>
                         <button type="button" aria-pressed={area === 'seoul'} disabled={!ready} onClick={() => { info.resetSelection();setMode('orbit');setArea('seoul'); }}>서울 전역</button>
@@ -1222,6 +1226,7 @@ function App() {
                         <p>출처: <a href="https://sgis.kostat.go.kr">국가데이터처 SGIS</a> · 가공: <a href="https://github.com/vuski/admdongkor">vuski/admdongkor</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · 추가 가공: 광역별 분할과 서울 자치구 합집합. 사용자 제공 QGIS 백지도는 원출처·이용조건 미확인.</p>
                         {allRegions && <p>전국 행정동 3,559개를 불러옵니다. 전체 보기는 기기의 메모리를 많이 사용할 수 있습니다. 서울 개별 건물 자료는 전국 전체가 아닙니다.</p>}
                     </div>}
+                    </>}
                     <div className="view-frame">
                         <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} onWeatherChange={setWeather} area={area} sight={sight} magnifier={magnifier} onAreaStatus={setAreaStatus} onStart={info.onStart} onInspection={info.onInspection} onInspectionState={info.onState} onProjection={setProjection} mapProvider={mapProvider} onMapStatus={onMapStatus} locationRequest={locationRequest} boundaries={boundaries} allRegions={allRegions} onGeographyStatus={onGeographyStatus} overviewRequest={overviewRequest} nationalSource={nationalSource} nationalLayers={nationalSelection||EMPTY_NATIONAL_LAYERS} onNationalStatus={onNationalStatus} roadSource={roadSource} roadLayers={roadLayers} roadMode={roadMode} onRoadStatus={onRoadStatus} />
                         {status !== 'ready' && (
@@ -1243,18 +1248,20 @@ function App() {
                             <span className="hint-touch">{mode === 'walk' ? '화면을 밀어 둘러보기 · 방향 버튼으로 이동' : '한 손가락으로 회전 · 두 손가락으로 이동과 확대'}</span>
                         </p>
                     </div>
+                    {mapMode && <>
                     <NationalBuildingChanges inspection={info.inspection} active={sight || magnifier || Boolean(info.inspection)} sight={sight} onFeaturesChange={onNationalBuildingFeatures} />
                     {(sight || info.inspection || info.keepPanel) && <BuildingInformationPanel sight={sight} inspection={info.inspection} outsideSeoul={geographyInspection?.insideSeoul === false} onSelectBuilding={info.onSelectBuilding} />}
                     {geographyVisible && (sight || magnifier || geographyInspection) && <GeographyInformation inspection={geographyInspection} state={geographyInspectionState} />}
                     {nationalActive && nationalManifest && (sight || info.inspection) && <NationalMapInformation hits={nationalHits||[]} status={nationalInspectState.state==='loading' ? '선택 지점의 원본 지형·시설을 조회하고 있습니다.' : nationalInspectState.state==='error' ? '선택 지점의 원본 정보를 불러오지 못했습니다.' : ''} />}
                     {nationalActive && roadMode!=='off' && (sight || info.inspection) && <NationalMapInformation title="전국 도로 원본 정보" hits={roadHits||[]} status={roadInspectState.state==='loading' ? '선택 지점 주변 도로를 조회하고 있습니다.' : roadInspectState.state==='error' ? '선택 지점의 도로 정보를 불러오지 못했습니다.' : roadStatus.state==='manual'||roadStatus.state==='zoom' ? roadStatus.message : ''} />}
                     {nationalActive && unlocatedHits && <NationalMapInformation title="위치 미기재 스키장 원본" hits={unlocatedHits} status="원본에서 좌표가 빠진 3건 · 지도에 점을 만들지 않았습니다." />}
+                    </>}
                     <div className="experience-bottom">
                         <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 대극장 로비와 별관 점포까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
                         <p className="model-note">서울 시간 {seoulTime} · {weather ? `김포공항 구름 관측 ${observedTime}` : '기상 관측을 가져오지 못해 구름은 임의로 표시합니다.'}<br />김포공항은 광화문과 기상이 다를 수 있습니다. 달의 위치는 근사이며 별은 연출입니다. <a href="https://aviationweather.gov/data/api/">NOAA 항공기상 관측</a></p>
                     </div>
                 </section>
-                <NationalCulturalExplorer onSelectLocation={selectNational} />
+                {mapMode && <NationalCulturalExplorer onSelectLocation={selectNational} />}
             </main>
             <footer className="site-footer"><span>SEJONG CENTER</span><span>건축을 바라보는 새로운 시선</span></footer>
         </div>

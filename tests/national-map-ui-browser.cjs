@@ -1,6 +1,6 @@
 const {chromium}=require(process.env.PLAYWRIGHT_PATH);const assert=require('node:assert/strict');
-const origin='http://127.0.0.1:3143';const pixel=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aPxoAAAAASUVORK5CYII=','base64');
-async function prepare(p){await p.route(/https:\/\/(tile\.openstreetmap\.org|tiles\.maps\.eox\.at)\//,r=>r.fulfill({status:200,contentType:'image/png',body:pixel,headers:{'access-control-allow-origin':'*'}}));await p.goto(origin);await p.waitForFunction(()=>!document.querySelector('.mode-switch button')?.disabled,null,{timeout:120000});}
+const origin=process.env.AREA_TEST_ORIGIN||'http://127.0.0.1:3143';const pixel=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aPxoAAAAASUVORK5CYII=','base64');
+async function prepare(p){await p.route(/https:\/\/(tile\.openstreetmap\.org|tiles\.maps\.eox\.at)\//,r=>r.fulfill({status:200,contentType:'image/png',body:pixel,headers:{'access-control-allow-origin':'*'}}));await p.goto(origin+'/map/');await p.waitForFunction(()=>!document.querySelector('.mode-switch button')?.disabled,null,{timeout:120000});}
 (async()=>{const b=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH,args:['--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader']});try{
  const p=await b.newPage({viewport:{width:1200,height:900}}),errors=[];p.on('pageerror',e=>errors.push(e.message));await prepare(p);
  await p.getByRole('button',{name:'전시천리안 (全視千里眼)'}).click();

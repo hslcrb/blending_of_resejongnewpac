@@ -4,7 +4,7 @@ const pixel=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
 async function prepare(page,failDong=false){
  await page.route(/https:\/\/(tile\.openstreetmap\.org|tiles\.maps\.eox\.at)\//,route=>route.fulfill({status:200,contentType:'image/png',body:pixel,headers:{'access-control-allow-origin':'*'}}));
  if(failDong)await page.route('**/gis/admin-dong/regions/11.geojson.gz',route=>route.abort());
- await page.goto(origin+'/');
+ await page.goto(origin+'/map/');
  await page.waitForFunction(()=>!document.querySelector('.mode-switch button')?.disabled,null,{timeout:120000});
 }
 (async()=>{const b=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{}),args:['--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader']});try{
