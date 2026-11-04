@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "format": "gzip-compressed GeoJSON with projected metre coordinates",
+  "crs": "EPSG:5186",
+  "coordinates": "[easting, northing]",
+  "dataKind": "small-scale overview, not cadastral or authoritative current boundary",
+  "source": "User-supplied 대한민국전도_.gpkg / 대한민국전도.qgz",
+  "sourceSha256": "cd5c34ced00cff5af0446261a8fa48db95b876dc2b86b7965b2278327cbb53df",
+  "provenance": "Exact original producer, date and licence not identified in supplied layer metadata.",
+  "assets": {
+    "national-admin.json.gz": {
+      "compressedBytes": 977377,
+      "uncompressedBytes": 3322184,
+      "sha256": "8a40bf750a0de1aa89d358f488238699f3801fbcba52235f1ad2b7b874d8dad9",
+      "layers": {
+        "시도_백지도": 30,
+        "시군구_백지도_": 3176
+      },
+      "simplificationMetres": {
+        "시도_백지도": 50,
+        "시군구_백지도_": 50
+      },
+      "clipBounds5186": null
+    },
+    "seoul-ground.json.gz": {
+      "compressedBytes": 2375067,
+      "uncompressedBytes": 32371376,
+      "sha256": "4795a3dede00526a3d1ccf3bc07e7ca531adb8f0970be6d10b59beab40ea1dd7",
+      "layers": {
+        "행정경계": 33,
+        "특별광역자치시도경계": 4,
+        "해안선": 0,
+        "실폭하천": 17,
+        "고속국도": 2698,
+        "일반국도": 38240,
+        "지방도": 2539,
+        "고속철도": 64,
+        "일반철도": 73
+      },
+      "simplificationMetres": {
+        "행정경계": 5,
+        "특별광역자치시도경계": 5,
+        "해안선": 5,
+        "실폭하천": 5,
+        "고속국도": 5,
+        "일반국도": 5,
+        "지방도": 5,
+        "고속철도": 5,
+        "일반철도": 5
+      },
+      "clipBounds5186": [
+        175000,
+        525000,
+        225000,
+        575000
+      ]
+    }
+  }
+}
