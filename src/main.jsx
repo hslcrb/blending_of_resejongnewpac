@@ -1186,7 +1186,7 @@ function App() {
                     <div className="intro-main">
                         <p className="eyebrow"><span /> SEJONG CENTER FOR THE PERFORMING ARTS</p>
                         <h1 id="page-title">도시의 중심에서,<br /><em>건축을 걷다.</em></h1>
-                        <p className="intro-copy">익숙한 광장의 풍경을 새로운 시선으로.<br />세종문화회관의 외관을 가까이에서 둘러보세요.</p>
+                        <p className="intro-copy">익숙한 광장의 풍경을 새로운 시선으로.<br />세종문화회관의 외관을 가까이에서 둘러보세요.</p><a className="theatre-entry" href={embedded ? "?theatre=1&embed=1" : "?theatre=1"}>대극장 내부 입장 <span aria-hidden="true">→</span></a>
                     </div>
                     <div className="intro-aside">
                         <span className="aside-number">건축 산책</span>
@@ -1289,4 +1289,5 @@ function App() {
     );
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+const TheatreExperience = React.lazy(() => import('./TheatreExperience.jsx'));
+createRoot(document.getElementById('root')).render(new URLSearchParams(window.location.search).get('theatre') === '1' ? <React.Suspense fallback={<p>대극장 체험을 불러오고 있습니다.</p>}><TheatreExperience /></React.Suspense> : <App />);

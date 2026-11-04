@@ -19,3 +19,13 @@ test('nearest seat respects distance and seated view follows the provided seat h
  assert.deepEqual(seatEyePosition(seats[1]),{x:3,y:2.08,z:6});
  assert.ok(theatreFloorHeight(20)>1);
 });
+
+test('doorway cannot be bypassed by stepping exactly onto the wall line',()=>{
+ assert.equal(canEnterTheatre(8,29.8,8,30),false);
+ assert.equal(canEnterTheatre(8,30,8,29.8),false);
+});
+test('a visitor cannot walk through the seat itself',()=>{
+ const seat={id:'A',level:1,position:[1,0,6]};
+ assert.deepEqual(stepInside({x:0,z:6},{x:.9,z:6},[seat]),{x:0,z:6});
+ assert.deepEqual(stepInside({x:0,z:6},{x:.2,z:6},[seat]),{x:.2,z:6});
+});
