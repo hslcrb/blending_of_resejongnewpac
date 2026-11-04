@@ -58,3 +58,5 @@ node --test tests/national-road-tiles.test.js
 전국 모든 168개 타일의 실제 외곽 상자 교차를 분석한 결과, 5·10km 범위의 최대는 12개 타일, 9,261,477바이트 압축 및 65,258,003바이트 압축 해제였고, 50km 범위의 최대는 26개 타일, 12,356,024바이트 압축 및 83,492,790바이트 압축 해제였다. JS 객체·Three.js geometry·브라우저 오버헤드는 추가된다. 서울 중심 10km에서 Node 힙 증가는 약 110MB였으며 이는 모든 기기와 위치의 상한이 아니다. 소프트웨어 WebGL과 390px Chromium의 테스트는 실제 모바일 기기의 메모리·성능 보증이 아니다.
 
 검증은 `node --test tests/national-road-view.test.js tests/national-road-tiles.test.js`와 Vite 실행 후 `tests/national-road-ui-browser.cjs`, `tests/national-road-ui-cancel-browser.cjs`로 수행한다. 데스크톱 자동 표시와 종류 선택, 기존 도로 숨김·복원, 원본 속성, 축소 제한, 모바일 초기 요청 0건 및 수동 표시, 도로 타일 실패와 재시도, 취소와 걷기 범위를 확인한다.
+
+추가 메모리 실측: Windows 헤드리스 Chromium 소프트웨어 WebGL에서 390×844px, 회관 초기 시야, 강제 GC 후 `Runtime.getHeapUsage`의 JS 사용량은 도로 끄기 78,634,812바이트, 직접 켜기 97,471,692바이트로 약 18.8MB 증가했고 도로 manifest·타일 요청은 5회였다. 이 측정은 JS 힙만 포함하며 GPU·브라우저 전체·최고점이나 실제 모바일 하드웨어 메모리를 포함하지 않는다. 범위와 GC 상태에 따라 달라진다. `tests/national-road-ui-memory-browser.cjs`로 같은 범위에서 재측정할 수 있다.
