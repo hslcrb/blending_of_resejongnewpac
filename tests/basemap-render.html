@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><body style="margin:0"><div id="credit"></div><script type="module">
+import * as THREE from 'three';
+import {createBasemapLayer} from '../src/basemapLayer.js';
+import {tileToLonLat,latLonTo5186,geoToWorld} from '../src/mapProjection.js';
+const mode=new URLSearchParams(location.search).get('mode')||'local';
+const renderer = new THREE.WebGLRenderer({antialias:false,preserveDrawingBuffer:true});
+renderer.setSize(800,800);renderer.setPixelRatio(1);renderer.outputColorSpace=THREE.SRGBColorSpace;document.body.appendChild(renderer.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color('black');
+const center=tileToLonLat(6985.5,3172.5,13), geo=latLonTo5186(center.lon,center.lat), pos=geoToWorld(mode,geo.easting,geo.northing);
+const camera=new THREE.PerspectiveCamera(45,1,1,12000);camera.position.set(pos.x,3000,pos.z);camera.up.set(0,0,-1);camera.lookAt(pos.x,0,pos.z);camera.updateMatrixWorld(true);
+const layer=createBasemapLayer({scene,attributionElement:document.querySelector('#credit'),invalidate:()=>renderer.render(scene,camera),loadImage:async()=>{
+ const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;const ctx=canvas.getContext('2d');
+ for(const [x,y,c] of [[0,0,'red'],[128,0,'lime'],[0,128,'blue'],[128,128,'yellow']]){ctx.fillStyle=c;ctx.fillRect(x,y,128,128)}
+ return createImageBitmap(canvas,{imageOrientation:'flipY'});
+}});
+layer.setProvider('ground');layer.update(camera,{width:800,height:800,mode});renderer.render(scene,camera);
+window.__sample=()=>{
+ const gl=renderer.getContext();
+ for (const mesh of layer.group.children){
+  const v=mesh.geometry.attributes.position;const p=[];
+  for (const [u,w] of [[.25,.25],[.75,.25],[.25,.75],[.75,.75]]){
+   const nw=new THREE.Vector3().fromBufferAttribute(v,0),ne=new THREE.Vector3().fromBufferAttribute(v,1),sw=new THREE.Vector3().fromBufferAttribute(v,2),se=new THREE.Vector3().fromBufferAttribute(v,3);
+   const point=nw.multiplyScalar((1-u)*(1-w)).add(ne.multiplyScalar(u*(1-w))).add(sw.multiplyScalar((1-u)*w)).add(se.multiplyScalar(u*w)).project(camera);
+   const x=Math.floor((point.x+1)*400),y=Math.floor((point.y+1)*400);
+   if(x<1||y<1||x>=799||y>=799){p.length=0;break}
+   const pixel=new Uint8Array(4);gl.readPixels(x,y,1,1,gl.RGBA,gl.UNSIGNED_BYTE,pixel);p.push([...pixel]);
+  }
+  if(p.length===4)return p;
+ }
+ return null;
+};
+window.__layer=layer;
+</script></body></html>
