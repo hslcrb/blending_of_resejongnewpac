@@ -1,0 +1,165 @@
+{
+  "copies": [
+    {
+      "source": "backups/blender/sejong_before_cafe_terrace.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_before_cafe_terrace.blend",
+      "state": "created",
+      "sha256": "73e20a74eb7e2ce4d18d5e95507c1f3977a6e0bea5939f3dd7c644f7557f9822",
+      "bytes": 17695343
+    },
+    {
+      "source": "backups/blender/sejong_before_component_entry_trial.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_before_component_entry_trial.blend",
+      "state": "created",
+      "sha256": "bfd068ca3d6217526cbb1004fd7c22f9cc3dae8e4b155c95ce0a0742c5a825f9",
+      "bytes": 17845964
+    },
+    {
+      "source": "backups/blender/sejong_before_entry_trial.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_before_entry_trial.blend",
+      "state": "created",
+      "sha256": "b727da42d5ea459f427c098e60853c9359162dda93f9fce54cefdeda64f3ac16",
+      "bytes": 17769245
+    },
+    {
+      "source": "backups/blender/sejong_before_gratitude.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_before_gratitude.blend",
+      "state": "created",
+      "sha256": "34953798b8004f7e939b3f3a48427b0e49d788dd722178ac66495536e6054b00",
+      "bytes": 18709052
+    },
+    {
+      "source": "backups/blender/sejong_before_masonry_resume.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_before_masonry_resume.blend",
+      "state": "created",
+      "sha256": "8b9734f9f76ed5de7bb295a84e6f683274d18b98d0fe3ee28522622e038f558e",
+      "bytes": 14591225
+    },
+    {
+      "source": "backups/blender/sejong_before_openstage_passage.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_before_openstage_passage.blend",
+      "state": "created",
+      "sha256": "ee361e7f025b3cd5fec36cdd02d5056d3c1b618ff0de7518b0aad9ce004d886f",
+      "bytes": 17632306
+    },
+    {
+      "source": "backups/blender/sejong_before_pavilion_entry.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_before_pavilion_entry.blend",
+      "state": "created",
+      "sha256": "6cb560d8eb274bf673667f09eb31d6fb10ed23842c5bc8aa165ef6c95fb3b985",
+      "bytes": 19129005
+    },
+    {
+      "source": "backups/blender/sejong_before_shop_detail.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_before_shop_detail.blend",
+      "state": "created",
+      "sha256": "e8fff90db55711a4d6213ede13c50afdf116a391c1be4815155cee93fa3275f0",
+      "bytes": 18509688
+    },
+    {
+      "source": "backups/blender/sejong_before_starbucks_interior.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_before_starbucks_interior.blend",
+      "state": "created",
+      "sha256": "c994f9f3cef1af187dff7bdd1d077bf8d1c2a9334f1fe88e8c1eed99bd57c961",
+      "bytes": 17655239
+    },
+    {
+      "source": "backups/blender/sejong_before_statue_refine.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_before_statue_refine.blend",
+      "state": "created",
+      "sha256": "612e11f737abfbbdaae3b82693fd7a398da0fffe85c94a4a15f4731d60d9a7e0",
+      "bytes": 18896675
+    },
+    {
+      "source": "backups/blender/sejong_before_surroundings.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_before_surroundings.blend",
+      "state": "created",
+      "sha256": "ac26ba9673732574dbbb090c4e591c0ea68726de0c49436fb46eff56733f1ec2",
+      "bytes": 17903530
+    },
+    {
+      "source": "backups/blender/sejong_pre_stair.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_pre_stair.blend",
+      "state": "created",
+      "sha256": "15598670b97ff6c5cdbcd23128d15c612aae4ecffcf077c13daa575496845aeb",
+      "bytes": 14558106
+    },
+    {
+      "source": "backups/blender/sejong_pre_stone_trial.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_pre_stone_trial.blend",
+      "state": "created",
+      "sha256": "6e462dd807643fa2e90a410d52dfbfa2592eb4411ff91930ea43de5c00a5f1c4",
+      "bytes": 14590623
+    },
+    {
+      "source": "backups/blender/sejong_surroundings_before_sunken.blend",
+      "target": "blender_work/20261104-live-sky/backups/blender/sejong_surroundings_before_sunken.blend",
+      "state": "created",
+      "sha256": "082c13be22b3ad8c4094e199cf5b4308bbda64f29f2738e33c42e1ea29063149",
+      "bytes": 17946152
+    },
+    {
+      "source": "blender_work/20261103/sejong_aerial_streaming_20261103.blend",
+      "target": "blender_work/20261104-live-sky/blender_work/20261103/sejong_aerial_streaming_20261103.blend",
+      "state": "created",
+      "sha256": "da6c2f5e28f78569dc40feb2cd6932732b07464e9949f6483567a216198bff08",
+      "bytes": 19289258
+    },
+    {
+      "source": "blender_work/20261103/sejong_survey_manual_20261103.blend",
+      "target": "blender_work/20261104-live-sky/blender_work/20261103/sejong_survey_manual_20261103.blend",
+      "state": "created",
+      "sha256": "2d8057cc3baa580cc898b1476dddf488caf344a1d86dc212363300869777b078",
+      "bytes": 18534436
+    },
+    {
+      "source": "blender_work/20261104/sejong_trees_connected_20261104.blend",
+      "target": "blender_work/20261104-live-sky/blender_work/20261104/sejong_trees_connected_20261104.blend",
+      "state": "created",
+      "sha256": "5e0c2f4796fb5322c588fe9a37dc136ce825f6e621292b83db3ad316b838cd37",
+      "bytes": 22513798
+    },
+    {
+      "source": "blender_work/20261104-gis-import/sejong_surroundings_gis_work.blend",
+      "target": "blender_work/20261104-live-sky/blender_work/20261104-gis-import/sejong_surroundings_gis_work.blend",
+      "state": "created",
+      "sha256": "85c35465ca581e6bdd06e64307104ea8d72f0c7b6be0eb9874bd9e6dd55352b7",
+      "bytes": 17786006
+    },
+    {
+      "source": "blender_work/20261104-gis-import/seoul/seoul_buildings_overview.blend",
+      "target": "blender_work/20261104-live-sky/blender_work/20261104-gis-import/seoul/seoul_buildings_overview.blend",
+      "state": "created",
+      "sha256": "8bc8151712090d62f2fdbb1aeee33f8ae4fcf598c42f3c099fd469c4705d3b3c",
+      "bytes": 16596844
+    },
+    {
+      "source": "blender_work/20261104-gis-import/web/sejong_web_source.blend",
+      "target": "blender_work/20261104-live-sky/blender_work/20261104-gis-import/web/sejong_web_source.blend",
+      "state": "created",
+      "sha256": "3ef992f2d11684ef71af8f1ff216eb9d11de855356b9d111c776556544a0456b",
+      "bytes": 17785446
+    },
+    {
+      "source": "public/model/sejong.blend",
+      "target": "blender_work/20261104-live-sky/public/model/sejong.blend",
+      "state": "created",
+      "sha256": "b99f2cba273c27c90b335702d728a2a1a7f1eee1fb59bad88fa36877815aab1e",
+      "bytes": 12213517
+    },
+    {
+      "source": "public/model/sejong_sitevisit_refined.blend",
+      "target": "blender_work/20261104-live-sky/public/model/sejong_sitevisit_refined.blend",
+      "state": "created",
+      "sha256": "43050716d23978842031f5c2ffa09223431f0db7342efc50aaf79df6b198d84a",
+      "bytes": 17904494
+    },
+    {
+      "source": "public/model/sejong_surroundings_work.blend",
+      "target": "blender_work/20261104-live-sky/public/model/sejong_surroundings_work.blend",
+      "state": "created",
+      "sha256": "59344b072903760059167a41655fb18872a87755599ced9e77aff110c0c68079",
+      "bytes": 17731770
+    }
+  ]
+}

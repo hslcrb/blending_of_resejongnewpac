@@ -1,0 +1,1581 @@
+{
+  "files": [
+    {
+      "sha256": "441f0dc34fdd23052aa0be48a72133827b8c9519265d88cf65407e66a02630e4",
+      "bytes": 17636639,
+      "scenes": [
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - King Sejong statue (unplaced)",
+          "objects": 73,
+          "renderable": 39,
+          "camera": true,
+          "world": "Sejong study world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1249,
+          "renderable": 1211,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1287,
+          "renderable": 1223,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_before_cafe_terrace.blend"
+    },
+    {
+      "sha256": "9a0ef3b723c65e635ebfbd6c61fad9735c1f0f26e6155b95ef05a8f64e1dea61",
+      "bytes": 17814897,
+      "scenes": [
+        {
+          "name": "Scene",
+          "objects": 569,
+          "renderable": 569,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 606,
+          "renderable": 581,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_before_component_entry_trial.blend"
+    },
+    {
+      "sha256": "bf0c6702ce75d988377815de7999a8cefec632fbc047d7a051510a9091e88f13",
+      "bytes": 17731852,
+      "scenes": [
+        {
+          "name": "Scene",
+          "objects": 567,
+          "renderable": 567,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 603,
+          "renderable": 579,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_before_entry_trial.blend"
+    },
+    {
+      "sha256": "80e5262e7c47e9465735e8a7eff625eaa82a590ef36ae9f32a7def85f2805bef",
+      "bytes": 18670830,
+      "scenes": [
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1124,
+          "renderable": 1086,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1162,
+          "renderable": 1098,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_before_gratitude.blend"
+    },
+    {
+      "sha256": "705b3701741a85657783dc5607223eeba7af0d115c8bf9684a69986fd73fe718",
+      "bytes": 14555357,
+      "scenes": [
+        {
+          "name": "Scene",
+          "objects": 564,
+          "renderable": 564,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 596,
+          "renderable": 576,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_before_masonry_resume.blend"
+    },
+    {
+      "sha256": "bc94c8d1034412cde60e1d4c32f9a20c2f877c8e077498526aee549d1487ce80",
+      "bytes": 17593007,
+      "scenes": [
+        {
+          "name": "Photo study - 121 lightwell (unplaced)",
+          "objects": 11,
+          "renderable": 10,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - 145 passage (unplaced)",
+          "objects": 16,
+          "renderable": 15,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - King Sejong statue (unplaced)",
+          "objects": 73,
+          "renderable": 39,
+          "camera": true,
+          "world": "Sejong study world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1273,
+          "renderable": 1235,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1301,
+          "renderable": 1237,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_before_openstage_passage.blend"
+    },
+    {
+      "sha256": "1fb228690a0edca1ae3f23102257845809f4c4bdba174813426b91ad7f5edc98",
+      "bytes": 19096549,
+      "scenes": [
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - King Sejong statue (unplaced)",
+          "objects": 73,
+          "renderable": 39,
+          "camera": true,
+          "world": "Sejong study world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1248,
+          "renderable": 1210,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1286,
+          "renderable": 1222,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_before_pavilion_entry.blend"
+    },
+    {
+      "sha256": "beee9615b27f7ede6febda410ffdbee46afdfb3b1b8f1c805890a28342648e27",
+      "bytes": 18470966,
+      "scenes": [
+        {
+          "name": "Scene",
+          "objects": 1016,
+          "renderable": 1016,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1054,
+          "renderable": 1028,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_before_shop_detail.blend"
+    },
+    {
+      "sha256": "9530eb04aac32d5bfd5fc37d528b20463197703b87f35c7d5fbe5549f6fc7e95",
+      "bytes": 17620457,
+      "scenes": [
+        {
+          "name": "Photo study - 121 lightwell (unplaced)",
+          "objects": 11,
+          "renderable": 10,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - 145 passage (unplaced)",
+          "objects": 16,
+          "renderable": 15,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - King Sejong statue (unplaced)",
+          "objects": 73,
+          "renderable": 39,
+          "camera": true,
+          "world": "Sejong study world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1281,
+          "renderable": 1243,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1301,
+          "renderable": 1237,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_before_starbucks_interior.blend"
+    },
+    {
+      "sha256": "ca0968b385a9e8272d2b858571045251b0ffb0232f48230ed38014cf05a39379",
+      "bytes": 18852701,
+      "scenes": [
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - King Sejong statue (unplaced)",
+          "objects": 36,
+          "renderable": 35,
+          "camera": true,
+          "world": "Sejong study world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1238,
+          "renderable": 1200,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1276,
+          "renderable": 1212,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_before_statue_refine.blend"
+    },
+    {
+      "sha256": "0c230b6a6075f68e324007221a6e6acfb35fa1deb11f0af31c47538b1677e62e",
+      "bytes": 17866528,
+      "scenes": [
+        {
+          "name": "Scene",
+          "objects": 573,
+          "renderable": 573,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 611,
+          "renderable": 585,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_before_surroundings.blend"
+    },
+    {
+      "sha256": "418c92dca17e12077efcd8320ab1bff30940eeafaeda1c2a8a19708dabe44a09",
+      "bytes": 14523185,
+      "scenes": [
+        {
+          "name": "Scene",
+          "objects": 549,
+          "renderable": 549,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 579,
+          "renderable": 560,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_pre_stair.blend"
+    },
+    {
+      "sha256": "bf93ece3bc7ed7246ad965d6d70aae6e9ce7c473894331d0296c5af03d119fb3",
+      "bytes": 14553811,
+      "scenes": [
+        {
+          "name": "Scene",
+          "objects": 564,
+          "renderable": 564,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 596,
+          "renderable": 576,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_pre_stone_trial.blend"
+    },
+    {
+      "sha256": "d08889e464943e3571651c282d28c7fe3884add66cc4aeb82d9079900e8df500",
+      "bytes": 17907212,
+      "scenes": [
+        {
+          "name": "Scene",
+          "objects": 583,
+          "renderable": 583,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 621,
+          "renderable": 595,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "backups/blender/sejong_surroundings_before_sunken.blend"
+    },
+    {
+      "sha256": "7c447c76a580547b2943dff1fa1a2301ef034e2eb60b28ff5ecbe1bd67e310b5",
+      "bytes": 19203734,
+      "scenes": [
+        {
+          "name": "20261103 - aerial proportion review",
+          "objects": 1474,
+          "renderable": 1428,
+          "camera": true,
+          "world": "20261103 review ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - annex garden daylight review",
+          "objects": 1474,
+          "renderable": 1428,
+          "camera": true,
+          "world": "20261103 - daylight sky review",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - cafe tile review",
+          "objects": 1397,
+          "renderable": 1350,
+          "camera": true,
+          "world": "20261103 review ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - export surface bake",
+          "objects": 1,
+          "renderable": 1,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - stair evening study",
+          "objects": 1396,
+          "renderable": 1350,
+          "camera": true,
+          "world": "20261103 evening ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - stair survey review",
+          "objects": 1398,
+          "renderable": 1350,
+          "camera": true,
+          "world": "20261103 review ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - streaming web export",
+          "objects": 1330,
+          "renderable": 1330,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - 121 lightwell (unplaced)",
+          "objects": 11,
+          "renderable": 10,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - 145 passage (unplaced)",
+          "objects": 16,
+          "renderable": 15,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - King Sejong statue (unplaced)",
+          "objects": 73,
+          "renderable": 39,
+          "camera": true,
+          "world": "Sejong study world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1472,
+          "renderable": 1428,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1434,
+          "renderable": 1364,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "blender_work/20261103/sejong_aerial_streaming_20261103.blend"
+    },
+    {
+      "sha256": "5c4e1a96964b9dfcd736d7ac8fa0628ce93f76da669114d9784988983e6f712c",
+      "bytes": 18442981,
+      "scenes": [
+        {
+          "name": "20261103 - cafe tile review",
+          "objects": 1397,
+          "renderable": 1350,
+          "camera": true,
+          "world": "20261103 review ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - stair evening study",
+          "objects": 1396,
+          "renderable": 1350,
+          "camera": true,
+          "world": "20261103 evening ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - stair survey review",
+          "objects": 1398,
+          "renderable": 1350,
+          "camera": true,
+          "world": "20261103 review ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - 121 lightwell (unplaced)",
+          "objects": 11,
+          "renderable": 10,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - 145 passage (unplaced)",
+          "objects": 16,
+          "renderable": 15,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - King Sejong statue (unplaced)",
+          "objects": 73,
+          "renderable": 39,
+          "camera": true,
+          "world": "Sejong study world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1394,
+          "renderable": 1350,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1356,
+          "renderable": 1286,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "blender_work/20261103/sejong_survey_manual_20261103.blend"
+    },
+    {
+      "sha256": "0f8609fcb95840e77aa063f9a3a731f2e26ba09628287a50c3ba1714985d5a9d",
+      "bytes": 22436959,
+      "scenes": [
+        {
+          "name": "20261103 - aerial proportion review",
+          "objects": 1474,
+          "renderable": 1428,
+          "camera": true,
+          "world": "20261103 review ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - annex garden daylight review",
+          "objects": 1474,
+          "renderable": 1428,
+          "camera": true,
+          "world": "20261103 - daylight sky review",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - cafe tile review",
+          "objects": 1397,
+          "renderable": 1350,
+          "camera": true,
+          "world": "20261103 review ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - export surface bake",
+          "objects": 1,
+          "renderable": 1,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - stair evening study",
+          "objects": 1396,
+          "renderable": 1350,
+          "camera": true,
+          "world": "20261103 evening ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - stair survey review",
+          "objects": 1398,
+          "renderable": 1350,
+          "camera": true,
+          "world": "20261103 review ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "20261103 - streaming web export",
+          "objects": 1330,
+          "renderable": 1330,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - 121 lightwell (unplaced)",
+          "objects": 11,
+          "renderable": 10,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - 145 passage (unplaced)",
+          "objects": 16,
+          "renderable": 15,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - King Sejong statue (unplaced)",
+          "objects": 73,
+          "renderable": 39,
+          "camera": true,
+          "world": "Sejong study world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1472,
+          "renderable": 1428,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1434,
+          "renderable": 1364,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "blender_work/20261104/sejong_trees_connected_20261104.blend"
+    },
+    {
+      "sha256": "e613bd842ea80b5c4ab31d99903479066f80d454c5e47d220bab864f76434937",
+      "bytes": 17730769,
+      "scenes": [
+        {
+          "name": "Photo study - 121 lightwell (unplaced)",
+          "objects": 11,
+          "renderable": 10,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - 145 passage (unplaced)",
+          "objects": 16,
+          "renderable": 15,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - King Sejong statue (unplaced)",
+          "objects": 73,
+          "renderable": 39,
+          "camera": true,
+          "world": "Sejong study world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1382,
+          "renderable": 1333,
+          "camera": false,
+          "world": "Seoul time - atmosphere",
+          "frames": [
+            1,
+            145
+          ],
+          "existingSky": true
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1301,
+          "renderable": 1236,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "blender_work/20261104-gis-import/sejong_surroundings_gis_work.blend"
+    },
+    {
+      "sha256": "037fba5462df5ce8b41740aa6957886319bd4c09a134253b827da8451b5270fe",
+      "bytes": 16553211,
+      "scenes": [
+        {
+          "name": "Scene",
+          "objects": 30,
+          "renderable": 26,
+          "camera": true,
+          "world": "Seoul time - atmosphere",
+          "frames": [
+            1,
+            145
+          ],
+          "existingSky": true
+        }
+      ],
+      "path": "blender_work/20261104-gis-import/seoul/seoul_buildings_overview.blend"
+    },
+    {
+      "sha256": "e8983cd0610d2788626f9507d0d88a6ebf7471ae4991864d9ca9758829e20831",
+      "bytes": 17730436,
+      "scenes": [
+        {
+          "name": "Photo study - 121 lightwell (unplaced)",
+          "objects": 11,
+          "renderable": 10,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - 145 passage (unplaced)",
+          "objects": 16,
+          "renderable": 15,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - King Sejong statue (unplaced)",
+          "objects": 73,
+          "renderable": 39,
+          "camera": true,
+          "world": "Sejong study world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1382,
+          "renderable": 1333,
+          "camera": false,
+          "world": "Seoul time - atmosphere",
+          "frames": [
+            1,
+            145
+          ],
+          "existingSky": true
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1301,
+          "renderable": 1236,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "blender_work/20261104-gis-import/web/sejong_web_source.blend"
+    },
+    {
+      "sha256": "44219e38da6be514f62adcf069781071ba05428a29331e1ea9e7334cc3c5cd46",
+      "bytes": 12206900,
+      "scenes": [
+        {
+          "name": "Scene",
+          "objects": 522,
+          "renderable": 522,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "public/model/sejong.blend"
+    },
+    {
+      "sha256": "536c7eefa31550bb6b132d88e2aa2e4b112bfd915c0e3fb35ee03a2d4f5f25ed",
+      "bytes": 17869821,
+      "scenes": [
+        {
+          "name": "Scene",
+          "objects": 573,
+          "renderable": 573,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 611,
+          "renderable": 585,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "public/model/sejong_sitevisit_refined.blend"
+    },
+    {
+      "sha256": "fc465f10280f7a5c93201c6b3afbc0fe59eca398449b9222531699aa89faaf2d",
+      "bytes": 17671677,
+      "scenes": [
+        {
+          "name": "Photo study - 121 lightwell (unplaced)",
+          "objects": 11,
+          "renderable": 10,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - 145 passage (unplaced)",
+          "objects": 16,
+          "renderable": 15,
+          "camera": true,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - cafe interior (location unconfirmed)",
+          "objects": 65,
+          "renderable": 46,
+          "camera": true,
+          "world": "Cafe study ambient",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Photo study - King Sejong statue (unplaced)",
+          "objects": 73,
+          "renderable": 39,
+          "camera": true,
+          "world": "Sejong study world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Scene",
+          "objects": 1339,
+          "renderable": 1300,
+          "camera": false,
+          "world": "World",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT",
+          "objects": 1301,
+          "renderable": 1236,
+          "camera": true,
+          "world": "Site visit - night world",
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        },
+        {
+          "name": "Site visit - NIGHT.001",
+          "objects": 0,
+          "renderable": 0,
+          "camera": false,
+          "world": null,
+          "frames": [
+            1,
+            250
+          ],
+          "existingSky": false
+        }
+      ],
+      "path": "public/model/sejong_surroundings_work.blend"
+    }
+  ]
+}
