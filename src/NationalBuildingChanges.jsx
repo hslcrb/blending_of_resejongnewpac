@@ -4,12 +4,14 @@ import {FIELD_LABELS, NUMERIC_FIELDS, formatCulturalField} from './nationalCultu
 import './nationalCulturalExplorer.css';
 import './nationalBuildingChanges.css';
 
-export default function NationalBuildingChanges({inspection, active, sight}) {
+export default function NationalBuildingChanges({inspection, active, sight, onFeaturesChange}) {
  const store=useMemo(()=>new NationalBuildingStore(),[]);
  const [manifest,setManifest]=useState(null),[manifestError,setManifestError]=useState(''),[attempt,setAttempt]=useState(0);
  const [radius,setRadius]=useState(75),[page,setPage]=useState(0),[state,setState]=useState({status:'idle',hits:[]});
  useEffect(()=>()=>store.dispose(),[store]);
  useEffect(()=>{if(!active)return;let alive=true;setManifestError('');store.manifest().then(m=>{if(alive)setManifest(m);}).catch(e=>{if(alive)setManifestError(e.message);});return()=>{alive=false;};},[active,attempt,store]);
+ useEffect(()=>{onFeaturesChange?.(active && state.status==='ready' ? state.hits.map(hit=>hit.building) : []);},[active,state,onFeaturesChange]);
+ useEffect(()=>()=>onFeaturesChange?.([]),[onFeaturesChange]);
  const easting=inspection?.easting,northing=inspection?.northing;
  useEffect(()=>{
   const controller=new AbortController();setPage(0);
@@ -22,7 +24,7 @@ export default function NationalBuildingChanges({inspection, active, sight}) {
  const total=state.hits.length,pages=Math.max(1,Math.ceil(total/5)),items=state.hits.slice(page*5,page*5+5);
  return <section className="national-explorer national-changes" aria-label="전국 건물 변경 자료">
   <h2>전국 건물 변경 자료</h2><p>출처: CH_D010_00_20261103, 2026년 11월 3일 건물 신규·수정 변경분(I/U). 전체 건물 현황이 아니며 삭제(D) 자료는 제외됩니다. 원본 주소는 법정동·지번이며 값은 변경 당시 자료입니다.</p>
-  {manifest&&<p>위치가 있는 변경 {manifest.totalRecords.toLocaleString('ko-KR')}건 · 위치 없는 자료 {manifest.unlocatedCount.toLocaleString('ko-KR')}건. 필드 설명은 원본 코드와 함께 표시합니다.</p>}
+  {manifest&&<p>위치가 있는 변경 {manifest.totalRecords.toLocaleString('ko-KR')}건 · 위치 없는 자료 {manifest.unlocatedCount.toLocaleString('ko-KR')}건. 분홍색 점은 변경 건물 중심점입니다. 확대하면 주변 이름·지번이 일부 나타나며, 돋보기로 선택하면 원본 필드를 볼 수 있습니다. 필드 설명은 원본 코드와 함께 표시합니다.</p>}
   {manifestError&&<div role="alert"><p>변경 자료 목록을 불러오지 못했습니다: {manifestError}</p><button onClick={()=>setAttempt(x=>x+1)}>다시 불러오기</button></div>}
   {sight&&manifest&&<details><summary>전국 변경 건물 분포 보기</summary><p>10km 격자별 변경 건수의 개략 분포입니다. 점의 위치는 격자 중심이며 개별 건물의 위치가 아닙니다. 목록만 사용하므로 전국 타일을 내려받지 않습니다.</p><RegionalMap tiles={manifest.tiles}/></details>}
   <label>선택 위치 주변 반경 <select value={radius} onChange={e=>setRadius(Number(e.target.value))}><option value={25}>25m</option><option value={75}>75m</option><option value={150}>150m</option></select></label>
