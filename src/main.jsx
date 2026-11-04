@@ -1173,6 +1173,7 @@ function App() {
                             <div><small>EXPLORE IN 3D</small><h2 id="viewer-title">세종문화회관 둘러보기</h2></div>
                         </div>
                         <div className="experience-controls">
+                            {embedded && <a className="theatre-entry embedded-theatre-entry" href="?theatre=1&embed=1">대극장 내부 입장 <span aria-hidden="true">→</span></a>}
                             <div className="mode-switch" role="group" aria-label="둘러보기 방식">
                                 <button type="button" aria-pressed={mode === 'orbit'} disabled={!ready} onClick={() => setMode('orbit')}><span aria-hidden="true">◉</span> 모형 보기</button>
                                 <button type="button" aria-pressed={mode === 'walk'} disabled={!ready || area === 'seoul'} onClick={() => { setMagnifier(false); setMode('walk'); }}><span aria-hidden="true">↟</span> 직접 걷기</button>
