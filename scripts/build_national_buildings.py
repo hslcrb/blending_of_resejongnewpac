@@ -34,6 +34,28 @@ def polygon_data(geometry, tile_e, tile_n):
         if rings: polygons.append(rings)
     return polygons
 
+def precise_polygon_data(geometry, tile_e, tile_n):
+    """Original doubles expressed in the same tile-relative decimetre units."""
+    name = geometry.GetGeometryName().upper()
+    parts = [geometry] if name == 'POLYGON' else [geometry.GetGeometryRef(i) for i in range(geometry.GetGeometryCount())] if name == 'MULTIPOLYGON' else []
+    return [[[v for j in range(p.GetGeometryRef(i).GetPointCount()) for v in ((p.GetGeometryRef(i).GetX(j)-tile_e*TILE_SIZE)*10, (p.GetGeometryRef(i).GetY(j)-tile_n*TILE_SIZE)*10)] for i in range(p.GetGeometryCount())] for p in parts]
+
+def needs_precision(geometry, compact):
+    """Preserve topology and distinct vertices if 0.1 m quantization damages them."""
+    from osgeo import ogr
+    parts = [geometry] if geometry.GetGeometryName().upper() == 'POLYGON' else [geometry.GetGeometryRef(i) for i in range(geometry.GetGeometryCount())]
+    if len(parts) != len(compact): return True
+    for original, polygon in zip(parts, compact):
+        if original.GetGeometryCount() != len(polygon): return True
+        for index, ring in enumerate(polygon):
+            source = original.GetGeometryRef(index)
+            before = {(source.GetX(j), source.GetY(j)) for j in range(source.GetPointCount())}
+            after = set(zip(ring[::2], ring[1::2]))
+            if len(after) < len(before): return True
+    coordinates = [[[[ring[i], ring[i+1]] for i in range(0,len(ring),2)] for ring in polygon] for polygon in compact]
+    result = ogr.CreateGeometryFromJson(json.dumps({'type':'MultiPolygon','coordinates':coordinates}))
+    return result is None or not result.IsValid()
+
 def write_gzip(path, value):
     raw = json.dumps(value, ensure_ascii=False, separators=(',', ':')).encode('utf-8')
     with path.open('xb') as stream:
@@ -70,7 +92,9 @@ def convert(source, output, limit=0):
             if not polygons: omitted.append([fid,'unsupported geometry',[fields[k] for k in FIELDS]]); continue
             min_e,max_e,min_n,max_n=geom.GetEnvelope(); span=max(max_e-min_e,max_n-min_n);max_span=max(max_span,span)
             if span > TILE_SIZE: anomalies.append([fid,round(span,1)])
-            tiles[(te,tn)].append([fid,round((e-te*TILE_SIZE)*10),round((n-tn*TILE_SIZE)*10),polygons,[fields[k] for k in FIELDS]])
+            record=[fid,round((e-te*TILE_SIZE)*10),round((n-tn*TILE_SIZE)*10),polygons,[fields[k] for k in FIELDS]]
+            if needs_precision(geom,polygons): record.append({'precision':'source','polygons':precise_polygon_data(geom,te,tn)})
+            tiles[(te,tn)].append(record)
     output.mkdir(parents=True,exist_ok=False)
     entries=[]
     for (te,tn),records in sorted(tiles.items()):
@@ -78,7 +102,7 @@ def convert(source, output, limit=0):
         if size > 20*1024*1024: raise ValueError(f'배포 파일 용량 초과: {path.name}')
         entries.append([te,tn,len(records),size,sha256(path)])
     if omitted: write_gzip(output/'unlocated.json.gz',omitted)
-    manifest={'version':1,'source':'CH_D010_00_20261103','sourceCrs':'EPSG:5186','tileSize':TILE_SIZE,'precision':0.1,'fields':FIELDS,'sourceRecords':count,'readRecords':min(count,limit) if limit else count,'actions':dict(actions),'totalRecords':sum(t[2] for t in entries),'unlocatedCount':len(omitted),'maxSpanMeters':round(max_span,1),'oversizeFids':anomalies,'tiles':entries,'inputSha256':{ext:sha256(source.with_suffix(ext)) for ext in ('.shp','.dbf','.shx')},'note':'I/U changes only, not a complete or current nationwide building inventory; D records are excluded.'}
+    manifest={'version':1,'source':'CH_D010_00_20261103','sourceCrs':'EPSG:5186','tileSize':TILE_SIZE,'precision':0.1,'fields':FIELDS,'sourceRecords':count,'readRecords':min(count,limit) if limit else count,'actions':dict(actions),'totalRecords':sum(t[2] for t in entries),'unlocatedCount':len(omitted),'precisionExceptions':sum(len(record)>5 for records in tiles.values() for record in records),'maxSpanMeters':round(max_span,1),'oversizeFids':anomalies,'tiles':entries,'inputSha256':{ext:sha256(source.with_suffix(ext)) for ext in ('.shp','.dbf','.shx')},'note':'I/U changes only, not a complete or current nationwide building inventory; D records are excluded.'}
     (output/'manifest.json').write_bytes((json.dumps(manifest,ensure_ascii=False,indent=2)+'\n').encode('utf-8'))
     print(json.dumps({'tiles':len(entries),'records':manifest['totalRecords'],'unlocated':len(omitted),'actions':dict(actions),'maxSpanMeters':manifest['maxSpanMeters'],'oversize':len(anomalies),'bytes':sum(t[3] for t in entries)},ensure_ascii=False))
 
