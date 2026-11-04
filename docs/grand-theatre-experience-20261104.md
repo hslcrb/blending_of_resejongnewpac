@@ -23,3 +23,5 @@
 `node --test tests/theatre-navigation.test.js tests/theatre-lobby.test.js tests/theatre-media.test.js`는 로비 출입·층별 보행·의자 충돌·가려진 좌석·영사 음원과 수명을 검사한다. `tests/theatre-experience-browser.cjs`는 실행 중인 서비스에서 실제 모델·착석·무대 장면·영상 재생·무대효과·모바일 폭을 확인한다. 스크린 UV는 별도의 실제 HTMLVideoElement 사색 모서리 렌더 검사로 확인했다. 자동 Playwright 좌석 라벨 재조회가 Vite 갱신 도중 두 차례 시간 초과한 실험은 모델 문서에 한계를 기록했다.
 
 이후 통합 브라우저 검사에서는 실제 2층 좌석을 선택해 앉고 일어서기, 1층 좌석에서 제공 영상 재생과 모바일 폭을 확인했다. Blender MCP로 새 사본을 열어 대극장 씬과 서울 기상 타이머 등록도 확인했다.
+
+리뉴얼 내장 모드에서는 기존 소개 영역이 숨겨지므로 대극장 입장 링크를 체험 조작 영역에 별도로 표시한다. 320·390·500·1100px에서 링크 표시와 내장 모드 유지 후 이동을 검사했다.
