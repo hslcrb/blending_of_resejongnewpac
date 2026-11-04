@@ -242,3 +242,4 @@ button:disabled { cursor: not-allowed; opacity: .5; }
 /* [외부 사이트 내장 / Embedded experience] */
 .app-shell.embedded .site-header, .app-shell.embedded .intro, .app-shell.embedded .site-footer { display:none; }
 .app-shell.embedded .main-content { padding-top:12px; }
+.app-shell.embedded { min-height:0; }
