@@ -1,16 +1,9 @@
 import React, { useEffect, useId, useMemo, useState } from 'react';
-import { CULTURAL_REGIONS, culturalRegion, filterCulturalCandidates, formatCulturalField, pageCulturalCandidates, parseCulturalCollection } from './nationalCulturalData.js';
+import { FIELD_LABELS, NUMERIC_FIELDS, CULTURAL_REGIONS, culturalRegion, filterCulturalCandidates, formatCulturalField, pageCulturalCandidates, parseCulturalCollection } from './nationalCulturalData.js';
 import './nationalCulturalExplorer.css';
 
 // 변경 자료의 필드 이름은 원본 코드와 함께 표시합니다.
 // Keep source codes visible beside the provisional field descriptions.
-const FIELD_LABELS = [
-    '원천도형 ID', 'GIS 건물통합 식별번호', '고유번호', '법정동 코드', '법정동명', '지번', '특수지 코드', '특수지 구분명',
-    '건축물 용도 코드', '건축물 용도명', '건축물 구조 코드', '건축물 구조명', '건축물 면적(㎡)', '사용 승인일', '연면적(㎡)',
-    '대지 면적(㎡)', '높이(m)', '건폐율(%)', '용적률(%)', '건축물 ID', '위반 건축물 여부', '참조체계 연계키',
-    '데이터 기준일', '시군구 코드', '건물명', '건물 동명', '지상층 수', '지하층 수', '데이터 생성·변경일', '변경 유형', '지역 코드',
-];
-const NUMERIC_FIELDS = new Set([0, 12, 14, 15, 16, 17, 18, 23, 26, 27]);
 const PAGE_SIZE = 10;
 
 /**
