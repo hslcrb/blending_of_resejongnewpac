@@ -165,7 +165,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
                     }`,
             }),
         );
-        sky.frustumCulled = false;
+        sky.frustumCulled = false; sky.renderOrder = -10;
         scene.add(sky);
         const ambient = new THREE.HemisphereLight(0xffffff, 0xb3c2bd, 1.3);
         scene.add(ambient);
@@ -741,7 +741,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
                 controls.update();
             }
             if (SHOW_SURROUNDINGS) {
-                const near = cameraNearPlane(modeNow, controls.getDistance());
+                const near = areaNow === 'seoul' ? Math.max(30, controls.getDistance() / 4000) : cameraNearPlane(modeNow, controls.getDistance());
                 if (Math.abs(camera.near - near) > near * 0.05) {
                     camera.near = near;
                     camera.updateProjectionMatrix();

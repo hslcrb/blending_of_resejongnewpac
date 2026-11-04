@@ -9,3 +9,9 @@ test('서울 격자에서 상세 회관 영역을 제외하고 나머지 높이�
  layer.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose()});
 });
 test('형식이 다른 격자 자료는 표시하지 않고 실패한다',()=>assert.throws(()=>createCityLayer({version:2,cells:[]})));
+
+test('서울 바탕면은 지도 타일과 깊이 충돌하지 않는다', () => {
+ const layer=createCityLayer({version:1,cells:[]});
+ const base=layer.children.find(o=>o.userData.cityBase);
+ assert.ok(base); assert.equal(base.material.depthWrite,false); assert.ok(base.renderOrder<0);
+});

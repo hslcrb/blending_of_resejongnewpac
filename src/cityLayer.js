@@ -20,7 +20,8 @@ export function createCityLayer(data) {
         mesh.instanceMatrix.needsUpdate = true; if (mesh.count) mesh.computeBoundingSphere(); group.add(mesh);
     }
     const base = new THREE.Mesh(new THREE.PlaneGeometry(44000,34000),new THREE.MeshStandardMaterial({color:0x4c6470,roughness:1}));
-    base.rotation.x = -Math.PI / 2; base.position.set(0,-1,-2000); group.add(base);
+    base.rotation.x = -Math.PI / 2; base.position.set(0,-1,-2000);
+    base.userData.cityBase = true; base.material.depthWrite = false; base.renderOrder = -1; group.add(base);
     const marker = new THREE.Mesh(new THREE.RingGeometry(250,350,48),new THREE.MeshBasicMaterial({color:0xf7d549,side:THREE.DoubleSide}));
     marker.rotation.x = -Math.PI / 2; marker.position.set(SEJONG_IN_SEOUL.x,100,SEJONG_IN_SEOUL.z); group.add(marker);
     return group;
