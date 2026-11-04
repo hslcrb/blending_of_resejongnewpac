@@ -68,7 +68,7 @@ export default function TheatreExperience(){
    const items=(layout.seats||[]).filter(s=>Array.isArray(s.position));if(!items.length||!screen||!curtain||!shell)throw new Error('좌석 또는 무대 구성 자료가 없습니다.');
    walkSeats=items;setSeats(items);const defaultSeat=items.filter(s=>s.level===1).reduce((best,s)=>Math.abs(s.position[0])+Math.abs(s.position[2]-15)<Math.abs(best.position[0])+Math.abs(best.position[2]-15)?s:best);setSeatId(defaultSeat.id);
    const geometry=new THREE.BoxGeometry(.65,1.05,.75),material=new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false,colorWrite:false});seatMesh=new THREE.InstancedMesh(geometry,material,items.length);seatMesh.name='SeatSelectionTargets';seatMesh.userData.seats=items;seatMesh.frustumCulled=false;const matrix=new THREE.Matrix4();items.forEach((seat,i)=>{const [x,y,z]=seat.position;matrix.makeTranslation(x,y+.55,z);seatMesh.setMatrixAt(i,matrix);});scene.add(seatMesh);
-   setStageScene('curtain');try{media=createTheatreMedia({THREE,camera,screen,effectLights,onStatus:message=>{if(!disposed){setMediaStatus(message);if(message==='영상이 끝났습니다.')setPlaying(false);}}});}catch(error){setMediaStatus('공간 음향을 준비하지 못했습니다. 브라우저 오디오 설정을 확인해 주세요.');}
+   setStageScene('curtain');try{media=createTheatreMedia({THREE,camera,screen,effectLights,onStatus:message=>{if(!disposed){setMediaStatus(message);if(message==='영상이 끝났습니다.'||message.startsWith('영상을 불러오지 못했습니다'))setPlaying(false);}}});}catch(error){setMediaStatus('공간 음향을 준비하지 못했습니다. 브라우저 오디오 설정을 확인해 주세요.');}
    setLoaded(true);setStatus('1층 로비에서 시작합니다. 화면을 끌어 둘러보고 W·A·S·D 또는 이동 버튼으로 걸어보세요.');
   }).catch(error=>{if(!disposed)setStatus(`대극장을 불러오지 못했습니다: ${error.message}. 새로고침해 다시 시도해 주세요.`);});
   frame=requestAnimationFrame(tick);
