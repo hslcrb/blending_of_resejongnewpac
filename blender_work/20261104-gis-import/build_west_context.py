@@ -3,8 +3,14 @@ import bpy
 import bmesh
 import json
 from pathlib import Path
+import sys
+IMPORT_ROOT=Path(__file__).resolve().parent
+sys.dont_write_bytecode = True
+sys.path.insert(0,str(IMPORT_ROOT))
+from gis_blender import open_scene_job,save_new_scene
+_, target = open_scene_job(__doc__)
 
-ROOT = Path(bpy.data.filepath).parent
+ROOT = IMPORT_ROOT
 DATA = ROOT / 'west-buildings.geojson'
 COLLECTION = 'GIS - western building context (provisional)'
 
@@ -82,4 +88,6 @@ def build():
         ground.materials.append(original.data.materials[0])
     print('Created', len(data['features']), 'GIS buildings and ground extension')
 
-if __name__ == '__main__': build()
+if __name__ == '__main__':
+    build()
+    save_new_scene(target)

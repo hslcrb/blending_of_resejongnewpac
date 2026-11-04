@@ -1,7 +1,13 @@
 """Add four GIS-footprint-based southern context masses to the working scene."""
 import bpy,bmesh,json
 from pathlib import Path
-root=Path(bpy.data.filepath).resolve().parent
+import sys
+IMPORT_ROOT=Path(__file__).resolve().parent
+sys.dont_write_bytecode = True
+sys.path.insert(0,str(IMPORT_ROOT))
+from gis_blender import open_scene_job,save_new_scene
+_, target = open_scene_job(__doc__)
+root=IMPORT_ROOT
 name='GIS - southern building context (provisional)'
 if bpy.data.collections.get(name): raise RuntimeError('Southern context already exists')
 data=json.loads((root/'south-buildings-5186.geojson').read_text(encoding='utf8'))
@@ -22,3 +28,5 @@ for feature in data['features']:
     obj['height_m']=h;obj['height_basis']='A16 candidate (unverified)' if props['A16']>0 else 'A26 floors x 3.2m (estimate)'
 col['registration']='EPSG:5186 E,N -> Blender X=N-552531, Y=197897-E; approximate fit'
 print('Created',len(col.objects),'southern GIS masses')
+
+save_new_scene(target)

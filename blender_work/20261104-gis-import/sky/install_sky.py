@@ -2,13 +2,14 @@
 import bpy, sys, datetime
 from pathlib import Path
 from importlib.util import spec_from_file_location, module_from_spec
-root=Path(__file__).resolve().parents[2]
-source=Path(sys.argv[sys.argv.index('--')+1]).resolve()
-if not bpy.app.background: raise RuntimeError('Run only in background')
-bpy.ops.wm.open_mainfile(filepath=str(source))
+IMPORT_ROOT=Path(__file__).resolve().parents[1]
+sys.dont_write_bytecode = True
+sys.path.insert(0,str(IMPORT_ROOT))
+from gis_blender import open_scene_job,save_new_scene
+source,target=open_scene_job(__doc__)
 scene=bpy.data.scenes.get('Scene')
 if scene is None: raise RuntimeError('Main scene not found')
-axis=scene.get('seoul_sky_axis') or ('seoul' if 'seoul_buildings_overview' in source.name else 'local')
+axis=scene.get('seoul_sky_axis') or ('seoul' if scene.get('local_origin_easting_northing') == '200000,550000' or 'seoul_buildings_overview' in source.name else 'local')
 existing=bool(scene.get('seoul_sky_axis'))
 scene['seoul_sky_axis']=axis
 if not existing: scene['seoul_sky_original_frames']=f'{scene.frame_start}:{scene.frame_end}'
@@ -32,7 +33,7 @@ if not fill:
 if axis=='seoul':
  old=scene.objects.get('Sun')
  if old: old.hide_render=True; old.hide_set(True); old['seoul_sky_disabled_original']=True
-path=root/'gis-sejong'/'sky'/'seoul_sky.py'
+path=Path(__file__).resolve().parent/'seoul_sky.py'
 spec=spec_from_file_location('seoul_sky',str(path)); module=module_from_spec(spec);spec.loader.exec_module(module)
 text=bpy.data.texts.get('Seoul live sky.py') or bpy.data.texts.new('Seoul live sky.py');text.clear();text.write(path.read_text(encoding='utf-8-sig'))
 now=datetime.datetime.now(module.KST); midnight=now.replace(hour=0,minute=0,second=0,microsecond=0)
@@ -40,6 +41,5 @@ for i in range(145): module.apply(scene,midnight+datetime.timedelta(minutes=10*i
 scene.frame_start=1;scene.frame_end=145;scene.frame_set(1+(now.hour*60+now.minute)//10)
 module.apply(scene,now)
 scene['seoul_sky_animation_date']=midnight.date().isoformat()
-bpy.context.preferences.filepaths.save_version=0
-bpy.ops.wm.save_as_mainfile(filepath=str(source),compress=True)
-print('Saved',source.name,'axis',axis,'frames',scene.frame_start,scene.frame_end,'time',now.isoformat())
+save_new_scene(target)
+print('Saved copy',target.name,'axis',axis,'frames',scene.frame_start,scene.frame_end,'time',now.isoformat())

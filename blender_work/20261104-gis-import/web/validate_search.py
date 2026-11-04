@@ -1,7 +1,13 @@
 """Verify search index points to the same source IDs and addresses as tiles."""
 from pathlib import Path
-import gzip,json
-root=Path(__file__).resolve().parents[2]/'v5'/'public'/'area'
+import argparse,gzip,json,sys
+IMPORT_ROOT=Path(__file__).resolve().parents[1]
+sys.dont_write_bytecode = True
+sys.path.insert(0,str(IMPORT_ROOT))
+from gis_paths import REPO
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--area',type=Path,default=REPO/'public'/'area')
+root=parser.parse_args().area
 manifest=json.loads((root/'buildings'/'manifest.json').read_text(encoding='utf8'))
 index=json.loads((root/'building-search'/'manifest.json').read_text(encoding='utf8'))
 expected={}
@@ -17,5 +23,5 @@ for code,length,size in index['shards']:
  for fid,e,n,address,name in rows:
   assert expected.pop(fid)==(e,n,address,name)
   count+=1
-assert not expected and count==index['totalRecords']==manifest['totalRecords']==695753
+assert not expected and count==index['totalRecords']==manifest['totalRecords']
 print('PASS:',count,'search records match source IDs, locations, addresses and names')

@@ -6,18 +6,22 @@ Coordinates use EPSG:5186; the published geometry is aggregated, not footprints.
 """
 from __future__ import annotations
 
+import argparse
 import gzip
+import sys
 import json
 import math
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-SOURCE = ROOT / 'gis-sejong' / 'seoul' / 'seoul-grid-50m.json.gz'
-OUTPUT = ROOT / 'v5' / 'public' / 'area' / 'seoul-grid.json'
+IMPORT_ROOT = Path(__file__).resolve().parents[1]
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(IMPORT_ROOT))
+from gis_paths import new_file
+SOURCE = IMPORT_ROOT / 'seoul' / 'seoul-grid-50m.json.gz'
 
 
-def export() -> dict:
-    with gzip.open(SOURCE, 'rt', encoding='utf-8') as file:
+def export(source_path=SOURCE) -> dict:
+    with gzip.open(source_path, 'rt', encoding='utf-8') as file:
         source = json.load(file)
     if source.get('crs') != 'EPSG:5186' or source.get('cell_size_m') != 50:
         raise ValueError('Unexpected source coordinate system or grid size')
@@ -51,10 +55,15 @@ def export() -> dict:
 
 
 def main() -> None:
-    data = export()
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT.write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
-    print(f"Exported {len(data['cells'])} cells to {OUTPUT} ({OUTPUT.stat().st_size} bytes)")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--source', type=Path, default=SOURCE)
+    parser.add_argument('--output', type=Path, required=True)
+    args = parser.parse_args()
+    target = new_file(args.output)
+    data = export(args.source)
+    with target.open('xb') as file:
+        file.write((json.dumps(data, ensure_ascii=False, separators=(',', ':')) + '\n').encode('utf-8'))
+    print(f"Exported {len(data['cells'])} cells to {target} ({target.stat().st_size} bytes)")
 
 
 if __name__ == '__main__':

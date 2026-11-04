@@ -2,10 +2,20 @@
 from collections import defaultdict, Counter
 from pathlib import Path
 from osgeo import ogr
-import gzip, json, math, sys
+import argparse, gzip, json, math, sys
 
-source = Path(sys.argv[1])
-out = Path(sys.argv[2])
+IMPORT_ROOT = Path(__file__).resolve().parents[1]
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(IMPORT_ROOT))
+from gis_paths import new_file
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('source', type=Path)
+parser.add_argument('--output', type=Path, required=True)
+parser.add_argument('--limit', type=int, default=0)
+args = parser.parse_args()
+if args.limit < 0: parser.error('--limit must be non-negative')
+source = args.source
+out = new_file(args.output)
 size = 50
 # Broad sanity envelope, not an administrative boundary.
 bounds = (175000, 530000, 225000, 575000)
@@ -17,6 +27,7 @@ cells = defaultdict(lambda: [0, 0., 0, 0, 0, Counter()])
 district_counts = Counter()
 counts = Counter()
 for feature in layer:
+    if args.limit and counts['source'] >= args.limit: break
     counts['source'] += 1
     code = str(feature.GetField('A23') or '')
     if not code.startswith('11'):
@@ -54,8 +65,7 @@ payload = {'version':1,'crs':'EPSG:5186','cell_size_m':size,'envelope':bounds,
            'counts':dict(counts),'district_counts':dict(sorted(district_counts.items())),
            'cells':[[min(v[5], key=lambda code: (-v[5][code],code)),e,n,v[0],round(v[1]/v[0],2),v[2],v[3],v[4]] for (e,n),v in sorted(cells.items())],
            'mixed_district_cells':[[e,n,sorted(v[5].items())] for (e,n),v in sorted(cells.items()) if len(v[5]) > 1]}
-out.parent.mkdir(parents=True, exist_ok=True)
-with out.open('wb') as f:
+with out.open('xb') as f:
     with gzip.GzipFile(fileobj=f, mode='wb', mtime=0) as z:
         z.write(json.dumps(payload,ensure_ascii=False,separators=(',',':')).encode('utf-8'))
 print(json.dumps({'counts':dict(counts),'cells':len(cells),'districts':len(district_counts),'mixed_district_cells':len(payload['mixed_district_cells']),'bytes':out.stat().st_size}))

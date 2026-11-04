@@ -1,10 +1,20 @@
 """Build a citywide 50m aggregate overview; real building outlines are not represented."""
-import bpy, gzip, json, math
+import argparse, bpy, gzip, json, math, sys
 from pathlib import Path
 from mathutils import Vector
 
 ROOT = Path(__file__).resolve().parent
-with gzip.open(ROOT / 'seoul-grid-50m.json.gz', 'rt', encoding='utf8') as f:
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(ROOT.parent))
+from gis_paths import new_file
+from gis_blender import save_new_scene
+if not bpy.app.background: raise RuntimeError('Run this generator with Blender in background mode')
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--source',type=Path,default=ROOT/'seoul-grid-50m.json.gz')
+parser.add_argument('--output',type=Path,required=True)
+args=parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+output_path=new_file(args.output)
+with gzip.open(args.source, 'rt', encoding='utf8') as f:
     data=json.load(f)
 assert data['crs']=='EPSG:5186' and data['cell_size_m']==50
 if not bpy.app.background:
@@ -15,7 +25,7 @@ scene.unit_settings.system='METRIC'
 scene['description']='Seoul building overview: 50m aggregate cells, not building footprints or city boundary'
 scene['source_crs']='EPSG:5186'
 scene['local_origin_easting_northing']='200000,550000'
-scene['excluded_outside_envelope']=data['counts']['outside_envelope']
+scene['excluded_outside_envelope']=data['counts'].get('outside_envelope', 0)
 
 def material(name, color):
     m=bpy.data.materials.new(name); m.diffuse_color=(*color,1); m.use_nodes=True
@@ -62,5 +72,5 @@ scene.view_settings.view_transform='AgX'
 for screen in bpy.data.screens:
     for area in screen.areas:
         if area.type == 'VIEW_3D': area.spaces.active.clip_end = 200000
-bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'seoul_buildings_overview.blend'),compress=True)
+save_new_scene(output_path)
 print('saved district objects',len(groups),'cells',len(data['cells']))

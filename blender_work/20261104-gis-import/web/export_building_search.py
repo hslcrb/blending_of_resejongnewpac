@@ -1,14 +1,22 @@
 """Build district-sharded address/name search index from metadata tiles."""
 from pathlib import Path
 from collections import defaultdict
-import json,gzip
-root=Path(__file__).resolve().parents[2];area=root/'v5'/'public'/'area';source=area/'buildings';output=area/'building-search'
-if output.exists(): raise RuntimeError('Refusing to overwrite search index')
-output.mkdir();manifest=json.loads((source/'manifest.json').read_text(encoding='utf8')); districts=defaultdict(list)
+import argparse,json,gzip,re,sys
+IMPORT_ROOT=Path(__file__).resolve().parents[1]
+sys.dont_write_bytecode = True
+sys.path.insert(0,str(IMPORT_ROOT))
+from gis_paths import REPO,new_directory
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--buildings',type=Path,default=REPO/'public'/'area'/'buildings')
+parser.add_argument('--output',type=Path,required=True)
+args=parser.parse_args();source=args.buildings;output=new_directory(args.output)
+output.mkdir(exist_ok=False);manifest=json.loads((source/'manifest.json').read_text(encoding='utf8')); districts=defaultdict(list)
 for e,n,count,size in manifest['tiles']:
  with gzip.open(source/f'{e}_{n}.json.gz','rt',encoding='utf8') as f: tile=json.load(f)
  for fid,x,y,polygons,attrs in tile['records']:
-  code=str(attrs[23] or 'unknown');address=' '.join(str(x) for x in (attrs[4],attrs[5]) if x is not None and x!='');name=str(attrs[24] or '')
+  code=str(attrs[23] or 'unknown')
+  if not re.fullmatch(r'(?:[0-9]+|unknown)',code): raise ValueError('Invalid district code')
+  address=' '.join(str(x) for x in (attrs[4],attrs[5]) if x is not None and x!='');name=str(attrs[24] or '')
   districts[code].append([fid,e,n,address,name])
 index={'version':1,'totalRecords':sum(map(len,districts.values())),'shards':[]}
 for code,rows in sorted(districts.items()):

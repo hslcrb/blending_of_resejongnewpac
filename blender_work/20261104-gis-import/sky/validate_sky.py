@@ -1,7 +1,8 @@
 """Validate saved sky timeline and preserved non-day scenes without saving."""
 import bpy,sys,math
 from pathlib import Path
-source=Path(sys.argv[sys.argv.index('--')+1]).resolve()
+if not bpy.app.background: raise RuntimeError('Run only in background')
+source=Path(sys.argv[sys.argv.index('--')+1]).resolve(strict=True)
 bpy.ops.wm.open_mainfile(filepath=str(source))
 s=bpy.data.scenes['Scene']; sky=next(n for n in s.world.node_tree.nodes if n.type=='TEX_SKY'); sun=s.objects['Seoul time - Sun']
 assert (s.frame_start,s.frame_end)==(1,145) and s.get('seoul_sky_axis') in ('local','seoul')
