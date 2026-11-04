@@ -838,6 +838,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
 }
 
 function App() {
+    const embedded = new URLSearchParams(window.location.search).get('embed') === '1';
     const [status, setStatus] = useState('loading');
     const [area, setArea] = useState('local');
     const [areaStatus, setAreaStatus] = useState('');
@@ -897,7 +898,7 @@ function App() {
     };
 
     return (
-        <div className="app-shell">
+        <div className={`app-shell${embedded ? ' embedded' : ''}`}>
             <header className="site-header">
                 <a className="brand" href="#top" aria-label="세종문화회관 건축 산책 처음으로">
                     <span className="brand-mark" aria-hidden="true"><span /></span>
