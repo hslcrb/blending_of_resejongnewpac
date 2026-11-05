@@ -36,7 +36,7 @@ export function createUnifiedTheatre({detail,camera,loadGltf,onState=()=>{},onLo
   floor:p=>unifiedFloorHeight(p,level),
   sit:id=>sit(state.seats.find(s=>s.id===id)),stand,
   sitNear(){const p=campusToTheatre(detail.worldToLocal(camera.position.clone()));sit(nearestSeat(state.seats.filter(s=>s.level===level),p.x,p.z,2));},
-  pick(event,element){if(!seatMesh)return;const rect=element.getBoundingClientRect(),ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1),camera);const hit=ray.intersectObject(seatMesh)[0];if(!hit)return;const solid=ray.intersectObjects([model,lobby.group],true).find(h=>{let n=h.object;while(n){if(!n.visible)return false;n=n.parent;}return true;});if(seatVisible(hit.distance,solid?.distance))sit(state.seats[hit.instanceId]);},
+  pick(event,element){if(!seatMesh || !isTheatreInterior(detail.worldToLocal(camera.position.clone())))return;const rect=element.getBoundingClientRect(),ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1),camera);const hit=ray.intersectObject(seatMesh)[0];if(!hit)return;const solid=ray.intersectObjects([model,lobby.group],true).find(h=>{let n=h.object;while(n){if(!n.visible)return false;n=n.parent;}return true;});if(seatVisible(hit.distance,solid?.distance))sit(state.seats[hit.instanceId]);},
   setStage,select:id=>publish({seatId:id}),
   async play(){try{setStage('projection');await ensureMedia().play();}catch(e){publish({playing:false,mediaMessage:e.message});}},
   pause(){media?.pause();publish({playing:false});},
