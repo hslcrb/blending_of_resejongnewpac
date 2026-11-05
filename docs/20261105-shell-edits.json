@@ -1,0 +1,159 @@
+{
+  "removedSolidComponents": [
+    {
+      "object": "stone",
+      "vertices": 8,
+      "min": [
+        -5.0,
+        11.399999618530273,
+        0.0
+      ],
+      "max": [
+        71.22295379638672,
+        84.69999694824219,
+        22.791358947753906
+      ]
+    },
+    {
+      "object": "stone",
+      "vertices": 8,
+      "min": [
+        -5.0,
+        -3.0,
+        5.908999919891357
+      ],
+      "max": [
+        71.22295379638672,
+        11.399999618530273,
+        6.639308929443359
+      ]
+    },
+    {
+      "object": "roofedge",
+      "vertices": 8,
+      "min": [
+        -5.70576810836792,
+        -4.5,
+        22.58819007873535
+      ],
+      "max": [
+        71.92872619628906,
+        59.17777633666992,
+        23.942659378051758
+      ]
+    },
+    {
+      "object": "dark",
+      "vertices": 8,
+      "min": [
+        -7.11730432510376,
+        -6.0,
+        23.77334976196289
+      ],
+      "max": [
+        73.34026336669922,
+        61.400001525878906,
+        24.39098358154297
+      ]
+    },
+    {
+      "object": "dark",
+      "vertices": 8,
+      "min": [
+        31.382347106933594,
+        11.282181739807129,
+        1.0700000524520874
+      ],
+      "max": [
+        34.84061050415039,
+        11.411110877990723,
+        3.9497368335723877
+      ]
+    },
+    {
+      "object": "stone",
+      "vertices": 8,
+      "min": [
+        11.938434600830078,
+        61.400001525878906,
+        22.791358947753906
+      ],
+      "max": [
+        54.284523010253906,
+        84.69999694824219,
+        31.52166748046875
+      ]
+    },
+    {
+      "object": "stone",
+      "vertices": 8,
+      "min": [
+        11.938434600830078,
+        61.400001525878906,
+        31.52166748046875
+      ],
+      "max": [
+        54.284523010253906,
+        84.69999694824219,
+        45.04499816894531
+      ]
+    },
+    {
+      "object": "Rear hall - reconstructed mass around entry",
+      "vertices": 8,
+      "min": [
+        23.230724334716797,
+        84.69999694824219,
+        0.0
+      ],
+      "max": [
+        49.0,
+        109.5,
+        21.165996551513672
+      ]
+    }
+  ],
+  "entranceWorldThree": [
+    33.1,
+    1.07,
+    3.1
+  ],
+  "newObjects": [
+    "Unified shell - west structural wall",
+    "Unified shell - east structural wall",
+    "Unified shell - ground slab",
+    "Unified shell - rear service west wall",
+    "Unified shell - rear service back wall",
+    "Unified shell - rear service floor",
+    "Unified shell - flytower west wall",
+    "Unified shell - flytower east wall",
+    "Unified shell - flytower front wall",
+    "Unified shell - flytower rear wall",
+    "Unified shell - flytower roof",
+    "Unified shell - foyer west gallery slab",
+    "Unified shell - foyer east gallery slab",
+    "Unified shell - foyer front lintel",
+    "Unified shell - west eave",
+    "Unified shell - east eave",
+    "Unified shell - front eave",
+    "Unified shell - roof west shadow reveal",
+    "Unified shell - roof east shadow reveal",
+    "Unified shell - roof front shadow reveal",
+    "Unified shell - auditorium upper ceiling",
+    "Unified shell - left door hinge",
+    "Unified shell - left clear door",
+    "Unified shell - door -1 frame 0",
+    "Unified shell - door -1 frame 1",
+    "Unified shell - door -1 frame 2",
+    "Unified shell - door -1 frame 3",
+    "Unified shell - door -1 handle",
+    "Unified shell - right door hinge",
+    "Unified shell - right clear door",
+    "Unified shell - door 1 frame 0",
+    "Unified shell - door 1 frame 1",
+    "Unified shell - door 1 frame 2",
+    "Unified shell - door 1 frame 3",
+    "Unified shell - door 1 handle",
+    "Unified shell - entry threshold"
+  ]
+}

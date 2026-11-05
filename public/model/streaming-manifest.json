@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": "20261104-connected-trees-shared-v1",
+  "revision": "20261105-unified-building-v1",
   "focusBounds": {
     "min": [
       -78,
@@ -14,9 +14,9 @@
     ]
   },
   "core": {
-    "url": "/model/stream/20261103-core.glb",
-    "bytes": 8668108,
-    "objects": 101,
+    "url": "/model/stream/20261105-unified-core.glb",
+    "bytes": 16771192,
+    "objects": 135,
     "bounds": {
       "min": [
         -210,
@@ -28,7 +28,8 @@
         98,
         260
       ]
-    }
+    },
+    "sha256": "884b348da0ecd02d362c127e78264f3c7f5c8a33a4ec5c7aecbd859488146dc5"
   },
   "chunks": [
     {
@@ -92,10 +93,10 @@
           37.74823
         ]
       },
-      "loadDistance": 50,
-      "unloadDistance": 90,
+      "loadDistance": 140,
+      "unloadDistance": 220,
       "shadowDistance": 55,
-      "maxViewDistance": 125
+      "maxViewDistance": 350
     },
     {
       "id": "campus-planting-center-rear",
@@ -136,10 +137,10 @@
           37.60402
         ]
       },
-      "loadDistance": 50,
-      "unloadDistance": 90,
+      "loadDistance": 140,
+      "unloadDistance": 220,
       "shadowDistance": 55,
-      "maxViewDistance": 125
+      "maxViewDistance": 350
     },
     {
       "id": "campus-planting-north-rear",
@@ -180,10 +181,10 @@
           38.39803
         ]
       },
-      "loadDistance": 50,
-      "unloadDistance": 90,
+      "loadDistance": 140,
+      "unloadDistance": 220,
       "shadowDistance": 55,
-      "maxViewDistance": 125
+      "maxViewDistance": 350
     },
     {
       "id": "campus-planting-south-rear",
@@ -297,9 +298,9 @@
     },
     {
       "id": "front-terrace-detail",
-      "url": "/model/stream/20261103-front-terrace-detail.glb",
-      "bytes": 1639312,
-      "objects": 77,
+      "url": "/model/stream/20261105-front-terrace-detail.glb",
+      "bytes": 1639184,
+      "objects": 71,
       "bounds": {
         "min": [
           -76.008,

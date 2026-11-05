@@ -4,6 +4,10 @@
 
 도면의 지면 기준으로 객석 지붕 +35.060m, 무대 파라펫 +45.045m를 매스에 참고했습니다. 녹청 지붕의 마루 높이 +37.2m와 길이, 정면 전체 폭은 사진과 배치도에 근거한 추정입니다. 변환된 DWG의 일부 객체 이름에 경고가 있어 수치는 원본 도면과 교차 확인이 필요합니다. 112.5m는 기준선 사이의 길이이며 전체 외피 길이와 같다고 단정하지 않습니다.
 
+## 2026-11-05 통합 회관 작업본
+
+현재 작업본은 `blender_work/20261105-unified/sejong_unified_20261105.blend`이며 `open-unified-building.cmd`로 엽니다. 기존 외관 안에 기존 대극장 내부와 로비를 배치하고 실제 벽·개구부·투명 유리문을 구성했습니다. `/explore/`의 직접 걷기로 광장에서 실내로 들어갑니다. 기존 `?theatre=1` 주소도 같은 모형과 카메라를 사용하며, 별도 내부 장면 전환이 없습니다. [개조·검증 기록](docs/20261105-unified-building.md)을 참고하세요.
+
 ## 실행
 
 ```sh
@@ -13,7 +17,7 @@ npm run dev
 
 `npm run build`는 Cloudflare Pages에 배포할 `dist` 디렉터리를 만듭니다. `main` 브랜치의 변경은 GitHub에 연결된 Cloudflare Pages에서 빌드합니다.
 
-현재 Blender 작업본은 수목과 서울 하늘을 포함한 `blender_work/20261104-live-sky/blender_work/20261104/sejong_trees_connected_20261104.blend`입니다. 이전 작업본과 `public/model/`의 원본들은 보존했습니다. Windows에서 `open-seoul-sky.cmd`를 실행하면 이 사본과 실시간 하늘이 함께 시작됩니다. 23개 원본에 대응하는 하늘 사본과 실행 방법은 `docs/blender-weather-sky-20261104.md`에 기록했습니다. 웹은 `public/model/streaming-manifest.json`의 기본 외형을 먼저 불러오고, 거리와 화면 크기에 맞춰 정원·실내·주변 상세 GLB를 추가로 받습니다. 반복되는 수목 형상은 공유 버퍼 3개로 재사용합니다. `?environment=legacy`는 이전 단일 모델을 유지합니다.
+이전 Blender 작업본은 수목과 서울 하늘을 포함한 `blender_work/20261104-live-sky/blender_work/20261104/sejong_trees_connected_20261104.blend`입니다. 이전 작업본과 `public/model/`의 원본들은 보존했습니다. Windows에서 `open-seoul-sky.cmd`를 실행하면 이 사본과 실시간 하늘이 함께 시작됩니다. 23개 원본에 대응하는 하늘 사본과 실행 방법은 `docs/blender-weather-sky-20261104.md`에 기록했습니다. 웹은 `public/model/streaming-manifest.json`의 기본 외형을 먼저 불러오고, 거리와 화면 크기에 맞춰 정원·실내·주변 상세 GLB를 추가로 받습니다. 반복되는 수목 형상은 공유 버퍼 3개로 재사용합니다. `?environment=legacy`는 이전 단일 모델을 유지합니다.
 
 항공사진을 참고해 별관 지붕의 앞뒤 길이를 본관의 약 50%로 늘리고 뒤 정원에 굽은 화단·벽돌 보행 공간과 수목을 보강했습니다. 이 비례와 위치는 사진에 따른 근사이며 실측값이 아닙니다. `scripts/build_sejong.py`는 이전 모델을 재생성하므로 현재 MCP 수정본을 덮어쓰는 용도로 사용하지 마세요. 부조·화면·현수막과 새 포장·석재 무늬는 직접 제작했으며 사진에서 잘라 쓰지 않았습니다.
 
