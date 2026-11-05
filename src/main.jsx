@@ -1,3 +1,7 @@
+import { createUnifiedTheatre } from './unifiedTheatre.js';
+import UnifiedTheatreControls from './UnifiedTheatreControls.jsx';
+import { campusToTheatre } from './theatrePlacement.js';
+import { theatreExposure } from './theatreLighting.js';
 import { isMapRoute, mapLink, exploreLink } from './experienceRoutes.js';
 import NationalBuildingChanges from './NationalBuildingChanges.jsx';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -105,7 +109,7 @@ function MoveButton({ direction, label, symbol, setHeld }) {
     );
 }
 
-function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange, area, sight, magnifier, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, mapProvider, onMapStatus, locationRequest, boundaries, allRegions, onGeographyStatus, overviewRequest, nationalSource, nationalLayers, onNationalStatus, roadSource, roadLayers, roadMode, onRoadStatus }) {
+function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange, area, sight, magnifier, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, mapProvider, onMapStatus, locationRequest, boundaries, allRegions, onGeographyStatus, overviewRequest, nationalSource, nationalLayers, onNationalStatus, roadSource, roadLayers, roadMode, onRoadStatus, onTheatreState }) {
     const containerRef = useRef(null);
     const sceneRef = useRef(null);
     const requestedTools = useRef({ area, sight, magnifier, mapProvider, locationRequest, boundaries, allRegions, nationalLayers, roadLayers, roadMode });
@@ -213,6 +217,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         const weatherTimer = window.setInterval(refreshWeather, 600000);
         let frameId;
         let model;
+        let theatre=null;
         const detail = new THREE.Group();
         scene.add(detail);
         nightLights = createCampusNightLights();
@@ -451,6 +456,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         };
 
         const resetWalk = () => {
+            theatre?.reset();
             camera.position.copy(WALK_START);
             yaw = 0;
             pitch = 0.1;
@@ -540,12 +546,13 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         };
         const pointerDown = (event) => {
             if (modeNow !== 'walk' || dragging || (event.pointerType === 'mouse' && event.button !== 0)) return;
-            dragging = { id: event.pointerId, x: event.clientX, y: event.clientY };
+            dragging = { id: event.pointerId, x: event.clientX, y: event.clientY, startX:event.clientX, startY:event.clientY, moved:false };
             renderer.domElement.setPointerCapture(event.pointerId);
             container.focus({ preventScroll: true });
         };
         const pointerMove = (event) => {
             if (modeNow !== 'walk' || dragging?.id !== event.pointerId) return;
+            if(Math.hypot(event.clientX-dragging.startX,event.clientY-dragging.startY)>5)dragging.moved=true;
             yaw -= (event.clientX - dragging.x) * 0.0035;
             pitch = THREE.MathUtils.clamp(pitch - (event.clientY - dragging.y) * 0.0035, -1.2, 1.2);
             dragging.x = event.clientX;
@@ -553,7 +560,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             camera.rotation.set(pitch, yaw, 0, 'YXZ');
         };
         const pointerEnd = (event) => {
-            if (dragging?.id === event.pointerId) dragging = null;
+            if (dragging?.id === event.pointerId) { const click=!dragging.moved && event.type!=='pointercancel';dragging=null;if(click)theatre?.pick(event,renderer.domElement); }
         };
         const focusOnDoubleClick = (event) => {
             if (modeNow !== 'orbit' || !model) return;
@@ -574,6 +581,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             clearInput();
             slowFrames.sample(performance.now(), false);
             streamer?.setPaused(document.hidden || !viewerVisible);
+            if(document.hidden)theatre?.pause();
             if (!document.hidden) { refreshSky(); void refreshWeather(); }
             void setNationalOptions().catch(()=>{});
         };
@@ -693,6 +701,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             if (signal.aborted) { disposeModelResources(gltf.scene); signal.throwIfAborted(); }
             return gltf;
         };
+        theatre=createUnifiedTheatre({detail,camera,loadGltf,onState:onTheatreState,onLookAt:target=>{const direction=target.clone().sub(camera.position);yaw=Math.atan2(-direction.x,-direction.z);pitch=Math.atan2(direction.y,Math.hypot(direction.x,direction.z));camera.rotation.set(pitch,yaw,0,'YXZ');}});
+        sceneRef.current.theatre=theatre;
         const prepareAsset = (gltf) => {
             const root = gltf.scene;
             const anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 4);
@@ -801,6 +811,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             if (requestedTools.current.area === 'seoul' && requestedTools.current.locationRequest) void focusLocation(requestedTools.current.locationRequest);
             else if (requestedTools.current.area !== 'local') void setAreaView(requestedTools.current.area);
             else onAreaStatus('세종문화회관과 광화문 주변');
+            if(mode==='walk')setMode('walk');
+            void theatre.load().catch(()=>{});
             onStatusChange('ready');
         };
         const bootModels = async () => {
@@ -869,7 +881,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
                     - (held.has('s') || held.has('arrowdown') || touchHeld.has('back') ? 1 : 0);
                 const side = (held.has('d') || touchHeld.has('right') ? 1 : 0)
                     - (held.has('a') || touchHeld.has('left') ? 1 : 0);
-                if (forward || side) {
+                if ((forward || side) && !theatre?.isSitting()) {
                     const direction = new THREE.Vector3(-Math.sin(yaw) * forward + Math.cos(yaw) * side, 0, -Math.cos(yaw) * forward - Math.sin(yaw) * side).normalize();
                     // 걷기와 빠른 이동 모두 작은 단위로 나눠 충돌을 확인합니다. / Substep both walking speeds for collision checks.
                     const speed = held.has('shift') ? WALK_FAST_SPEED : WALK_SPEED;
@@ -877,15 +889,17 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
                     const dx = direction.x * dt * speed / steps;
                     const dz = direction.z * dt * speed / steps;
                     for (let i = 0; i < steps; i += 1) {
-                        if (canWalk(camera.position.x + dx, camera.position.z, SHOW_SURROUNDINGS)) camera.position.x += dx;
-                        if (canWalk(camera.position.x, camera.position.z + dz, SHOW_SURROUNDINGS)) camera.position.z += dz;
+                        if (theatre.canMove(camera.position,{x:camera.position.x+dx,z:camera.position.z},(x,z)=>canWalk(x,z,SHOW_SURROUNDINGS))) camera.position.x += dx;
+                        if (theatre.canMove(camera.position,{x:camera.position.x,z:camera.position.z+dz},(x,z)=>canWalk(x,z,SHOW_SURROUNDINGS))) camera.position.z += dz;
                     }
                 }
-                camera.position.y = groundHeight(camera.position.x, camera.position.z) + 1.7;
+                if(!theatre?.isSitting())camera.position.y=(theatre?.isInside(camera.position)?theatre.floor(camera.position):groundHeight(camera.position.x,camera.position.z))+1.7;
                 camera.rotation.set(pitch, yaw, 0, 'YXZ');
             } else {
                 controls.update();
             }
+            theatre?.update(time,detail.worldToLocal(camera.position.clone()));
+            renderer.toneMappingExposure=modeNow==='walk'&&theatre?.isInside(camera.position)?theatreExposure(campusToTheatre(camera.position).z):1.05;
             if (modeNow === 'walk' && time - lastNationalTime >= 1200 && (requestedTools.current.sight || requestedTools.current.magnifier)) {
                 lastNationalTime=time;
                 const direction=camera.getWorldDirection(new THREE.Vector3());
@@ -950,6 +964,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
             window.removeEventListener('blur', clearInput);
             document.removeEventListener('visibilitychange', onPageVisibility);
+            theatre?.dispose();
             coreAsset?.dispose();
             model?.removeFromParent();
             sun.shadow.dispose();
@@ -957,7 +972,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             renderer.domElement.remove();
             viewerRef.current = null;
         };
-    }, [onStatusChange, onWeatherChange, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, onMapStatus, onGeographyStatus, nationalSource, onNationalStatus, roadSource, onRoadStatus, viewerRef]);
+    }, [onStatusChange, onWeatherChange, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, onMapStatus, onGeographyStatus, nationalSource, onNationalStatus, roadSource, onRoadStatus, onTheatreState, viewerRef]);
 
     useEffect(() => { sceneRef.current?.setAreaView(area); }, [area]);
     useEffect(() => { sceneRef.current?.setMapProvider(mapProvider); }, [mapProvider]);
@@ -1070,7 +1085,10 @@ function App() {
     useEffect(() => { const timer = window.setInterval(() => setClock(new Date()), 60000); return () => window.clearInterval(timer); }, []);
     const seoulTime = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hour12: false }).format(clock);
     const observedTime = weather ? new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(weather.observedAt)) : null;
-    const [mode, setMode] = useState('orbit');
+    const theatreRequested = new URLSearchParams(window.location.search).get('theatre')==='1';
+    const [mode, setMode] = useState(theatreRequested?'walk':'orbit');
+    const [theatreState,setTheatreState]=useState({});
+    const onTheatreState=useCallback(value=>setTheatreState(value),[]);
     const [view, setView] = useState({ name: 'perspective' });
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [fullscreenError, setFullscreenError] = useState('');
@@ -1228,7 +1246,7 @@ function App() {
                     </div>}
                     </>}
                     <div className="view-frame">
-                        <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} onWeatherChange={setWeather} area={area} sight={sight} magnifier={magnifier} onAreaStatus={setAreaStatus} onStart={info.onStart} onInspection={info.onInspection} onInspectionState={info.onState} onProjection={setProjection} mapProvider={mapProvider} onMapStatus={onMapStatus} locationRequest={locationRequest} boundaries={boundaries} allRegions={allRegions} onGeographyStatus={onGeographyStatus} overviewRequest={overviewRequest} nationalSource={nationalSource} nationalLayers={nationalSelection||EMPTY_NATIONAL_LAYERS} onNationalStatus={onNationalStatus} roadSource={roadSource} roadLayers={roadLayers} roadMode={roadMode} onRoadStatus={onRoadStatus} />
+                        <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} onWeatherChange={setWeather} area={area} sight={sight} magnifier={magnifier} onAreaStatus={setAreaStatus} onStart={info.onStart} onInspection={info.onInspection} onInspectionState={info.onState} onProjection={setProjection} mapProvider={mapProvider} onMapStatus={onMapStatus} locationRequest={locationRequest} boundaries={boundaries} allRegions={allRegions} onGeographyStatus={onGeographyStatus} overviewRequest={overviewRequest} nationalSource={nationalSource} nationalLayers={nationalSelection||EMPTY_NATIONAL_LAYERS} onNationalStatus={onNationalStatus} roadSource={roadSource} roadLayers={roadLayers} roadMode={roadMode} onRoadStatus={onRoadStatus} onTheatreState={onTheatreState} />
                         {status !== 'ready' && (
                             <div className="viewer-status" role="status">
                                 <span>{status === 'loading' ? '건축 모델을 불러오는 중입니다.' : '모델을 불러오지 못했습니다.'}</span>
@@ -1248,6 +1266,7 @@ function App() {
                             <span className="hint-touch">{mode === 'walk' ? '화면을 밀어 둘러보기 · 방향 버튼으로 이동' : '한 손가락으로 회전 · 두 손가락으로 이동과 확대'}</span>
                         </p>
                     </div>
+                    {!mapMode && <UnifiedTheatreControls state={theatreState} viewerRef={viewerRef} initialOpen={theatreRequested} onWalk={reset=>{viewerRef.current?.setMode('walk');setMode('walk');if(reset!==false)viewerRef.current?.resetWalk();}} />}
                     {mapMode && <>
                     <NationalBuildingChanges inspection={info.inspection} active={sight || magnifier || Boolean(info.inspection)} sight={sight} onFeaturesChange={onNationalBuildingFeatures} />
                     {(sight || info.inspection || info.keepPanel) && <BuildingInformationPanel sight={sight} inspection={info.inspection} outsideSeoul={geographyInspection?.insideSeoul === false} onSelectBuilding={info.onSelectBuilding} />}
@@ -1268,5 +1287,4 @@ function App() {
     );
 }
 
-const TheatreExperience = React.lazy(() => import('./TheatreExperience.jsx'));
-createRoot(document.getElementById('root')).render(new URLSearchParams(window.location.search).get('theatre') === '1' ? <React.Suspense fallback={<p>대극장 체험을 불러오고 있습니다.</p>}><TheatreExperience /></React.Suspense> : <App />);
+createRoot(document.getElementById('root')).render(<App />);
