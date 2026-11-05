@@ -1,3 +1,4 @@
+import { walkMotionDelta, walkSubsteps } from './walkMotion.js';
 import { createUnifiedTheatre } from './unifiedTheatre.js';
 import UnifiedTheatreControls from './UnifiedTheatreControls.jsx';
 import { campusToTheatre } from './theatrePlacement.js';
@@ -134,6 +135,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.shadowMap.autoUpdate = false;
+        renderer.domElement.classList.add('campus-webgl');
         container.appendChild(renderer.domElement);
 
         const controls = new OrbitControls(camera, renderer.domElement);
@@ -539,7 +541,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             controls.update();
         };
         const handleKeyUp = (event) => held.delete(walkKeyForEvent(event));
-        const clearInput = () => { held.clear(); touchHeld.clear(); dragging = null; };
+        const clearInput = () => { held.clear(); touchHeld.clear(); dragging = null; lastTime=0; };
         const setHeld = (direction, down) => {
             if (down) touchHeld.add(direction);
             else touchHeld.delete(direction);
@@ -676,7 +678,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             scheduleNational();
             onAreaStatus('전국 행정동과 문화시설 후보 · 전국 건물 변경분과 서울 건물 자료');
         };
-        sceneRef.current = { setNationalBuildingFeatures: value => { nationalBuildingFeatures = value; explorer?.setChangeFeatures(value); }, fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, showNational, setGeographyOptions, inspectGeography, cancelPendingFocus: () => {focusSequence++;regionGeneration++;window.clearTimeout(regionTimer);}, retryGeography: () => geography?.retry(), setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center(), setNationalOptions, refreshNational: scheduleNational, inspectNational, inspectRoads, retryNational: () => setNationalOptions(), retryRoads: () => setNationalOptions() };
+        sceneRef.current = { getWalkState:()=>({position:camera.position.toArray(),yaw,pitch,mode:modeNow,held:[...held],visible:viewerVisible,ready:Boolean(sceneRef.current?.size),lastFrame:lastTime}), setNationalBuildingFeatures: value => { nationalBuildingFeatures = value; explorer?.setChangeFeatures(value); }, fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, showNational, setGeographyOptions, inspectGeography, cancelPendingFocus: () => {focusSequence++;regionGeneration++;window.clearTimeout(regionTimer);}, retryGeography: () => geography?.retry(), setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center(), setNationalOptions, refreshNational: scheduleNational, inspectNational, inspectRoads, retryNational: () => setNationalOptions(), retryRoads: () => setNationalOptions() };
         viewerRef.current = sceneRef.current;
 
         // 주 건물은 먼저, 주변 세부는 공간별로 내려받습니다. / Load core first and stream spatial detail separately.
@@ -861,7 +863,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         else { viewerVisible = true; bootModels(); }
 
         const animate = (time) => {
-            const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.2) : 0;
+            const motionDt=walkMotionDelta(lastTime,time);
+            const dt=Math.min(motionDt,.2);
             lastTime = time;
             if (!viewerVisible || document.hidden) {
                 slowFrames.sample(time, false);
@@ -885,9 +888,9 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
                     const direction = new THREE.Vector3(-Math.sin(yaw) * forward + Math.cos(yaw) * side, 0, -Math.cos(yaw) * forward - Math.sin(yaw) * side).normalize();
                     // 걷기와 빠른 이동 모두 작은 단위로 나눠 충돌을 확인합니다. / Substep both walking speeds for collision checks.
                     const speed = held.has('shift') ? WALK_FAST_SPEED : WALK_SPEED;
-                    const steps = Math.max(1, Math.ceil(dt * speed / 0.25));
-                    const dx = direction.x * dt * speed / steps;
-                    const dz = direction.z * dt * speed / steps;
+                    const steps = walkSubsteps(motionDt,speed);
+                    const dx = direction.x * motionDt * speed / steps;
+                    const dz = direction.z * motionDt * speed / steps;
                     for (let i = 0; i < steps; i += 1) {
                         if (theatre.canMove(camera.position,{x:camera.position.x+dx,z:camera.position.z},(x,z)=>canWalk(x,z,SHOW_SURROUNDINGS))) camera.position.x += dx;
                         if (theatre.canMove(camera.position,{x:camera.position.x,z:camera.position.z+dz},(x,z)=>canWalk(x,z,SHOW_SURROUNDINGS))) camera.position.z += dz;
@@ -1190,7 +1193,7 @@ function App() {
                     <div className="experience-top">
                         <div className="experience-title">
                             <span className="status-dot" />
-                            <div><small>EXPLORE IN 3D</small><h2 id="viewer-title">세종문화회관 둘러보기</h2></div>
+                            <div><small>EXPLORE IN 3D</small><h2 id="viewer-title">{theatreRequested ? '세종문화회관 대극장' : '세종문화회관 둘러보기'}</h2></div>
                         </div>
                         <div className="experience-controls">
                             {mapMode ? <a className="route-entry" href={exploreLink(embedded)}>회관·광화문 보기</a> : <a className="route-entry" href={mapLink()} target={embedded ? "_blank" : undefined} rel={embedded ? "noopener noreferrer" : undefined}>지도·전시천리안</a>}
