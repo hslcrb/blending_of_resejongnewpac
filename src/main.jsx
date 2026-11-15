@@ -23,6 +23,7 @@ import { setCampusLayout } from './campusLayout.js';
 import { cameraNearPlane } from './cameraClipping.js';
 import { seoulSolarPosition, sunDirection, cloudFractionFromMetar, moonPosition, lightingForSun, skyPreviewDate } from './skyState.js';
 import { createSurveyLighting } from './surveyLighting.js';
+import { extractSurveyGeometry, hideReplacedSurveyGeometry } from './surveyGeometry.js';
 import { createSkyMaterial, createCampusNightLights } from './skyVisual.js';
 import { createCityLayer, disposeCityLayer } from './cityLayer.js';
 import { SEJONG_IN_SEOUL } from './area/coordinates.ts';
@@ -710,8 +711,10 @@ function BuildingViewer({ skyMode, mode, view, viewerRef, onStatusChange, onWeat
         };
         theatre=createUnifiedTheatre({detail,camera,loadGltf,onState:onTheatreState,onLookAt:target=>{const direction=target.clone().sub(camera.position);yaw=Math.atan2(-direction.x,-direction.z);pitch=Math.atan2(direction.y,Math.hypot(direction.x,direction.z));camera.rotation.set(pitch,yaw,0,'YXZ');}});
         sceneRef.current.theatre=theatre;
+        let geometryPatch = null;
         const prepareAsset = (gltf) => {
             const root = gltf.scene;
+            if (geometryPatch) hideReplacedSurveyGeometry(root, geometryPatch);
             const anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 4);
             const sampledTextures = new Set();
             root.traverse((object) => {
@@ -841,7 +844,34 @@ function BuildingViewer({ skyMode, mode, view, viewerRef, onStatusChange, onWeat
                 const coreUrl = manifest?.core.url || (SHOW_SURROUNDINGS ? '/model/sejong_surroundings_latest.glb' : '/model/sejong_sitevisit_refined.glb');
                 const gltf = await loadGltf(coreUrl, { signal: bootRequest.signal });
                 if (disposed) { disposeModelResources(gltf.scene); return; }
-                installCore(prepareAsset(gltf), manifest?.focusBounds);
+                // Optional photo correction: failure leaves the complete original core visible.
+                let patchGltf = null;
+                try {
+                    const response = await fetch('/model/survey-20261115/colonnade-replacements.json', { signal: bootRequest.signal });
+                    if (!response.ok) throw new Error('Survey manifest unavailable');
+                    const replacements = await response.json();
+                    patchGltf = await loadGltf('/model/survey-20261115/colonnade-geometry.glb', { signal: bootRequest.signal });
+                    const patch = extractSurveyGeometry(patchGltf, replacements);
+                    patchGltf = null;
+                    let hasStone = false;
+                    gltf.scene.traverse(object => { if ((object.userData.name || object.name) === 'stone') hasStone = true; });
+                    if (!hasStone) { disposeModelResources(patch.root); throw new Error('Survey target absent'); }
+                    geometryPatch = patch;
+                } catch (error) {
+                    if (patchGltf) for (const root of patchGltf.scenes || [patchGltf.scene]) disposeModelResources(root);
+                    if (error.name === 'AbortError') { disposeModelResources(gltf.scene); throw error; }
+                    console.warn('Photo geometry correction unavailable; original model retained.', error);
+                }
+                if (disposed) { disposeModelResources(gltf.scene); if (geometryPatch) disposeModelResources(geometryPatch.root); return; }
+                const patch = geometryPatch;
+                if (patch) {
+                    hideReplacedSurveyGeometry(gltf.scene, patch);
+                    gltf.scene.add(patch.root);
+                }
+                geometryPatch = null;
+                const core = prepareAsset(gltf);
+                geometryPatch = patch;
+                installCore(core, manifest?.focusBounds);
                 if (manifest) {
                     streamer = createSpatialModelStreamer({
                         chunks: manifest.chunks,

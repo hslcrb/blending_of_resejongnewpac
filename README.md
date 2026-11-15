@@ -49,3 +49,5 @@ NOAA API는 브라우저 CORS를 지원하지 않아 Cloudflare Pages Function `
 ## 2026-11-15 답사 사진 기반 주야간 조명
 
 149장 재검토 기록, 실제 회랑 렌즈에 대응하는 49개 조명, 주간/야간 Blender 장면은 [검증 기록](docs/survey-20261115/README.md)을 참고하세요. 새 파일은 `blender_work/20261115-survey/sejong_survey_day_night.blend`이며 기존 20261105 통합 원본은 보존됩니다. 웹은 자동·낮·밤 전환과 최대8개 근접 조명을 지원합니다. 전체 형상의 실측 재현 완료를 의미하지 않습니다.
+
+사진092·095의 회랑 기둥 단면과 짙은 천장 패널을 추가 보정한 최신 파일은 `blender_work/20261115-survey/sejong_survey_colonnade_refined.blend`입니다. [전후 렌더·변경 근거](docs/survey-20261115/COLONNADE-GEOMETRY.md)를 확인하세요.
