@@ -21,7 +21,8 @@ import { disposeModelResources, shouldCastModelShadow } from './modelResources.j
 import { createSlowFrameDetector } from './framePerformance.js';
 import { setCampusLayout } from './campusLayout.js';
 import { cameraNearPlane } from './cameraClipping.js';
-import { seoulSolarPosition, sunDirection, cloudFractionFromMetar, moonPosition, lightingForSun } from './skyState.js';
+import { seoulSolarPosition, sunDirection, cloudFractionFromMetar, moonPosition, lightingForSun, skyPreviewDate } from './skyState.js';
+import { createSurveyLighting } from './surveyLighting.js';
 import { createSkyMaterial, createCampusNightLights } from './skyVisual.js';
 import { createCityLayer, disposeCityLayer } from './cityLayer.js';
 import { SEJONG_IN_SEOUL } from './area/coordinates.ts';
@@ -110,7 +111,9 @@ function MoveButton({ direction, label, symbol, setHeld }) {
     );
 }
 
-function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange, area, sight, magnifier, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, mapProvider, onMapStatus, locationRequest, boundaries, allRegions, onGeographyStatus, overviewRequest, nationalSource, nationalLayers, onNationalStatus, roadSource, roadLayers, roadMode, onRoadStatus, onTheatreState }) {
+function BuildingViewer({ skyMode, mode, view, viewerRef, onStatusChange, onWeatherChange, area, sight, magnifier, onAreaStatus, onStart, onInspection, onInspectionState, onProjection, mapProvider, onMapStatus, locationRequest, boundaries, allRegions, onGeographyStatus, overviewRequest, nationalSource, nationalLayers, onNationalStatus, roadSource, roadLayers, roadMode, onRoadStatus, onTheatreState }) {
+    const skyModeRef = useRef(skyMode);
+    skyModeRef.current = skyMode;
     const containerRef = useRef(null);
     const sceneRef = useRef(null);
     const requestedTools = useRef({ area, sight, magnifier, mapProvider, locationRequest, boundaries, allRegions, nationalLayers, roadLayers, roadMode });
@@ -170,12 +173,12 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         let basemap = null;
         const skyAbort = new AbortController();
         const solarVector = new THREE.Vector3(0, 1, 0);
-        let observedCloud = null, weatherSequence = 0, nightLights = null;
+        let observedCloud = null, weatherSequence = 0, nightLights = null, surveyLights = null, surveyReady = false;
         // [서울 시각과 관측 하늘 / Seoul time and observed sky]
         // 현장과 다른 김포공항 관측임을 화면에 밝히고, 실패 시 임의 구름으로 대체합니다.
         // Identify the nearby airport observation and fall back visibly when it is unavailable.
         const refreshSky = () => {
-            const now = new Date();
+            const now = skyPreviewDate(new Date(),skyModeRef.current);
             const solar = seoulSolarPosition(now);
             const direction = sunDirection(solar, areaNow);
             const moon = moonPosition(now, areaNow);
@@ -191,7 +194,8 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             ambient.intensity = lighting.ambient;
             sun.intensity = lighting.sun;
             fill.intensity = lighting.fill;
-            nightLights?.setIntensity(lighting.facade);
+            nightLights?.setIntensity(surveyReady ? 0 : lighting.facade);
+            surveyLights?.setLevel(1-lighting.daylight);
             sun.position.copy(sun.target.position).addScaledVector(solarVector, 140);
             renderer.shadowMap.needsUpdate = true;
         };
@@ -224,6 +228,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
         scene.add(detail);
         nightLights = createCampusNightLights();
         detail.add(nightLights.group);
+        surveyLights=createSurveyLighting(detail,{onReady:()=>{surveyReady=true;nightLights.group.removeFromParent();refreshSky();}});
         refreshSky();
         let city = null, cityPromise = null, areaSequence = 0, focusSequence = 0, explorer = null;
         let locationMarker = null, nationalBuildingFeatures = [];
@@ -678,7 +683,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             scheduleNational();
             onAreaStatus('전국 행정동과 문화시설 후보 · 전국 건물 변경분과 서울 건물 자료');
         };
-        sceneRef.current = { getWalkState:()=>({position:camera.position.toArray(),yaw,pitch,mode:modeNow,held:[...held],visible:viewerVisible,ready:Boolean(sceneRef.current?.size),lastFrame:lastTime}), setNationalBuildingFeatures: value => { nationalBuildingFeatures = value; explorer?.setChangeFeatures(value); }, fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, showNational, setGeographyOptions, inspectGeography, cancelPendingFocus: () => {focusSequence++;regionGeneration++;window.clearTimeout(regionTimer);}, retryGeography: () => geography?.retry(), setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center(), setNationalOptions, refreshNational: scheduleNational, inspectNational, inspectRoads, retryNational: () => setNationalOptions(), retryRoads: () => setNationalOptions() };
+        sceneRef.current = { refreshSky, getWalkState:()=>({position:camera.position.toArray(),yaw,pitch,mode:modeNow,held:[...held],visible:viewerVisible,ready:Boolean(sceneRef.current?.size),lastFrame:lastTime}), setNationalBuildingFeatures: value => { nationalBuildingFeatures = value; explorer?.setChangeFeatures(value); }, fitView, setMode, resetWalk, handleKeyDown, handleKeyUp, clearInput, setHeld, setAreaView, setTools, focusLocation, showNational, setGeographyOptions, inspectGeography, cancelPendingFocus: () => {focusSequence++;regionGeneration++;window.clearTimeout(regionTimer);}, retryGeography: () => geography?.retry(), setMapProvider: value => basemap?.setProvider(value), retryMap: () => basemap?.retry(), inspectCenter: () => explorer?.center(), setNationalOptions, refreshNational: scheduleNational, inspectNational, inspectRoads, retryNational: () => setNationalOptions(), retryRoads: () => setNationalOptions() };
         viewerRef.current = sceneRef.current;
 
         // 주 건물은 먼저, 주변 세부는 공간별로 내려받습니다. / Load core first and stream spatial detail separately.
@@ -922,6 +927,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
                 const focus = modeNow === 'walk' ? camera.position : controls.target;
                 const localFocus = detail.worldToLocal(focus.clone());
                 const localCamera = detail.worldToLocal(camera.position.clone());
+                surveyLights?.update(localCamera);
                 streamer?.update(localFocus, { cameraPosition: localCamera, now: time });
                 basemap?.update(camera, {width:container.clientWidth,height:container.clientHeight,mode:areaNow});
                 if (coreAsset.updateCoreShadows(localCamera)) renderer.shadowMap.needsUpdate = true;
@@ -943,6 +949,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
             disposed = true;
             bootRequest.abort();
             skyAbort.abort();
+            surveyLights?.dispose();
             window.clearInterval(skyTimer);
             window.clearInterval(weatherTimer);
             streamer?.dispose();
@@ -984,6 +991,7 @@ function BuildingViewer({ mode, view, viewerRef, onStatusChange, onWeatherChange
     useEffect(() => { void sceneRef.current?.setNationalOptions().catch(()=>{}); }, [nationalLayers, roadLayers, roadMode, sight, magnifier, area]);
     useEffect(() => { void sceneRef.current?.setGeographyOptions(boundaries && (sight || magnifier || mapProvider !== null), allRegions); }, [area, boundaries, allRegions, sight, magnifier, mapProvider]);
     useEffect(() => { if (overviewRequest) sceneRef.current?.showNational(); }, [overviewRequest]);
+    useEffect(() => { sceneRef.current?.refreshSky(); }, [skyMode]);
     useEffect(() => { sceneRef.current?.setMode(mode); }, [mode]);
     useEffect(() => { sceneRef.current?.fitView(view.name); sceneRef.current?.refreshNational(); }, [view]);
 
@@ -1083,6 +1091,7 @@ function App() {
     const onMapStatus = useCallback(value => setMapStatus(value), []);
     const onGeographyStatus = useCallback(value => setGeographyStatus(value), []);
     const selectNational = useCallback(value => { info.selectLocation(value.coordinates,value.fields); setMode('orbit'); setArea('seoul'); setMapProvider('ground'); setLocationRequest({coordinates:value.coordinates,fields:value.fields}); experienceRef.current?.scrollIntoView({behavior:'smooth',block:'start'}); }, [info.selectLocation]);
+    const [skyMode,setSkyMode] = useState('auto');
     const [weather, setWeather] = useState(null);
     const [clock, setClock] = useState(() => new Date());
     useEffect(() => { const timer = window.setInterval(() => setClock(new Date()), 60000); return () => window.clearInterval(timer); }, []);
@@ -1249,7 +1258,7 @@ function App() {
                     </div>}
                     </>}
                     <div className="view-frame">
-                        <BuildingViewer mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} onWeatherChange={setWeather} area={area} sight={sight} magnifier={magnifier} onAreaStatus={setAreaStatus} onStart={info.onStart} onInspection={info.onInspection} onInspectionState={info.onState} onProjection={setProjection} mapProvider={mapProvider} onMapStatus={onMapStatus} locationRequest={locationRequest} boundaries={boundaries} allRegions={allRegions} onGeographyStatus={onGeographyStatus} overviewRequest={overviewRequest} nationalSource={nationalSource} nationalLayers={nationalSelection||EMPTY_NATIONAL_LAYERS} onNationalStatus={onNationalStatus} roadSource={roadSource} roadLayers={roadLayers} roadMode={roadMode} onRoadStatus={onRoadStatus} onTheatreState={onTheatreState} />
+                        <BuildingViewer skyMode={skyMode} mode={mode} view={view} viewerRef={viewerRef} onStatusChange={setStatus} onWeatherChange={setWeather} area={area} sight={sight} magnifier={magnifier} onAreaStatus={setAreaStatus} onStart={info.onStart} onInspection={info.onInspection} onInspectionState={info.onState} onProjection={setProjection} mapProvider={mapProvider} onMapStatus={onMapStatus} locationRequest={locationRequest} boundaries={boundaries} allRegions={allRegions} onGeographyStatus={onGeographyStatus} overviewRequest={overviewRequest} nationalSource={nationalSource} nationalLayers={nationalSelection||EMPTY_NATIONAL_LAYERS} onNationalStatus={onNationalStatus} roadSource={roadSource} roadLayers={roadLayers} roadMode={roadMode} onRoadStatus={onRoadStatus} onTheatreState={onTheatreState} />
                         {status !== 'ready' && (
                             <div className="viewer-status" role="status">
                                 <span>{status === 'loading' ? '건축 모델을 불러오는 중입니다.' : '모델을 불러오지 못했습니다.'}</span>
@@ -1258,6 +1267,7 @@ function App() {
                         )}
                         <div className="viewer-label" aria-hidden="true"><span>{allRegions ? 'NATIONAL MAP' : mode === 'walk' ? 'GROUND WALK' : 'ARCHITECTURE MODEL'}</span><strong>{allRegions ? '전국 행정동' : mode === 'walk' ? '광장을 걷는 시선' : '세종문화회관'}</strong></div>
                         <div className="view-actions">
+                            <label>조명 <select aria-label="낮과 밤 조명" value={skyMode} onChange={event=>setSkyMode(event.target.value)}><option value="auto">자동 · 서울 시각</option><option value="day">낮 미리보기</option><option value="night">밤 미리보기</option></select></label>
                             {mode === 'orbit' && area === 'local' && <>
                                 <button type="button" disabled={!ready} onClick={() => setView({ name: 'front' })}>정면 보기</button>
                                 <button type="button" disabled={!ready} onClick={() => setView({ name: 'rear' })}>뒷면 보기</button>
@@ -1280,7 +1290,7 @@ function App() {
                     </>}
                     <div className="experience-bottom">
                         <div className="guidance"><span className="guidance-icon" aria-hidden="true">✳</span><p>{mode === 'walk' ? '광장에서 대극장 로비와 별관 점포까지 걸을 수 있습니다.' : '모형을 회전하고 확대해 입면의 디테일을 살펴보세요.'}</p></div>
-                        <p className="model-note">서울 시간 {seoulTime} · {weather ? `김포공항 구름 관측 ${observedTime}` : '기상 관측을 가져오지 못해 구름은 임의로 표시합니다.'}<br />김포공항은 광화문과 기상이 다를 수 있습니다. 달의 위치는 근사이며 별은 연출입니다. <a href="https://aviationweather.gov/data/api/">NOAA 항공기상 관측</a></p>
+                        <p className="model-note">서울 시간 {seoulTime} · {skyMode==='auto'?'실시간 하늘':skyMode==='day'?'낮 미리보기 (12:00)':'밤 미리보기 (22:00)'} · {weather ? `김포공항 구름 관측 ${observedTime}` : '기상 관측을 가져오지 못해 구름은 임의로 표시합니다.'}<br />김포공항은 광화문과 기상이 다를 수 있습니다. 달의 위치는 근사이며 별은 연출입니다. <a href="https://aviationweather.gov/data/api/">NOAA 항공기상 관측</a></p>
                     </div>
                 </section>
                 {mapMode && <NationalCulturalExplorer onSelectLocation={selectNational} />}
@@ -1291,3 +1301,4 @@ function App() {
 }
 
 createRoot(document.getElementById('root')).render(<App />);
+
