@@ -1,0 +1,23 @@
+{
+  "scenes": [
+    "20261115 답사 - 주간",
+    "20261115 답사 - 야간 조명"
+  ],
+  "original_scene_preserved": 1401,
+  "new_lighting_objects": 53,
+  "missing_fonts_replaced": [
+    "048 custom starbucks typography",
+    "075 custom MOM text",
+    "075 neighbor ISAAC sign",
+    "075 vertical sign text",
+    "Cafe typographic study",
+    "Freedom Hall entrance original type",
+    "Neighbor plain typographic study",
+    "Passage display typographic study",
+    "Sejong pedestal lettering",
+    "Yellow facade plain typographic study"
+  ],
+  "photo_review_count": 149,
+  "photometry": "illustrative, not measured",
+  "original_geometry_changed": false
+}

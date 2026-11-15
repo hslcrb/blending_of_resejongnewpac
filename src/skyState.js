@@ -67,3 +67,11 @@ export function lightingForSun(elevation, cloudAmount = 0) {
         basemap: 0.5 + 0.5 * daylight,
     };
 }
+
+
+// Preview uses noon/22:00 on today's Seoul calendar date; auto always uses the real clock.
+export function skyPreviewDate(now, mode = 'auto') {
+    if (mode !== 'day' && mode !== 'night') return new Date(now.getTime());
+    const local = new Date(now.getTime() + 9 * 3600000);
+    return new Date(Date.UTC(local.getUTCFullYear(),local.getUTCMonth(),local.getUTCDate(),mode==='day'?3:13));
+}
