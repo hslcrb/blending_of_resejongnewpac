@@ -74,7 +74,8 @@
       "loadDistance": 45,
       "unloadDistance": 100,
       "shadowDistance": 40,
-      "maxViewDistance": 140
+      "maxViewDistance": 140,
+      "renderDistance": 70
     },
     {
       "id": "campus-planting-center-front",
@@ -228,7 +229,8 @@
       "loadDistance": 100,
       "unloadDistance": 155,
       "shadowDistance": 55,
-      "maxViewDistance": 330
+      "maxViewDistance": 330,
+      "renderDistance": 125
     },
     {
       "id": "east-kt-detail",
@@ -250,7 +252,8 @@
       "loadDistance": 100,
       "unloadDistance": 155,
       "shadowDistance": 55,
-      "maxViewDistance": 330
+      "maxViewDistance": 330,
+      "renderDistance": 125
     },
     {
       "id": "east-kyobo-detail",
@@ -272,7 +275,8 @@
       "loadDistance": 100,
       "unloadDistance": 155,
       "shadowDistance": 55,
-      "maxViewDistance": 330
+      "maxViewDistance": 330,
+      "renderDistance": 125
     },
     {
       "id": "east-museum-detail",
@@ -294,7 +298,8 @@
       "loadDistance": 100,
       "unloadDistance": 155,
       "shadowDistance": 55,
-      "maxViewDistance": 330
+      "maxViewDistance": 330,
+      "renderDistance": 125
     },
     {
       "id": "front-terrace-detail",
@@ -602,7 +607,8 @@
       "loadDistance": 45,
       "unloadDistance": 100,
       "shadowDistance": 40,
-      "maxViewDistance": 140
+      "maxViewDistance": 140,
+      "renderDistance": 70
     }
   ]
 }

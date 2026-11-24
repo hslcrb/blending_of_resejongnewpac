@@ -119,3 +119,66 @@ test('broad ground receives light without self-shadow acne while architecture an
     assert.equal(shouldCastModelShadow({ ...mesh, name: 'Survey143 low planter curb' }, box([0,0,0],[6.5,.28,.18])), true);
     material.dispose();
 });
+
+
+test('optional render budgets prefetch invisibly, avoid threshold jitter, and restore without a second load', async () => {
+    const assets = {};
+    const requests = [];
+    const streamer = createSpatialModelStreamer({
+        chunks: [chunk('ornament', 0, { renderDistance: 60 }), chunk('required-surface')],
+        load: async (_url, {chunk: spec}) => {
+            requests.push(spec.id);
+            const model = asset();
+            model.root.add(new THREE.Object3D());
+            return assets[spec.id] = model;
+        },
+        attach() {},
+    });
+    const move = (height, now) => streamer.update([5, 0, 0], { cameraPosition: [5, height, 0], now });
+    const submitted = (id) => {
+        let count = 0;
+        assets[id].root.traverseVisible((node) => { if (node !== assets[id].root) count += 1; });
+        return count;
+    };
+    try {
+        move(67, 0); // AABB edge 57: between 51 m show and 60 m hide.
+        await waitFor(() => Object.keys(assets).length === 2);
+        assert.equal(submitted('ornament'), 0);
+        assert.equal(submitted('required-surface'), 1);
+        move(60, 250);
+        assert.equal(submitted('ornament'), 1);
+        move(69, 500);
+        assert.equal(submitted('ornament'), 1);
+        move(71, 750);
+        assert.equal(submitted('ornament'), 0);
+        assert.equal(assets.ornament.shadowStates.at(-1), false);
+        move(69, 1000);
+        move(62, 1250);
+        assert.equal(submitted('ornament'), 0);
+        move(60, 1500);
+        assert.equal(submitted('ornament'), 1);
+        assert.deepEqual(requests.sort(), ['ornament', 'required-surface']);
+        assert.equal(assets.ornament.disposed, 0);
+    } finally { streamer.dispose(); }
+});
+
+test('validates optional draw budget and leaves legacy zones opted out', () => {
+    const core = { url: '/core.glb', bounds: { min: [-10, 0, -10], max: [10, 20, 10] } };
+    for (const renderDistance of [0, -15, NaN, null, '60', 101]) {
+        assert.throws(() => validateStreamManifest({ version: 1, core, chunks: [chunk('bad', 0, { renderDistance })] }), /render distance/i);
+    }
+    assert.equal(validateStreamManifest({ version: 1, core, chunks: [chunk('old')] }).chunks[0].renderDistance, undefined);
+    assert.equal(validateStreamManifest({ version: 1, core, chunks: [chunk('detail', 0, { renderDistance: 60 })] }).chunks[0].renderDistance, 60);
+});
+
+test('deployment manifest opts only known cosmetic chunks into the tighter render budget', async () => {
+    const { readFile } = await import('node:fs/promises');
+    const manifest = validateStreamManifest(JSON.parse(await readFile(new URL('../public/model/streaming-manifest.json', import.meta.url))));
+    assert.deepEqual(manifest.chunks.filter(({renderDistance}) => renderDistance !== undefined).map(({id}) => id), [
+        'cafe-tile-detail', 'east-embassy-detail', 'east-kt-detail',
+        'east-kyobo-detail', 'east-museum-detail', 'yellow-shop-detail',
+    ]);
+    assert.equal(manifest.chunks.find(({id}) => id === 'front-terrace-detail').renderDistance, undefined);
+    assert.equal(manifest.chunks.find(({id}) => id === 'rear-stair-detail').renderDistance, undefined);
+    assert.equal(manifest.chunks.find(({id}) => id === 'cafe-interior').renderDistance, undefined);
+});

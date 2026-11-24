@@ -20,9 +20,11 @@ function chunkOf(value) {
     const loadDistance = positive(value.loadDistance, 90, 'load distance');
     const unloadDistance = positive(value.unloadDistance, loadDistance * 1.65, 'unload distance');
     if (unloadDistance <= loadDistance) throw new Error('Unload distance must exceed load distance');
+    const maxViewDistance = positive(value.maxViewDistance, loadDistance * 3, 'view distance');
+    const renderDistance = value.renderDistance === undefined ? undefined : positive(value.renderDistance, undefined, 'render distance');
+    if (renderDistance > maxViewDistance) throw new Error('Render distance must not exceed view distance');
     return {
-        ...value, bounds: boundsOf(value.bounds, value.id), loadDistance, unloadDistance,
-        maxViewDistance: positive(value.maxViewDistance, loadDistance * 3, 'view distance'),
+        ...value, bounds: boundsOf(value.bounds, value.id), loadDistance, unloadDistance, maxViewDistance, renderDistance,
         shadowDistance: positive(value.shadowDistance, 45, 'shadow distance'),
     };
 }
@@ -48,12 +50,12 @@ function distance(point, bounds, flat = false) {
 export function createSpatialModelStreamer({ chunks, load, attach, onChange = () => {}, concurrency = 1,
     unloadDelayMs = 20000, retryDelayMs = 30000 }) {
     const entries = chunks.map((value) => ({ chunk: chunkOf(value), state: 'idle', asset: null, controller: null,
-        cancelled: false, farSince: null, retryAt: 0, shadow: null, attempts: 0, focusDistance: Infinity, proximityDistance: Infinity, viewDistance: Infinity }));
+        cancelled: false, farSince: null, retryAt: 0, shadow: null, visible: false, attempts: 0, focusDistance: Infinity, proximityDistance: Infinity, viewDistance: Infinity }));
     let closed = false; let active = 0; let current = null; let paused = false;
 
     const release = (entry) => {
         const value = entry.asset;
-        entry.asset = null; entry.state = 'idle'; entry.shadow = null; entry.farSince = null;
+        entry.asset = null; entry.state = 'idle'; entry.shadow = null; entry.visible = false; entry.farSince = null;
         value?.dispose();
         if (value) onChange();
     };
@@ -68,9 +70,14 @@ export function createSpatialModelStreamer({ chunks, load, attach, onChange = ()
     };
     const display = (entry) => {
         if (!entry.asset) return;
-        const visible = !far(entry);
-        let changed = entry.asset.root.visible !== visible;
-        entry.asset.root.visible = visible;
+        // 장식 청크만 GPU 제출 거리와 다운로드 거리를 분리합니다. / Opt-in detail can stay warm without rendering.
+        // A hidden chunk only returns 15% inside the exit limit; geometry and texture handles are retained.
+        const budget = entry.chunk.renderDistance;
+        const visible = !far(entry) && (budget === undefined || entry.viewDistance <= budget * (entry.visible ? 1 : 0.85));
+        const root = entry.asset.root;
+        let changed = root.visible !== visible;
+        if (changed) root.visible = visible;
+        entry.visible = visible;
         const shadow = visible && entry.viewDistance <= entry.chunk.shadowDistance;
         if (entry.shadow !== shadow) { entry.asset.setShadows?.(shadow); entry.shadow = shadow; changed = true; }
         if (changed) onChange();
@@ -132,3 +139,4 @@ export function createSpatialModelStreamer({ chunks, load, attach, onChange = ()
         },
     };
 }
+
