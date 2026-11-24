@@ -1,0 +1,24 @@
+{
+  "meshNames": [
+    "Rear colonnade - linear ceiling and access panels",
+    "Rear columns - beveled stone joints and foot",
+    "Rear columns - vertical stone panel joints",
+    "stone"
+  ],
+  "trianglesBefore": 7968,
+  "trianglesAfter": 8640,
+  "nonWhiteExportedVertices": 592,
+  "nonWhitePerColumn": {
+    "0": 92,
+    "1": 64,
+    "2": 94,
+    "3": 88,
+    "4": 64,
+    "5": 96,
+    "6": 94
+  },
+  "outsideShaftTrianglesPreserved": true,
+  "textureBytesPreserved": true,
+  "bytesBefore": 634592,
+  "bytesAfter": 802292
+}
