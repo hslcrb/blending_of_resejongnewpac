@@ -1,0 +1,212 @@
+[
+  {
+    "id": "east-embassy-detail",
+    "name": "before",
+    "near": [
+      16,
+      1440
+    ],
+    "far": [
+      16,
+      1440
+    ],
+    "jitter": [
+      16,
+      1440
+    ],
+    "returnNear": [
+      16,
+      1440
+    ],
+    "loads": 1
+  },
+  {
+    "id": "east-embassy-detail",
+    "name": "after",
+    "near": [
+      16,
+      1440
+    ],
+    "far": [
+      0,
+      0
+    ],
+    "jitter": [
+      0,
+      0
+    ],
+    "returnNear": [
+      16,
+      1440
+    ],
+    "loads": 1
+  },
+  {
+    "id": "east-kt-detail",
+    "name": "before",
+    "near": [
+      13,
+      996
+    ],
+    "far": [
+      18,
+      1188
+    ],
+    "jitter": [
+      18,
+      1188
+    ],
+    "returnNear": [
+      13,
+      996
+    ],
+    "loads": 1
+  },
+  {
+    "id": "east-kt-detail",
+    "name": "after",
+    "near": [
+      13,
+      996
+    ],
+    "far": [
+      0,
+      0
+    ],
+    "jitter": [
+      0,
+      0
+    ],
+    "returnNear": [
+      13,
+      996
+    ],
+    "loads": 1
+  },
+  {
+    "id": "east-kyobo-detail",
+    "name": "before",
+    "near": [
+      2,
+      540
+    ],
+    "far": [
+      6,
+      960
+    ],
+    "jitter": [
+      6,
+      960
+    ],
+    "returnNear": [
+      2,
+      540
+    ],
+    "loads": 1
+  },
+  {
+    "id": "east-kyobo-detail",
+    "name": "after",
+    "near": [
+      2,
+      540
+    ],
+    "far": [
+      0,
+      0
+    ],
+    "jitter": [
+      0,
+      0
+    ],
+    "returnNear": [
+      2,
+      540
+    ],
+    "loads": 1
+  },
+  {
+    "id": "east-museum-detail",
+    "name": "before",
+    "near": [
+      16,
+      1632
+    ],
+    "far": [
+      16,
+      1632
+    ],
+    "jitter": [
+      16,
+      1632
+    ],
+    "returnNear": [
+      16,
+      1632
+    ],
+    "loads": 1
+  },
+  {
+    "id": "east-museum-detail",
+    "name": "after",
+    "near": [
+      16,
+      1632
+    ],
+    "far": [
+      0,
+      0
+    ],
+    "jitter": [
+      0,
+      0
+    ],
+    "returnNear": [
+      16,
+      1632
+    ],
+    "loads": 1
+  },
+  {
+    "id": "yellow-shop-detail",
+    "name": "before",
+    "near": [
+      8,
+      2124
+    ],
+    "far": [
+      8,
+      2124
+    ],
+    "jitter": [
+      8,
+      2124
+    ],
+    "returnNear": [
+      8,
+      2124
+    ],
+    "loads": 1
+  },
+  {
+    "id": "yellow-shop-detail",
+    "name": "after",
+    "near": [
+      8,
+      2124
+    ],
+    "far": [
+      0,
+      0
+    ],
+    "jitter": [
+      0,
+      0
+    ],
+    "returnNear": [
+      8,
+      2124
+    ],
+    "loads": 1
+  }
+]
