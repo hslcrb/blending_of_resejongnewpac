@@ -55,7 +55,7 @@ async function snap(frame,name) {
                     assert.deepEqual(errors,[]);
                     continue;
                 }
-                const gardenEnd=scenario==='after'?'/gratitude-field.glb':'/20261103-gratitude-garden.glb';
+                const gardenEnd=scenario==='after'?'/gratitude-plaza.glb':'/20261103-gratitude-garden.glb';
                 const gardenPromise=!models.some(r=>r.url.endsWith(gardenEnd)&&r.status===200) && p.waitForResponse(r=>r.url().endsWith(gardenEnd)&&r.status()===200,timeout);
                 await news.selectOption('gratitude-garden',timeout);
                 if(gardenPromise) await gardenPromise;

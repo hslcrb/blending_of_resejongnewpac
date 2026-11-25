@@ -1,0 +1,31 @@
+{
+  "url": "/model/public-axis-20261125/gratitude-plaza.glb",
+  "bytes": 566948,
+  "objects": 262,
+  "bounds": {
+    "min": [
+      55.0,
+      -3.42,
+      49.3
+    ],
+    "max": [
+      158.5,
+      6.251,
+      117.3
+    ]
+  },
+  "sha256": "5b66affa6d78794204418e175a625dc550c22b73058bcec26df9697a302f3b56",
+  "sourceGitBlob": "9104c40f3c4f22cecab9afebd81ebfc5bcfe7759",
+  "layoutSha256": "b7af01b7ef5e777cea4b1863315c6961058c6909de0bb0e3b18b1af42efcfa70",
+  "atlasSha256": "ab8e2a9c4a88be73d4938d30817b688b685872684e358549744b54d19b5205cf",
+  "donationModules": [
+    "nl",
+    "in",
+    "gr",
+    "be",
+    "lu",
+    "no",
+    "de",
+    "se"
+  ]
+}
