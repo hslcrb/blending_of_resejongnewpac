@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": "20261125-public-axis-v2",
+  "revision": "20261125-public-axis-v3-field",
   "focusBounds": {
     "min": [
       -78,
@@ -325,18 +325,18 @@
     },
     {
       "id": "gratitude-garden",
-      "url": "/model/public-axis-20261125/gratitude.glb",
-      "bytes": 176408,
-      "objects": 274,
+      "url": "/model/public-axis-20261125/gratitude-field.glb",
+      "bytes": 398540,
+      "objects": 334,
       "bounds": {
         "min": [
-          62.712,
+          62.72,
           -3.42,
           56.92
         ],
         "max": [
           158.5,
-          6.25,
+          6.259,
           117.3
         ]
       },
@@ -344,7 +344,7 @@
       "unloadDistance": 155,
       "shadowDistance": 55,
       "maxViewDistance": 330,
-      "sha256": "8654acb262960ba3f2935bd286057aab23a6331ce02d160180a97e44ee2c93cf"
+      "sha256": "ff181c49ecd7d77c9e42770fcc990a9e32ce6de81c20d80005a452eb908dba3d"
     },
     {
       "id": "plaza-water-detail",
@@ -636,8 +636,8 @@
     }
   ],
   "sTheatrePatch": {
-    "url": "/model/public-axis-20261125/theatre.glb",
-    "bytes": 321244,
+    "url": "/model/public-axis-20261125/theatre-field.glb",
+    "bytes": 321252,
     "objects": 14,
     "bounds": {
       "min": [
@@ -651,7 +651,7 @@
         260.0
       ]
     },
-    "sha256": "f26b843bf44489c816fdc8d1b877191ad738d4d9aa428aaa5b44664ca368ff3e",
+    "sha256": "1007a1b21d6397ae0057b56be8cdd8bf7ad9175a83256e0306cf73cc46e706db",
     "hideFromCore": [
       "ground",
       "Surroundings - continuous plaza foundation",

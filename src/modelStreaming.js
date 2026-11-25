@@ -36,7 +36,7 @@ export function validateStreamManifest(value) {
     if (new Set(chunks.map((item) => item.id)).size !== chunks.length) throw new Error('Duplicate spatial chunk id');
     const patch = value.sTheatrePatch;
     const sTheatrePatch = patch && typeof patch.url === 'string'
-        && /^\/model\/[a-z0-9_-]+\/theatre[.]glb$/i.test(patch.url)
+        && /^\/model\/[a-z0-9_-]+\/theatre(?:-field)?[.]glb$/i.test(patch.url)
         && Array.isArray(patch.hideFromCore) && patch.hideFromCore.length === 8
         && patch.hideFromCore.every(name => typeof name === 'string' && name.length <= 150)
         ? { url: patch.url, hideFromCore: [...patch.hideFromCore] } : undefined;

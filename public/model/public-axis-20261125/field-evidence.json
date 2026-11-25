@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "sourceGitBlob": "9104c40f3c4f22cecab9afebd81ebfc5bcfe7759",
+  "theatre": {
+    "url": "/model/public-axis-20261125/theatre-field.glb",
+    "bytes": 321252,
+    "objects": 14,
+    "bounds": {
+      "min": [
+        -210.0,
+        -3.38,
+        -168.0
+      ],
+      "max": [
+        240.0,
+        6.02,
+        260.0
+      ]
+    },
+    "sha256": "1007a1b21d6397ae0057b56be8cdd8bf7ad9175a83256e0306cf73cc46e706db"
+  },
+  "garden": {
+    "url": "/model/public-axis-20261125/gratitude-field.glb",
+    "bytes": 398540,
+    "objects": 334,
+    "bounds": {
+      "min": [
+        62.72,
+        -3.42,
+        56.92
+      ],
+      "max": [
+        158.5,
+        6.259,
+        117.3
+      ]
+    },
+    "sha256": "ff181c49ecd7d77c9e42770fcc990a9e32ce6de81c20d80005a452eb908dba3d"
+  },
+  "north": {
+    "url": "/model/public-axis-20261125/gwanghwamun.glb",
+    "bytes": 297864,
+    "objects": 42,
+    "bounds": {
+      "min": [
+        239.0,
+        -0.28,
+        18.957
+      ],
+      "max": [
+        438.0,
+        18.79,
+        145.0
+      ]
+    },
+    "sha256": "3bc0cf9b09c33376c017920e6946a57c0fbcffcee55e1bd90d456bcd7e813e88"
+  },
+  "hideFromCore": [
+    "ground",
+    "Surroundings - continuous plaza foundation",
+    "Pavilion - dark metal grid",
+    "Pavilion - low stone plinth",
+    "Pavilion - SEJONG S THEATER letters",
+    "Pavilion - tinted glazing",
+    "Pavilion - unlit garden uplights",
+    "Pavilion - upper band and suggested entry"
+  ],
+  "theatreLayout": {
+    "minX": 28.9,
+    "maxX": 36.5,
+    "minY": 111.25,
+    "maxY": 122.5,
+    "doorMinY": 120.35,
+    "doorMaxY": 121.85,
+    "wellMinX": 30.15,
+    "wellMaxX": 35.4,
+    "wellMinY": 112.6,
+    "wellMaxY": 119.15,
+    "stairTopY": 118.6,
+    "stairBottomY": 113.48,
+    "top": 0.24,
+    "bottom": -3.16,
+    "steps": 20,
+    "publicFace": "north"
+  },
+  "northAnchor": {
+    "latitude": 37.576044,
+    "longitude": 126.977019,
+    "x": 413.324,
+    "z": 72.957
+  }
+}
