@@ -3,8 +3,8 @@
   "sourceGitBlob": "9104c40f3c4f22cecab9afebd81ebfc5bcfe7759",
   "theatre": {
     "url": "/model/public-axis-20261125/theatre.glb",
-    "bytes": 273360,
-    "objects": 13,
+    "bytes": 321244,
+    "objects": 14,
     "bounds": {
       "min": [
         -210.0,
@@ -17,11 +17,11 @@
         260.0
       ]
     },
-    "sha256": "0fd16cbed3a390620ca83927151a898b921c58de8c33ffa76cdb5560812e2873"
+    "sha256": "f26b843bf44489c816fdc8d1b877191ad738d4d9aa428aaa5b44664ca368ff3e"
   },
   "garden": {
     "url": "/model/public-axis-20261125/gratitude.glb",
-    "bytes": 179024,
+    "bytes": 176408,
     "objects": 274,
     "bounds": {
       "min": [
@@ -35,12 +35,12 @@
         117.3
       ]
     },
-    "sha256": "f6945e5c07dc5b020bb34c7536eca163632c07942def9bd82754954788a4922f"
+    "sha256": "8654acb262960ba3f2935bd286057aab23a6331ce02d160180a97e44ee2c93cf"
   },
   "north": {
     "url": "/model/public-axis-20261125/gwanghwamun.glb",
-    "bytes": 316544,
-    "objects": 44,
+    "bytes": 297864,
+    "objects": 42,
     "bounds": {
       "min": [
         239.0,
@@ -53,7 +53,7 @@
         145.0
       ]
     },
-    "sha256": "cd7ef7fe3b1ae327b634ab3a90748e0a7b2a14a55c8d0c7e2809b9424af32832"
+    "sha256": "3bc0cf9b09c33376c017920e6946a57c0fbcffcee55e1bd90d456bcd7e813e88"
   },
   "hideFromCore": [
     "ground",

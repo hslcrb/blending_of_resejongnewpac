@@ -34,7 +34,13 @@ export function validateStreamManifest(value) {
         || !Array.isArray(value.chunks)) throw new Error('Unsupported spatial model manifest');
     const chunks = value.chunks.map(chunkOf);
     if (new Set(chunks.map((item) => item.id)).size !== chunks.length) throw new Error('Duplicate spatial chunk id');
-    return { ...value, core: { ...value.core, bounds: boundsOf(value.core.bounds, 'core') },
+    const patch = value.sTheatrePatch;
+    const sTheatrePatch = patch && typeof patch.url === 'string'
+        && /^\/model\/[a-z0-9_-]+\/theatre[.]glb$/i.test(patch.url)
+        && Array.isArray(patch.hideFromCore) && patch.hideFromCore.length === 8
+        && patch.hideFromCore.every(name => typeof name === 'string' && name.length <= 150)
+        ? { url: patch.url, hideFromCore: [...patch.hideFromCore] } : undefined;
+    return { ...value, sTheatrePatch, core: { ...value.core, bounds: boundsOf(value.core.bounds, 'core') },
         focusBounds: value.focusBounds ? boundsOf(value.focusBounds, 'focus') : undefined, chunks };
 }
 
@@ -128,6 +134,7 @@ export function createSpatialModelStreamer({ chunks, load, attach, onChange = ()
             }
             else drain();
         },
+        isVisible(id) { return entries.some(entry => entry.chunk.id === id && entry.state === 'loaded' && entry.visible); },
         snapshot() {
             return entries.map((entry) => ({ id: entry.chunk.id, state: entry.state, visible: entry.asset?.root.visible ?? false,
                 attempts: entry.attempts, focusDistance: entry.focusDistance, proximityDistance: entry.proximityDistance, viewDistance: entry.viewDistance }));

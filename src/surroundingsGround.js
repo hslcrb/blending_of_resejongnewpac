@@ -1,11 +1,18 @@
+import { northAxisHeight, sTheatreHeight } from './publicAxis.js';
+
 // Height overrides for the expanded model; null leaves the original terrain unchanged.
-export function surroundingsGroundHeight(x, z) {
+export function surroundingsGroundHeight(x, z, axis = null) {
+    if(axis?.north && x>=239)return northAxisHeight(x,z);
+    if(axis?.theatre){
+        const newHeight=sTheatreHeight(x,z);
+        if(newHeight!==null)return newHeight;
+    }
     if (x >= -128 && x <= -118 && z >= -7 && z <= 15) return 0.12;
     if (x >= -69 && x <= -49.5 && z >= 19.4 && z <= 30.8) return 0.195;
     if (x > -49.5 && x <= -48.6 && z >= 19.4 && z <= 30.8) {
         return 0.195 - (x + 49.5) * (0.185 / 0.9);
     }
-    if (x >= 29.4 && x <= 34 && z >= -122.5 && z <= -111.08) return 0.23;
+    if (!axis?.theatre && x >= 29.4 && x <= 34 && z >= -122.5 && z <= -111.08) return 0.23;
     if (x >= -55 && x <= -2 && z >= 94 && z <= 108) {
         if (x >= -47 && x <= -43 && z < 98) return 0;
         if (x >= -54.88 && x <= -50.45 && z >= 94.04 && z < 103.04) {

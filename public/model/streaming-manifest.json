@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": "20261105-unified-building-v1",
+  "revision": "20261125-public-axis-v2",
   "focusBounds": {
     "min": [
       -78,
@@ -325,25 +325,26 @@
     },
     {
       "id": "gratitude-garden",
-      "url": "/model/stream/20261103-gratitude-garden.glb",
-      "bytes": 154044,
-      "objects": 114,
+      "url": "/model/public-axis-20261125/gratitude.glb",
+      "bytes": 176408,
+      "objects": 274,
       "bounds": {
         "min": [
-          62.55,
+          62.712,
           -3.42,
           56.92
         ],
         "max": [
           158.5,
-          6.27,
+          6.25,
           117.3
         ]
       },
       "loadDistance": 100,
       "unloadDistance": 155,
       "shadowDistance": 55,
-      "maxViewDistance": 330
+      "maxViewDistance": 330,
+      "sha256": "8654acb262960ba3f2935bd286057aab23a6331ce02d160180a97e44ee2c93cf"
     },
     {
       "id": "plaza-water-detail",
@@ -609,6 +610,57 @@
       "shadowDistance": 40,
       "maxViewDistance": 140,
       "renderDistance": 70
+    },
+    {
+      "id": "gwanghwamun-north-axis",
+      "url": "/model/public-axis-20261125/gwanghwamun.glb",
+      "bytes": 297864,
+      "objects": 42,
+      "bounds": {
+        "min": [
+          239.0,
+          -0.28,
+          18.957
+        ],
+        "max": [
+          438.0,
+          18.79,
+          145.0
+        ]
+      },
+      "sha256": "3bc0cf9b09c33376c017920e6946a57c0fbcffcee55e1bd90d456bcd7e813e88",
+      "loadDistance": 135,
+      "unloadDistance": 225,
+      "shadowDistance": 85,
+      "maxViewDistance": 420
     }
-  ]
+  ],
+  "sTheatrePatch": {
+    "url": "/model/public-axis-20261125/theatre.glb",
+    "bytes": 321244,
+    "objects": 14,
+    "bounds": {
+      "min": [
+        -210.0,
+        -3.38,
+        -168.0
+      ],
+      "max": [
+        240.0,
+        6.02,
+        260.0
+      ]
+    },
+    "sha256": "f26b843bf44489c816fdc8d1b877191ad738d4d9aa428aaa5b44664ca368ff3e",
+    "hideFromCore": [
+      "ground",
+      "Surroundings - continuous plaza foundation",
+      "Pavilion - dark metal grid",
+      "Pavilion - low stone plinth",
+      "Pavilion - SEJONG S THEATER letters",
+      "Pavilion - tinted glazing",
+      "Pavilion - unlit garden uplights",
+      "Pavilion - upper band and suggested entry"
+    ]
+  }
 }

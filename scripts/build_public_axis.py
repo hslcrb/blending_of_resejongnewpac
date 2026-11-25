@@ -120,13 +120,13 @@ def grain(name, color, seed, folder, tiles=False):
     r = np.random.default_rng(seed)
     y,x = np.mgrid[0:size,0:size] * (2*pi/size)
     large = np.sin(3*x+2*y)+.8*np.cos(5*x-3*y)+.45*np.sin(15*x+12*y)
-    fine = np.clip(r.normal(0,.065,(size,size)),-.16,.16)
-    fleck = np.where(r.random((size,size))>.97, .12, 0)
-    val = .041*large + fine + fleck
+    fine = np.clip(r.normal(0,.029,(size,size)),-.075,.075)
+    fleck = np.where(r.random((size,size))>.995, .06, 0)
+    val = .009*large + fine + fleck
     if tiles:
         val -= .21*((np.mod(np.arange(size),64)[:,None]<1)|(np.mod(np.arange(size),64)[None,:]<1))
     a = np.ones((size,size,4),dtype=np.float32)
-    a[:,:,:3] = np.clip(np.array(color)[None,None,:]+val[:,:,None],0,1)**2.2
+    a[:,:,:3] = np.clip(np.array(color)[None,None,:]+val[:,:,None],0,1)
     img = bpy.data.images.new(name,width=size,height=size,alpha=False)
     img.pixels.foreach_set(a.ravel())
     img.filepath_raw=str(Path(folder)/(name+".jpg"))
@@ -313,6 +313,17 @@ def theatre_model(c, mats):
     interior.box(m["wall"],w0+.12,w1-.12,ws+.12,ws+.24,p["bottom"],.24)
     interior.box(m["tactile"],a+.12,w0-.11,d0+.09,d1-.09,.24,.255)
     interior.finish()
+    # The freestanding S appears both at opening and in the 2026 site visit.
+    sign_curve=bpy.data.curves.new("Entrance freestanding S",'FONT')
+    sign_curve.body="S";sign_curve.size=2.02;sign_curve.extrude=.085
+    sign_curve.bevel_depth=.015;sign_curve.resolution_u=9
+    sign=bpy.data.objects.new("S Theatre / freestanding entrance S",sign_curve)
+    sign.location=(27.95,122.64,.22);sign.rotation_euler=(pi/2,0,-pi/2)
+    c.objects.link(sign);sign.data.materials.append(m["yellow"])
+    bpy.ops.object.select_all(action='DESELECT');sign.select_set(True)
+    bpy.context.view_layer.objects.active=sign
+    bpy.ops.object.convert(target='MESH')
+    sign.select_set(False)
 
 
 def garden_model(c,m):
@@ -354,7 +365,7 @@ def gate_model(c,m):
     for i in range(5):
         lo=-48.7+i*stair_length/5
         p.box(m["stone"],-14.85,14.85,lo,lo+stair_length/5,.03,.164*(i+1))
-    p.box(m["granite"],-14.85,14.85,-46.3,-8.78,.03,.76)
+    p.box(m["stone"],-14.85,14.85,-46.3,-8.78,.03,.76)
     p.box(m["stone"],-14.72,14.72,-46.3,-8.65,.76,.82)
     p.box(m["stone_lite"],-3.5,3.5,-46.3,-8.55,.821,.85)
     for x in (-14.3,14.3):
@@ -369,15 +380,15 @@ def gate_model(c,m):
     p.finish()
 
     wall=Batch("Gwanghwamun / three vaulted stone passages",c,gt)
-    wall.box(m["granite"],-17,17,-8.9,8.4,5.05,7.55)
+    wall.box(m["stone"],-17,17,-8.9,8.4,5.05,7.55)
     for side in (-1,1):
         x=side*18
-        wall.box(m["granite"],min(x,side*54),max(x,side*54),-2.3,2.3,0,4.24)
+        wall.box(m["stone"],min(x,side*54),max(x,side*54),-2.3,2.3,0,4.24)
         wall.box(m["tile"],min(x,side*54),max(x,side*54),-2.5,2.5,4.24,4.54)
     opening=[(-10.3,1.62,2.73),(0,2.13,3.63),(10.3,1.62,2.73)]
     spans=[-17]+[x+v*w for x,w,_ in opening for v in (-1,1)]+[17]
     for l,r in zip(spans[::2],spans[1::2]):
-        wall.box(m["granite"],l,r,-8.9,8.4,0,5.06)
+        wall.box(m["stone"],l,r,-8.9,8.4,0,5.06)
     for x,width,spring in opening:
         crown=min(4.97,spring+width*.78)
         radius=crown-spring
@@ -385,7 +396,7 @@ def gate_model(c,m):
             t0=pi*i/19;t1=pi*(i+1)/19
             a=x-width*cos(t0);b=x-width*cos(t1)
             z0=spring+radius*sin(t0);z1=spring+radius*sin(t1)
-            wall.shape(m["granite"],[(a,-8.9,z0),(b,-8.9,z1),(a,-8.9,5.06),(b,-8.9,5.06),
+            wall.shape(m["stone"],[(a,-8.9,z0),(b,-8.9,z1),(a,-8.9,5.06),(b,-8.9,5.06),
                         (a,8.4,z0),(b,8.4,z1),(a,8.4,5.06),(b,8.4,5.06)],
                        [(0,2,3,1),(4,5,7,6),(0,1,5,4),(2,6,7,3)])
             wall.beam(m["stone_lite"],(a,-8.94,z0+.075),(b,-8.94,z1+.075),.18)
@@ -499,12 +510,12 @@ def main():
         def stone(name,c,seed,period=2.,tiles=False):
             return material(name,c,texture=grain(name,c,seed,tmp,tiles),period=period)
         m={
-         "granite":stone("Granite fine salt and pepper",(.48,.50,.53),44,.48),
-         "stone":stone("Warm pale cut stone",(.64,.61,.56),25,.74),
+         "granite":stone("Granite fine salt and pepper",(.57,.58,.60),44,.88),
+         "stone":stone("Warm pale cut stone",(.68,.66,.60),25,1.15),
          "floor":stone("Hewn grey pavers",(.6,.61,.60),58,2.7,True),
-         "steps":stone("Charcoal stair paving",(.28,.30,.31),82,.62),
+         "steps":stone("Charcoal stair paving",(.32,.34,.35),82,1.08),
          "wall":stone("S Theatre pale mineral wall",(.78,.77,.70),67,1.9),
-         "tile":stone("Dark ink ceramic roof tiles",(.21,.25,.235),91,.44),
+         "tile":stone("Dark ink ceramic roof tiles",(.23,.27,.26),91,.66),
          "asphalt":stone("North road aggregate",(.31,.33,.34),79,.79),
          "steel":material("Dark anodized curtainwall",(.035,.047,.050),.35,.42),
          "inner":material("Light steel skylight framing",(.46,.53,.43),.39,.35),
@@ -526,6 +537,7 @@ def main():
          "lattice":material("Dark wooden lattice",(.085,.12,.074),.69),
          "tile_edge":material("Roof ridge and roll tiles",(.074,.097,.085),.57),
          "sign":material("Gate inscription board",(.11,.076,.041),.55),
+         "yellow":material("S Theatre warm yellow sign",(.83,.49,.022),.32,.14),
          "stripe":material("Crosswalk paint",(.79,.78,.74),.83),
          "green":stone("Yukjo lawn aggregate",(.29,.39,.19),97,1.9),
         }
