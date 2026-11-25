@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+
+:root { font-family: 'Noto Sans KR', sans-serif; color: #193443; background: #edf8f8; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; }
+button { font: inherit; }
+button:focus-visible, a:focus-visible, .viewer-canvas:focus-visible { outline: 3px solid #167992; outline-offset: 3px; }
+button:disabled { cursor: not-allowed; opacity: .5; }
+
+/* 빛과 공기를 담은 페이지 표면 / An airy page surface. */
+.app-shell { min-height: 100vh; overflow: hidden; background: radial-gradient(ellipse at 92% 2%, rgba(255,255,255,.96) 0, transparent 36%), radial-gradient(ellipse at 5% 36%, rgba(191,235,232,.55) 0, transparent 33%), linear-gradient(160deg, #e5f5f5 0%, #f3faf8 55%, #d8eeec 100%); }
+.site-header, .main-content, .site-footer { width: min(1440px, calc(100% - 96px)); margin-inline: auto; }
+.site-header { height: 100px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(73,126,132,.2); }
+.brand { color: inherit; display: inline-flex; align-items: center; gap: 13px; text-decoration: none; }
+.brand strong, .brand small { display: block; }
+.brand strong { font-size: 14px; font-weight: 700; letter-spacing: -.04em; }
+.brand small { color: #5e8990; font: 700 9px 'DM Sans', sans-serif; letter-spacing: .13em; margin-top: 3px; }
+.brand-mark { position: relative; width: 34px; height: 34px; border: 1px solid #79b1ad; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(145deg, #fff, #c4eae4); box-shadow: inset 0 1px 4px #fff, 0 3px 9px #9fc7c144; }
+.brand-mark span { width: 15px; height: 15px; border: 2px solid #3a8a83; border-radius: 50%; }
+.brand-mark::after { content: ''; position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #3a8a83; }
+.header-location { font: 700 10px 'DM Sans', sans-serif; letter-spacing: .16em; color: #729599; }
+.header-location span, .eyebrow span, .status-dot { display: inline-block; width: 7px; height: 7px; background: #56ae9f; border-radius: 50%; margin-right: 8px; box-shadow: 0 0 0 4px #9dd8cb55; }
+.intro { display: flex; justify-content: space-between; align-items: end; padding: 75px 0 47px; }
+.eyebrow { margin: 0 0 20px; color: #4c898d; font: 700 10px 'DM Sans', sans-serif; letter-spacing: .16em; }
+.intro h1 { margin: 0; color: #15384a; font-size: clamp(38px, 4.3vw, 67px); letter-spacing: -.07em; line-height: 1.19; font-weight: 700; }
+.intro h1 em { color: #468e86; font-style: normal; }
+.intro-copy { color: #62808a; font-size: 15px; line-height: 1.8; margin: 22px 0 0; letter-spacing: -.035em; }
+.intro-aside { display: flex; align-items: center; gap: 16px; padding-bottom: 6px; color: #688c8e; }
+.intro-aside p { font-size: 12px; line-height: 1.65; margin: 0; }
+.aside-number { color: #4c908d; font: 600 11px 'DM Sans', sans-serif; white-space: nowrap; }
+.aside-line { width: 34px; height: 1px; background: #98c6c1; }
+
+/* 건축 모형과 조작 / Model and controls. */
+.experience { border: 1px solid rgba(255,255,255,.95); border-radius: 24px; background: rgba(255,255,255,.58); box-shadow: 0 20px 65px #568e8a1c, inset 0 1px #fff; padding: 22px; }
+.experience-top { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 0 2px 20px; }
+.experience-title { display: flex; align-items: center; gap: 12px; }
+.experience-title .status-dot { margin: 0 0 0 5px; }
+.experience-title small { display: block; color: #7aa6a3; font: 700 9px 'DM Sans', sans-serif; letter-spacing: .16em; margin-bottom: 4px; }
+.experience-title h2 { margin: 0; font-size: 15px; line-height: 1.3; letter-spacing: -.04em; }
+.experience-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.mode-switch { display: flex; gap: 3px; border-radius: 99px; padding: 4px; background: #dbeeea; border: 1px solid #cde5df; }
+.mode-switch button, .view-actions button { border: 0; cursor: pointer; }
+.mode-switch button {
+    color: #315f5b;
+    background: transparent;
+    padding: 10px 17px;
+    border-radius: 99px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.mode-switch button span { font-size: 14px; margin-right: 5px; }
+.mode-switch button[aria-pressed='true'] { color: #23655e; background: linear-gradient(180deg,#fff,#ecfaf5); box-shadow: 0 2px 6px #52897b28, inset 0 1px #fff; }
+.fullscreen-btn {
+    color: #286e6a;
+    border: 1px solid #c4e2dc;
+    border-radius: 99px;
+    background: linear-gradient(180deg, #fff, #eaf8f4);
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.fullscreen-btn span {
+    font-size: 16px;
+    margin-right: 6px;
+}
+.fullscreen-btn:hover {
+    background: #fff;
+}
+.fullscreen-error {
+    color: #8a3434;
+    font-size: 13px;
+    margin: 0 3px 12px;
+}
+.experience:fullscreen {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    border: 0;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    background: #eff9f7;
+}
+.experience:fullscreen .view-frame {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+    height: auto;
+}
+.view-frame { position: relative; height: min(68vw, 690px); min-height: 470px; overflow: hidden; border: 1px solid #cee8e7; border-radius: 15px; background: #d2edf2; }
+.viewer-canvas { position: absolute; inset: 0; overflow: hidden; touch-action: none; background: radial-gradient(ellipse at 74% 13%, #fffefa 0%, #f7ffffc9 8%, transparent 31%), linear-gradient(180deg, #a4d9e9 0%, #ddf2f1 57%, #e8f2e7 100%); cursor: grab; }
+.viewer-canvas:active { cursor: grabbing; }
+.viewer-canvas canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.viewer-label { position: absolute; top: 27px; left: 30px; pointer-events: none; text-shadow: 0 1px 8px #ffffffa6; }
+.viewer-label span, .viewer-label strong { display: block; }
+.viewer-label span { color: #508b8e; font: 700 9px 'DM Sans', sans-serif; letter-spacing: .18em; }
+.viewer-label strong { color: #315e68; font-size: 13px; margin-top: 6px; letter-spacing: -.04em; }
+.view-actions { position: absolute; right: 22px; top: 22px; display: flex; gap: 7px; }
+.view-actions button {
+    color: #234f50;
+    border: 1px solid #ffffffd6;
+    border-radius: 99px;
+    background: rgb(249 255 255 / 90%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px #679b9a1c;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 700;
+}
+.view-actions button:hover { background: #fff; }
+.viewer-hint {
+    position: absolute;
+    left: 24px;
+    bottom: 20px;
+    margin: 0;
+    padding: 9px 13px;
+    border: 1px solid #ffffffb3;
+    background: rgb(247 255 255 / 92%);
+    color: #315e61;
+    border-radius: 18px;
+    font-size: 13px;
+    font-weight: 600;
+    pointer-events: none;
+}
+.hint-touch {
+    display: none;
+}
+@media (hover: none) and (pointer: coarse) {
+    .hint-pointer {
+        display: none;
+    }
+    .hint-touch {
+        display: inline;
+    }
+}
+.viewer-status { position: absolute; inset: 0; z-index: 2; background: #d9eeeece; display: flex; flex-direction: column; gap: 14px; align-items: center; justify-content: center; color: #396b70; font-size: 14px; }
+.viewer-status button { color: white; background: #307d79; border: 0; padding: 10px 16px; border-radius: 99px; cursor: pointer; }
+.walk-pad { position: absolute; right: 22px; bottom: 21px; display: grid; grid-template-columns: repeat(3, 44px); gap: 4px; }
+.move-btn { width: 44px; height: 44px; border-radius: 13px; border: 1px solid #ffffffdf; color: #2c7770; background: #f9ffffca; box-shadow: 0 3px 12px #679b9a25; font-size: 22px; line-height: 1; cursor: pointer; touch-action: none; user-select: none; }
+.move-btn:active { background: #bde5d7; }
+.experience-bottom { display: flex; justify-content: space-between; gap: 20px; padding: 18px 3px 0; align-items: center; }
+.guidance { display: flex; align-items: center; gap: 10px; color: #365e61; }
+.guidance p { margin: 0; font-size: 14px; line-height: 1.6; }
+.guidance-icon { width: 27px; height: 27px; flex: none; display: grid; place-items: center; border-radius: 50%; color: #5aa397; background: #ddf2e9; }
+.model-note { margin: 0; color: #4c6d6b; font-size: 13px; line-height: 1.6; text-align: right; }
+.site-footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px 0 42px; color: #8ba8a7; font-size: 10px; }
+.site-footer span:first-child { font: 700 10px 'DM Sans', sans-serif; letter-spacing: .14em; }
+
+@media (max-width: 900px) {
+    .experience-bottom {
+        align-items: start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .model-note {
+        padding-left: 37px;
+        text-align: left;
+    }
+}
+
+@media (max-width: 700px) {
+    .site-header, .main-content, .site-footer { width: calc(100% - 32px); }
+    .site-header { height: 75px; }
+    .header-location { font-size: 8px; letter-spacing: .08em; }
+    .header-location span { display: none; }
+    .intro { padding: 55px 0 30px; }
+    .intro h1 { font-size: clamp(35px, 10vw, 48px); }
+    .intro-copy { font-size: 13px; }
+    .intro-aside { display: none; }
+    .experience { padding: 13px; border-radius: 19px; }
+    .experience-top { align-items: start; flex-direction: column; gap: 15px; padding-bottom: 14px; }
+    .experience-title h2 { font-size: 14px; }
+    .experience-controls {
+        width: 100%;
+    }
+    .mode-switch { width: 100%; }
+    .mode-switch button { flex: 1; }
+    .fullscreen-btn {
+        padding-inline: 11px;
+    }
+    .view-frame { height: 62vh; min-height: 440px; max-height: 630px; }
+    .viewer-label { top: 18px; left: 18px; }
+    .view-actions { right: 12px; top: 12px; gap: 4px; }
+    .view-actions button { padding: 9px 11px; font-size: 13px; }
+    .viewer-hint { left: 12px; bottom: 12px; max-width: calc(100% - 24px); font-size: 12px; padding: 8px 10px; text-wrap: balance; }
+    .walk-pad { right: 12px; bottom: 76px; grid-template-columns: repeat(3, 44px); }
+    .move-btn { width: 44px; height: 44px; }
+    .site-footer { padding: 28px 0 32px; }
+}
+@media (max-width: 400px) {
+    .viewer-label { display: none; }
+    .experience-controls {
+        align-items: stretch;
+        flex-wrap: wrap;
+    }
+    .fullscreen-btn {
+        min-height: 40px;
+    }
+}
+@media (max-height: 500px) {
+    .experience:fullscreen {
+        padding: 10px;
+    }
+    .experience:fullscreen .experience-top {
+        flex-direction: row;
+        align-items: center;
+        padding-bottom: 8px;
+    }
+    .experience:fullscreen .experience-title small {
+        display: none;
+    }
+    .experience:fullscreen .experience-bottom {
+        padding-top: 6px;
+        gap: 4px;
+    }
+    .experience:fullscreen .experience-controls {
+        width: auto;
+        flex-wrap: nowrap;
+    }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* [서울 3D 도구 / Seoul 3D tools] */
+.area-toolbox { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0; }
+.area-toolbox button { min-height:44px; padding:8px 15px; border:1px solid #cde5df; border-radius:12px; background:#f4fbf9; color:#24534f; cursor:pointer; font-size:16px; }
+.area-toolbox button[aria-pressed='true'] { background:#b9e3d7; font-weight:700; }
+.area-tool-state { margin:6px 2px; color:#315f5b; font-size:16px; line-height:1.5; }
+.viewer-canvas canvas.area-projection { position:absolute; inset:0; pointer-events:none; }
+.map-attribution { position:absolute; z-index:3; right:8px; bottom:8px; max-width:min(65%, 520px); padding:5px 8px; background:#fffffff0; color:#173c39; border-radius:6px; font-size:16px; line-height:1.35; }
+.map-attribution[hidden] { display:none; }
+@media(max-width:600px) { .map-attribution { bottom:55px; max-width:80%; font-size:16px; } }
+
+/* [외부 사이트 내장 / Embedded experience] */
+.app-shell.embedded .site-header, .app-shell.embedded .intro, .app-shell.embedded .site-footer { display:none; }
+.app-shell.embedded .main-content { padding-top:12px; }
+.app-shell.embedded { min-height:0; }
+
+/* [경계 출처와 상태 / Boundary attribution and status] */
+.geography-summary { margin:8px 2px 14px; color:#315f5b; }
+.geography-summary p { margin:6px 0; font-size:16px; line-height:1.5; }
+.geography-summary a { color:#174d47; text-decoration:underline; overflow-wrap:anywhere; }
+.geography-summary button { min-height:44px; padding:8px 14px; font-size:16px; border:1px solid #a8c7be; background:#fff; border-radius:10px; }
+.theatre-entry{display:inline-flex;align-items:center;gap:1rem;margin-top:1.1rem;padding:.85rem 1.15rem;background:#632c38;color:#fff;border-radius:.3rem;font-size:1.1rem;font-weight:700;text-decoration:none}.theatre-entry:hover{background:#4f202a}.theatre-entry:focus-visible{outline:3px solid #427c88;outline-offset:3px}
+
+.embedded-theatre-entry{margin-top:0;min-height:3rem;white-space:nowrap}
+.app-shell.embedded .experience-controls{flex-wrap:wrap}
+
+/* [지도 체험 이동 / Navigate between the walk and map] */
+.route-entry{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.65rem .95rem;border:1px solid #376965;border-radius:.5rem;color:#24534f;background:#fff;font-size:1rem;font-weight:700;text-decoration:none;white-space:nowrap}.route-entry:hover{background:#e4f3ee}.route-entry:focus-visible{outline:3px solid #427c88;outline-offset:3px}.experience-controls{flex-wrap:wrap}

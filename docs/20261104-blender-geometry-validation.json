@@ -1,0 +1,165 @@
+{
+  "results": [
+    {
+      "source": "backups/blender/sejong_before_cafe_terrace.blend",
+      "geometry": {
+        "sha256": "2f23e053950377affdadcf4693a88334df439cb0495de8868ee658f0e3ad834a",
+        "mesh_count": 684
+      }
+    },
+    {
+      "source": "backups/blender/sejong_before_component_entry_trial.blend",
+      "geometry": {
+        "sha256": "6d3920137e574436615b8fa517a3a2f12e1c2f30a1d091c65724bc22ddfdbe3a",
+        "mesh_count": 182
+      }
+    },
+    {
+      "source": "backups/blender/sejong_before_entry_trial.blend",
+      "geometry": {
+        "sha256": "3fd519c3b62577d3b45420398d6f61238e2728ac260749d5d82e28fee70bb9f0",
+        "mesh_count": 180
+      }
+    },
+    {
+      "source": "backups/blender/sejong_before_gratitude.blend",
+      "geometry": {
+        "sha256": "f4403afde1bb711de811e932350bc6780deeabf3c12a1dab9b36dd7b35eb73ec",
+        "mesh_count": 489
+      }
+    },
+    {
+      "source": "backups/blender/sejong_before_masonry_resume.blend",
+      "geometry": {
+        "sha256": "b5101f9fcabd7eb9b5654d3ac2da610c246da48c3bb8349a33b3cec5a5d0787d",
+        "mesh_count": 174
+      }
+    },
+    {
+      "source": "backups/blender/sejong_before_openstage_passage.blend",
+      "geometry": {
+        "sha256": "09ffea7e8953b7c4699c463e70ca58a59a8299870a7d0e928645a5588ecf39de",
+        "mesh_count": 708
+      }
+    },
+    {
+      "source": "backups/blender/sejong_before_pavilion_entry.blend",
+      "geometry": {
+        "sha256": "e1a2371ae264d4da547bc3a82cc7e370aa649c240ed4d642a3b448fab3ffd7b2",
+        "mesh_count": 679
+      }
+    },
+    {
+      "source": "backups/blender/sejong_before_shop_detail.blend",
+      "geometry": {
+        "sha256": "c2e0d38f3b9762716cc8b5b2f69e455c40d360236541fb57073dfe72e71e6261",
+        "mesh_count": 384
+      }
+    },
+    {
+      "source": "backups/blender/sejong_before_starbucks_interior.blend",
+      "geometry": {
+        "sha256": "5eba1b5a89ff2859309d8d4e051a8ab061e3c760fba393342fa903d903ff2df2",
+        "mesh_count": 716
+      }
+    },
+    {
+      "source": "backups/blender/sejong_before_statue_refine.blend",
+      "geometry": {
+        "sha256": "ec753d23d8b96078a3b773a9dc5c7d23f9e11fec309484421e2d7808a76be976",
+        "mesh_count": 639
+      }
+    },
+    {
+      "source": "backups/blender/sejong_before_surroundings.blend",
+      "geometry": {
+        "sha256": "011a3676d1aa33d63530d139301ebede2be4f99052b8f0aefbab96c9e193ade6",
+        "mesh_count": 188
+      }
+    },
+    {
+      "source": "backups/blender/sejong_pre_stair.blend",
+      "geometry": {
+        "sha256": "92d7f3220870783868213e60bd5f3167a96ceac3a3dd767415ce496681f07627",
+        "mesh_count": 155
+      }
+    },
+    {
+      "source": "backups/blender/sejong_pre_stone_trial.blend",
+      "geometry": {
+        "sha256": "b5101f9fcabd7eb9b5654d3ac2da610c246da48c3bb8349a33b3cec5a5d0787d",
+        "mesh_count": 174
+      }
+    },
+    {
+      "source": "backups/blender/sejong_surroundings_before_sunken.blend",
+      "geometry": {
+        "sha256": "c4ebf41a3346c661ec87eb662f8269a812bac62763a1db5cc148e9af679739b2",
+        "mesh_count": 198
+      }
+    },
+    {
+      "source": "blender_work/20261103/sejong_aerial_streaming_20261103.blend",
+      "geometry": {
+        "sha256": "21ffcbd7dcbd1234ab977f214166c71ebc0eb4b17ced58ab84c1a72033d39a61",
+        "mesh_count": 850
+      }
+    },
+    {
+      "source": "blender_work/20261103/sejong_survey_manual_20261103.blend",
+      "geometry": {
+        "sha256": "d60006161a4ba155e83a6636f4220e6898b6417369020f7ee4805d9b6b8f3e5d",
+        "mesh_count": 804
+      }
+    },
+    {
+      "source": "blender_work/20261104/sejong_trees_connected_20261104.blend",
+      "geometry": {
+        "sha256": "9090e58b89f70862366f6e5a3d30046959656654aceddf6b4e8a1ae1b6a00011",
+        "mesh_count": 850
+      }
+    },
+    {
+      "source": "blender_work/20261104-gis-import/sejong_surroundings_gis_work.blend",
+      "geometry": {
+        "sha256": "ecfbb2b1aa475f205b8712e9af0ece98a9d730343330345f0cae6b8522281998",
+        "mesh_count": 807
+      }
+    },
+    {
+      "source": "blender_work/20261104-gis-import/seoul/seoul_buildings_overview.blend",
+      "geometry": {
+        "sha256": "fe9a364d7ca5c73a4c534fc10da211bc51d320588da2de020566fd1b63d55e8d",
+        "mesh_count": 26
+      }
+    },
+    {
+      "source": "blender_work/20261104-gis-import/web/sejong_web_source.blend",
+      "geometry": {
+        "sha256": "ecfbb2b1aa475f205b8712e9af0ece98a9d730343330345f0cae6b8522281998",
+        "mesh_count": 807
+      }
+    },
+    {
+      "source": "public/model/sejong.blend",
+      "geometry": {
+        "sha256": "c0f3672d69d706522e3b13fd37bea10327257dbfa8cc783fbc24d7aedd295e4a",
+        "mesh_count": 122
+      }
+    },
+    {
+      "source": "public/model/sejong_sitevisit_refined.blend",
+      "geometry": {
+        "sha256": "011a3676d1aa33d63530d139301ebede2be4f99052b8f0aefbab96c9e193ade6",
+        "mesh_count": 188
+      }
+    },
+    {
+      "source": "public/model/sejong_surroundings_work.blend",
+      "geometry": {
+        "sha256": "830320c4bd485279b5f4e4499bc56ef68e21b01a3c91760399f714502ccb707b",
+        "mesh_count": 774
+      }
+    }
+  ]
+}

@@ -1,0 +1,607 @@
+{
+  "version": 1,
+  "revision": "20261103-aerial-shared-v1",
+  "focusBounds": {
+    "min": [
+      -78,
+      0,
+      -115
+    ],
+    "max": [
+      80,
+      46,
+      35
+    ]
+  },
+  "core": {
+    "url": "/model/stream/20261103-core.glb",
+    "bytes": 8668108,
+    "objects": 101,
+    "bounds": {
+      "min": [
+        -210,
+        -0.48,
+        -168
+      ],
+      "max": [
+        240,
+        98,
+        260
+      ]
+    }
+  },
+  "chunks": [
+    {
+      "id": "cafe-interior",
+      "url": "/model/stream/20261103-cafe-interior.glb",
+      "bytes": 397224,
+      "objects": 61,
+      "bounds": {
+        "min": [
+          -127.875,
+          0.12,
+          -6.77083
+        ],
+        "max": [
+          -117.8,
+          15.45,
+          14.77083
+        ]
+      },
+      "loadDistance": 45,
+      "unloadDistance": 100,
+      "shadowDistance": 40,
+      "maxViewDistance": 140
+    },
+    {
+      "id": "cafe-tile-detail",
+      "url": "/model/stream/20261103-cafe-tile-detail.glb",
+      "bytes": 1763128,
+      "objects": 1,
+      "bounds": {
+        "min": [
+          -117.864,
+          8.2,
+          -6.5
+        ],
+        "max": [
+          -117.81,
+          15,
+          14.5
+        ]
+      },
+      "loadDistance": 45,
+      "unloadDistance": 100,
+      "shadowDistance": 40,
+      "maxViewDistance": 140
+    },
+    {
+      "id": "campus-planting-center-front",
+      "url": "/model/stream-shared/20261103-campus-planting-center-front.glb",
+      "bytes": 3335820,
+      "objects": 66,
+      "bounds": {
+        "min": [
+          -72.4875,
+          0.16444,
+          -82.84821
+        ],
+        "max": [
+          78.45705,
+          10.90378,
+          37.37748
+        ]
+      },
+      "loadDistance": 50,
+      "unloadDistance": 90,
+      "shadowDistance": 55,
+      "maxViewDistance": 125
+    },
+    {
+      "id": "campus-planting-center-rear",
+      "url": "/model/stream-shared/20261103-campus-planting-center-rear.glb",
+      "bytes": 3222748,
+      "objects": 85,
+      "bounds": {
+        "min": [
+          -69.24618,
+          0.09516,
+          -165.73691
+        ],
+        "max": [
+          74.32401,
+          11.76782,
+          -120.3947
+        ]
+      },
+      "loadDistance": 50,
+      "unloadDistance": 90,
+      "shadowDistance": 55,
+      "maxViewDistance": 125
+    },
+    {
+      "id": "campus-planting-north-front",
+      "url": "/model/stream-shared/20261103-campus-planting-north-front.glb",
+      "bytes": 1021852,
+      "objects": 92,
+      "bounds": {
+        "min": [
+          2.09185,
+          0.17735,
+          -49.28867
+        ],
+        "max": [
+          81.36002,
+          11.29914,
+          37.24986
+        ]
+      },
+      "loadDistance": 50,
+      "unloadDistance": 90,
+      "shadowDistance": 55,
+      "maxViewDistance": 125
+    },
+    {
+      "id": "campus-planting-north-rear",
+      "url": "/model/stream-shared/20261103-campus-planting-north-rear.glb",
+      "bytes": 71284,
+      "objects": 95,
+      "bounds": {
+        "min": [
+          24.02163,
+          0.15716,
+          -165.16199
+        ],
+        "max": [
+          81.33905,
+          12.17157,
+          -51.55243
+        ]
+      },
+      "loadDistance": 50,
+      "unloadDistance": 90,
+      "shadowDistance": 55,
+      "maxViewDistance": 125
+    },
+    {
+      "id": "campus-planting-south-front",
+      "url": "/model/stream-shared/20261103-campus-planting-south-front.glb",
+      "bytes": 53104,
+      "objects": 45,
+      "bounds": {
+        "min": [
+          -72.92814,
+          0.1778,
+          14.15006
+        ],
+        "max": [
+          -46.65869,
+          9.36033,
+          37.9684
+        ]
+      },
+      "loadDistance": 50,
+      "unloadDistance": 90,
+      "shadowDistance": 55,
+      "maxViewDistance": 125
+    },
+    {
+      "id": "campus-planting-south-rear",
+      "url": "/model/stream-shared/20261103-campus-planting-south-rear.glb",
+      "bytes": 61288,
+      "objects": 60,
+      "bounds": {
+        "min": [
+          -72.86548,
+          0.15716,
+          -166.29181
+        ],
+        "max": [
+          -34.54938,
+          11.85855,
+          -120.52682
+        ]
+      },
+      "loadDistance": 50,
+      "unloadDistance": 90,
+      "shadowDistance": 55,
+      "maxViewDistance": 125
+    },
+    {
+      "id": "east-embassy-detail",
+      "url": "/model/stream/20261103-east-embassy-detail.glb",
+      "bytes": 33020,
+      "objects": 16,
+      "bounds": {
+        "min": [
+          40,
+          2.2,
+          162.85001
+        ],
+        "max": [
+          89,
+          28.2,
+          162.99001
+        ]
+      },
+      "loadDistance": 100,
+      "unloadDistance": 155,
+      "shadowDistance": 55,
+      "maxViewDistance": 330
+    },
+    {
+      "id": "east-kt-detail",
+      "url": "/model/stream/20261103-east-kt-detail.glb",
+      "bytes": 39048,
+      "objects": 18,
+      "bounds": {
+        "min": [
+          -207,
+          0.12,
+          152.98
+        ],
+        "max": [
+          237,
+          74.14,
+          163
+        ]
+      },
+      "loadDistance": 100,
+      "unloadDistance": 155,
+      "shadowDistance": 55,
+      "maxViewDistance": 330
+    },
+    {
+      "id": "east-kyobo-detail",
+      "url": "/model/stream/20261103-east-kyobo-detail.glb",
+      "bytes": 22568,
+      "objects": 6,
+      "bounds": {
+        "min": [
+          -95,
+          0.25,
+          162.64
+        ],
+        "max": [
+          -29,
+          98.14,
+          162.99001
+        ]
+      },
+      "loadDistance": 100,
+      "unloadDistance": 155,
+      "shadowDistance": 55,
+      "maxViewDistance": 330
+    },
+    {
+      "id": "east-museum-detail",
+      "url": "/model/stream/20261103-east-museum-detail.glb",
+      "bytes": 35488,
+      "objects": 16,
+      "bounds": {
+        "min": [
+          96,
+          2.2,
+          162.85001
+        ],
+        "max": [
+          150,
+          29.075,
+          162.99001
+        ]
+      },
+      "loadDistance": 100,
+      "unloadDistance": 155,
+      "shadowDistance": 55,
+      "maxViewDistance": 330
+    },
+    {
+      "id": "front-terrace-detail",
+      "url": "/model/stream/20261103-front-terrace-detail.glb",
+      "bytes": 1639312,
+      "objects": 77,
+      "bounds": {
+        "min": [
+          -76.008,
+          0,
+          -11.362
+        ],
+        "max": [
+          121.008,
+          17.49881,
+          125
+        ]
+      },
+      "loadDistance": 45,
+      "unloadDistance": 100,
+      "shadowDistance": 40,
+      "maxViewDistance": 140
+    },
+    {
+      "id": "gratitude-garden",
+      "url": "/model/stream/20261103-gratitude-garden.glb",
+      "bytes": 154044,
+      "objects": 114,
+      "bounds": {
+        "min": [
+          62.55,
+          -3.42,
+          56.92
+        ],
+        "max": [
+          158.5,
+          6.27,
+          117.3
+        ]
+      },
+      "loadDistance": 100,
+      "unloadDistance": 155,
+      "shadowDistance": 55,
+      "maxViewDistance": 330
+    },
+    {
+      "id": "plaza-water-detail",
+      "url": "/model/stream/20261103-plaza-water-detail.glb",
+      "bytes": 66776,
+      "objects": 5,
+      "bounds": {
+        "min": [
+          -210,
+          0,
+          115.1
+        ],
+        "max": [
+          240,
+          0.1,
+          150.2
+        ]
+      },
+      "loadDistance": 100,
+      "unloadDistance": 155,
+      "shadowDistance": 55,
+      "maxViewDistance": 330
+    },
+    {
+      "id": "public-planting-0",
+      "url": "/model/stream-shared/20261103-public-planting-0.glb",
+      "bytes": 23972,
+      "objects": 60,
+      "bounds": {
+        "min": [
+          -191.28915,
+          0.10759,
+          81.6548
+        ],
+        "max": [
+          -83.9774,
+          10.05377,
+          158.67844
+        ]
+      },
+      "loadDistance": 45,
+      "unloadDistance": 90,
+      "shadowDistance": 55,
+      "maxViewDistance": 160
+    },
+    {
+      "id": "public-planting-1",
+      "url": "/model/stream-shared/20261103-public-planting-1.glb",
+      "bytes": 21636,
+      "objects": 50,
+      "bounds": {
+        "min": [
+          -82.28915,
+          0.10759,
+          81.92451
+        ],
+        "max": [
+          1.72525,
+          10.05377,
+          158.67844
+        ]
+      },
+      "loadDistance": 45,
+      "unloadDistance": 90,
+      "shadowDistance": 55,
+      "maxViewDistance": 160
+    },
+    {
+      "id": "public-planting-2",
+      "url": "/model/stream-shared/20261103-public-planting-2.glb",
+      "bytes": 597368,
+      "objects": 52,
+      "bounds": {
+        "min": [
+          -196.11,
+          -0.0785,
+          79.75
+        ],
+        "max": [
+          225.11,
+          9.37135,
+          158.35658
+        ]
+      },
+      "loadDistance": 45,
+      "unloadDistance": 90,
+      "shadowDistance": 55,
+      "maxViewDistance": 160
+    },
+    {
+      "id": "public-planting-3",
+      "url": "/model/stream-shared/20261103-public-planting-3.glb",
+      "bytes": 21624,
+      "objects": 50,
+      "bounds": {
+        "min": [
+          77.17131,
+          0.10759,
+          81.6548
+        ],
+        "max": [
+          160.90907,
+          10.05377,
+          158.67844
+        ]
+      },
+      "loadDistance": 45,
+      "unloadDistance": 90,
+      "shadowDistance": 55,
+      "maxViewDistance": 160
+    },
+    {
+      "id": "public-planting-4",
+      "url": "/model/stream-shared/20261103-public-planting-4.glb",
+      "bytes": 17092,
+      "objects": 30,
+      "bounds": {
+        "min": [
+          170.96901,
+          0.10759,
+          81.6548
+        ],
+        "max": [
+          217.0226,
+          10.05377,
+          158.04314
+        ]
+      },
+      "loadDistance": 45,
+      "unloadDistance": 90,
+      "shadowDistance": 55,
+      "maxViewDistance": 160
+    },
+    {
+      "id": "rear-garden-detail",
+      "url": "/model/stream/20261103-rear-garden-detail.glb",
+      "bytes": 818520,
+      "objects": 17,
+      "bounds": {
+        "min": [
+          -75.07665,
+          0,
+          -154.2374
+        ],
+        "max": [
+          78.01031,
+          5.8,
+          -111.18
+        ]
+      },
+      "loadDistance": 100,
+      "unloadDistance": 155,
+      "shadowDistance": 55,
+      "maxViewDistance": 330
+    },
+    {
+      "id": "rear-stair-detail",
+      "url": "/model/stream/20261103-rear-stair-detail.glb",
+      "bytes": 519580,
+      "objects": 64,
+      "bounds": {
+        "min": [
+          -28.96,
+          0,
+          -118.01
+        ],
+        "max": [
+          54.59,
+          13.91958,
+          -101.555
+        ]
+      },
+      "loadDistance": 45,
+      "unloadDistance": 100,
+      "shadowDistance": 40,
+      "maxViewDistance": 140
+    },
+    {
+      "id": "south-alley",
+      "url": "/model/stream/20261103-south-alley.glb",
+      "bytes": 5600,
+      "objects": 3,
+      "bounds": {
+        "min": [
+          -113,
+          0,
+          -65
+        ],
+        "max": [
+          -82,
+          0.12,
+          21
+        ]
+      },
+      "loadDistance": 100,
+      "unloadDistance": 155,
+      "shadowDistance": 55,
+      "maxViewDistance": 330
+    },
+    {
+      "id": "sunken-court",
+      "url": "/model/stream/20261103-sunken-court.glb",
+      "bytes": 420400,
+      "objects": 61,
+      "bounds": {
+        "min": [
+          -59.04,
+          -3.45,
+          93.98
+        ],
+        "max": [
+          -2,
+          1.13,
+          108
+        ]
+      },
+      "loadDistance": 100,
+      "unloadDistance": 155,
+      "shadowDistance": 55,
+      "maxViewDistance": 200
+    },
+    {
+      "id": "west-garden",
+      "url": "/model/stream-shared/20261103-west-garden.glb",
+      "bytes": 333884,
+      "objects": 77,
+      "bounds": {
+        "min": [
+          -76.1875,
+          0.004,
+          -115
+        ],
+        "max": [
+          -28.9,
+          10.24376,
+          -55
+        ]
+      },
+      "loadDistance": 80,
+      "unloadDistance": 135,
+      "shadowDistance": 55,
+      "maxViewDistance": 230
+    },
+    {
+      "id": "yellow-shop-detail",
+      "url": "/model/stream/20261103-yellow-shop-detail.glb",
+      "bytes": 43368,
+      "objects": 8,
+      "bounds": {
+        "min": [
+          -101.69998,
+          0,
+          -22.51999
+        ],
+        "max": [
+          -93.48999,
+          14.18,
+          -10.47998
+        ]
+      },
+      "loadDistance": 45,
+      "unloadDistance": 100,
+      "shadowDistance": 40,
+      "maxViewDistance": 140
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "meshNames": [
+    "stone",
+    "Rear columns - beveled stone joints and foot",
+    "Rear columns - vertical stone panel joints",
+    "Rear colonnade - linear ceiling and access panels"
+  ],
+  "photoIndices": [
+    92,
+    95
+  ],
+  "note": "Photo-inferred 0.38 m chamfer, not measured; original column centres and envelope retained",
+  "changedVertices": {
+    "stone": 112,
+    "Rear columns - beveled stone joints and foot": 1568,
+    "Rear columns - vertical stone panel joints": 0
+  },
+  "finishRevision": {
+    "date": "2026-11-24",
+    "nonWhiteExportedStoneVertices": 592,
+    "sha256": "598820cb21f2aa47300f12fdbdde0bbfb928d8e296415a96d1d86ea9558b079c",
+    "bytes": 802292
+  }
+}

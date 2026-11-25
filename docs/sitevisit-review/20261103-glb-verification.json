@@ -1,0 +1,2035 @@
+{
+  "date": "2026-11-03T07:40:25.840Z",
+  "method": "Read-only Node.js GLB parser + installed Three.js MeshoptDecoder. Every compressed bufferView decoded. Every active-scene POSITION accessor read and all vertices transformed by node world matrices. All geometry nodes from all scenes independently matched against the partition list, including proxy names.",
+  "manifestRevision": "20261103-aerial",
+  "expectedOriginalObjects": 1330,
+  "limitBytes": 26214400,
+  "files": [
+    {
+      "id": "core",
+      "url": "/model/stream/20261103-core.glb",
+      "bytes": 8668108,
+      "sha256": "d362fcb06214432d71e22acec9df6587d6e0bd6d6e13352f5b2340ff9ee38cf4",
+      "issues": [],
+      "images": [
+        {
+          "name": "20261103_cafe_frame",
+          "mimeType": "image/png",
+          "bytes": 218984,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "4b9ce80b5d40bd06abba1445e42a5dc4fab6e901308c57bd11813049a6558d78",
+          "baseColorMaterials": [
+            "20261103_cafe_frame PBR baked"
+          ],
+          "width": 512,
+          "height": 512
+        },
+        {
+          "name": "Original stone2 stone grain",
+          "mimeType": "image/png",
+          "bytes": 76607,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "edbe2b8be1a1cc9decc96b0b2556e1ba380aec93751222be2aa8960a4062e5f8",
+          "baseColorMaterials": [
+            "밝은 석재 줄눈.006",
+            "밝은 석재 줄눈.006"
+          ],
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "Original front garden surface",
+          "mimeType": "image/png",
+          "bytes": 84781,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "62075a08062da941b07dfd557148f5a163b4d9701d89ad436eeeb8232725218a",
+          "baseColorMaterials": [
+            "Front planting ground.010"
+          ],
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "Original fine plaza paving",
+          "mimeType": "image/png",
+          "bytes": 89994,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "9d45c0009e05a3676a3bef30ede2d40498e8629d2f1334a2f9cf9130104428b2",
+          "baseColorMaterials": [
+            "광장 석재.006"
+          ],
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "sitevisit_connector_stone_normal",
+          "mimeType": "image/png",
+          "bytes": 821138,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "f8f450bb527a587d2d54fc3d954bece8699a40fd0f269f610bc1e6f528238c47",
+          "baseColorMaterials": [],
+          "width": 512,
+          "height": 1024
+        },
+        {
+          "name": "sitevisit_connector_stone",
+          "mimeType": "image/png",
+          "bytes": 800518,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "5c669f137deea3d5ac4774b67a9e984ef68013e840ce88f058637dab6ce0af7a",
+          "baseColorMaterials": [
+            "Site visit - procedural rough coursed stone"
+          ],
+          "width": 512,
+          "height": 1024
+        },
+        {
+          "name": "Fine granite",
+          "mimeType": "image/png",
+          "bytes": 94523,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "96a1b631c8a3aa800a9b6ac502da79af85a8b03cb978ac17de586f225cae70dd",
+          "baseColorMaterials": [
+            "밝은 화강석.006",
+            "밝은 화강석.006"
+          ],
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "20261103_stair_granite",
+          "mimeType": "image/png",
+          "bytes": 209499,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "0b3b227aabb8c808620f53aa47f8cef39ce38e7f5cb54fd6358484e272e20efc",
+          "baseColorMaterials": [
+            "20261103_stair_granite PBR baked"
+          ],
+          "width": 512,
+          "height": 512
+        },
+        {
+          "name": "Original terrace_stone stone grain",
+          "mimeType": "image/png",
+          "bytes": 62680,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "977bca2968b1025af3b94659ccceb464cc59087c58767b5a1a309743b55d4ba6",
+          "baseColorMaterials": [
+            "별관 외부 석재.020"
+          ],
+          "width": 256,
+          "height": 256
+        }
+      ],
+      "meshoptViews": 287,
+      "decodedBytes": 14179856,
+      "positionVertices": 468792,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "KHR_materials_emissive_strength"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 101,
+      "activeSceneGeometryNodes": 101,
+      "allSceneGeometryNodes": 101,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -210,
+          -0.480010986328125,
+          -168
+        ],
+        "max": [
+          240,
+          98,
+          260
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -210,
+          -0.48,
+          -168
+        ],
+        "max": [
+          240,
+          98,
+          260
+        ]
+      },
+      "boundsContainmentExcess": 1.0986328125017764e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 104
+    },
+    {
+      "id": "cafe-interior",
+      "url": "/model/stream/20261103-cafe-interior.glb",
+      "bytes": 397224,
+      "sha256": "80428eafec4ecf440396d64e17cdccc374156cfd54f8a1ab318cca12d892bc63",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 154,
+      "decodedBytes": 851544,
+      "positionVertices": 32064,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "KHR_materials_emissive_strength"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 61,
+      "activeSceneGeometryNodes": 61,
+      "allSceneGeometryNodes": 61,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -127.875,
+          0.1199951171875,
+          -6.770843505859375
+        ],
+        "max": [
+          -117.80001831054688,
+          15.45001220703125,
+          14.770843505859375
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -127.875,
+          0.12,
+          -6.77083
+        ],
+        "max": [
+          -117.8,
+          15.45,
+          14.77083
+        ]
+      },
+      "boundsContainmentExcess": 1.3505859374873808e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 61
+    },
+    {
+      "id": "cafe-tile-detail",
+      "url": "/model/stream/20261103-cafe-tile-detail.glb",
+      "bytes": 1763128,
+      "sha256": "641602cb2286e0e756a89aed2e662582f5b09fa19805aed8dac07062915ebaeb",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 9,
+      "decodedBytes": 3316968,
+      "positionVertices": 119814,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 1,
+      "activeSceneGeometryNodes": 1,
+      "allSceneGeometryNodes": 1,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -117.864013671875,
+          8.20001220703125,
+          -6.5
+        ],
+        "max": [
+          -117.80999755859375,
+          15,
+          14.5
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -117.864,
+          8.2,
+          -6.5
+        ],
+        "max": [
+          -117.81,
+          15,
+          14.5
+        ]
+      },
+      "boundsContainmentExcess": 1.36718749956799e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 3
+    },
+    {
+      "id": "campus-planting-center-front",
+      "url": "/model/stream/20261103-campus-planting-center-front.glb",
+      "bytes": 7529688,
+      "sha256": "fc986fdb37aaf8be366f40b5ce29cfb19f31df90d77baf21fc5cc160bcb3204c",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 108,
+      "decodedBytes": 12998484,
+      "positionVertices": 486096,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 66,
+      "activeSceneGeometryNodes": 66,
+      "allSceneGeometryNodes": 66,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -72.48751831054688,
+          0.1644287109375,
+          -82.84820556640625
+        ],
+        "max": [
+          78.45706176757812,
+          10.903782781910195,
+          36.253197963568304
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -72.4875,
+          0.16444,
+          -82.84821
+        ],
+        "max": [
+          78.45705,
+          10.90378,
+          37.37748
+        ]
+      },
+      "boundsContainmentExcess": 1.831054687784217e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 36
+    },
+    {
+      "id": "campus-planting-center-rear",
+      "url": "/model/stream/20261103-campus-planting-center-rear.glb",
+      "bytes": 7416620,
+      "sha256": "4d0da6ebdb08fb49dd5ead324867a668184314b403d3ee7d278e9277fdab2941",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 120,
+      "decodedBytes": 14446548,
+      "positionVertices": 545688,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 85,
+      "activeSceneGeometryNodes": 85,
+      "allSceneGeometryNodes": 85,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -69.24615478515625,
+          0.09515380859375,
+          -163.88919933315648
+        ],
+        "max": [
+          74.32403564453125,
+          11.767825416475262,
+          -120.63428476413976
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -69.24618,
+          0.09516,
+          -165.73691
+        ],
+        "max": [
+          74.32401,
+          11.76782,
+          -120.3947
+        ]
+      },
+      "boundsContainmentExcess": 2.564453124875854e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 40
+    },
+    {
+      "id": "campus-planting-north-front",
+      "url": "/model/stream/20261103-campus-planting-north-front.glb",
+      "bytes": 5215724,
+      "sha256": "0c1b2c8c6663a0bf1758614062ad1d73a58afb96bcfde898ad2135ee64e64a83",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 81,
+      "decodedBytes": 8647992,
+      "positionVertices": 332232,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 92,
+      "activeSceneGeometryNodes": 92,
+      "allSceneGeometryNodes": 92,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          2.0918426513671875,
+          0.1773489451295518,
+          -47.86073636614325
+        ],
+        "max": [
+          80.22440095370284,
+          11.299143731249842,
+          36.36872515149326
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          2.09185,
+          0.17735,
+          -49.28867
+        ],
+        "max": [
+          81.36002,
+          11.29914,
+          37.24986
+        ]
+      },
+      "boundsContainmentExcess": 7.34863281248721e-06,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 27
+    },
+    {
+      "id": "campus-planting-north-rear",
+      "url": "/model/stream/20261103-campus-planting-north-rear.glb",
+      "bytes": 4265152,
+      "sha256": "a4e355f5cc8c75d7ec1339a151656474a31412ed14ea94a707e8f28a18398f82",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 75,
+      "decodedBytes": 6951960,
+      "positionVertices": 267000,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 95,
+      "activeSceneGeometryNodes": 95,
+      "allSceneGeometryNodes": 95,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          25.557089554310437,
+          0.15715957272686865,
+          -164.05917312225654
+        ],
+        "max": [
+          80.18457903479907,
+          12.171576692462622,
+          -52.30136376496003
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          24.02163,
+          0.15716,
+          -165.16199
+        ],
+        "max": [
+          81.33905,
+          12.17157,
+          -51.55243
+        ]
+      },
+      "boundsContainmentExcess": 6.692462623192341e-06,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 25
+    },
+    {
+      "id": "campus-planting-south-front",
+      "url": "/model/stream/20261103-campus-planting-south-front.glb",
+      "bytes": 4246972,
+      "sha256": "b3632b05b8b08b1e5e10f00576f8069a0ccb20a4513cadb0a48218251dcc3eb7",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 75,
+      "decodedBytes": 6951960,
+      "positionVertices": 267000,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 45,
+      "activeSceneGeometryNodes": 45,
+      "allSceneGeometryNodes": 45,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -72.53387451171875,
+          0.17779867885803924,
+          15.101843198415708
+        ],
+        "max": [
+          -47.93943918017717,
+          9.360326577696696,
+          36.619419859549716
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -72.92814,
+          0.1778,
+          14.15006
+        ],
+        "max": [
+          -46.65869,
+          9.36033,
+          37.9684
+        ]
+      },
+      "boundsContainmentExcess": 1.3211419607750408e-06,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 25
+    },
+    {
+      "id": "campus-planting-south-rear",
+      "url": "/model/stream/20261103-campus-planting-south-rear.glb",
+      "bytes": 4255156,
+      "sha256": "34e97fa39b485c1ed9e0bab475dda1dc12c1b160e95cc2e9b438ee0b2bb52ccc",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 75,
+      "decodedBytes": 6951960,
+      "positionVertices": 267000,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 60,
+      "activeSceneGeometryNodes": 60,
+      "allSceneGeometryNodes": 60,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -71.16902797422752,
+          0.15715957272686865,
+          -164.3645025075053
+        ],
+        "max": [
+          -34.843735540723245,
+          11.858549350442445,
+          -121.5098381984149
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -72.86548,
+          0.15716,
+          -166.29181
+        ],
+        "max": [
+          -34.54938,
+          11.85855,
+          -120.52682
+        ]
+      },
+      "boundsContainmentExcess": 4.2727313134816036e-07,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 25
+    },
+    {
+      "id": "east-embassy-detail",
+      "url": "/model/stream/20261103-east-embassy-detail.glb",
+      "bytes": 33020,
+      "sha256": "b7d41a48d82fb2e26f83b6d9802bfcda58ebee157f4b549a62051e02d0863eb0",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 34,
+      "decodedBytes": 70200,
+      "positionVertices": 2880,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 16,
+      "activeSceneGeometryNodes": 16,
+      "allSceneGeometryNodes": 16,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          40,
+          2.20001220703125,
+          162.85003662109375
+        ],
+        "max": [
+          89,
+          28.20001220703125,
+          162.989990234375
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          40,
+          2.2,
+          162.85001
+        ],
+        "max": [
+          89,
+          28.2,
+          162.99001
+        ]
+      },
+      "boundsContainmentExcess": 1.2207031250710543e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 16
+    },
+    {
+      "id": "east-kt-detail",
+      "url": "/model/stream/20261103-east-kt-detail.glb",
+      "bytes": 39048,
+      "sha256": "3f647fa819a9f83a599af359b644e005f5a6cee2f913989059477f0aff9d6fcb",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 45,
+      "decodedBytes": 62784,
+      "positionVertices": 2376,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 18,
+      "activeSceneGeometryNodes": 18,
+      "allSceneGeometryNodes": 18,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -207,
+          0.1199951171875,
+          152.97998046875
+        ],
+        "max": [
+          237,
+          74.1400146484375,
+          163
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -207,
+          0.12,
+          152.98
+        ],
+        "max": [
+          237,
+          74.14,
+          163
+        ]
+      },
+      "boundsContainmentExcess": 1.9531249989768185e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 18
+    },
+    {
+      "id": "east-kyobo-detail",
+      "url": "/model/stream/20261103-east-kyobo-detail.glb",
+      "bytes": 22568,
+      "sha256": "f52224751bb7a8fc736bbc5b611a3b8ad3a75abbed9d16ccbbdbefc6e0d49b26",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 17,
+      "decodedBytes": 51768,
+      "positionVertices": 1920,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 6,
+      "activeSceneGeometryNodes": 6,
+      "allSceneGeometryNodes": 6,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -95,
+          0.25,
+          162.6400146484375
+        ],
+        "max": [
+          -29,
+          98.1400146484375,
+          162.989990234375
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -95,
+          0.25,
+          162.64
+        ],
+        "max": [
+          -29,
+          98.14,
+          162.99001
+        ]
+      },
+      "boundsContainmentExcess": 1.4648437499431566e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 6
+    },
+    {
+      "id": "east-museum-detail",
+      "url": "/model/stream/20261103-east-museum-detail.glb",
+      "bytes": 35488,
+      "sha256": "c1e6bf1ba4814cc7b30a670956622c8e246a324ec3d951f7eff5730363f950ef",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 34,
+      "decodedBytes": 79560,
+      "positionVertices": 3264,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 16,
+      "activeSceneGeometryNodes": 16,
+      "allSceneGeometryNodes": 16,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          96,
+          2.20001220703125,
+          162.85003662109375
+        ],
+        "max": [
+          150,
+          29.07501220703125,
+          162.989990234375
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          96,
+          2.2,
+          162.85001
+        ],
+        "max": [
+          150,
+          29.075,
+          162.99001
+        ]
+      },
+      "boundsContainmentExcess": 1.2207031250710543e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 16
+    },
+    {
+      "id": "front-terrace-detail",
+      "url": "/model/stream/20261103-front-terrace-detail.glb",
+      "bytes": 1639312,
+      "sha256": "b31ee5cb07413d116360f9df2383a764f27431b5c8c162ad1e330c1e659ec06e",
+      "issues": [],
+      "images": [
+        {
+          "name": "annex-screen",
+          "mimeType": "image/png",
+          "bytes": 291477,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "2c5fa5b645af4e31e77d84184e1600839c28159921e9367125053c2c0a968356",
+          "baseColorMaterials": [
+            "Annex screen • original art original vector artwork.037"
+          ],
+          "width": 1440,
+          "height": 960
+        },
+        {
+          "name": "Original timber plank grain",
+          "mimeType": "image/png",
+          "bytes": 82791,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "8fe1ec393ee4618259a34c9eb49d5fb044dc753d3c952b940d6a4f8fd93a31fd",
+          "baseColorMaterials": [
+            "Plaza deck oiled hardwood.032"
+          ],
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "bridge-banner",
+          "mimeType": "image/png",
+          "bytes": 286130,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "df8c19fa788b0b0f54945c3f49b465b7c5f6e9df6df7faaf2d869e96e30a83e8",
+          "baseColorMaterials": [
+            "Glazed bridge banner • original art original vector artwork.013"
+          ],
+          "width": 1440,
+          "height": 360
+        },
+        {
+          "name": "annex-banner",
+          "mimeType": "image/png",
+          "bytes": 157892,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "60eda2bea8b4fda818c674e23a79282a01c1043ec9e341b2e99775e490513fc8",
+          "baseColorMaterials": [
+            "Terrace banner 0 • original art original vector artwork.037",
+            "Terrace banner 1 • original art original vector artwork.037"
+          ],
+          "width": 3724,
+          "height": 140
+        }
+      ],
+      "meshoptViews": 236,
+      "decodedBytes": 1703640,
+      "positionVertices": 53524,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 77,
+      "activeSceneGeometryNodes": 77,
+      "allSceneGeometryNodes": 77,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -76.00799560546875,
+          0,
+          -11.36199975861782
+        ],
+        "max": [
+          121.00799560546875,
+          17.498809814453125,
+          125
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -76.008,
+          0,
+          -11.362
+        ],
+        "max": [
+          121.008,
+          17.49881,
+          125
+        ]
+      },
+      "boundsContainmentExcess": 0,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 77
+    },
+    {
+      "id": "gratitude-garden",
+      "url": "/model/stream/20261103-gratitude-garden.glb",
+      "bytes": 154044,
+      "sha256": "a5380328f2816406078c47ac7f8137b52144d26e432f0a0168c3a426f3303a7f",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 195,
+      "decodedBytes": 170984,
+      "positionVertices": 6118,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 114,
+      "activeSceneGeometryNodes": 114,
+      "allSceneGeometryNodes": 114,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          62.54998779296875,
+          -3.420013427734375,
+          56.920013427734375
+        ],
+        "max": [
+          158.5,
+          6.269989013671875,
+          117.29998779296875
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          62.55,
+          -3.42,
+          56.92
+        ],
+        "max": [
+          158.5,
+          6.27,
+          117.3
+        ]
+      },
+      "boundsContainmentExcess": 1.3427734375071054e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 92
+    },
+    {
+      "id": "plaza-water-detail",
+      "url": "/model/stream/20261103-plaza-water-detail.glb",
+      "bytes": 66776,
+      "sha256": "3a843010b78e777af3aaa752c741bcb63a2a3447d2cb955ed0052a8bab22ba54",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 15,
+      "decodedBytes": 244296,
+      "positionVertices": 9048,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 5,
+      "activeSceneGeometryNodes": 5,
+      "allSceneGeometryNodes": 5,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -210,
+          0,
+          115.10000610351562
+        ],
+        "max": [
+          240,
+          0.100006103515625,
+          150.20001220703125
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -210,
+          0,
+          115.1
+        ],
+        "max": [
+          240,
+          0.1,
+          150.2
+        ]
+      },
+      "boundsContainmentExcess": 1.2207031261368684e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 5
+    },
+    {
+      "id": "public-planting-0",
+      "url": "/model/stream/20261103-public-planting-0.glb",
+      "bytes": 863284,
+      "sha256": "3d82eaa8a1f91900fbadb019ddb6a83c4496850b19d1465e1755a8c2baf022c8",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 15,
+      "decodedBytes": 1390392,
+      "positionVertices": 53400,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 60,
+      "activeSceneGeometryNodes": 60,
+      "allSceneGeometryNodes": 60,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -191.15618662222585,
+          0.10758563940271415,
+          82.32941829009836
+        ],
+        "max": [
+          -84.60030094625169,
+          10.05376636924666,
+          157.9328990936916
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -191.28915,
+          0.10759,
+          81.6548
+        ],
+        "max": [
+          -83.9774,
+          10.05377,
+          158.67844
+        ]
+      },
+      "boundsContainmentExcess": 4.360597285854584e-06,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 5
+    },
+    {
+      "id": "public-planting-1",
+      "url": "/model/stream/20261103-public-planting-1.glb",
+      "bytes": 860952,
+      "sha256": "0bc5d0f46fa954f893144f7ca39f75297afb6991100fa0e9a567771df9f301bf",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 15,
+      "decodedBytes": 1390392,
+      "positionVertices": 53400,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 50,
+      "activeSceneGeometryNodes": 50,
+      "allSceneGeometryNodes": 50,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -82.15618662222583,
+          0.10758563940271415,
+          82.69595123924479
+        ],
+        "max": [
+          0.6735814527859425,
+          10.05376636924666,
+          157.9328990936916
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -82.28915,
+          0.10759,
+          81.92451
+        ],
+        "max": [
+          1.72525,
+          10.05377,
+          158.67844
+        ]
+      },
+      "boundsContainmentExcess": 4.360597285854584e-06,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 5
+    },
+    {
+      "id": "public-planting-2",
+      "url": "/model/stream/20261103-public-planting-2.glb",
+      "bytes": 1436688,
+      "sha256": "1b9867101c2ce27bdf19a45150df0a20bb87261dee920d9b5504a39235862733",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 49,
+      "decodedBytes": 2528760,
+      "positionVertices": 97080,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 52,
+      "activeSceneGeometryNodes": 52,
+      "allSceneGeometryNodes": 52,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -196.1099853515625,
+          -0.0784912109375,
+          79.75
+        ],
+        "max": [
+          225.1099853515625,
+          9.371351087107769,
+          157.9121292601387
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -196.11,
+          -0.0785,
+          79.75
+        ],
+        "max": [
+          225.11,
+          9.37135,
+          158.35658
+        ]
+      },
+      "boundsContainmentExcess": 1.087107769137674e-06,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 17
+    },
+    {
+      "id": "public-planting-3",
+      "url": "/model/stream/20261103-public-planting-3.glb",
+      "bytes": 860936,
+      "sha256": "dd89eb125256730510e0ab43534af493b3b320b52fe6db22eab34b3f0f2789f5",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 15,
+      "decodedBytes": 1390392,
+      "positionVertices": 53400,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 50,
+      "activeSceneGeometryNodes": 50,
+      "allSceneGeometryNodes": 50,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          77.78749305385749,
+          0.10758563940271415,
+          82.32941829009836
+        ],
+        "max": [
+          160.3072277609458,
+          10.05376636924666,
+          157.9328990936916
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          77.17131,
+          0.10759,
+          81.6548
+        ],
+        "max": [
+          160.90907,
+          10.05377,
+          158.67844
+        ]
+      },
+      "boundsContainmentExcess": 4.360597285854584e-06,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 5
+    },
+    {
+      "id": "public-planting-4",
+      "url": "/model/stream/20261103-public-planting-4.glb",
+      "bytes": 856404,
+      "sha256": "3fb9f216cbcf2851c5527d25649a29cf5080ddd1c35190d0a3240bd90030c999",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 15,
+      "decodedBytes": 1390392,
+      "positionVertices": 53400,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 30,
+      "activeSceneGeometryNodes": 30,
+      "allSceneGeometryNodes": 30,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          171.34282113732885,
+          0.10758563940271415,
+          82.32941829009836
+        ],
+        "max": [
+          216.3996990537483,
+          10.05376636924666,
+          157.62720026924123
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          170.96901,
+          0.10759,
+          81.6548
+        ],
+        "max": [
+          217.0226,
+          10.05377,
+          158.04314
+        ]
+      },
+      "boundsContainmentExcess": 4.360597285854584e-06,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 5
+    },
+    {
+      "id": "rear-garden-detail",
+      "url": "/model/stream/20261103-rear-garden-detail.glb",
+      "bytes": 818520,
+      "sha256": "7a20d084627c41b63f45b4346bc6ca85c733c1d20bb4dc400f584a2b75efdee5",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 72,
+      "decodedBytes": 2248020,
+      "positionVertices": 83284,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 17,
+      "activeSceneGeometryNodes": 17,
+      "allSceneGeometryNodes": 17,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -75.07666015625,
+          0,
+          -154.2374267578125
+        ],
+        "max": [
+          78.01031494140625,
+          5.79998779296875,
+          -111.17999267578125
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -75.07665,
+          0,
+          -154.2374
+        ],
+        "max": [
+          78.01031,
+          5.8,
+          -111.18
+        ]
+      },
+      "boundsContainmentExcess": 2.6757812491950972e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 26
+    },
+    {
+      "id": "rear-stair-detail",
+      "url": "/model/stream/20261103-rear-stair-detail.glb",
+      "bytes": 519580,
+      "sha256": "2ff42a02e96e9395faa9735f66970bfd4ee257577ea462c72cbeaaf3e6a35606",
+      "issues": [],
+      "images": [
+        {
+          "name": "20261103_stair_granite",
+          "mimeType": "image/png",
+          "bytes": 209499,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "0b3b227aabb8c808620f53aa47f8cef39ce38e7f5cb54fd6358484e272e20efc",
+          "baseColorMaterials": [
+            "20261103_stair_granite PBR baked"
+          ],
+          "width": 512,
+          "height": 512
+        },
+        {
+          "name": "Fine granite",
+          "mimeType": "image/png",
+          "bytes": 94523,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "96a1b631c8a3aa800a9b6ac502da79af85a8b03cb978ac17de586f225cae70dd",
+          "baseColorMaterials": [
+            "밝은 화강석.006"
+          ],
+          "width": 256,
+          "height": 256
+        }
+      ],
+      "meshoptViews": 210,
+      "decodedBytes": 338060,
+      "positionVertices": 12286,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "KHR_materials_clearcoat",
+        "KHR_materials_emissive_strength"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 64,
+      "activeSceneGeometryNodes": 64,
+      "allSceneGeometryNodes": 64,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -28.959991455078125,
+          0,
+          -118.010009765625
+        ],
+        "max": [
+          54.589996337890625,
+          13.919586181640625,
+          -101.55499267578125
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -28.96,
+          0,
+          -118.01
+        ],
+        "max": [
+          54.59,
+          13.91958,
+          -101.555
+        ]
+      },
+      "boundsContainmentExcess": 9.765624994884092e-06,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 75
+    },
+    {
+      "id": "south-alley",
+      "url": "/model/stream/20261103-south-alley.glb",
+      "bytes": 5600,
+      "sha256": "9c3dbeffbc25555c04302092990754554e6467414874c24481b11ebe394be1fa",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 9,
+      "decodedBytes": 3576,
+      "positionVertices": 132,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 3,
+      "activeSceneGeometryNodes": 3,
+      "allSceneGeometryNodes": 3,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -113,
+          0,
+          -65
+        ],
+        "max": [
+          -82,
+          0.1199951171875,
+          21
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -113,
+          0,
+          -65
+        ],
+        "max": [
+          -82,
+          0.12,
+          21
+        ]
+      },
+      "boundsContainmentExcess": 0,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 3
+    },
+    {
+      "id": "sunken-court",
+      "url": "/model/stream/20261103-sunken-court.glb",
+      "bytes": 420400,
+      "sha256": "8f400165691e582f995909612ae84cf4138efc07fc3ae3a67349dbe636247f56",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 165,
+      "decodedBytes": 966928,
+      "positionVertices": 27420,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "KHR_materials_emissive_strength"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 61,
+      "activeSceneGeometryNodes": 61,
+      "allSceneGeometryNodes": 61,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -59.040008544921875,
+          -3.45001220703125,
+          93.98001098632812
+        ],
+        "max": [
+          -2,
+          1.1300048828125,
+          108
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -59.04,
+          -3.45,
+          93.98
+        ],
+        "max": [
+          -2,
+          1.13,
+          108
+        ]
+      },
+      "boundsContainmentExcess": 1.2207031249822364e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 66
+    },
+    {
+      "id": "west-garden",
+      "url": "/model/stream/20261103-west-garden.glb",
+      "bytes": 2850424,
+      "sha256": "4f3c8c061e335697ff00aac123df57ae19058ad0492e2a475246dc0370914ee8",
+      "issues": [],
+      "images": [
+        {
+          "name": "20261103_garden_paving",
+          "mimeType": "image/png",
+          "bytes": 10882,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "b3f412b03c5db4af728e3a1735dcce3d1fcb8431dd3597885646cc966c02304d",
+          "baseColorMaterials": [
+            "20261103_garden_paving PBR baked"
+          ],
+          "width": 512,
+          "height": 512
+        },
+        {
+          "name": "Original front garden surface",
+          "mimeType": "image/png",
+          "bytes": 84781,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "62075a08062da941b07dfd557148f5a163b4d9701d89ad436eeeb8232725218a",
+          "baseColorMaterials": [
+            "20261103 - west garden living ground surface"
+          ],
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "Fine granite",
+          "mimeType": "image/png",
+          "bytes": 94523,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "sha256": "96a1b631c8a3aa800a9b6ac502da79af85a8b03cb978ac17de586f225cae70dd",
+          "baseColorMaterials": [
+            "밝은 화강석.006"
+          ],
+          "width": 256,
+          "height": 256
+        }
+      ],
+      "meshoptViews": 106,
+      "decodedBytes": 4309720,
+      "positionVertices": 164954,
+      "extensionsUsed": [
+        "EXT_meshopt_compression"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 77,
+      "activeSceneGeometryNodes": 77,
+      "allSceneGeometryNodes": 77,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -76.1875,
+          0.003997802734375,
+          -115
+        ],
+        "max": [
+          -28.899993896484375,
+          10.243761450052261,
+          -55
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -76.1875,
+          0.004,
+          -115
+        ],
+        "max": [
+          -28.9,
+          10.24376,
+          -55
+        ]
+      },
+      "boundsContainmentExcess": 6.1035156235789145e-06,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 35
+    },
+    {
+      "id": "yellow-shop-detail",
+      "url": "/model/stream/20261103-yellow-shop-detail.glb",
+      "bytes": 43368,
+      "sha256": "48f3d5e18fad4ff2b575fa036c7e0a175f79448efbbaefdf1dd203ac3c7e6767",
+      "issues": [],
+      "images": [],
+      "meshoptViews": 23,
+      "decodedBytes": 114624,
+      "positionVertices": 4248,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "KHR_materials_emissive_strength"
+      ],
+      "extensionsRequired": [
+        "EXT_meshopt_compression"
+      ],
+      "expectedObjects": 8,
+      "activeSceneGeometryNodes": 8,
+      "allSceneGeometryNodes": 8,
+      "sceneCount": 1,
+      "missingExpectedNodes": [],
+      "unexpectedNodes": [],
+      "unexpectedNodesAnyScene": [],
+      "missingExpectedNodesAnyScene": [],
+      "duplicateNodeNames": [],
+      "decodedPositionBounds": {
+        "min": [
+          -101.69997037705255,
+          0,
+          -22.519992174455297
+        ],
+        "max": [
+          -93.48994657207496,
+          14.17999267578125,
+          -10.479953495671168
+        ]
+      },
+      "manifestBounds": {
+        "min": [
+          -101.69998,
+          0,
+          -22.51999
+        ],
+        "max": [
+          -93.48999,
+          14.18,
+          -10.47998
+        ]
+      },
+      "boundsContainmentExcess": 4.342792504985482e-05,
+      "boundsToleranceMeters": 0.005,
+      "positionAccessors": 8
+    }
+  ],
+  "issues": [],
+  "limitations": [
+    "The 1330 intended source objects are verified against the explicit export-partitions list. Intentionally excluded archive/parent/LC-alpha objects are outside this export contract.",
+    "This validates binary geometry, embedded image bytes and references, not visual fidelity or runtime FPS."
+  ],
+  "assignment": {
+    "rows": 1330,
+    "uniqueSources": 1330,
+    "duplicates": 0
+  },
+  "manifestGroupContract": {
+    "entries": 27,
+    "uniqueIds": 27,
+    "matchesPartitions": true,
+    "matchesExportResults": true
+  },
+  "totals": {
+    "files": 27,
+    "bytes": 55284184,
+    "allSceneGeometryNodes": 1330,
+    "activeSceneGeometryNodes": 1330,
+    "meshoptViews": 2254,
+    "decodedBytes": 93751760,
+    "positionAccessors": 826,
+    "positionVertices": 3467820,
+    "primitives": 1373
+  },
+  "coreBytes": 8668108,
+  "chunkBytes": 46616076,
+  "expectedBakedImages": [
+    {
+      "name": "20261103_stair_granite",
+      "matches": [
+        {
+          "file": "core",
+          "bytes": 209499,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "width": 512,
+          "height": 512,
+          "baseColorMaterials": [
+            "20261103_stair_granite PBR baked"
+          ]
+        },
+        {
+          "file": "rear-stair-detail",
+          "bytes": 209499,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "width": 512,
+          "height": 512,
+          "baseColorMaterials": [
+            "20261103_stair_granite PBR baked"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "20261103_cafe_frame",
+      "matches": [
+        {
+          "file": "core",
+          "bytes": 218984,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "width": 512,
+          "height": 512,
+          "baseColorMaterials": [
+            "20261103_cafe_frame PBR baked"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "20261103_garden_paving",
+      "matches": [
+        {
+          "file": "west-garden",
+          "bytes": 10882,
+          "embedded": true,
+          "pngSignatureValid": true,
+          "width": 512,
+          "height": 512,
+          "baseColorMaterials": [
+            "20261103_garden_paving PBR baked"
+          ]
+        }
+      ]
+    }
+  ],
+  "passed": true,
+  "resourceCostBreakdown": {
+    "scope": "Read-only exact encoded bufferView-byte SHA256 plus mode/filter/count/stride comparison; this is a theoretical reuse estimate, not a claim that runtime caches automatically share GLB buffers.",
+    "embeddedImageBytes": 3771222,
+    "uniqueEmbeddedImageBytes": 3287896,
+    "embeddedImageCopiesBeyondOne": 483326,
+    "meshoptEncodedGeometryBytes": 50340014,
+    "uniqueEncodedGeometryBytes": 22333342,
+    "withinFileRepeatedEncodedBytes": 136669,
+    "betweenFileRepeatedEncodedBytes": 27870003,
+    "largestFiles": [
+      {
+        "id": "core",
+        "fileBytes": 8668108,
+        "meshoptEncodedGeometryBytes": 6075234,
+        "embeddedImageBytes": 2458724,
+        "imageFraction": 0.283652,
+        "largestImages": [
+          {
+            "name": "sitevisit_connector_stone_normal",
+            "bytes": 821138,
+            "width": 512,
+            "height": 1024
+          },
+          {
+            "name": "sitevisit_connector_stone",
+            "bytes": 800518,
+            "width": 512,
+            "height": 1024
+          },
+          {
+            "name": "20261103_cafe_frame",
+            "bytes": 218984,
+            "width": 512,
+            "height": 512
+          },
+          {
+            "name": "20261103_stair_granite",
+            "bytes": 209499,
+            "width": 512,
+            "height": 512
+          },
+          {
+            "name": "Fine granite",
+            "bytes": 94523,
+            "width": 256,
+            "height": 256
+          }
+        ]
+      },
+      {
+        "id": "campus-planting-center-front",
+        "fileBytes": 7529688,
+        "meshoptEncodedGeometryBytes": 7476203,
+        "embeddedImageBytes": 0,
+        "imageFraction": 0.0,
+        "largestImages": []
+      },
+      {
+        "id": "campus-planting-center-rear",
+        "fileBytes": 7416620,
+        "meshoptEncodedGeometryBytes": 7346167,
+        "embeddedImageBytes": 0,
+        "imageFraction": 0.0,
+        "largestImages": []
+      },
+      {
+        "id": "campus-planting-north-front",
+        "fileBytes": 5215724,
+        "meshoptEncodedGeometryBytes": 5167670,
+        "embeddedImageBytes": 0,
+        "imageFraction": 0.0,
+        "largestImages": []
+      },
+      {
+        "id": "campus-planting-north-rear",
+        "fileBytes": 4265152,
+        "meshoptEncodedGeometryBytes": 4209342,
+        "embeddedImageBytes": 0,
+        "imageFraction": 0.0,
+        "largestImages": []
+      },
+      {
+        "id": "campus-planting-south-rear",
+        "fileBytes": 4255156,
+        "meshoptEncodedGeometryBytes": 4209342,
+        "embeddedImageBytes": 0,
+        "imageFraction": 0.0,
+        "largestImages": []
+      },
+      {
+        "id": "campus-planting-south-front",
+        "fileBytes": 4246972,
+        "meshoptEncodedGeometryBytes": 4209342,
+        "embeddedImageBytes": 0,
+        "imageFraction": 0.0,
+        "largestImages": []
+      },
+      {
+        "id": "west-garden",
+        "fileBytes": 2850424,
+        "meshoptEncodedGeometryBytes": 2600199,
+        "embeddedImageBytes": 190186,
+        "imageFraction": 0.066722,
+        "largestImages": [
+          {
+            "name": "Fine granite",
+            "bytes": 94523,
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "Original front garden surface",
+            "bytes": 84781,
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "20261103_garden_paving",
+            "bytes": 10882,
+            "width": 512,
+            "height": 512
+          }
+        ]
+      }
+    ],
+    "largestRepeatedGeometryViews": [
+      {
+        "bytes": 113889,
+        "copies": 11,
+        "distinctFiles": [
+          "campus-planting-center-front",
+          "campus-planting-center-rear",
+          "campus-planting-north-front",
+          "campus-planting-north-rear",
+          "campus-planting-south-front",
+          "campus-planting-south-rear",
+          "public-planting-0",
+          "public-planting-1",
+          "public-planting-2",
+          "public-planting-3",
+          "public-planting-4"
+        ],
+        "repeatedBytes": 1138890,
+        "mode": "ATTRIBUTES",
+        "filter": "EXPONENTIAL"
+      },
+      {
+        "bytes": 113834,
+        "copies": 11,
+        "distinctFiles": [
+          "campus-planting-center-front",
+          "campus-planting-center-rear",
+          "campus-planting-north-front",
+          "campus-planting-north-rear",
+          "campus-planting-south-front",
+          "campus-planting-south-rear",
+          "public-planting-0",
+          "public-planting-1",
+          "public-planting-2",
+          "public-planting-3",
+          "public-planting-4"
+        ],
+        "repeatedBytes": 1138340,
+        "mode": "ATTRIBUTES",
+        "filter": "EXPONENTIAL"
+      },
+      {
+        "bytes": 113801,
+        "copies": 11,
+        "distinctFiles": [
+          "campus-planting-center-front",
+          "campus-planting-center-rear",
+          "campus-planting-north-front",
+          "campus-planting-north-rear",
+          "campus-planting-south-front",
+          "campus-planting-south-rear",
+          "public-planting-0",
+          "public-planting-1",
+          "public-planting-2",
+          "public-planting-3",
+          "public-planting-4"
+        ],
+        "repeatedBytes": 1138010,
+        "mode": "ATTRIBUTES",
+        "filter": "EXPONENTIAL"
+      },
+      {
+        "bytes": 113672,
+        "copies": 11,
+        "distinctFiles": [
+          "campus-planting-center-front",
+          "campus-planting-center-rear",
+          "campus-planting-north-front",
+          "campus-planting-north-rear",
+          "campus-planting-south-front",
+          "campus-planting-south-rear",
+          "public-planting-0",
+          "public-planting-1",
+          "public-planting-2",
+          "public-planting-3",
+          "public-planting-4"
+        ],
+        "repeatedBytes": 1136720,
+        "mode": "ATTRIBUTES",
+        "filter": "EXPONENTIAL"
+      },
+      {
+        "bytes": 69252,
+        "copies": 11,
+        "distinctFiles": [
+          "campus-planting-center-front",
+          "campus-planting-center-rear",
+          "campus-planting-north-front",
+          "campus-planting-north-rear",
+          "campus-planting-south-front",
+          "campus-planting-south-rear",
+          "public-planting-0",
+          "public-planting-1",
+          "public-planting-2",
+          "public-planting-3",
+          "public-planting-4"
+        ],
+        "repeatedBytes": 692520,
+        "mode": "ATTRIBUTES",
+        "filter": "EXPONENTIAL"
+      }
+    ],
+    "repeatedImages": [
+      {
+        "name": "20261103_stair_granite",
+        "bytes": 209499,
+        "files": [
+          "core",
+          "rear-stair-detail"
+        ],
+        "repeatedBytes": 209499
+      },
+      {
+        "name": "Fine granite",
+        "bytes": 94523,
+        "files": [
+          "core",
+          "rear-stair-detail",
+          "west-garden"
+        ],
+        "repeatedBytes": 189046
+      },
+      {
+        "name": "Original front garden surface",
+        "bytes": 84781,
+        "files": [
+          "core",
+          "west-garden"
+        ],
+        "repeatedBytes": 84781
+      }
+    ],
+    "finding": "Large campus planting chunks contain no embedded images. Identical compressed geometry is repeated across spatial planting chunks, up to 11 files for the same view. Most total-size growth comes from geometry copies rather than image duplication."
+  }
+}

@@ -1,0 +1,765 @@
+"""Original modeled detail for the Sejong scene; no reference-photo pixels.
+
+Executed by build_sejong.py inside Blender after the architectural shells exist.
+The curated planting plan is based on the supplied frontal and oblique photos.
+The lobby is an interpretation, because the references do not show its interior.
+"""
+import math
+import random
+from mathutils import Vector
+
+
+class DetailMesh:
+    def __init__(self):
+        self.vertices = []
+        self.faces = []
+
+    def box(self, center, size):
+        x, y, z = center
+        sx, sy, sz = size
+        start = len(self.vertices)
+        self.vertices += [(x + a*sx/2, y + b*sy/2, z + c*sz/2)
+                          for a, b, c in [(-1,-1,-1),(1,-1,-1),(1,1,-1),(-1,1,-1),
+                                          (-1,-1,1),(1,-1,1),(1,1,1),(-1,1,1)]]
+        self.faces += [tuple(start+i for i in face) for face in
+                       [(0,3,2,1),(4,5,6,7),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)]]
+
+    def branch(self, start, end, r0, r1, sides=7):
+        a, z = Vector(start), Vector(end)
+        axis = (z-a).normalized()
+        u = axis.cross(Vector((0,0,1)))
+        if u.length < .001:
+            u = axis.cross(Vector((0,1,0)))
+        u.normalize()
+        v = axis.cross(u).normalized()
+        n = len(self.vertices)
+        for point, radius in ((a,r0),(z,r1)):
+            for i in range(sides):
+                angle = 2*math.pi*i/sides
+                self.vertices.append(tuple(point+radius*(u*math.cos(angle)+v*math.sin(angle))))
+        self.faces.append(tuple(n+i for i in reversed(range(sides))))
+        self.faces.append(tuple(n+sides+i for i in range(sides)))
+        self.faces += [(n+i,n+(i+1)%sides,n+sides+(i+1)%sides,n+sides+i) for i in range(sides)]
+
+    def leaf(self, point, direction, length, width):
+        center = Vector(point)
+        axis = Vector(direction).normalized()
+        side = axis.cross(Vector((0,0,1)))
+        if side.length < .01:
+            side = axis.cross(Vector((0,1,0)))
+        side.normalize()
+        # Five points form a small folded lanceolate leaf, rather than a green sphere.
+        tip = center + axis*length*.52
+        base = center - axis*length*.52
+        left = center + side*width*.5
+        right = center - side*width*.5
+        ridge = center + Vector((0,0,.025))
+        n = len(self.vertices)
+        self.vertices += list(map(tuple,(base,left,tip,right,ridge)))
+        self.faces += [(n,n+1,n+4),(n+1,n+2,n+4),(n+2,n+3,n+4),(n+3,n,n+4)]
+
+    def finish(self, name, mat):
+        mesh = bpy.data.meshes.new(name)
+        mesh.from_pydata(self.vertices, [], self.faces)
+        mesh.update()
+        obj = bpy.data.objects.new(name, mesh)
+        bpy.context.collection.objects.link(obj)
+        obj.data.materials.append(mat)
+        return obj
+
+
+def detail_material(name, color, metallic=0, roughness=.8):
+    return material(name, color, metallic, roughness)
+
+
+soil = detail_material('Garden soil', (.19,.19,.13))
+grass = detail_material('Garden groundcover', (.25,.37,.17))
+curb = detail_material('Warm pale garden edging', (.63,.64,.60))
+bark = detail_material('Tree bark', (.26,.22,.17), roughness=.95)
+leaf_mats = [detail_material('Deciduous foliage %d' % i, color, roughness=.9) for i,color in enumerate([
+    (.27,.43,.14),(.34,.51,.18),(.22,.36,.12),(.43,.56,.22)])]
+wood = detail_material('Oiled timber', (.27,.16,.105), roughness=.72)
+metal = detail_material('Dark bronze fittings', (.16,.17,.15), metallic=.48, roughness=.44)
+interior = detail_material('Lobby warm limestone', (.72,.70,.64), roughness=.83)
+light = detail_material('Lobby light diffuser', (.95,.88,.70), roughness=.55)
+
+# Low raised, planted beds are deliberately placed rather than scattered.
+beds = [(-61,-26.5,23,19), (14,-25.5,25,18), (58,-25.5,29,18),
+        (8,-14,7,4), (60,-14,7,4), (76,45,5,76)]
+# Keep a small clear patch at the base of the photo-inspired sign below.
+marker_x,marker_y=5.05,-12.50
+garden = DetailMesh()
+front_garden = DetailMesh()
+edge = DetailMesh()
+for bed_id,(x,y,w,d) in enumerate(beds):
+    (front_garden if bed_id in (1,2) else garden).box((x,y,.09),(w,d,.18))
+    for yy in (y-d/2,y+d/2):
+        edge.box((x,yy,.15),(w+.4,.22,.30))
+    for xx in (x-w/2,x+w/2):
+        edge.box((xx,y,.15),(.22,d,.30))
+garden.finish('Curated garden beds', grass)
+edge.finish('Garden stone edging', curb)
+
+# A subtle original, packed surface variation gives the two broad front beds
+# depth beneath the individual plants.  No reference photo is sampled.
+front_soil=detail_material('Front planting ground',(.25,.37,.17),roughness=.95)
+front_ground=front_garden.finish('Front gardens ground',front_soil)
+front_texture=bpy.data.images.new('Original front garden surface',width=256,height=256,alpha=True)
+front_rng=random.Random(3047)
+front_pixels=[]
+for py in range(256):
+    for px in range(256):
+        broad=.017*math.sin(px*2*math.pi/64)*math.cos(py*2*math.pi/128)
+        fine=front_rng.gauss(0,.006)
+        value=broad+fine
+        front_pixels.extend((linear_to_srgb(.25+value),linear_to_srgb(.37+value*.9),
+                             linear_to_srgb(.17+value*.65),1))
+front_texture.pixels[:]=front_pixels
+front_texture.pack()
+front_uv=front_ground.data.uv_layers.new(name='Garden surface projection')
+for face in front_ground.data.polygons:
+    for index in face.loop_indices:
+        point=front_ground.data.vertices[front_ground.data.loops[index].vertex_index].co
+        front_uv.data[index].uv=(point.x/3,point.y/3)
+front_shader=next(n for n in front_soil.node_tree.nodes if n.type=='BSDF_PRINCIPLED')
+front_node=front_soil.node_tree.nodes.new('ShaderNodeTexImage')
+front_node.image=front_texture
+front_soil.node_tree.links.new(front_node.outputs['Color'],front_shader.inputs['Base Color'])
+
+# An explicit site plan. Each tree's *shape* varies, but its position is fixed.
+tree_positions = [(-69,-23,8.7),(-61,-20,9.3),(-53,-25,8.1),
+                  (4,-20,8.3),(12,-24,9.2),(21,-20,8.9),
+                  (46,-23,9.0),(54,-19,8.5),(62,-24,9.4),(70,-20,8.0),
+                  (8,-13.75,10.8),(60,-14,10.2),
+                  (76,9,10.4),(76,21,11.2),(76,33,10.0),
+                  # Photo-based continuation beside the long east elevation.
+                  # These positions and heights remain estimates.
+                  (76.1,44,9.5),(76.3,56,10.5),(75.9,69,8.8),(76.2,79,10.2),
+                  # The supplied front aerial view shows interlocking crowns
+                  # and multiple trunks within each of the three fixed beds.
+                  # Positions and heights are visual estimates, not survey data.
+                  (-66,-18.7,7.5),(-57,-22.5,8.4),(-51.8,-19.0,7.1),
+                  (5.5,-25.0,7.7),(9,-19.1,8.6),(17,-25.0,7.9),(24,-23.8,7.4),
+                  (48,-19.0,7.7),(55.8,-25.0,7.2),(60,-18.5,8.3),
+                  (67,-25.0,7.5),(71,-23.0,7.1),
+                  (-68,-33,7.7),(-59,-32,8.2),(-51.5,-32,7.4),
+                  (4,-32,8.0),(13,-32.5,8.8),(22.5,-32,8.2),
+                  (47,-32,8.3),(56,-32.5,9.0),(65,-31.8,8.6),(70.5,-32,7.5)]
+templates=[]
+for template_id in range(5):
+    branches = DetailMesh()
+    leaves = [DetailMesh() for _ in leaf_mats]
+    rng = random.Random(1309+template_id*53)
+    root = Vector((0,0,0))
+    height=10
+    stem_top = root+Vector((.2,-.12,height*.82))
+    branches.branch(root, root+Vector((.03,-.02,height*.30)), .20,.145, 9)
+    branches.branch(root+Vector((.03,-.02,height*.30)), stem_top, .145,.055, 8)
+    for arm in range(9):
+        angle=arm*2*math.pi/9+.15*(template_id%3)+rng.uniform(-.12,.12)
+        radial=Vector((math.cos(angle),math.sin(angle),0))
+        lateral=Vector((-math.sin(angle),math.cos(angle),0))
+        start=root+Vector((.07,-.04,height*(.33+.045*(arm%5))))
+        end=root+radial*(2.25+.18*(arm%4))+Vector((.15,-.08,height*(.64+.055*(arm%5))))
+        # Break each limb at a gently offset elbow instead of making all the
+        # branches straight spokes. The crown is still an interpretation of
+        # the deciduous trees visible in the supplied plaza photographs.
+        elbow=start.lerp(end,.48)+lateral*rng.uniform(-.25,.25)+Vector((0,0,.18))
+        branches.branch(start,elbow,.09,.056,6)
+        branches.branch(elbow,end,.056,.024,6)
+        for fork in range(3):
+            end2=end+radial*(.28+.18*fork)+lateral*((fork-1)*.68)+Vector((0,0,.38+.18*fork))
+            branches.branch(end,end2,.025,.009,5)
+            for leaf_id in range(160):
+                # Use overlapping volumes around the upper limbs so foliage
+                # fills a continuous, irregular crown rather than thin spokes.
+                p=elbow.lerp(end2, rng.uniform(.12,1.0))
+                p+=radial*rng.uniform(-.45,.60)+lateral*rng.uniform(-.70,.70)+Vector((0,0,rng.uniform(-.40,.68)))
+                direction=(radial*rng.uniform(-1,1)+lateral*rng.uniform(-1,1)+Vector((0,0,rng.uniform(-.5,1))))
+                # Smaller leaves and a higher leaf count avoid the oversized
+                # diamond-like foliage visible at pedestrian distance.
+                leaves[(template_id+arm+fork+leaf_id)%len(leaves)].leaf(p,direction,rng.uniform(.20,.31),rng.uniform(.09,.16))
+    x,y,actual_height=tree_positions[template_id]
+    prototype=[branches.finish('Tree trunk %d' % template_id,bark)]
+    for shade,builder in enumerate(leaves):
+        ob=builder.finish('Tree foliage %d shade %d' % (template_id,shade),leaf_mats[shade])
+        ob.data.materials[0].use_backface_culling=False
+        prototype.append(ob)
+    for ob in prototype:
+        ob.location=(x,y,.18)
+        ob.scale=(1,1,actual_height/10)
+        ob.rotation_euler.z=template_id*.57
+    templates.append(prototype)
+for tree_id,(x,y,height) in enumerate(tree_positions[5:],start=5):
+    prototype=templates[tree_id%len(templates)]
+    for index,source in enumerate(prototype):
+        name='Tree trunk %d' % tree_id if index==0 else 'Tree foliage %d shade %d' % (tree_id,index-1)
+        ob=bpy.data.objects.new(name,source.data)
+        bpy.context.collection.objects.link(ob)
+        ob.location=(x,y,.18)
+        ob.scale=(1,1,height/10)
+        ob.rotation_euler.z=tree_id*.57
+
+# Exposed soil around the trunks breaks up the uniform planting surface.
+# The discs overlap the bed surface slightly, so they sit on the ground.
+tree_soil=DetailMesh()
+for x,y,_ in tree_positions:
+    tree_soil.branch((x,y,.175),(x,y,.184),.53,.53,20)
+tree_soil.finish('Exposed soil around tree trunks',soil)
+
+# A few young trees have three timber supports, as in the plaza photographs.
+# Their feet rest in the planted bed and the upper ends meet the trunk.
+tree_supports=DetailMesh()
+tree_ties=DetailMesh()
+for tree_id in (0,2,5,8,12,15,17):
+    x,y,_=tree_positions[tree_id]
+    for arm in range(3):
+        angle=tree_id*.23+arm*2*math.pi/3
+        radial=Vector((math.cos(angle),math.sin(angle),0))
+        foot=Vector((x,y,.18))+radial*.80
+        top=Vector((x+.02,y-.01,1.90))+radial*.17
+        tree_supports.branch(foot,top,.045,.038,7)
+    # Short bands sit around the trunk and visibly bind the support heads.
+    for k in range(12):
+        a=2*math.pi*k/12
+        b=2*math.pi*(k+1)/12
+        tree_ties.branch((x+.02+.18*math.cos(a),y-.01+.18*math.sin(a),1.84),
+                         (x+.02+.18*math.cos(b),y-.01+.18*math.sin(b),1.84),
+                         .018,.018,5)
+tree_supports.finish('Young tree timber supports',wood)
+tree_ties.finish('Young tree support ties',metal)
+
+# The rear photograph shows a wooded garden with lighter paths behind the
+# theatre. These intentionally placed planting islands are a spatial
+# interpretation, not surveyed footprints or a reconstruction of each species.
+rear_beds=[
+    [(-70,127),(-67,123),(-60,122),(-54,123),(-48,122),(-41,124),(-36,125),(-34,129),(-35,134),(-38,138),(-46,139),(-53,137),(-61,139),(-68,136)],
+    [(-27,128),(-25,124),(-20,122),(-13,123),(-6,122),(1,124),(5,128),(4,134),(1,138),(-6,139),(-13,137),(-20,139),(-25,135)],
+    [(12,129),(15,125),(20,123),(27,124),(34,123),(39,126),(40,131),(39,137),(35,140),(28,141),(21,139),(16,140),(12,136)],
+    [(48,130),(51,126),(57,124),(63,125),(70,124),(74,128),(75,133),(74,139),(69,142),(62,143),(57,141),(51,142),(48,138)],
+    [(-70,152),(-67,148),(-61,146),(-54,147),(-47,146),(-40,148),(-35,147),(-33,151),(-34,157),(-37,162),(-44,164),(-51,162),(-59,164),(-67,161)],
+    [(-23,152),(-20,148),(-14,146),(-7,147),(0,146),(8,148),(12,147),(15,151),(14,157),(11,162),(4,164),(-3,162),(-11,164),(-19,161)],
+    [(24,153),(27,149),(34,147),(42,148),(49,147),(57,149),(65,147),(72,150),(74,154),(73,160),(68,163),(59,164),(52,162),(44,164),(36,162),(28,163),(24,159)],
+]
+rear_soil=detail_material('Rear garden deep planted soil',(.16,.22,.105),roughness=.98)
+rear_path_mat=detail_material('Rear garden warm path',(.53,.37,.27),roughness=.94)
+rear_edge_mat=detail_material('Rear garden stone border',(.43,.46,.40),roughness=.91)
+rear_bed_mesh=DetailMesh()
+rear_border=DetailMesh()
+for polygon in rear_beds:
+    start=len(rear_bed_mesh.vertices)
+    count=len(polygon)
+    rear_bed_mesh.vertices.extend([(x,y,z) for z in (0,.16) for x,y in polygon])
+    rear_bed_mesh.faces.append(tuple(start+i for i in reversed(range(count))))
+    rear_bed_mesh.faces.append(tuple(start+count+i for i in range(count)))
+    for i in range(count):
+        j=(i+1)%count
+        rear_bed_mesh.faces.append((start+i,start+j,start+count+j,start+count+i))
+        x0,y0=polygon[i];x1,y1=polygon[j]
+        rear_border.branch((x0,y0,.17),(x1,y1,.17),.075,.075,6)
+rear_bed_mesh.finish('Rear garden planting islands',rear_soil)
+rear_border.finish('Rear garden low stone borders',rear_edge_mat)
+
+# A gently bending crossing path follows the green edges in the photograph.
+rear_paths=DetailMesh()
+path_centers=[(-75,142.2),(-60,141.2),(-45,141.2),(-30,141.7),(-15,142.8),
+              (0,142.7),(15,142.6),(30,143.9),(45,144),(60,145),(78,145.2)]
+for i,(x,y) in enumerate(path_centers):
+    a=Vector(path_centers[max(0,i-1)])
+    b=Vector(path_centers[min(len(path_centers)-1,i+1)])
+    tangent=(b-a).normalized()
+    offset=Vector((-tangent.y,tangent.x))*1.2
+    rear_paths.vertices.extend([(x+offset.x,y+offset.y,0),(x-offset.x,y-offset.y,0),
+                                (x+offset.x,y+offset.y,.016),(x-offset.x,y-offset.y,.016)])
+for i in range(len(path_centers)-1):
+    a=4*i;b=a+4
+    rear_paths.faces.extend(((a,b,b+1,a+1),(a+2,a+3,b+3,b+2),
+                             (a,a+2,b+2,b),(a+1,b+1,b+3,a+3)))
+rear_paths.faces.extend(((0,1,3,2),(4*(len(path_centers)-1),4*(len(path_centers)-1)+2,
+                                     4*(len(path_centers)-1)+3,4*(len(path_centers)-1)+1)))
+rear_paths.finish('Rear garden warm paved paths',rear_path_mat)
+
+# The 44 tree positions are fixed, share the existing five hand-built tree
+# meshes, and include subdued autumn tones seen in the supplied rear photo.
+rear_trees=[
+    (-64,127,9.2),(-53,133,10.4),(-42,128,8.9),
+    (-20,127,10.2),(-10,134,9.4),(-1,128,8.8),
+    (19,130,9.7),(30,135,10.5),(36,128,8.8),
+    (55,130,9.3),(65,136,10.3),(71,130,8.6),
+    (-62,151,10.4),(-50,158,9.2),(-39,151,10.0),
+    (-15,151,9.4),(-3,158,10.6),(9,151,9.2),
+    (31,152,10.3),(43,158,9.0),(56,152,10.2),(68,158,9.3),
+    (-57,127,10.4),(-14,130,10.6),(24,132,11.0),(59,134,10.8),
+    (-55,154,10.5),(-7,154,10.0),(37,154,10.6),(62,154,10.2),
+    (-49,127,8.0),(-62,134,12.0),(-23,133,9.2),(-4,134,11.5),
+    (15,135,8.8),(34,132,11.8),(51,137,8.4),(69,136,12.0),
+    (-65,158,9.2),(-43,157,11.7),(-18,158,8.3),(5,157,11.5),
+    (27,158,8.6),(51,157,11.9),
+]
+rear_autumn=[
+    detail_material('Rear autumn foliage %d' % i,color,roughness=.92)
+    for i,color in enumerate(((.50,.48,.13),(.65,.52,.14),(.53,.36,.12),(.35,.42,.12)))
+]
+for rear_id,(x,y,height) in enumerate(rear_trees):
+    tree_id=len(tree_positions)+rear_id
+    for part,source in enumerate(templates[tree_id%len(templates)]):
+        name=('Tree trunk %d' % tree_id if part==0
+              else 'Tree foliage %d shade %d' % (tree_id,part-1))
+        ob=bpy.data.objects.new(name,source.data)
+        bpy.context.collection.objects.link(ob)
+        ob.location=(x,y,.16)
+        crown=(1.16,1.52,1.30,1.62,1.23,1.45,1.68)[rear_id%7]
+        ob.scale=(crown,crown,height/10)
+        ob.rotation_euler.z=tree_id*.57
+        if part and rear_id%3!=0:
+            ob.material_slots[0].link='OBJECT'
+            ob.material_slots[0].material=rear_autumn[(rear_id+part)%len(rear_autumn)]
+
+# Low ground plants occupy intentional sites within the islands.
+rear_plants=[DetailMesh(),DetailMesh()]
+rear_plant_regions=[(-70,-34,122,139),(-27,5,122,139),(12,40,123,141),
+                    (48,75,124,143),(-70,-33,146,164),(-23,15,146,164),(24,74,147,164)]
+for bed_id,(xmin,xmax,ymin,ymax) in enumerate(rear_plant_regions):
+    rng=random.Random(9200+bed_id)
+    for row in range(4):
+        for col in range(6):
+            x=xmin+3+(xmax-xmin-6)*col/5+rng.uniform(-.4,.4)
+            y=ymin+3+(ymax-ymin-6)*row/3+rng.uniform(-.35,.35)
+            if any((x-tx)**2+(y-ty)**2<1.05**2 for tx,ty,_ in rear_trees):
+                continue
+            for leaf in range(14):
+                a=2*math.pi*leaf/14+rng.uniform(-.15,.15)
+                direction=Vector((math.cos(a)*.6,math.sin(a)*.6,rng.uniform(.5,1))).normalized()
+                length=rng.uniform(.22,.42)
+                root=Vector((x,y,.16))
+                rear_plants[(row+col+leaf)%2].leaf(root+direction*length*.52,direction,length,.09)
+for i,builder in enumerate(rear_plants):
+    builder.finish('Rear garden understory %d' % i,leaf_mats[i+1])
+
+# Groundcover grows in irregular groups within the explicitly placed beds.
+# Each leaf emerges from a root near the soil rather than floating above it.
+groundcover=[DetailMesh(),DetailMesh()]
+for bed_id,(x,y,w,d) in enumerate(beds):
+    rng=random.Random(602+bed_id)
+    rows=max(2,round((d-1.4)/1.1)+1)
+    columns=max(2,round((w-1.4)/1.1)+1)
+    for row in range(rows):
+        for col in range(columns):
+            if rng.random()<.18:
+                continue
+            px=x-w/2+.7+col*(w-1.4)/(columns-1)+rng.uniform(-.44,.44)
+            py=y-d/2+.7+row*(d-1.4)/(rows-1)+rng.uniform(-.44,.44)
+            if any((px-tx)**2+(py-ty)**2<.85**2 for tx,ty,_ in tree_positions):
+                continue
+            if bed_id==3 and (px-marker_x)**2+(py-marker_y)**2<1.1**2:
+                continue
+            count=rng.randint(11,17)
+            phase=rng.uniform(0,2*math.pi)
+            for j in range(count):
+                angle=phase+j*2*math.pi/count+rng.uniform(-.15,.15)
+                direction=Vector((math.cos(angle)*rng.uniform(.5,.9),math.sin(angle)*rng.uniform(.5,.9),rng.uniform(.4,1))).normalized()
+                length=rng.uniform(.17,.34)
+                root=Vector((px+rng.uniform(-.09,.09),py+rng.uniform(-.09,.09),.18))
+                center=root+direction*length*.52
+                groundcover[(col+row+j)%2].leaf(center,direction,length,rng.uniform(.055,.11))
+for i,builder in enumerate(groundcover):
+    builder.finish('Layered garden groundcover %d' % i,leaf_mats[i+1])
+
+# Varied low leafy groups fill the two planted beds facing the theatre.  Root
+# sites follow those fixed bed boundaries and leave clearance for tree supports.
+front_foliage=[DetailMesh(),DetailMesh()]
+for bed_id in (1,2):
+    x,y,w,d=beds[bed_id]
+    rng=random.Random(5600+bed_id)
+    columns=int((w-2.4)/2.0)+1
+    rows=int((d-2.4)/2.0)+1
+    for row in range(rows):
+        for col in range(columns):
+            if rng.random()<.16:
+                continue
+            px=x-w/2+1.2+col*(w-2.4)/(columns-1)+rng.uniform(-.35,.35)
+            py=y-d/2+1.2+row*(d-2.4)/(rows-1)+rng.uniform(-.35,.35)
+            if any((px-tx)**2+(py-ty)**2<1.35**2 for tx,ty,_ in tree_positions):
+                continue
+            phase=rng.uniform(0,2*math.pi)
+            for leaf_id in range(36):
+                angle=phase+2*math.pi*leaf_id/36+rng.uniform(-.20,.20)
+                radius=rng.uniform(.04,.28)
+                root=Vector((px+math.cos(angle)*radius,py+math.sin(angle)*radius,.18))
+                direction=Vector((math.cos(angle)*rng.uniform(.35,.8),
+                                  math.sin(angle)*rng.uniform(.35,.8),
+                                  rng.uniform(.45,1.2))).normalized()
+                length=rng.uniform(.28,.54)
+                front_foliage[(row+col+leaf_id)%2].leaf(root+direction*length*.52,
+                                                        direction,length,rng.uniform(.075,.14))
+for i,builder in enumerate(front_foliage):
+    builder.finish('Plaza shrub foliage %d' % (i+3),leaf_mats[i+1])
+
+# Low shrubs form small, intentional groups between trees in the photo-based
+# beds.  Their coordinates are chosen within each bed, not scattered buildings.
+shrub_sites=[(-65,-25),(-58,-26),(-56,-19),(7,-23),(17,-20),(23,-25),
+             (49,-25),(57,-21),(66,-23),(69,-25),(6,-14),(58,-14),
+             (76,14),(76,27),(75.6,38.5),(76.8,50),(75.5,62),(76.8,74),
+             # Low layered planting between larger trunks.
+             (-70,-26),(-62,-25),(-54,-27),(3,-23),(8,-26),(14,-20),
+             (19,-23),(24,-20),(47,-26),(52,-22),(60,-26),(64,-20),(70,-27)]
+shrub_branches=DetailMesh()
+shrub_leaves=[DetailMesh(),DetailMesh(),DetailMesh()]
+for shrub_id,(x,y) in enumerate(shrub_sites):
+    rng=random.Random(3900+shrub_id)
+    height=rng.uniform(.48,.82)
+    base=Vector((x,y,.18))
+    for stem in range(7):
+        angle=2*math.pi*stem/7+rng.uniform(-.25,.25)
+        radial=Vector((math.cos(angle),math.sin(angle),0))
+        tip=base+radial*rng.uniform(.20,.44)+Vector((0,0,height*rng.uniform(.65,1)))
+        shrub_branches.branch(base,tip,.018,.006,5)
+        for leaf_id in range(15):
+            p=base.lerp(tip,rng.uniform(.35,1))+radial*rng.uniform(-.07,.12)+Vector((rng.uniform(-.10,.10),rng.uniform(-.10,.10),rng.uniform(-.06,.08)))
+            direction=radial*rng.uniform(.1,.8)+Vector((rng.uniform(-.4,.4),rng.uniform(-.4,.4),rng.uniform(.25,1)))
+            shrub_leaves[(shrub_id+stem+leaf_id)%3].leaf(p,direction,rng.uniform(.12,.22),rng.uniform(.055,.105))
+shrub_branches.finish('Plaza shrub stems',bark)
+for i,builder in enumerate(shrub_leaves):
+    builder.finish('Plaza shrub foliage %d' % i,leaf_mats[i+1])
+
+# Benches and lighting are aligned with the plaza, with visible feet and slats.
+bench = DetailMesh()
+fittings = DetailMesh()
+for x,y in [(-55,-38),(-45,-38),(7,-36.5),(19,-36.5),(49,-36.5),(62,-36.5)]:
+    for j in range(5):
+        bench.box((x,y+(j-2)*.10,.56),(2.9,.075,.09))
+    for xx in (x-1.05,x+1.05):
+        fittings.box((xx,y,.28),(.11,.45,.56))
+for x,y in [(-73,-31),(-35,-31),(0,-31),(35,-31),(75,-31)]:
+    fittings.box((x,y,2.2),(.10,.10,4.4))
+    fittings.box((x,y-.42,4.35),(.12,.9,.12))
+    fittings.box((x,y-.8,4.28),(.20,.25,.12))
+bench.finish('Plaza benches, wood slats', wood)
+fittings.finish('Bench legs and plaza lights', metal)
+
+# Three connected timber platforms in front of the central stair.  Their
+# stepped footprint follows the supplied street-level views; measurements
+# remain estimates.  Each tier is solid all the way down to its predecessor.
+deck_wood=detail_material('Plaza deck oiled hardwood',(.36,.23,.15),roughness=.76)
+deck_end=detail_material('Plaza deck end grain',(.23,.13,.085),roughness=.82)
+deck=DetailMesh()
+deck_edges=DetailMesh()
+for layer,(width,depth) in enumerate(((23,7.2),(21,5.8),(19,4.4))):
+    x,y=-19,-24
+    bottom=layer*.22
+    top=bottom+.22
+    deck.box((x,y,(bottom+top)/2),(width,depth,top-bottom))
+    # The ends and front edges are made of narrow horizontal courses.
+    for z in (bottom+.045,bottom+.10,bottom+.155):
+        for yy in (y-depth/2-.006,y+depth/2+.006):
+            deck_edges.box((x,yy,z),(width,.012,.012))
+        for xx in (x-width/2-.006,x+width/2+.006):
+            deck_edges.box((xx,y,z),(.012,depth,.012))
+deck_obj=deck.finish('Central plaza stepped timber platform',deck_wood)
+deck_edges.finish('Timber platform board edges',deck_end)
+# A packed, original wood texture replaces subpixel seam geometry. This keeps
+# individual boards readable without distracting moiré as the camera moves.
+wood_image=bpy.data.images.new('Original timber plank grain',width=256,height=256,alpha=True)
+wood_rng=random.Random(3811)
+wood_pixels=[]
+for py in range(256):
+    plank=py//32
+    local=py%32
+    for px in range(256):
+        grain=.012*math.sin(px*.16+math.sin(py*.09)*2)+wood_rng.gauss(0,.004)
+        variation=.012*math.sin(plank*2.1)
+        seam=-.065 if local in (0,1) else 0
+        value=grain+variation+seam
+        wood_pixels.extend((linear_to_srgb(.27+value),linear_to_srgb(.17+value*.74),
+                            linear_to_srgb(.11+value*.5),1))
+wood_image.pixels[:]=wood_pixels
+wood_image.pack()
+deck_uv=deck_obj.data.uv_layers.new(name='Timber boards')
+for face in deck_obj.data.polygons:
+    for index in face.loop_indices:
+        point=deck_obj.data.vertices[deck_obj.data.loops[index].vertex_index].co
+        deck_uv.data[index].uv=(point.x/4,point.y/1.12)
+wood_shader=next(n for n in deck_wood.node_tree.nodes if n.type=='BSDF_PRINCIPLED')
+wood_texture=deck_wood.node_tree.nodes.new('ShaderNodeTexImage')
+wood_texture.image=wood_image
+deck_wood.node_tree.links.new(wood_texture.outputs['Color'],wood_shader.inputs['Base Color'])
+
+# Planted ledges are attached to the right-hand stair retaining wall, climbing
+# with the six stone terraces instead of floating beside the handrail.
+terrace_stone=DetailMesh()
+terrace_green=DetailMesh()
+terrace_leaves=[DetailMesh(),DetailMesh()]
+wall_x=facade_x(-2.7)
+for i in range(6):
+    y=-13.65+i*2.65
+    support=annex_z(.65+i*.53+.07)
+    # Keep the stone planter clear of the stair rail posts while maintaining
+    # overlap with their underlying retaining wall.
+    x=wall_x+.88
+    # Solid stone supports extend to grade; the projecting planter is not
+    # left cantilevered from the narrow stair wall.
+    terrace_stone.box((x,y,(support+.36)/2),(1.56,2.42,support+.36))
+    terrace_green.box((x,y,support+.37),(1.40,2.24,.04))
+    rng=random.Random(1901+i)
+    for plant in range(6):
+        px=x+rng.uniform(-.5,.5)
+        py=y-1+plant*.4+rng.uniform(-.1,.1)
+        for j in range(14):
+            angle=j*2*math.pi/14
+            root_x=max(x-.67,min(x+.67,px+rng.uniform(-.18,.18)))
+            root_y=max(y-1.09,min(y+1.09,py+rng.uniform(-.18,.18)))
+            root=Vector((root_x,root_y,support+.39))
+            direction=Vector((math.cos(angle)*.7,math.sin(angle)*.7,rng.uniform(.4,1))).normalized()
+            length=rng.uniform(.20,.36)
+            terrace_leaves[(i+j)%2].leaf(root+direction*length*.52,direction,length,rng.uniform(.09,.16))
+terrace_stone.finish('Central stair planted stone terraces',curb)
+terrace_green.finish('Central stair terrace planting beds',grass)
+for i,builder in enumerate(terrace_leaves):
+    builder.finish('Central stair terrace shrubs %d' % i,leaf_mats[i+1])
+
+# A slender wayfinding marker stands near the central stair and main hall.
+# Its location and graphics are interpretive: the photographs show a vertical
+# marker but do not make its lettering or precise setting legible.  The marker
+# is placed within an existing blocked planting bed and has its own foot plate.
+wayfinding_shell=detail_material('Wayfinding dark green enamel',(.12,.24,.23),metallic=.25,roughness=.42)
+wayfinding_ink=detail_material('Wayfinding pale lettering',(.86,.90,.83),roughness=.72)
+wayfinding=DetailMesh()
+wayfinding.box((marker_x,marker_y,.205),(.64,.32,.05))
+wayfinding.box((marker_x,marker_y,1.31),(.52,.15,2.16))
+wayfinding.finish('Main hall wayfinding marker',wayfinding_shell)
+marker_graphic=DetailMesh()
+# Three short rules are individual original geometry, not photo-derived pixels.
+for z,width in ((1.55,.25),(1.43,.18),(1.31,.22)):
+    marker_graphic.box((marker_x,marker_y-.077,z),(width,.006,.012))
+marker_graphic.finish('Wayfinding marker graphic',wayfinding_ink)
+marker_font_path=r'C:\Windows\Fonts\malgun.ttf'
+if os.path.exists(marker_font_path):
+    marker_font=bpy.data.fonts.load(marker_font_path,check_existing=True)
+    for caption,z,size in [('세종',2.12,.13),('문화회관',1.94,.095)]:
+        lettering=bpy.data.curves.new('Wayfinding marker text','FONT')
+        lettering.body=caption
+        lettering.font=marker_font
+        lettering.align_x='CENTER'
+        lettering.size=size
+        lettering.extrude=.001
+        text_object=bpy.data.objects.new('Wayfinding marker '+caption,lettering)
+        bpy.context.collection.objects.link(text_object)
+        text_object.location=(marker_x,marker_y-.079,z)
+        text_object.rotation_euler=(math.pi/2,0,0)
+        text_object.data.materials.append(wayfinding_ink)
+        bpy.ops.object.select_all(action='DESELECT')
+        text_object.select_set(True)
+        bpy.context.view_layer.objects.active=text_object
+        bpy.ops.object.convert(target='MESH')
+
+# Simple lobby fittings and the entrance leaves standing open at the jambs.
+lobby = DetailMesh()
+lobby_trim = DetailMesh()
+lobby_glass = DetailMesh()
+for left,right in door_ranges:
+    for x in (facade_x(left),facade_x(right)):
+        for y in (-2.84,-1.36):lobby_trim.box((x,y,2.30),(.08,.08,2.45))
+        for z in (1.10,3.50):lobby_trim.box((x,-2.1,z),(.08,1.55,.08))
+        # Connect the open leaf to the bronze jamb without closing the passage.
+        for z in (1.4,3.2):lobby_trim.box((x,-3.02,z),(.08,.44,.14))
+        lobby_glass.box((x,-2.1,2.30),(.024,1.40,2.32))
+for x in (17,48):
+    lobby.box((x,7.7,1.62),(5.8,1.2,1.1))
+    lobby_trim.box((x,7.7,2.19),(6.1,1.4,.12))
+for x in (7,57):
+    lobby.box((x,3.6,1.37),(4.3,.95,.60))
+    lobby_trim.box((x,3.6,1.68),(4.4,1.0,.09))
+for x in (9,21,33,45,57):
+    lobby_trim.box((x,4,6.13),(2.0,.28,.05))
+lobby.finish('Lobby benches and counters', interior)
+lobby_trim.finish('Lobby open doors and fittings', metal)
+lobby_glass.finish('Lobby open door glass', mats['glass'])
+
+# Three separate open shop entrances follow the recessed terrace openings.
+# Store interiors are interpretive because the supplied photos show exteriors.
+store_trim=DetailMesh()
+store_glass=DetailMesh()
+for left,right in shop_ranges:
+    for x in (facade_x(left),facade_x(right)):
+        for y in (-11.18,-10.08):store_trim.box((x,y,1.55),(.06,.07,2.8))
+        for z in (.16,2.94):store_trim.box((x,-10.63,z),(.06,1.16,.07))
+        store_glass.box((x,-10.63,1.55),(.02,1.04,2.66))
+store_trim.finish('Annex shop open door frames',metal)
+store_glass.finish('Annex shop open door glass',mats['shopglass'])
+# Quietly detailed, illustrative shop interiors behind the transparent glazing.
+# The references do not document actual tenants or interior arrangements.
+store_furniture=DetailMesh()
+store_edging=DetailMesh()
+store_highlights=DetailMesh()
+for center in shop_centers:
+    x=facade_x(center)+2.1
+    store_furniture.box((x,-5.45,.70),(1.65,.55,1.2))
+    store_edging.box((x,-5.45,1.32),(1.72,.62,.08))
+    for i in range(4):
+        store_highlights.box((x-.58+i*.37,-5.77,1.02),(.25,.055,.32))
+store_furniture.finish('Annex shop display cabinets',wood)
+store_edging.finish('Annex shop cabinet edging',metal)
+store_highlights.finish('Annex shop display cards',interior)
+
+ceiling_lights = DetailMesh()
+for x in (9,21,33,45,57):
+    ceiling_lights.box((x,4,6.09),(1.85,.22,.04))
+ceiling_lights.finish('Lobby light strips', light)
+
+# The exterior photos do not disclose the interior signage, so this is an
+# expressly interpretive lobby sign, set from Korean font outlines in Blender.
+font_path=r'C:\Windows\Fonts\malgun.ttf'
+if os.path.exists(font_path):
+    korean_font=bpy.data.fonts.load(font_path,check_existing=True)
+    for text_value,z,size in [('세종문화회관',4.35,.82),('SEJONG CENTER',3.62,.30)]:
+        lettering=bpy.data.curves.new('Lobby lettering','FONT')
+        lettering.body=text_value
+        lettering.font=korean_font
+        lettering.align_x='CENTER'
+        lettering.size=size
+        lettering.extrude=.002
+        text_obj=bpy.data.objects.new('Lobby lettering '+text_value,lettering)
+        bpy.context.collection.objects.link(text_obj)
+        text_obj.location=(33.1,11.36,z)
+        text_obj.rotation_euler=(math.pi/2,0,0)
+        text_obj.data.materials.append(metal)
+        bpy.ops.object.select_all(action='DESELECT')
+        text_obj.select_set(True)
+        bpy.context.view_layer.objects.active=text_obj
+        bpy.ops.object.convert(target='MESH')
+    for label,center in zip(('SEJONG','ART','LOUNGE'),shop_centers):
+        lettering=bpy.data.curves.new('Annex shop lettering','FONT')
+        lettering.body=label
+        lettering.font=korean_font
+        lettering.align_x='CENTER'
+        lettering.size=.39
+        lettering.extrude=.002
+        text_obj=bpy.data.objects.new('Annex shop sign '+label,lettering)
+        bpy.context.collection.objects.link(text_obj)
+        text_obj.location=(facade_x(center),-4.62,2.50)
+        text_obj.rotation_euler=(math.pi/2,0,0)
+        text_obj.data.materials.append(interior)
+        bpy.ops.object.select_all(action='DESELECT')
+        text_obj.select_set(True)
+        bpy.context.view_layer.objects.active=text_obj
+        bpy.ops.object.convert(target='MESH')
+
+# Original low reliefs modeled as shallow curved stone strokes; no source photo
+# is sampled or projected onto the mesh. The obscured sculpture is interpretive.
+relief_mat=detail_material('Carved pale stone', (.63,.64,.61), roughness=.95)
+contours=[
+ [(-.82,.03),(-.88,.24),(-.70,.47),(-.48,.59),(-.35,.84)],
+ [(-.38,.84),(-.22,1.12),(-.02,1.30),(.22,1.35),(.38,1.22)],
+ [(.38,1.22),(.50,1.02),(.39,.82),(.24,.71),(.19,.56)],
+ [(.16,.54),(.44,.45),(.57,.25),(.58,.06),(.44,-.16)],
+ [(-.46,.57),(-.28,.43),(-.24,.24),(-.42,.04),(-.59,-.22)],
+ [(-.60,-.22),(-.61,-.49),(-.43,-.72),(-.13,-.82),(.15,-.76),(.34,-.60)],
+ [(.44,-.16),(.30,-.34),(.13,-.49),(-.10,-.55),(-.35,-.48)],
+ [(-.75,-.32),(-.77,-.57),(-.63,-.85),(-.34,-1.03),(.01,-1.10),(.41,-1.00)],
+ [(-.31,.53),(-.13,.66),(.11,.71),(.28,.68)],
+ [(-.51,.13),(-.30,.21),(-.12,.20),(.08,.12),(.22,-.02)],
+ [(-.55,-.34),(-.31,-.30),(-.12,-.23),(.10,-.09)],
+ [(-.28,-.70),(-.10,-.64),(.11,-.53),(.30,-.38)],
+ [(-.25,1.04),(-.09,1.10),(.10,1.08),(.22,.99)],
+ [(-.20,.91),(-.04,.87),(.12,.90)],
+ [(-.90,-.76),(-.65,-1.07),(-.27,-1.23),(.18,-1.25),(.52,-1.10)],
+]
+for panel,center in enumerate((-2.2,46.2)):
+    for index,points in enumerate(contours):
+        curve=bpy.data.curves.new('Hand modeled relief line','CURVE')
+        curve.dimensions='3D'
+        curve.resolution_u=8
+        curve.bevel_depth=.018 if index>7 else .032
+        curve.bevel_resolution=2
+        spline=curve.splines.new('BEZIER')
+        spline.bezier_points.add(len(points)-1)
+        for bp,(u,v) in zip(spline.bezier_points,points):
+            if panel: u=-u
+            bp.co=(facade_x(center+u*1.40),front-1.005,theatre_z(10.15+v*2.45))
+            bp.handle_left_type='AUTO'
+            bp.handle_right_type='AUTO'
+        obj=bpy.data.objects.new('Original carved relief %d %02d' % (panel,index),curve)
+        bpy.context.collection.objects.link(obj)
+        obj.data.materials.append(relief_mat)
+        bpy.ops.object.select_all(action='DESELECT')
+        obj.select_set(True)
+        bpy.context.view_layer.objects.active=obj
+        bpy.ops.object.convert(target='MESH')
+
+# Graphics are original SVG drawings rasterized to textures, not source photos.
+graphic_images={}
+def graphic_plane(name, filepath, left, right, y, bottom, top, emission=0, u_range=(0,1)):
+    absolute=os.path.abspath(filepath)
+    if absolute not in graphic_images:
+        # Rebuilding in the same Blender session must read the current file,
+        # not reuse an older packed image with the same path.
+        graphic_images[absolute]=bpy.data.images.load(absolute,check_existing=False)
+        graphic_images[absolute].pack()
+    image=graphic_images[absolute]
+    mesh=bpy.data.meshes.new(name)
+    mesh.from_pydata([(left,y,bottom),(right,y,bottom),(right,y,top),(left,y,top)],[],[(0,1,2,3)])
+    mesh.update()
+    layer=mesh.uv_layers.new(name='Artwork UV')
+    for face in mesh.polygons:
+        for index in face.loop_indices:
+            vertex=mesh.loops[index].vertex_index
+            u0,u1=u_range
+            layer.data[index].uv=[(u0,0),(u1,0),(u1,1),(u0,1)][vertex]
+    obj=bpy.data.objects.new(name,mesh)
+    bpy.context.collection.objects.link(obj)
+    mat=bpy.data.materials.new(name+' original vector artwork')
+    mat.use_nodes=True
+    shader=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED')
+    texture=mat.node_tree.nodes.new('ShaderNodeTexImage')
+    texture.image=image
+    mat.node_tree.links.new(texture.outputs['Color'],shader.inputs['Base Color'])
+    if emission:
+        mat.node_tree.links.new(texture.outputs['Color'],shader.inputs['Emission Color'])
+        shader.inputs['Emission Strength'].default_value=emission
+    mesh.materials.append(mat)
+    return obj
+
+graphic_plane('Annex screen • original art','assets/graphics/annex-screen.png',
+              facade_x(-43.12),facade_x(-34.88),-4.91,annex_z(4.48+screen_lift),annex_z(10.12+screen_lift),.18)
+banner_left,banner_right=facade_x(-50.4),facade_x(-27.6)
+banner_mid=(banner_left+banner_right)/2
+for i,(left,right) in enumerate(((banner_left,banner_mid),(banner_mid,banner_right))):
+    graphic_plane('Terrace banner %d • original art' % i,'assets/graphics/annex-banner.png',
+                  left,right,-12.225,annex_z(2.95),annex_z(4.25),u_range=(i*.5,(i+1)*.5))
+
+# The original event graphic spans the glazed projection as a separate framed
+# panel.  Its backing overlaps the existing mullions; no photo pixels are used.
+# The left part of the projection is behind the corner pier from the plaza.
+# Fit the 4:1 graphic into the visible section instead of hiding its title.
+bridge_left,bridge_right=-35.0,facade_x(-21.7)
+bridge_top=annex_z(8.10)
+bridge_bottom=bridge_top-(bridge_right-bridge_left)/4
+bridge_frame=DetailMesh()
+bridge_frame.box(((bridge_left+bridge_right)/2,-2.62,(bridge_bottom+bridge_top)/2),
+                 (bridge_right-bridge_left+.12,.08,bridge_top-bridge_bottom+.12))
+bridge_frame.finish('Glazed bridge banner backing',metal)
+graphic_plane('Glazed bridge banner • original art','assets/graphics/bridge-banner.png',
+              bridge_left,bridge_right,-2.67,bridge_bottom,bridge_top)
+
+# A subtly varied, packed paving texture remains visible at pedestrian scale.
+random_texture=random.Random(8127)
+paving=bpy.data.images.new('Original fine plaza paving',width=256,height=256,alpha=True)
+pix=[]
+for py in range(256):
+    for px in range(256):
+        grain=random_texture.gauss(0,.008)
+        broad=.007*math.sin(px*2*math.pi/61)*math.sin(py*2*math.pi/97)
+        v=grain+broad
+        pix.extend((linear_to_srgb(.45+v),linear_to_srgb(.47+v),linear_to_srgb(.46+v),1))
+paving.pixels[:]=pix
+paving.pack()
+ground_obj=bpy.data.objects['ground']
+ground_uv=ground_obj.data.uv_layers.new(name='Plaza paving projection')
+for face in ground_obj.data.polygons:
+    for index in face.loop_indices:
+        point=ground_obj.data.vertices[ground_obj.data.loops[index].vertex_index].co
+        ground_uv.data[index].uv=(point.x/2,point.y/2)
+ground_shader=next(n for n in mats['ground'].node_tree.nodes if n.type=='BSDF_PRINCIPLED')
+ground_texture=mats['ground'].node_tree.nodes.new('ShaderNodeTexImage')
+ground_texture.image=paving
+mats['ground'].node_tree.links.new(ground_texture.outputs['Color'],ground_shader.inputs['Base Color'])

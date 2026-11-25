@@ -1,0 +1,5758 @@
+{
+  "version": 1,
+  "scene": "20261103 - streaming web export",
+  "groups": {
+    "cafe-interior": {
+      "objects": [
+        {
+          "source": "048 cafe floor tables",
+          "object": "048 cafe floor tables"
+        },
+        {
+          "source": "048 cafe table supports",
+          "object": "048 cafe table supports"
+        },
+        {
+          "source": "048 warm recessed lights",
+          "object": "048 warm recessed lights"
+        },
+        {
+          "source": "Connected upper cafe - Cafe study columns",
+          "object": "Connected upper cafe - Cafe study columns"
+        },
+        {
+          "source": "Connected upper cafe - Cafe window counter",
+          "object": "Connected upper cafe - Cafe window counter"
+        },
+        {
+          "source": "Connected ground cafe - Cafe order counter",
+          "object": "Connected ground cafe - Cafe order counter"
+        },
+        {
+          "source": "Connected ground cafe - Cafe order counter display",
+          "object": "Connected ground cafe - Cafe order counter display"
+        },
+        {
+          "source": "Connected upper cafe - Cafe interior column panel joints",
+          "object": "Connected upper cafe - Cafe interior column panel joints"
+        },
+        {
+          "source": "Connected upper cafe - Cafe window counter edge and legs",
+          "object": "Connected upper cafe - Cafe window counter edge and legs"
+        },
+        {
+          "source": "Connected upper cafe - Cafe perforated acoustic ceiling panels",
+          "object": "Connected upper cafe - Cafe perforated acoustic ceiling panels"
+        },
+        {
+          "source": "Connected upper cafe - Cafe ceiling rectangular ventilation grilles",
+          "object": "Connected upper cafe - Cafe ceiling rectangular ventilation grilles"
+        },
+        {
+          "source": "Connected upper cafe - Cafe ventilation slats",
+          "object": "Connected upper cafe - Cafe ventilation slats"
+        },
+        {
+          "source": "Connected ground cafe - Cafe order counter cabinet divisions",
+          "object": "Connected ground cafe - Cafe order counter cabinet divisions"
+        },
+        {
+          "source": "Connected ground cafe - Cafe order counter top",
+          "object": "Connected ground cafe - Cafe order counter top"
+        },
+        {
+          "source": "Connected ground cafe - Cafe coffee equipment",
+          "object": "Connected ground cafe - Cafe coffee equipment"
+        },
+        {
+          "source": "Connected ground cafe - Cafe pickup overhead signage",
+          "object": "Connected ground cafe - Cafe pickup overhead signage"
+        },
+        {
+          "source": "Connected upper cafe - Cafe refined individual seat pads",
+          "object": "Connected upper cafe - Cafe refined individual seat pads"
+        },
+        {
+          "source": "Connected ground cafe - Cafe refined individual seat pads",
+          "object": "Connected ground cafe - Cafe refined individual seat pads"
+        },
+        {
+          "source": "Connected upper cafe - Cafe refined individual seat backs",
+          "object": "Connected upper cafe - Cafe refined individual seat backs"
+        },
+        {
+          "source": "Connected ground cafe - Cafe refined individual seat backs",
+          "object": "Connected ground cafe - Cafe refined individual seat backs"
+        },
+        {
+          "source": "Connected upper cafe - Cafe refined slender chair legs",
+          "object": "Connected upper cafe - Cafe refined slender chair legs"
+        },
+        {
+          "source": "Connected ground cafe - Cafe refined slender chair legs",
+          "object": "Connected ground cafe - Cafe refined slender chair legs"
+        },
+        {
+          "source": "Connected upper cafe - Cafe refined seat back supports",
+          "object": "Connected upper cafe - Cafe refined seat back supports"
+        },
+        {
+          "source": "Connected ground cafe - Cafe refined seat back supports",
+          "object": "Connected ground cafe - Cafe refined seat back supports"
+        },
+        {
+          "source": "Connected upper cafe - Cafe round timber tables",
+          "object": "Connected upper cafe - Cafe round timber tables"
+        },
+        {
+          "source": "Connected ground cafe - Cafe round timber tables",
+          "object": "Connected ground cafe - Cafe round timber tables"
+        },
+        {
+          "source": "Connected upper cafe - Cafe round table central posts",
+          "object": "Connected upper cafe - Cafe round table central posts"
+        },
+        {
+          "source": "Connected ground cafe - Cafe round table central posts",
+          "object": "Connected ground cafe - Cafe round table central posts"
+        },
+        {
+          "source": "Connected upper cafe - Cafe table circular feet",
+          "object": "Connected upper cafe - Cafe table circular feet"
+        },
+        {
+          "source": "Connected ground cafe - Cafe table circular feet",
+          "object": "Connected ground cafe - Cafe table circular feet"
+        },
+        {
+          "source": "Connected upper cafe - Cafe round recessed downlights",
+          "object": "Connected upper cafe - Cafe round recessed downlights"
+        },
+        {
+          "source": "Connected ground cafe - Cafe round recessed downlights",
+          "object": "Connected ground cafe - Cafe round recessed downlights"
+        },
+        {
+          "source": "Connected upper cafe - Cafe round diffuser vents",
+          "object": "Connected upper cafe - Cafe round diffuser vents"
+        },
+        {
+          "source": "Connected ground cafe - Cafe round diffuser vents",
+          "object": "Connected ground cafe - Cafe round diffuser vents"
+        },
+        {
+          "source": "Connected upper cafe - Cafe circular vent centers",
+          "object": "Connected upper cafe - Cafe circular vent centers"
+        },
+        {
+          "source": "Connected ground cafe - Cafe circular vent centers",
+          "object": "Connected ground cafe - Cafe circular vent centers"
+        },
+        {
+          "source": "Connected ground cafe - Cafe order screen darker frame",
+          "object": "Connected ground cafe - Cafe order screen darker frame"
+        },
+        {
+          "source": "Connected ground cafe - Cafe order screen luminous inset",
+          "object": "Connected ground cafe - Cafe order screen luminous inset"
+        },
+        {
+          "source": "Connected ground cafe - Cafe order screen header",
+          "object": "Connected ground cafe - Cafe order screen header"
+        },
+        {
+          "source": "Connected ground cafe - Cafe order screen status rows",
+          "object": "Connected ground cafe - Cafe order screen status rows"
+        },
+        {
+          "source": "Connected ground cafe - Cafe menu panel dark frames",
+          "object": "Connected ground cafe - Cafe menu panel dark frames"
+        },
+        {
+          "source": "Connected ground cafe - Cafe menu panel colored faces",
+          "object": "Connected ground cafe - Cafe menu panel colored faces"
+        },
+        {
+          "source": "Connected ground cafe - Cafe menu original graphic strokes",
+          "object": "Connected ground cafe - Cafe menu original graphic strokes"
+        },
+        {
+          "source": "Cafe photo ground window section",
+          "object": "Cafe photo ground window section"
+        },
+        {
+          "source": "Cafe photo ground window section.001",
+          "object": "Cafe photo ground window section.001"
+        },
+        {
+          "source": "Cafe photo entrance vertical frame",
+          "object": "Cafe photo entrance vertical frame"
+        },
+        {
+          "source": "Cafe photo entrance vertical frame.001",
+          "object": "Cafe photo entrance vertical frame.001"
+        },
+        {
+          "source": "Cafe photo entrance lintel",
+          "object": "Cafe photo entrance lintel"
+        },
+        {
+          "source": "Cafe interpretive open door left leaf",
+          "object": "Cafe interpretive open door left leaf"
+        },
+        {
+          "source": "Cafe interpretive open door right leaf",
+          "object": "Cafe interpretive open door right leaf"
+        },
+        {
+          "source": "Connected cafe photo details - Cafe warm light paving",
+          "object": "Connected cafe photo details - Cafe warm light paving"
+        },
+        {
+          "source": "Connected cafe photo details - Cafe warm floor fine joints",
+          "object": "Connected cafe photo details - Cafe warm floor fine joints"
+        },
+        {
+          "source": "Connected cafe photo details - Cafe walnut shelving",
+          "object": "Connected cafe photo details - Cafe walnut shelving"
+        },
+        {
+          "source": "Connected cafe photo details - Cafe bag kraft",
+          "object": "Connected cafe photo details - Cafe bag kraft"
+        },
+        {
+          "source": "Connected cafe photo details - Cafe espresso dark details",
+          "object": "Connected cafe photo details - Cafe espresso dark details"
+        },
+        {
+          "source": "Connected cafe photo details - Cafe porcelain and cup sleeves",
+          "object": "Connected cafe photo details - Cafe porcelain and cup sleeves"
+        },
+        {
+          "source": "Connected cafe photo details - Cafe brushed steel",
+          "object": "Connected cafe photo details - Cafe brushed steel"
+        },
+        {
+          "source": "Connected cafe photo details - Cafe counter brass detail",
+          "object": "Connected cafe photo details - Cafe counter brass detail"
+        },
+        {
+          "source": "Connected cafe photo details - Cafe menu deep green",
+          "object": "Connected cafe photo details - Cafe menu deep green"
+        },
+        {
+          "source": "Connected cafe photo details - Cafe menu warm lettering",
+          "object": "Connected cafe photo details - Cafe menu warm lettering"
+        },
+        {
+          "source": "Connected cafe photo details - Cafe seasonal menu crimson",
+          "object": "Connected cafe photo details - Cafe seasonal menu crimson"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -127.875,
+          0.12,
+          -6.77083
+        ],
+        "max": [
+          -117.8,
+          15.45,
+          14.77083
+        ]
+      }
+    },
+    "cafe-tile-detail": {
+      "objects": [
+        {
+          "source": "Survey048 - overlapping round-ended terracotta scale tiles",
+          "object": "Survey048 - overlapping round-ended terracotta scale tiles"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -117.864,
+          8.2,
+          -6.5
+        ],
+        "max": [
+          -117.81,
+          15.0,
+          14.5
+        ]
+      }
+    },
+    "campus-planting-center-front": {
+      "objects": [
+        {
+          "source": "Tree trunk 3",
+          "object": "Tree trunk 3"
+        },
+        {
+          "source": "Tree foliage 3 shade 0",
+          "object": "Tree foliage 3 shade 0"
+        },
+        {
+          "source": "Tree foliage 3 shade 1",
+          "object": "Tree foliage 3 shade 1"
+        },
+        {
+          "source": "Tree foliage 3 shade 2",
+          "object": "Tree foliage 3 shade 2"
+        },
+        {
+          "source": "Tree foliage 3 shade 3",
+          "object": "Tree foliage 3 shade 3"
+        },
+        {
+          "source": "Tree trunk 4",
+          "object": "Tree trunk 4"
+        },
+        {
+          "source": "Tree foliage 4 shade 0",
+          "object": "Tree foliage 4 shade 0"
+        },
+        {
+          "source": "Tree foliage 4 shade 1",
+          "object": "Tree foliage 4 shade 1"
+        },
+        {
+          "source": "Tree foliage 4 shade 2",
+          "object": "Tree foliage 4 shade 2"
+        },
+        {
+          "source": "Tree foliage 4 shade 3",
+          "object": "Tree foliage 4 shade 3"
+        },
+        {
+          "source": "Tree trunk 5",
+          "object": "Tree trunk 5"
+        },
+        {
+          "source": "Tree foliage 5 shade 0",
+          "object": "Tree foliage 5 shade 0"
+        },
+        {
+          "source": "Tree foliage 5 shade 1",
+          "object": "Tree foliage 5 shade 1"
+        },
+        {
+          "source": "Tree foliage 5 shade 2",
+          "object": "Tree foliage 5 shade 2"
+        },
+        {
+          "source": "Tree foliage 5 shade 3",
+          "object": "Tree foliage 5 shade 3"
+        },
+        {
+          "source": "Tree trunk 10",
+          "object": "Tree trunk 10"
+        },
+        {
+          "source": "Tree foliage 10 shade 0",
+          "object": "Tree foliage 10 shade 0"
+        },
+        {
+          "source": "Tree foliage 10 shade 1",
+          "object": "Tree foliage 10 shade 1"
+        },
+        {
+          "source": "Tree foliage 10 shade 2",
+          "object": "Tree foliage 10 shade 2"
+        },
+        {
+          "source": "Tree foliage 10 shade 3",
+          "object": "Tree foliage 10 shade 3"
+        },
+        {
+          "source": "Tree trunk 22",
+          "object": "Tree trunk 22"
+        },
+        {
+          "source": "Tree foliage 22 shade 0",
+          "object": "Tree foliage 22 shade 0"
+        },
+        {
+          "source": "Tree foliage 22 shade 1",
+          "object": "Tree foliage 22 shade 1"
+        },
+        {
+          "source": "Tree foliage 22 shade 2",
+          "object": "Tree foliage 22 shade 2"
+        },
+        {
+          "source": "Tree foliage 22 shade 3",
+          "object": "Tree foliage 22 shade 3"
+        },
+        {
+          "source": "Tree trunk 23",
+          "object": "Tree trunk 23"
+        },
+        {
+          "source": "Tree foliage 23 shade 0",
+          "object": "Tree foliage 23 shade 0"
+        },
+        {
+          "source": "Tree foliage 23 shade 1",
+          "object": "Tree foliage 23 shade 1"
+        },
+        {
+          "source": "Tree foliage 23 shade 2",
+          "object": "Tree foliage 23 shade 2"
+        },
+        {
+          "source": "Tree foliage 23 shade 3",
+          "object": "Tree foliage 23 shade 3"
+        },
+        {
+          "source": "Tree trunk 24",
+          "object": "Tree trunk 24"
+        },
+        {
+          "source": "Tree foliage 24 shade 0",
+          "object": "Tree foliage 24 shade 0"
+        },
+        {
+          "source": "Tree foliage 24 shade 1",
+          "object": "Tree foliage 24 shade 1"
+        },
+        {
+          "source": "Tree foliage 24 shade 2",
+          "object": "Tree foliage 24 shade 2"
+        },
+        {
+          "source": "Tree foliage 24 shade 3",
+          "object": "Tree foliage 24 shade 3"
+        },
+        {
+          "source": "Tree trunk 25",
+          "object": "Tree trunk 25"
+        },
+        {
+          "source": "Tree foliage 25 shade 0",
+          "object": "Tree foliage 25 shade 0"
+        },
+        {
+          "source": "Tree foliage 25 shade 1",
+          "object": "Tree foliage 25 shade 1"
+        },
+        {
+          "source": "Tree foliage 25 shade 2",
+          "object": "Tree foliage 25 shade 2"
+        },
+        {
+          "source": "Tree foliage 25 shade 3",
+          "object": "Tree foliage 25 shade 3"
+        },
+        {
+          "source": "Tree trunk 34",
+          "object": "Tree trunk 34"
+        },
+        {
+          "source": "Tree foliage 34 shade 0",
+          "object": "Tree foliage 34 shade 0"
+        },
+        {
+          "source": "Tree foliage 34 shade 1",
+          "object": "Tree foliage 34 shade 1"
+        },
+        {
+          "source": "Tree foliage 34 shade 2",
+          "object": "Tree foliage 34 shade 2"
+        },
+        {
+          "source": "Tree foliage 34 shade 3",
+          "object": "Tree foliage 34 shade 3"
+        },
+        {
+          "source": "Tree trunk 35",
+          "object": "Tree trunk 35"
+        },
+        {
+          "source": "Tree foliage 35 shade 0",
+          "object": "Tree foliage 35 shade 0"
+        },
+        {
+          "source": "Tree foliage 35 shade 1",
+          "object": "Tree foliage 35 shade 1"
+        },
+        {
+          "source": "Tree foliage 35 shade 2",
+          "object": "Tree foliage 35 shade 2"
+        },
+        {
+          "source": "Tree foliage 35 shade 3",
+          "object": "Tree foliage 35 shade 3"
+        },
+        {
+          "source": "Tree trunk 36",
+          "object": "Tree trunk 36"
+        },
+        {
+          "source": "Tree foliage 36 shade 0",
+          "object": "Tree foliage 36 shade 0"
+        },
+        {
+          "source": "Tree foliage 36 shade 1",
+          "object": "Tree foliage 36 shade 1"
+        },
+        {
+          "source": "Tree foliage 36 shade 2",
+          "object": "Tree foliage 36 shade 2"
+        },
+        {
+          "source": "Tree foliage 36 shade 3",
+          "object": "Tree foliage 36 shade 3"
+        },
+        {
+          "source": "Exposed soil around tree trunks",
+          "object": "Exposed soil around tree trunks"
+        },
+        {
+          "source": "Young tree timber supports",
+          "object": "Young tree timber supports"
+        },
+        {
+          "source": "Young tree support ties",
+          "object": "Young tree support ties"
+        },
+        {
+          "source": "Layered garden groundcover 0",
+          "object": "Layered garden groundcover 0"
+        },
+        {
+          "source": "Layered garden groundcover 1",
+          "object": "Layered garden groundcover 1"
+        },
+        {
+          "source": "Plaza shrub stems",
+          "object": "Plaza shrub stems"
+        },
+        {
+          "source": "Plaza shrub foliage 0",
+          "object": "Plaza shrub foliage 0"
+        },
+        {
+          "source": "Plaza shrub foliage 1",
+          "object": "Plaza shrub foliage 1"
+        },
+        {
+          "source": "Plaza shrub foliage 2",
+          "object": "Plaza shrub foliage 2"
+        },
+        {
+          "source": "Central stair terrace shrubs 0",
+          "object": "Central stair terrace shrubs 0"
+        },
+        {
+          "source": "Central stair terrace shrubs 1",
+          "object": "Central stair terrace shrubs 1"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -72.4875,
+          0.16444,
+          -82.84821
+        ],
+        "max": [
+          78.45705,
+          10.90378,
+          37.37748
+        ]
+      }
+    },
+    "campus-planting-center-rear": {
+      "objects": [
+        {
+          "source": "Tree trunk 44",
+          "object": "Tree trunk 44"
+        },
+        {
+          "source": "Tree foliage 44 shade 0",
+          "object": "Tree foliage 44 shade 0"
+        },
+        {
+          "source": "Tree foliage 44 shade 1",
+          "object": "Tree foliage 44 shade 1"
+        },
+        {
+          "source": "Tree foliage 44 shade 2",
+          "object": "Tree foliage 44 shade 2"
+        },
+        {
+          "source": "Tree foliage 44 shade 3",
+          "object": "Tree foliage 44 shade 3"
+        },
+        {
+          "source": "Tree trunk 45",
+          "object": "Tree trunk 45"
+        },
+        {
+          "source": "Tree foliage 45 shade 0",
+          "object": "Tree foliage 45 shade 0"
+        },
+        {
+          "source": "Tree foliage 45 shade 1",
+          "object": "Tree foliage 45 shade 1"
+        },
+        {
+          "source": "Tree foliage 45 shade 2",
+          "object": "Tree foliage 45 shade 2"
+        },
+        {
+          "source": "Tree foliage 45 shade 3",
+          "object": "Tree foliage 45 shade 3"
+        },
+        {
+          "source": "Tree trunk 46",
+          "object": "Tree trunk 46"
+        },
+        {
+          "source": "Tree foliage 46 shade 0",
+          "object": "Tree foliage 46 shade 0"
+        },
+        {
+          "source": "Tree foliage 46 shade 1",
+          "object": "Tree foliage 46 shade 1"
+        },
+        {
+          "source": "Tree foliage 46 shade 2",
+          "object": "Tree foliage 46 shade 2"
+        },
+        {
+          "source": "Tree foliage 46 shade 3",
+          "object": "Tree foliage 46 shade 3"
+        },
+        {
+          "source": "Tree trunk 47",
+          "object": "Tree trunk 47"
+        },
+        {
+          "source": "Tree foliage 47 shade 0",
+          "object": "Tree foliage 47 shade 0"
+        },
+        {
+          "source": "Tree foliage 47 shade 1",
+          "object": "Tree foliage 47 shade 1"
+        },
+        {
+          "source": "Tree foliage 47 shade 2",
+          "object": "Tree foliage 47 shade 2"
+        },
+        {
+          "source": "Tree foliage 47 shade 3",
+          "object": "Tree foliage 47 shade 3"
+        },
+        {
+          "source": "Tree trunk 56",
+          "object": "Tree trunk 56"
+        },
+        {
+          "source": "Tree foliage 56 shade 0",
+          "object": "Tree foliage 56 shade 0"
+        },
+        {
+          "source": "Tree foliage 56 shade 1",
+          "object": "Tree foliage 56 shade 1"
+        },
+        {
+          "source": "Tree foliage 56 shade 2",
+          "object": "Tree foliage 56 shade 2"
+        },
+        {
+          "source": "Tree foliage 56 shade 3",
+          "object": "Tree foliage 56 shade 3"
+        },
+        {
+          "source": "Tree trunk 57",
+          "object": "Tree trunk 57"
+        },
+        {
+          "source": "Tree foliage 57 shade 0",
+          "object": "Tree foliage 57 shade 0"
+        },
+        {
+          "source": "Tree foliage 57 shade 1",
+          "object": "Tree foliage 57 shade 1"
+        },
+        {
+          "source": "Tree foliage 57 shade 2",
+          "object": "Tree foliage 57 shade 2"
+        },
+        {
+          "source": "Tree foliage 57 shade 3",
+          "object": "Tree foliage 57 shade 3"
+        },
+        {
+          "source": "Tree trunk 58",
+          "object": "Tree trunk 58"
+        },
+        {
+          "source": "Tree foliage 58 shade 0",
+          "object": "Tree foliage 58 shade 0"
+        },
+        {
+          "source": "Tree foliage 58 shade 1",
+          "object": "Tree foliage 58 shade 1"
+        },
+        {
+          "source": "Tree foliage 58 shade 2",
+          "object": "Tree foliage 58 shade 2"
+        },
+        {
+          "source": "Tree foliage 58 shade 3",
+          "object": "Tree foliage 58 shade 3"
+        },
+        {
+          "source": "Tree trunk 64",
+          "object": "Tree trunk 64"
+        },
+        {
+          "source": "Tree foliage 64 shade 0",
+          "object": "Tree foliage 64 shade 0"
+        },
+        {
+          "source": "Tree foliage 64 shade 1",
+          "object": "Tree foliage 64 shade 1"
+        },
+        {
+          "source": "Tree foliage 64 shade 2",
+          "object": "Tree foliage 64 shade 2"
+        },
+        {
+          "source": "Tree foliage 64 shade 3",
+          "object": "Tree foliage 64 shade 3"
+        },
+        {
+          "source": "Tree trunk 65",
+          "object": "Tree trunk 65"
+        },
+        {
+          "source": "Tree foliage 65 shade 0",
+          "object": "Tree foliage 65 shade 0"
+        },
+        {
+          "source": "Tree foliage 65 shade 1",
+          "object": "Tree foliage 65 shade 1"
+        },
+        {
+          "source": "Tree foliage 65 shade 2",
+          "object": "Tree foliage 65 shade 2"
+        },
+        {
+          "source": "Tree foliage 65 shade 3",
+          "object": "Tree foliage 65 shade 3"
+        },
+        {
+          "source": "Tree trunk 68",
+          "object": "Tree trunk 68"
+        },
+        {
+          "source": "Tree foliage 68 shade 0",
+          "object": "Tree foliage 68 shade 0"
+        },
+        {
+          "source": "Tree foliage 68 shade 1",
+          "object": "Tree foliage 68 shade 1"
+        },
+        {
+          "source": "Tree foliage 68 shade 2",
+          "object": "Tree foliage 68 shade 2"
+        },
+        {
+          "source": "Tree foliage 68 shade 3",
+          "object": "Tree foliage 68 shade 3"
+        },
+        {
+          "source": "Tree trunk 73",
+          "object": "Tree trunk 73"
+        },
+        {
+          "source": "Tree foliage 73 shade 0",
+          "object": "Tree foliage 73 shade 0"
+        },
+        {
+          "source": "Tree foliage 73 shade 1",
+          "object": "Tree foliage 73 shade 1"
+        },
+        {
+          "source": "Tree foliage 73 shade 2",
+          "object": "Tree foliage 73 shade 2"
+        },
+        {
+          "source": "Tree foliage 73 shade 3",
+          "object": "Tree foliage 73 shade 3"
+        },
+        {
+          "source": "Tree trunk 74",
+          "object": "Tree trunk 74"
+        },
+        {
+          "source": "Tree foliage 74 shade 0",
+          "object": "Tree foliage 74 shade 0"
+        },
+        {
+          "source": "Tree foliage 74 shade 1",
+          "object": "Tree foliage 74 shade 1"
+        },
+        {
+          "source": "Tree foliage 74 shade 2",
+          "object": "Tree foliage 74 shade 2"
+        },
+        {
+          "source": "Tree foliage 74 shade 3",
+          "object": "Tree foliage 74 shade 3"
+        },
+        {
+          "source": "Tree trunk 75",
+          "object": "Tree trunk 75"
+        },
+        {
+          "source": "Tree foliage 75 shade 0",
+          "object": "Tree foliage 75 shade 0"
+        },
+        {
+          "source": "Tree foliage 75 shade 1",
+          "object": "Tree foliage 75 shade 1"
+        },
+        {
+          "source": "Tree foliage 75 shade 2",
+          "object": "Tree foliage 75 shade 2"
+        },
+        {
+          "source": "Tree foliage 75 shade 3",
+          "object": "Tree foliage 75 shade 3"
+        },
+        {
+          "source": "Tree trunk 81",
+          "object": "Tree trunk 81"
+        },
+        {
+          "source": "Tree foliage 81 shade 0",
+          "object": "Tree foliage 81 shade 0"
+        },
+        {
+          "source": "Tree foliage 81 shade 1",
+          "object": "Tree foliage 81 shade 1"
+        },
+        {
+          "source": "Tree foliage 81 shade 2",
+          "object": "Tree foliage 81 shade 2"
+        },
+        {
+          "source": "Tree foliage 81 shade 3",
+          "object": "Tree foliage 81 shade 3"
+        },
+        {
+          "source": "Tree trunk 82",
+          "object": "Tree trunk 82"
+        },
+        {
+          "source": "Tree foliage 82 shade 0",
+          "object": "Tree foliage 82 shade 0"
+        },
+        {
+          "source": "Tree foliage 82 shade 1",
+          "object": "Tree foliage 82 shade 1"
+        },
+        {
+          "source": "Tree foliage 82 shade 2",
+          "object": "Tree foliage 82 shade 2"
+        },
+        {
+          "source": "Tree foliage 82 shade 3",
+          "object": "Tree foliage 82 shade 3"
+        },
+        {
+          "source": "Tree trunk 83",
+          "object": "Tree trunk 83"
+        },
+        {
+          "source": "Tree foliage 83 shade 0",
+          "object": "Tree foliage 83 shade 0"
+        },
+        {
+          "source": "Tree foliage 83 shade 1",
+          "object": "Tree foliage 83 shade 1"
+        },
+        {
+          "source": "Tree foliage 83 shade 2",
+          "object": "Tree foliage 83 shade 2"
+        },
+        {
+          "source": "Tree foliage 83 shade 3",
+          "object": "Tree foliage 83 shade 3"
+        },
+        {
+          "source": "Rear garden understory 0",
+          "object": "Rear garden understory 0"
+        },
+        {
+          "source": "Rear garden understory 1",
+          "object": "Rear garden understory 1"
+        },
+        {
+          "source": "Garden - clipped shrubs",
+          "object": "Garden - clipped shrubs"
+        },
+        {
+          "source": "Garden - autumn grass clumps",
+          "object": "Garden - autumn grass clumps"
+        },
+        {
+          "source": "Garden - hedge foliage leaves",
+          "object": "Garden - hedge foliage leaves"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -69.24618,
+          0.09516,
+          -165.73691
+        ],
+        "max": [
+          74.32401,
+          11.76782,
+          -120.3947
+        ]
+      }
+    },
+    "campus-planting-north-front": {
+      "objects": [
+        {
+          "source": "Tree trunk 6",
+          "object": "Tree trunk 6"
+        },
+        {
+          "source": "Tree foliage 6 shade 0",
+          "object": "Tree foliage 6 shade 0"
+        },
+        {
+          "source": "Tree foliage 6 shade 1",
+          "object": "Tree foliage 6 shade 1"
+        },
+        {
+          "source": "Tree foliage 6 shade 2",
+          "object": "Tree foliage 6 shade 2"
+        },
+        {
+          "source": "Tree foliage 6 shade 3",
+          "object": "Tree foliage 6 shade 3"
+        },
+        {
+          "source": "Tree trunk 7",
+          "object": "Tree trunk 7"
+        },
+        {
+          "source": "Tree foliage 7 shade 0",
+          "object": "Tree foliage 7 shade 0"
+        },
+        {
+          "source": "Tree foliage 7 shade 1",
+          "object": "Tree foliage 7 shade 1"
+        },
+        {
+          "source": "Tree foliage 7 shade 2",
+          "object": "Tree foliage 7 shade 2"
+        },
+        {
+          "source": "Tree foliage 7 shade 3",
+          "object": "Tree foliage 7 shade 3"
+        },
+        {
+          "source": "Tree trunk 8",
+          "object": "Tree trunk 8"
+        },
+        {
+          "source": "Tree foliage 8 shade 0",
+          "object": "Tree foliage 8 shade 0"
+        },
+        {
+          "source": "Tree foliage 8 shade 1",
+          "object": "Tree foliage 8 shade 1"
+        },
+        {
+          "source": "Tree foliage 8 shade 2",
+          "object": "Tree foliage 8 shade 2"
+        },
+        {
+          "source": "Tree foliage 8 shade 3",
+          "object": "Tree foliage 8 shade 3"
+        },
+        {
+          "source": "Tree trunk 9",
+          "object": "Tree trunk 9"
+        },
+        {
+          "source": "Tree foliage 9 shade 0",
+          "object": "Tree foliage 9 shade 0"
+        },
+        {
+          "source": "Tree foliage 9 shade 1",
+          "object": "Tree foliage 9 shade 1"
+        },
+        {
+          "source": "Tree foliage 9 shade 2",
+          "object": "Tree foliage 9 shade 2"
+        },
+        {
+          "source": "Tree foliage 9 shade 3",
+          "object": "Tree foliage 9 shade 3"
+        },
+        {
+          "source": "Tree trunk 11",
+          "object": "Tree trunk 11"
+        },
+        {
+          "source": "Tree foliage 11 shade 0",
+          "object": "Tree foliage 11 shade 0"
+        },
+        {
+          "source": "Tree foliage 11 shade 1",
+          "object": "Tree foliage 11 shade 1"
+        },
+        {
+          "source": "Tree foliage 11 shade 2",
+          "object": "Tree foliage 11 shade 2"
+        },
+        {
+          "source": "Tree foliage 11 shade 3",
+          "object": "Tree foliage 11 shade 3"
+        },
+        {
+          "source": "Tree trunk 12",
+          "object": "Tree trunk 12"
+        },
+        {
+          "source": "Tree foliage 12 shade 0",
+          "object": "Tree foliage 12 shade 0"
+        },
+        {
+          "source": "Tree foliage 12 shade 1",
+          "object": "Tree foliage 12 shade 1"
+        },
+        {
+          "source": "Tree foliage 12 shade 2",
+          "object": "Tree foliage 12 shade 2"
+        },
+        {
+          "source": "Tree foliage 12 shade 3",
+          "object": "Tree foliage 12 shade 3"
+        },
+        {
+          "source": "Tree trunk 13",
+          "object": "Tree trunk 13"
+        },
+        {
+          "source": "Tree foliage 13 shade 0",
+          "object": "Tree foliage 13 shade 0"
+        },
+        {
+          "source": "Tree foliage 13 shade 1",
+          "object": "Tree foliage 13 shade 1"
+        },
+        {
+          "source": "Tree foliage 13 shade 2",
+          "object": "Tree foliage 13 shade 2"
+        },
+        {
+          "source": "Tree foliage 13 shade 3",
+          "object": "Tree foliage 13 shade 3"
+        },
+        {
+          "source": "Tree trunk 14",
+          "object": "Tree trunk 14"
+        },
+        {
+          "source": "Tree foliage 14 shade 0",
+          "object": "Tree foliage 14 shade 0"
+        },
+        {
+          "source": "Tree foliage 14 shade 1",
+          "object": "Tree foliage 14 shade 1"
+        },
+        {
+          "source": "Tree foliage 14 shade 2",
+          "object": "Tree foliage 14 shade 2"
+        },
+        {
+          "source": "Tree foliage 14 shade 3",
+          "object": "Tree foliage 14 shade 3"
+        },
+        {
+          "source": "Tree trunk 15",
+          "object": "Tree trunk 15"
+        },
+        {
+          "source": "Tree foliage 15 shade 0",
+          "object": "Tree foliage 15 shade 0"
+        },
+        {
+          "source": "Tree foliage 15 shade 1",
+          "object": "Tree foliage 15 shade 1"
+        },
+        {
+          "source": "Tree foliage 15 shade 2",
+          "object": "Tree foliage 15 shade 2"
+        },
+        {
+          "source": "Tree foliage 15 shade 3",
+          "object": "Tree foliage 15 shade 3"
+        },
+        {
+          "source": "Tree trunk 26",
+          "object": "Tree trunk 26"
+        },
+        {
+          "source": "Tree foliage 26 shade 0",
+          "object": "Tree foliage 26 shade 0"
+        },
+        {
+          "source": "Tree foliage 26 shade 1",
+          "object": "Tree foliage 26 shade 1"
+        },
+        {
+          "source": "Tree foliage 26 shade 2",
+          "object": "Tree foliage 26 shade 2"
+        },
+        {
+          "source": "Tree foliage 26 shade 3",
+          "object": "Tree foliage 26 shade 3"
+        },
+        {
+          "source": "Tree trunk 27",
+          "object": "Tree trunk 27"
+        },
+        {
+          "source": "Tree foliage 27 shade 0",
+          "object": "Tree foliage 27 shade 0"
+        },
+        {
+          "source": "Tree foliage 27 shade 1",
+          "object": "Tree foliage 27 shade 1"
+        },
+        {
+          "source": "Tree foliage 27 shade 2",
+          "object": "Tree foliage 27 shade 2"
+        },
+        {
+          "source": "Tree foliage 27 shade 3",
+          "object": "Tree foliage 27 shade 3"
+        },
+        {
+          "source": "Tree trunk 28",
+          "object": "Tree trunk 28"
+        },
+        {
+          "source": "Tree foliage 28 shade 0",
+          "object": "Tree foliage 28 shade 0"
+        },
+        {
+          "source": "Tree foliage 28 shade 1",
+          "object": "Tree foliage 28 shade 1"
+        },
+        {
+          "source": "Tree foliage 28 shade 2",
+          "object": "Tree foliage 28 shade 2"
+        },
+        {
+          "source": "Tree foliage 28 shade 3",
+          "object": "Tree foliage 28 shade 3"
+        },
+        {
+          "source": "Tree trunk 29",
+          "object": "Tree trunk 29"
+        },
+        {
+          "source": "Tree foliage 29 shade 0",
+          "object": "Tree foliage 29 shade 0"
+        },
+        {
+          "source": "Tree foliage 29 shade 1",
+          "object": "Tree foliage 29 shade 1"
+        },
+        {
+          "source": "Tree foliage 29 shade 2",
+          "object": "Tree foliage 29 shade 2"
+        },
+        {
+          "source": "Tree foliage 29 shade 3",
+          "object": "Tree foliage 29 shade 3"
+        },
+        {
+          "source": "Tree trunk 30",
+          "object": "Tree trunk 30"
+        },
+        {
+          "source": "Tree foliage 30 shade 0",
+          "object": "Tree foliage 30 shade 0"
+        },
+        {
+          "source": "Tree foliage 30 shade 1",
+          "object": "Tree foliage 30 shade 1"
+        },
+        {
+          "source": "Tree foliage 30 shade 2",
+          "object": "Tree foliage 30 shade 2"
+        },
+        {
+          "source": "Tree foliage 30 shade 3",
+          "object": "Tree foliage 30 shade 3"
+        },
+        {
+          "source": "Tree trunk 37",
+          "object": "Tree trunk 37"
+        },
+        {
+          "source": "Tree foliage 37 shade 0",
+          "object": "Tree foliage 37 shade 0"
+        },
+        {
+          "source": "Tree foliage 37 shade 1",
+          "object": "Tree foliage 37 shade 1"
+        },
+        {
+          "source": "Tree foliage 37 shade 2",
+          "object": "Tree foliage 37 shade 2"
+        },
+        {
+          "source": "Tree foliage 37 shade 3",
+          "object": "Tree foliage 37 shade 3"
+        },
+        {
+          "source": "Tree trunk 38",
+          "object": "Tree trunk 38"
+        },
+        {
+          "source": "Tree foliage 38 shade 0",
+          "object": "Tree foliage 38 shade 0"
+        },
+        {
+          "source": "Tree foliage 38 shade 1",
+          "object": "Tree foliage 38 shade 1"
+        },
+        {
+          "source": "Tree foliage 38 shade 2",
+          "object": "Tree foliage 38 shade 2"
+        },
+        {
+          "source": "Tree foliage 38 shade 3",
+          "object": "Tree foliage 38 shade 3"
+        },
+        {
+          "source": "Tree trunk 39",
+          "object": "Tree trunk 39"
+        },
+        {
+          "source": "Tree foliage 39 shade 0",
+          "object": "Tree foliage 39 shade 0"
+        },
+        {
+          "source": "Tree foliage 39 shade 1",
+          "object": "Tree foliage 39 shade 1"
+        },
+        {
+          "source": "Tree foliage 39 shade 2",
+          "object": "Tree foliage 39 shade 2"
+        },
+        {
+          "source": "Tree foliage 39 shade 3",
+          "object": "Tree foliage 39 shade 3"
+        },
+        {
+          "source": "Tree trunk 40",
+          "object": "Tree trunk 40"
+        },
+        {
+          "source": "Tree foliage 40 shade 0",
+          "object": "Tree foliage 40 shade 0"
+        },
+        {
+          "source": "Tree foliage 40 shade 1",
+          "object": "Tree foliage 40 shade 1"
+        },
+        {
+          "source": "Tree foliage 40 shade 2",
+          "object": "Tree foliage 40 shade 2"
+        },
+        {
+          "source": "Tree foliage 40 shade 3",
+          "object": "Tree foliage 40 shade 3"
+        },
+        {
+          "source": "Plaza shrub foliage 3",
+          "object": "Plaza shrub foliage 3"
+        },
+        {
+          "source": "Plaza shrub foliage 4",
+          "object": "Plaza shrub foliage 4"
+        }
+      ],
+      "bounds": {
+        "min": [
+          2.09185,
+          0.17735,
+          -49.28867
+        ],
+        "max": [
+          81.36002,
+          11.29914,
+          37.24986
+        ]
+      }
+    },
+    "campus-planting-north-rear": {
+      "objects": [
+        {
+          "source": "Tree trunk 16",
+          "object": "Tree trunk 16"
+        },
+        {
+          "source": "Tree foliage 16 shade 0",
+          "object": "Tree foliage 16 shade 0"
+        },
+        {
+          "source": "Tree foliage 16 shade 1",
+          "object": "Tree foliage 16 shade 1"
+        },
+        {
+          "source": "Tree foliage 16 shade 2",
+          "object": "Tree foliage 16 shade 2"
+        },
+        {
+          "source": "Tree foliage 16 shade 3",
+          "object": "Tree foliage 16 shade 3"
+        },
+        {
+          "source": "Tree trunk 17",
+          "object": "Tree trunk 17"
+        },
+        {
+          "source": "Tree foliage 17 shade 0",
+          "object": "Tree foliage 17 shade 0"
+        },
+        {
+          "source": "Tree foliage 17 shade 1",
+          "object": "Tree foliage 17 shade 1"
+        },
+        {
+          "source": "Tree foliage 17 shade 2",
+          "object": "Tree foliage 17 shade 2"
+        },
+        {
+          "source": "Tree foliage 17 shade 3",
+          "object": "Tree foliage 17 shade 3"
+        },
+        {
+          "source": "Tree trunk 18",
+          "object": "Tree trunk 18"
+        },
+        {
+          "source": "Tree foliage 18 shade 0",
+          "object": "Tree foliage 18 shade 0"
+        },
+        {
+          "source": "Tree foliage 18 shade 1",
+          "object": "Tree foliage 18 shade 1"
+        },
+        {
+          "source": "Tree foliage 18 shade 2",
+          "object": "Tree foliage 18 shade 2"
+        },
+        {
+          "source": "Tree foliage 18 shade 3",
+          "object": "Tree foliage 18 shade 3"
+        },
+        {
+          "source": "Tree trunk 48",
+          "object": "Tree trunk 48"
+        },
+        {
+          "source": "Tree foliage 48 shade 0",
+          "object": "Tree foliage 48 shade 0"
+        },
+        {
+          "source": "Tree foliage 48 shade 1",
+          "object": "Tree foliage 48 shade 1"
+        },
+        {
+          "source": "Tree foliage 48 shade 2",
+          "object": "Tree foliage 48 shade 2"
+        },
+        {
+          "source": "Tree foliage 48 shade 3",
+          "object": "Tree foliage 48 shade 3"
+        },
+        {
+          "source": "Tree trunk 49",
+          "object": "Tree trunk 49"
+        },
+        {
+          "source": "Tree foliage 49 shade 0",
+          "object": "Tree foliage 49 shade 0"
+        },
+        {
+          "source": "Tree foliage 49 shade 1",
+          "object": "Tree foliage 49 shade 1"
+        },
+        {
+          "source": "Tree foliage 49 shade 2",
+          "object": "Tree foliage 49 shade 2"
+        },
+        {
+          "source": "Tree foliage 49 shade 3",
+          "object": "Tree foliage 49 shade 3"
+        },
+        {
+          "source": "Tree trunk 50",
+          "object": "Tree trunk 50"
+        },
+        {
+          "source": "Tree foliage 50 shade 0",
+          "object": "Tree foliage 50 shade 0"
+        },
+        {
+          "source": "Tree foliage 50 shade 1",
+          "object": "Tree foliage 50 shade 1"
+        },
+        {
+          "source": "Tree foliage 50 shade 2",
+          "object": "Tree foliage 50 shade 2"
+        },
+        {
+          "source": "Tree foliage 50 shade 3",
+          "object": "Tree foliage 50 shade 3"
+        },
+        {
+          "source": "Tree trunk 51",
+          "object": "Tree trunk 51"
+        },
+        {
+          "source": "Tree foliage 51 shade 0",
+          "object": "Tree foliage 51 shade 0"
+        },
+        {
+          "source": "Tree foliage 51 shade 1",
+          "object": "Tree foliage 51 shade 1"
+        },
+        {
+          "source": "Tree foliage 51 shade 2",
+          "object": "Tree foliage 51 shade 2"
+        },
+        {
+          "source": "Tree foliage 51 shade 3",
+          "object": "Tree foliage 51 shade 3"
+        },
+        {
+          "source": "Tree trunk 52",
+          "object": "Tree trunk 52"
+        },
+        {
+          "source": "Tree foliage 52 shade 0",
+          "object": "Tree foliage 52 shade 0"
+        },
+        {
+          "source": "Tree foliage 52 shade 1",
+          "object": "Tree foliage 52 shade 1"
+        },
+        {
+          "source": "Tree foliage 52 shade 2",
+          "object": "Tree foliage 52 shade 2"
+        },
+        {
+          "source": "Tree foliage 52 shade 3",
+          "object": "Tree foliage 52 shade 3"
+        },
+        {
+          "source": "Tree trunk 59",
+          "object": "Tree trunk 59"
+        },
+        {
+          "source": "Tree foliage 59 shade 0",
+          "object": "Tree foliage 59 shade 0"
+        },
+        {
+          "source": "Tree foliage 59 shade 1",
+          "object": "Tree foliage 59 shade 1"
+        },
+        {
+          "source": "Tree foliage 59 shade 2",
+          "object": "Tree foliage 59 shade 2"
+        },
+        {
+          "source": "Tree foliage 59 shade 3",
+          "object": "Tree foliage 59 shade 3"
+        },
+        {
+          "source": "Tree trunk 60",
+          "object": "Tree trunk 60"
+        },
+        {
+          "source": "Tree foliage 60 shade 0",
+          "object": "Tree foliage 60 shade 0"
+        },
+        {
+          "source": "Tree foliage 60 shade 1",
+          "object": "Tree foliage 60 shade 1"
+        },
+        {
+          "source": "Tree foliage 60 shade 2",
+          "object": "Tree foliage 60 shade 2"
+        },
+        {
+          "source": "Tree foliage 60 shade 3",
+          "object": "Tree foliage 60 shade 3"
+        },
+        {
+          "source": "Tree trunk 61",
+          "object": "Tree trunk 61"
+        },
+        {
+          "source": "Tree foliage 61 shade 0",
+          "object": "Tree foliage 61 shade 0"
+        },
+        {
+          "source": "Tree foliage 61 shade 1",
+          "object": "Tree foliage 61 shade 1"
+        },
+        {
+          "source": "Tree foliage 61 shade 2",
+          "object": "Tree foliage 61 shade 2"
+        },
+        {
+          "source": "Tree foliage 61 shade 3",
+          "object": "Tree foliage 61 shade 3"
+        },
+        {
+          "source": "Tree trunk 62",
+          "object": "Tree trunk 62"
+        },
+        {
+          "source": "Tree foliage 62 shade 0",
+          "object": "Tree foliage 62 shade 0"
+        },
+        {
+          "source": "Tree foliage 62 shade 1",
+          "object": "Tree foliage 62 shade 1"
+        },
+        {
+          "source": "Tree foliage 62 shade 2",
+          "object": "Tree foliage 62 shade 2"
+        },
+        {
+          "source": "Tree foliage 62 shade 3",
+          "object": "Tree foliage 62 shade 3"
+        },
+        {
+          "source": "Tree trunk 66",
+          "object": "Tree trunk 66"
+        },
+        {
+          "source": "Tree foliage 66 shade 0",
+          "object": "Tree foliage 66 shade 0"
+        },
+        {
+          "source": "Tree foliage 66 shade 1",
+          "object": "Tree foliage 66 shade 1"
+        },
+        {
+          "source": "Tree foliage 66 shade 2",
+          "object": "Tree foliage 66 shade 2"
+        },
+        {
+          "source": "Tree foliage 66 shade 3",
+          "object": "Tree foliage 66 shade 3"
+        },
+        {
+          "source": "Tree trunk 69",
+          "object": "Tree trunk 69"
+        },
+        {
+          "source": "Tree foliage 69 shade 0",
+          "object": "Tree foliage 69 shade 0"
+        },
+        {
+          "source": "Tree foliage 69 shade 1",
+          "object": "Tree foliage 69 shade 1"
+        },
+        {
+          "source": "Tree foliage 69 shade 2",
+          "object": "Tree foliage 69 shade 2"
+        },
+        {
+          "source": "Tree foliage 69 shade 3",
+          "object": "Tree foliage 69 shade 3"
+        },
+        {
+          "source": "Tree trunk 70",
+          "object": "Tree trunk 70"
+        },
+        {
+          "source": "Tree foliage 70 shade 0",
+          "object": "Tree foliage 70 shade 0"
+        },
+        {
+          "source": "Tree foliage 70 shade 1",
+          "object": "Tree foliage 70 shade 1"
+        },
+        {
+          "source": "Tree foliage 70 shade 2",
+          "object": "Tree foliage 70 shade 2"
+        },
+        {
+          "source": "Tree foliage 70 shade 3",
+          "object": "Tree foliage 70 shade 3"
+        },
+        {
+          "source": "Tree trunk 76",
+          "object": "Tree trunk 76"
+        },
+        {
+          "source": "Tree foliage 76 shade 0",
+          "object": "Tree foliage 76 shade 0"
+        },
+        {
+          "source": "Tree foliage 76 shade 1",
+          "object": "Tree foliage 76 shade 1"
+        },
+        {
+          "source": "Tree foliage 76 shade 2",
+          "object": "Tree foliage 76 shade 2"
+        },
+        {
+          "source": "Tree foliage 76 shade 3",
+          "object": "Tree foliage 76 shade 3"
+        },
+        {
+          "source": "Tree trunk 77",
+          "object": "Tree trunk 77"
+        },
+        {
+          "source": "Tree foliage 77 shade 0",
+          "object": "Tree foliage 77 shade 0"
+        },
+        {
+          "source": "Tree foliage 77 shade 1",
+          "object": "Tree foliage 77 shade 1"
+        },
+        {
+          "source": "Tree foliage 77 shade 2",
+          "object": "Tree foliage 77 shade 2"
+        },
+        {
+          "source": "Tree foliage 77 shade 3",
+          "object": "Tree foliage 77 shade 3"
+        },
+        {
+          "source": "Tree trunk 78",
+          "object": "Tree trunk 78"
+        },
+        {
+          "source": "Tree foliage 78 shade 0",
+          "object": "Tree foliage 78 shade 0"
+        },
+        {
+          "source": "Tree foliage 78 shade 1",
+          "object": "Tree foliage 78 shade 1"
+        },
+        {
+          "source": "Tree foliage 78 shade 2",
+          "object": "Tree foliage 78 shade 2"
+        },
+        {
+          "source": "Tree foliage 78 shade 3",
+          "object": "Tree foliage 78 shade 3"
+        },
+        {
+          "source": "Tree trunk 84",
+          "object": "Tree trunk 84"
+        },
+        {
+          "source": "Tree foliage 84 shade 0",
+          "object": "Tree foliage 84 shade 0"
+        },
+        {
+          "source": "Tree foliage 84 shade 1",
+          "object": "Tree foliage 84 shade 1"
+        },
+        {
+          "source": "Tree foliage 84 shade 2",
+          "object": "Tree foliage 84 shade 2"
+        },
+        {
+          "source": "Tree foliage 84 shade 3",
+          "object": "Tree foliage 84 shade 3"
+        }
+      ],
+      "bounds": {
+        "min": [
+          24.02163,
+          0.15716,
+          -165.16199
+        ],
+        "max": [
+          81.33905,
+          12.17157,
+          -51.55243
+        ]
+      }
+    },
+    "campus-planting-south-front": {
+      "objects": [
+        {
+          "source": "Tree trunk 0",
+          "object": "Tree trunk 0"
+        },
+        {
+          "source": "Tree foliage 0 shade 0",
+          "object": "Tree foliage 0 shade 0"
+        },
+        {
+          "source": "Tree foliage 0 shade 1",
+          "object": "Tree foliage 0 shade 1"
+        },
+        {
+          "source": "Tree foliage 0 shade 2",
+          "object": "Tree foliage 0 shade 2"
+        },
+        {
+          "source": "Tree foliage 0 shade 3",
+          "object": "Tree foliage 0 shade 3"
+        },
+        {
+          "source": "Tree trunk 1",
+          "object": "Tree trunk 1"
+        },
+        {
+          "source": "Tree foliage 1 shade 0",
+          "object": "Tree foliage 1 shade 0"
+        },
+        {
+          "source": "Tree foliage 1 shade 1",
+          "object": "Tree foliage 1 shade 1"
+        },
+        {
+          "source": "Tree foliage 1 shade 2",
+          "object": "Tree foliage 1 shade 2"
+        },
+        {
+          "source": "Tree foliage 1 shade 3",
+          "object": "Tree foliage 1 shade 3"
+        },
+        {
+          "source": "Tree trunk 2",
+          "object": "Tree trunk 2"
+        },
+        {
+          "source": "Tree foliage 2 shade 0",
+          "object": "Tree foliage 2 shade 0"
+        },
+        {
+          "source": "Tree foliage 2 shade 1",
+          "object": "Tree foliage 2 shade 1"
+        },
+        {
+          "source": "Tree foliage 2 shade 2",
+          "object": "Tree foliage 2 shade 2"
+        },
+        {
+          "source": "Tree foliage 2 shade 3",
+          "object": "Tree foliage 2 shade 3"
+        },
+        {
+          "source": "Tree trunk 19",
+          "object": "Tree trunk 19"
+        },
+        {
+          "source": "Tree foliage 19 shade 0",
+          "object": "Tree foliage 19 shade 0"
+        },
+        {
+          "source": "Tree foliage 19 shade 1",
+          "object": "Tree foliage 19 shade 1"
+        },
+        {
+          "source": "Tree foliage 19 shade 2",
+          "object": "Tree foliage 19 shade 2"
+        },
+        {
+          "source": "Tree foliage 19 shade 3",
+          "object": "Tree foliage 19 shade 3"
+        },
+        {
+          "source": "Tree trunk 20",
+          "object": "Tree trunk 20"
+        },
+        {
+          "source": "Tree foliage 20 shade 0",
+          "object": "Tree foliage 20 shade 0"
+        },
+        {
+          "source": "Tree foliage 20 shade 1",
+          "object": "Tree foliage 20 shade 1"
+        },
+        {
+          "source": "Tree foliage 20 shade 2",
+          "object": "Tree foliage 20 shade 2"
+        },
+        {
+          "source": "Tree foliage 20 shade 3",
+          "object": "Tree foliage 20 shade 3"
+        },
+        {
+          "source": "Tree trunk 21",
+          "object": "Tree trunk 21"
+        },
+        {
+          "source": "Tree foliage 21 shade 0",
+          "object": "Tree foliage 21 shade 0"
+        },
+        {
+          "source": "Tree foliage 21 shade 1",
+          "object": "Tree foliage 21 shade 1"
+        },
+        {
+          "source": "Tree foliage 21 shade 2",
+          "object": "Tree foliage 21 shade 2"
+        },
+        {
+          "source": "Tree foliage 21 shade 3",
+          "object": "Tree foliage 21 shade 3"
+        },
+        {
+          "source": "Tree trunk 31",
+          "object": "Tree trunk 31"
+        },
+        {
+          "source": "Tree foliage 31 shade 0",
+          "object": "Tree foliage 31 shade 0"
+        },
+        {
+          "source": "Tree foliage 31 shade 1",
+          "object": "Tree foliage 31 shade 1"
+        },
+        {
+          "source": "Tree foliage 31 shade 2",
+          "object": "Tree foliage 31 shade 2"
+        },
+        {
+          "source": "Tree foliage 31 shade 3",
+          "object": "Tree foliage 31 shade 3"
+        },
+        {
+          "source": "Tree trunk 32",
+          "object": "Tree trunk 32"
+        },
+        {
+          "source": "Tree foliage 32 shade 0",
+          "object": "Tree foliage 32 shade 0"
+        },
+        {
+          "source": "Tree foliage 32 shade 1",
+          "object": "Tree foliage 32 shade 1"
+        },
+        {
+          "source": "Tree foliage 32 shade 2",
+          "object": "Tree foliage 32 shade 2"
+        },
+        {
+          "source": "Tree foliage 32 shade 3",
+          "object": "Tree foliage 32 shade 3"
+        },
+        {
+          "source": "Tree trunk 33",
+          "object": "Tree trunk 33"
+        },
+        {
+          "source": "Tree foliage 33 shade 0",
+          "object": "Tree foliage 33 shade 0"
+        },
+        {
+          "source": "Tree foliage 33 shade 1",
+          "object": "Tree foliage 33 shade 1"
+        },
+        {
+          "source": "Tree foliage 33 shade 2",
+          "object": "Tree foliage 33 shade 2"
+        },
+        {
+          "source": "Tree foliage 33 shade 3",
+          "object": "Tree foliage 33 shade 3"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -72.92814,
+          0.1778,
+          14.15006
+        ],
+        "max": [
+          -46.65869,
+          9.36033,
+          37.9684
+        ]
+      }
+    },
+    "campus-planting-south-rear": {
+      "objects": [
+        {
+          "source": "Tree trunk 41",
+          "object": "Tree trunk 41"
+        },
+        {
+          "source": "Tree foliage 41 shade 0",
+          "object": "Tree foliage 41 shade 0"
+        },
+        {
+          "source": "Tree foliage 41 shade 1",
+          "object": "Tree foliage 41 shade 1"
+        },
+        {
+          "source": "Tree foliage 41 shade 2",
+          "object": "Tree foliage 41 shade 2"
+        },
+        {
+          "source": "Tree foliage 41 shade 3",
+          "object": "Tree foliage 41 shade 3"
+        },
+        {
+          "source": "Tree trunk 42",
+          "object": "Tree trunk 42"
+        },
+        {
+          "source": "Tree foliage 42 shade 0",
+          "object": "Tree foliage 42 shade 0"
+        },
+        {
+          "source": "Tree foliage 42 shade 1",
+          "object": "Tree foliage 42 shade 1"
+        },
+        {
+          "source": "Tree foliage 42 shade 2",
+          "object": "Tree foliage 42 shade 2"
+        },
+        {
+          "source": "Tree foliage 42 shade 3",
+          "object": "Tree foliage 42 shade 3"
+        },
+        {
+          "source": "Tree trunk 43",
+          "object": "Tree trunk 43"
+        },
+        {
+          "source": "Tree foliage 43 shade 0",
+          "object": "Tree foliage 43 shade 0"
+        },
+        {
+          "source": "Tree foliage 43 shade 1",
+          "object": "Tree foliage 43 shade 1"
+        },
+        {
+          "source": "Tree foliage 43 shade 2",
+          "object": "Tree foliage 43 shade 2"
+        },
+        {
+          "source": "Tree foliage 43 shade 3",
+          "object": "Tree foliage 43 shade 3"
+        },
+        {
+          "source": "Tree trunk 53",
+          "object": "Tree trunk 53"
+        },
+        {
+          "source": "Tree foliage 53 shade 0",
+          "object": "Tree foliage 53 shade 0"
+        },
+        {
+          "source": "Tree foliage 53 shade 1",
+          "object": "Tree foliage 53 shade 1"
+        },
+        {
+          "source": "Tree foliage 53 shade 2",
+          "object": "Tree foliage 53 shade 2"
+        },
+        {
+          "source": "Tree foliage 53 shade 3",
+          "object": "Tree foliage 53 shade 3"
+        },
+        {
+          "source": "Tree trunk 54",
+          "object": "Tree trunk 54"
+        },
+        {
+          "source": "Tree foliage 54 shade 0",
+          "object": "Tree foliage 54 shade 0"
+        },
+        {
+          "source": "Tree foliage 54 shade 1",
+          "object": "Tree foliage 54 shade 1"
+        },
+        {
+          "source": "Tree foliage 54 shade 2",
+          "object": "Tree foliage 54 shade 2"
+        },
+        {
+          "source": "Tree foliage 54 shade 3",
+          "object": "Tree foliage 54 shade 3"
+        },
+        {
+          "source": "Tree trunk 55",
+          "object": "Tree trunk 55"
+        },
+        {
+          "source": "Tree foliage 55 shade 0",
+          "object": "Tree foliage 55 shade 0"
+        },
+        {
+          "source": "Tree foliage 55 shade 1",
+          "object": "Tree foliage 55 shade 1"
+        },
+        {
+          "source": "Tree foliage 55 shade 2",
+          "object": "Tree foliage 55 shade 2"
+        },
+        {
+          "source": "Tree foliage 55 shade 3",
+          "object": "Tree foliage 55 shade 3"
+        },
+        {
+          "source": "Tree trunk 63",
+          "object": "Tree trunk 63"
+        },
+        {
+          "source": "Tree foliage 63 shade 0",
+          "object": "Tree foliage 63 shade 0"
+        },
+        {
+          "source": "Tree foliage 63 shade 1",
+          "object": "Tree foliage 63 shade 1"
+        },
+        {
+          "source": "Tree foliage 63 shade 2",
+          "object": "Tree foliage 63 shade 2"
+        },
+        {
+          "source": "Tree foliage 63 shade 3",
+          "object": "Tree foliage 63 shade 3"
+        },
+        {
+          "source": "Tree trunk 67",
+          "object": "Tree trunk 67"
+        },
+        {
+          "source": "Tree foliage 67 shade 0",
+          "object": "Tree foliage 67 shade 0"
+        },
+        {
+          "source": "Tree foliage 67 shade 1",
+          "object": "Tree foliage 67 shade 1"
+        },
+        {
+          "source": "Tree foliage 67 shade 2",
+          "object": "Tree foliage 67 shade 2"
+        },
+        {
+          "source": "Tree foliage 67 shade 3",
+          "object": "Tree foliage 67 shade 3"
+        },
+        {
+          "source": "Tree trunk 71",
+          "object": "Tree trunk 71"
+        },
+        {
+          "source": "Tree foliage 71 shade 0",
+          "object": "Tree foliage 71 shade 0"
+        },
+        {
+          "source": "Tree foliage 71 shade 1",
+          "object": "Tree foliage 71 shade 1"
+        },
+        {
+          "source": "Tree foliage 71 shade 2",
+          "object": "Tree foliage 71 shade 2"
+        },
+        {
+          "source": "Tree foliage 71 shade 3",
+          "object": "Tree foliage 71 shade 3"
+        },
+        {
+          "source": "Tree trunk 72",
+          "object": "Tree trunk 72"
+        },
+        {
+          "source": "Tree foliage 72 shade 0",
+          "object": "Tree foliage 72 shade 0"
+        },
+        {
+          "source": "Tree foliage 72 shade 1",
+          "object": "Tree foliage 72 shade 1"
+        },
+        {
+          "source": "Tree foliage 72 shade 2",
+          "object": "Tree foliage 72 shade 2"
+        },
+        {
+          "source": "Tree foliage 72 shade 3",
+          "object": "Tree foliage 72 shade 3"
+        },
+        {
+          "source": "Tree trunk 79",
+          "object": "Tree trunk 79"
+        },
+        {
+          "source": "Tree foliage 79 shade 0",
+          "object": "Tree foliage 79 shade 0"
+        },
+        {
+          "source": "Tree foliage 79 shade 1",
+          "object": "Tree foliage 79 shade 1"
+        },
+        {
+          "source": "Tree foliage 79 shade 2",
+          "object": "Tree foliage 79 shade 2"
+        },
+        {
+          "source": "Tree foliage 79 shade 3",
+          "object": "Tree foliage 79 shade 3"
+        },
+        {
+          "source": "Tree trunk 80",
+          "object": "Tree trunk 80"
+        },
+        {
+          "source": "Tree foliage 80 shade 0",
+          "object": "Tree foliage 80 shade 0"
+        },
+        {
+          "source": "Tree foliage 80 shade 1",
+          "object": "Tree foliage 80 shade 1"
+        },
+        {
+          "source": "Tree foliage 80 shade 2",
+          "object": "Tree foliage 80 shade 2"
+        },
+        {
+          "source": "Tree foliage 80 shade 3",
+          "object": "Tree foliage 80 shade 3"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -72.86548,
+          0.15716,
+          -166.29181
+        ],
+        "max": [
+          -34.54938,
+          11.85855,
+          -120.52682
+        ]
+      }
+    },
+    "core": {
+      "objects": [
+        {
+          "source": "stone2",
+          "object": "stone2"
+        },
+        {
+          "source": "terrace_stone",
+          "object": "terrace_stone"
+        },
+        {
+          "source": "roof",
+          "object": "roof"
+        },
+        {
+          "source": "roofedge",
+          "object": "roofedge"
+        },
+        {
+          "source": "roofjoint",
+          "object": "roofjoint"
+        },
+        {
+          "source": "beamjoint",
+          "object": "beamjoint"
+        },
+        {
+          "source": "copper",
+          "object": "copper"
+        },
+        {
+          "source": "copperjoint",
+          "object": "copperjoint"
+        },
+        {
+          "source": "dark",
+          "object": "dark"
+        },
+        {
+          "source": "connector_glass",
+          "object": "connector_glass"
+        },
+        {
+          "source": "shopglass",
+          "object": "shopglass"
+        },
+        {
+          "source": "gold",
+          "object": "gold"
+        },
+        {
+          "source": "ground",
+          "object": "ground"
+        },
+        {
+          "source": "line",
+          "object": "line"
+        },
+        {
+          "source": "white",
+          "object": "white"
+        },
+        {
+          "source": "Curated garden beds",
+          "object": "Curated garden beds"
+        },
+        {
+          "source": "Garden stone edging",
+          "object": "Garden stone edging"
+        },
+        {
+          "source": "Front gardens ground",
+          "object": "Front gardens ground"
+        },
+        {
+          "source": "Rear garden planting islands",
+          "object": "Rear garden planting islands"
+        },
+        {
+          "source": "Rear garden low stone borders",
+          "object": "Rear garden low stone borders"
+        },
+        {
+          "source": "Rear garden warm paved paths",
+          "object": "Rear garden warm paved paths"
+        },
+        {
+          "source": "Rear connector - procedural irregular coursed stone",
+          "object": "Rear connector - procedural irregular coursed stone"
+        },
+        {
+          "source": "Rear colonnade - shallow mortar backing",
+          "object": "Rear colonnade - shallow mortar backing"
+        },
+        {
+          "source": "Rear hall - entry facade and terrace guards approximation",
+          "object": "Rear hall - entry facade and terrace guards approximation"
+        },
+        {
+          "source": "stone",
+          "object": "stone"
+        },
+        {
+          "source": "glass",
+          "object": "glass"
+        },
+        {
+          "source": "Rear hall - reconstructed mass around entry",
+          "object": "Rear hall - reconstructed mass around entry"
+        },
+        {
+          "source": "Rear hall - glazing around entry",
+          "object": "Rear hall - glazing around entry"
+        },
+        {
+          "source": "Pavilion - low stone plinth",
+          "object": "Pavilion - low stone plinth"
+        },
+        {
+          "source": "Pavilion - dark metal grid",
+          "object": "Pavilion - dark metal grid"
+        },
+        {
+          "source": "Pavilion - tinted glazing",
+          "object": "Pavilion - tinted glazing"
+        },
+        {
+          "source": "Pavilion - upper band and suggested entry",
+          "object": "Pavilion - upper band and suggested entry"
+        },
+        {
+          "source": "Pavilion - unlit garden uplights",
+          "object": "Pavilion - unlit garden uplights"
+        },
+        {
+          "source": "Pavilion - SEJONG S THEATER letters",
+          "object": "Pavilion - SEJONG S THEATER letters"
+        },
+        {
+          "source": "Rear service wall - stone panels",
+          "object": "Rear service wall - stone panels"
+        },
+        {
+          "source": "Rear service wall - glass infill",
+          "object": "Rear service wall - glass infill"
+        },
+        {
+          "source": "Rear service wall - metal infill",
+          "object": "Rear service wall - metal infill"
+        },
+        {
+          "source": "Rear service wall - door dividing seams",
+          "object": "Rear service wall - door dividing seams"
+        },
+        {
+          "source": "Rear landing - pale stone panels",
+          "object": "Rear landing - pale stone panels"
+        },
+        {
+          "source": "Rear landing - glass",
+          "object": "Rear landing - glass"
+        },
+        {
+          "source": "Rear landing - metal",
+          "object": "Rear landing - metal"
+        },
+        {
+          "source": "Rear stair - individual stone treads and short mid landing",
+          "object": "Rear stair - individual stone treads and short mid landing"
+        },
+        {
+          "source": "Rear stair - top landing connection",
+          "object": "Rear stair - top landing connection"
+        },
+        {
+          "source": "Rear stair - tread nosings",
+          "object": "Rear stair - tread nosings"
+        },
+        {
+          "source": "Rear stair - sloping stone enclosure",
+          "object": "Rear stair - sloping stone enclosure"
+        },
+        {
+          "source": "Rear stair - stone balusters",
+          "object": "Rear stair - stone balusters"
+        },
+        {
+          "source": "Rear stair - metal handrails",
+          "object": "Rear stair - metal handrails"
+        },
+        {
+          "source": "Rear stair - service door",
+          "object": "Rear stair - service door"
+        },
+        {
+          "source": "Rear stair - outer stone cap rail",
+          "object": "Rear stair - outer stone cap rail"
+        },
+        {
+          "source": "Rear stair - inner metal posts",
+          "object": "Rear stair - inner metal posts"
+        },
+        {
+          "source": "Rear stair - inner glass guard panels",
+          "object": "Rear stair - inner glass guard panels"
+        },
+        {
+          "source": "Surroundings - continuous plaza foundation",
+          "object": "Surroundings - continuous plaza foundation"
+        },
+        {
+          "source": "Surroundings - eastern plaza stone walk",
+          "object": "Surroundings - eastern plaza stone walk"
+        },
+        {
+          "source": "Surroundings - east-side seven lane roadway",
+          "object": "Surroundings - east-side seven lane roadway"
+        },
+        {
+          "source": "Surroundings - east sidewalk",
+          "object": "Surroundings - east sidewalk"
+        },
+        {
+          "source": "Surroundings - plaza green islands",
+          "object": "Surroundings - plaza green islands"
+        },
+        {
+          "source": "North historical museum - approximate estimated stone mass",
+          "object": "North historical museum - approximate estimated stone mass"
+        },
+        {
+          "source": "Embassy - approximate estimated stone mass",
+          "object": "Embassy - approximate estimated stone mass"
+        },
+        {
+          "source": "KT West - photo 013 glass mass",
+          "object": "KT West - photo 013 glass mass"
+        },
+        {
+          "source": "Kyobo commercial tower - approximate glass mass",
+          "object": "Kyobo commercial tower - approximate glass mass"
+        },
+        {
+          "source": "Kyobo low podium",
+          "object": "Kyobo low podium"
+        },
+        {
+          "source": "075 structural shell and upper floor slabs",
+          "object": "075 structural shell and upper floor slabs"
+        },
+        {
+          "source": "075 illuminated facade perimeter",
+          "object": "075 illuminated facade perimeter"
+        },
+        {
+          "source": "075 broad yellow sign and intermediate band",
+          "object": "075 broad yellow sign and intermediate band"
+        },
+        {
+          "source": "075 glazed shop ground floor",
+          "object": "075 glazed shop ground floor"
+        },
+        {
+          "source": "075 large middle floor window",
+          "object": "075 large middle floor window"
+        },
+        {
+          "source": "075 upper large window",
+          "object": "075 upper large window"
+        },
+        {
+          "source": "075 upper narrow dark side window",
+          "object": "075 upper narrow dark side window"
+        },
+        {
+          "source": "075 window and entry frame lines",
+          "object": "075 window and entry frame lines"
+        },
+        {
+          "source": "075 dark ground poster panel",
+          "object": "075 dark ground poster panel"
+        },
+        {
+          "source": "075 original abstract poster display",
+          "object": "075 original abstract poster display"
+        },
+        {
+          "source": "075 entrance glass door",
+          "object": "075 entrance glass door"
+        },
+        {
+          "source": "075 custom MOM text",
+          "object": "075 custom MOM text [web mesh]"
+        },
+        {
+          "source": "075 vertical projecting sign",
+          "object": "075 vertical projecting sign"
+        },
+        {
+          "source": "075 vertical sign text",
+          "object": "075 vertical sign text [web mesh]"
+        },
+        {
+          "source": "075 dark intervening facade",
+          "object": "075 dark intervening facade"
+        },
+        {
+          "source": "075 neighboring low facade",
+          "object": "075 neighboring low facade"
+        },
+        {
+          "source": "075 neighboring lower glazing",
+          "object": "075 neighboring lower glazing"
+        },
+        {
+          "source": "075 neighboring light sign panel",
+          "object": "075 neighboring light sign panel"
+        },
+        {
+          "source": "075 neighbor entry framing",
+          "object": "075 neighbor entry framing"
+        },
+        {
+          "source": "075 neighbor ISAAC sign",
+          "object": "075 neighbor ISAAC sign [web mesh]"
+        },
+        {
+          "source": "Retail frontage pedestrian stone.001",
+          "object": "Retail frontage pedestrian stone.001"
+        },
+        {
+          "source": "Retail frontage paving joints.001",
+          "object": "Retail frontage paving joints.001"
+        },
+        {
+          "source": "048 rear and side shell",
+          "object": "048 rear and side shell"
+        },
+        {
+          "source": "048 individual floor slabs",
+          "object": "048 individual floor slabs"
+        },
+        {
+          "source": "048 asymmetrical ground stone wall",
+          "object": "048 asymmetrical ground stone wall"
+        },
+        {
+          "source": "048 ground center glazed shop",
+          "object": "048 ground center glazed shop"
+        },
+        {
+          "source": "048 ground dark mullions",
+          "object": "048 ground dark mullions"
+        },
+        {
+          "source": "048 recessed portal stone lining",
+          "object": "048 recessed portal stone lining"
+        },
+        {
+          "source": "048 projecting dark retail fascia",
+          "object": "048 projecting dark retail fascia"
+        },
+        {
+          "source": "048 custom starbucks typography",
+          "object": "048 custom starbucks typography [web mesh]"
+        },
+        {
+          "source": "048 second level glass",
+          "object": "048 second level glass"
+        },
+        {
+          "source": "048 second level vertical pale columns",
+          "object": "048 second level vertical pale columns"
+        },
+        {
+          "source": "048 second level narrow dark divisions",
+          "object": "048 second level narrow dark divisions"
+        },
+        {
+          "source": "048 brick facade surrounding off center windows",
+          "object": "048 brick facade surrounding off center windows"
+        },
+        {
+          "source": "048 long upper lit window",
+          "object": "048 long upper lit window"
+        },
+        {
+          "source": "048 long windows black mullions",
+          "object": "048 long windows black mullions"
+        },
+        {
+          "source": "048 heavy gray stone surround",
+          "object": "048 heavy gray stone surround"
+        },
+        {
+          "source": "Retail frontage pedestrian stone",
+          "object": "Retail frontage pedestrian stone"
+        },
+        {
+          "source": "Retail frontage paving joints",
+          "object": "Retail frontage paving joints"
+        },
+        {
+          "source": "Aerial annex - additional correctly spaced side eave blocks",
+          "object": "Aerial annex - additional correctly spaced side eave blocks"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -210.0,
+          -0.48,
+          -168.0
+        ],
+        "max": [
+          240.0,
+          98.0,
+          260.0
+        ]
+      }
+    },
+    "east-embassy-detail": {
+      "objects": [
+        {
+          "source": "Embassy - approximate ribbon glazing 00",
+          "object": "Embassy - approximate ribbon glazing 00"
+        },
+        {
+          "source": "Embassy - approximate window divisions 00",
+          "object": "Embassy - approximate window divisions 00"
+        },
+        {
+          "source": "Embassy - approximate ribbon glazing 01",
+          "object": "Embassy - approximate ribbon glazing 01"
+        },
+        {
+          "source": "Embassy - approximate window divisions 01",
+          "object": "Embassy - approximate window divisions 01"
+        },
+        {
+          "source": "Embassy - approximate ribbon glazing 02",
+          "object": "Embassy - approximate ribbon glazing 02"
+        },
+        {
+          "source": "Embassy - approximate window divisions 02",
+          "object": "Embassy - approximate window divisions 02"
+        },
+        {
+          "source": "Embassy - approximate ribbon glazing 03",
+          "object": "Embassy - approximate ribbon glazing 03"
+        },
+        {
+          "source": "Embassy - approximate window divisions 03",
+          "object": "Embassy - approximate window divisions 03"
+        },
+        {
+          "source": "Embassy - approximate ribbon glazing 04",
+          "object": "Embassy - approximate ribbon glazing 04"
+        },
+        {
+          "source": "Embassy - approximate window divisions 04",
+          "object": "Embassy - approximate window divisions 04"
+        },
+        {
+          "source": "Embassy - approximate ribbon glazing 05",
+          "object": "Embassy - approximate ribbon glazing 05"
+        },
+        {
+          "source": "Embassy - approximate window divisions 05",
+          "object": "Embassy - approximate window divisions 05"
+        },
+        {
+          "source": "Embassy - approximate ribbon glazing 06",
+          "object": "Embassy - approximate ribbon glazing 06"
+        },
+        {
+          "source": "Embassy - approximate window divisions 06",
+          "object": "Embassy - approximate window divisions 06"
+        },
+        {
+          "source": "Embassy - approximate ribbon glazing 07",
+          "object": "Embassy - approximate ribbon glazing 07"
+        },
+        {
+          "source": "Embassy - approximate window divisions 07",
+          "object": "Embassy - approximate window divisions 07"
+        }
+      ],
+      "bounds": {
+        "min": [
+          40.0,
+          2.2,
+          162.85001
+        ],
+        "max": [
+          89.0,
+          28.2,
+          162.99001
+        ]
+      }
+    },
+    "east-kt-detail": {
+      "objects": [
+        {
+          "source": "KT West - photo 013 facade horizontal mullions",
+          "object": "KT West - photo 013 facade horizontal mullions"
+        },
+        {
+          "source": "KT West - photo 013 facade vertical mullions",
+          "object": "KT West - photo 013 facade vertical mullions"
+        },
+        {
+          "source": "KT West - photo 013 ground floor glazing",
+          "object": "KT West - photo 013 ground floor glazing"
+        },
+        {
+          "source": "KT West - photo 013 ground floor frames",
+          "object": "KT West - photo 013 ground floor frames"
+        },
+        {
+          "source": "KT paired screen framing",
+          "object": "KT paired screen framing"
+        },
+        {
+          "source": "KT original screen graphic cyan",
+          "object": "KT original screen graphic cyan"
+        },
+        {
+          "source": "KT original screen graphic red",
+          "object": "KT original screen graphic red"
+        },
+        {
+          "source": "KT original screen graphic pale",
+          "object": "KT original screen graphic pale"
+        },
+        {
+          "source": "KT entrance portal dark frame",
+          "object": "KT entrance portal dark frame"
+        },
+        {
+          "source": "KT entrance glass and double doors",
+          "object": "KT entrance glass and double doors"
+        },
+        {
+          "source": "KT entrance transom and handles",
+          "object": "KT entrance transom and handles"
+        },
+        {
+          "source": "KT awning",
+          "object": "KT awning"
+        },
+        {
+          "source": "KT street level display windows",
+          "object": "KT street level display windows"
+        },
+        {
+          "source": "KT horizontal podium ledges",
+          "object": "KT horizontal podium ledges"
+        },
+        {
+          "source": "Sidewalk tactile route",
+          "object": "Sidewalk tactile route"
+        },
+        {
+          "source": "Wayfinding poles",
+          "object": "Wayfinding poles"
+        },
+        {
+          "source": "Wayfinding sign faces",
+          "object": "Wayfinding sign faces"
+        },
+        {
+          "source": "Wayfinding sign strokes",
+          "object": "Wayfinding sign strokes"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -207.0,
+          0.12,
+          152.98
+        ],
+        "max": [
+          237.0,
+          74.14,
+          163.0
+        ]
+      }
+    },
+    "east-kyobo-detail": {
+      "objects": [
+        {
+          "source": "Kyobo commercial tower - approximate facade horizontal mullions",
+          "object": "Kyobo commercial tower - approximate facade horizontal mullions"
+        },
+        {
+          "source": "Kyobo commercial tower - approximate facade vertical mullions",
+          "object": "Kyobo commercial tower - approximate facade vertical mullions"
+        },
+        {
+          "source": "Kyobo commercial tower - approximate ground floor glazing",
+          "object": "Kyobo commercial tower - approximate ground floor glazing"
+        },
+        {
+          "source": "Kyobo commercial tower - approximate ground floor frames",
+          "object": "Kyobo commercial tower - approximate ground floor frames"
+        },
+        {
+          "source": "Kyobo street-facing openings",
+          "object": "Kyobo street-facing openings"
+        },
+        {
+          "source": "Kyobo entrance mullions",
+          "object": "Kyobo entrance mullions"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -95.0,
+          0.25,
+          162.64
+        ],
+        "max": [
+          -29.0,
+          98.14,
+          162.99001
+        ]
+      }
+    },
+    "east-museum-detail": {
+      "objects": [
+        {
+          "source": "North historical museum - approximate ribbon glazing 00",
+          "object": "North historical museum - approximate ribbon glazing 00"
+        },
+        {
+          "source": "North historical museum - approximate window divisions 00",
+          "object": "North historical museum - approximate window divisions 00"
+        },
+        {
+          "source": "North historical museum - approximate ribbon glazing 01",
+          "object": "North historical museum - approximate ribbon glazing 01"
+        },
+        {
+          "source": "North historical museum - approximate window divisions 01",
+          "object": "North historical museum - approximate window divisions 01"
+        },
+        {
+          "source": "North historical museum - approximate ribbon glazing 02",
+          "object": "North historical museum - approximate ribbon glazing 02"
+        },
+        {
+          "source": "North historical museum - approximate window divisions 02",
+          "object": "North historical museum - approximate window divisions 02"
+        },
+        {
+          "source": "North historical museum - approximate ribbon glazing 03",
+          "object": "North historical museum - approximate ribbon glazing 03"
+        },
+        {
+          "source": "North historical museum - approximate window divisions 03",
+          "object": "North historical museum - approximate window divisions 03"
+        },
+        {
+          "source": "North historical museum - approximate ribbon glazing 04",
+          "object": "North historical museum - approximate ribbon glazing 04"
+        },
+        {
+          "source": "North historical museum - approximate window divisions 04",
+          "object": "North historical museum - approximate window divisions 04"
+        },
+        {
+          "source": "North historical museum - approximate ribbon glazing 05",
+          "object": "North historical museum - approximate ribbon glazing 05"
+        },
+        {
+          "source": "North historical museum - approximate window divisions 05",
+          "object": "North historical museum - approximate window divisions 05"
+        },
+        {
+          "source": "North historical museum - approximate ribbon glazing 06",
+          "object": "North historical museum - approximate ribbon glazing 06"
+        },
+        {
+          "source": "North historical museum - approximate window divisions 06",
+          "object": "North historical museum - approximate window divisions 06"
+        },
+        {
+          "source": "North historical museum - approximate ribbon glazing 07",
+          "object": "North historical museum - approximate ribbon glazing 07"
+        },
+        {
+          "source": "North historical museum - approximate window divisions 07",
+          "object": "North historical museum - approximate window divisions 07"
+        }
+      ],
+      "bounds": {
+        "min": [
+          96.0,
+          2.2,
+          162.85001
+        ],
+        "max": [
+          150.0,
+          29.075,
+          162.99001
+        ]
+      }
+    },
+    "front-terrace-detail": {
+      "objects": [
+        {
+          "source": "Plaza benches, wood slats",
+          "object": "Plaza benches, wood slats"
+        },
+        {
+          "source": "Bench legs and plaza lights",
+          "object": "Bench legs and plaza lights"
+        },
+        {
+          "source": "Central plaza stepped timber platform",
+          "object": "Central plaza stepped timber platform"
+        },
+        {
+          "source": "Timber platform board edges",
+          "object": "Timber platform board edges"
+        },
+        {
+          "source": "Central stair planted stone terraces",
+          "object": "Central stair planted stone terraces"
+        },
+        {
+          "source": "Central stair terrace planting beds",
+          "object": "Central stair terrace planting beds"
+        },
+        {
+          "source": "Main hall wayfinding marker",
+          "object": "Main hall wayfinding marker"
+        },
+        {
+          "source": "Wayfinding marker graphic",
+          "object": "Wayfinding marker graphic"
+        },
+        {
+          "source": "Wayfinding marker 세종",
+          "object": "Wayfinding marker 세종"
+        },
+        {
+          "source": "Wayfinding marker 문화회관",
+          "object": "Wayfinding marker 문화회관"
+        },
+        {
+          "source": "Lobby benches and counters",
+          "object": "Lobby benches and counters"
+        },
+        {
+          "source": "Lobby open doors and fittings",
+          "object": "Lobby open doors and fittings"
+        },
+        {
+          "source": "Lobby open door glass",
+          "object": "Lobby open door glass"
+        },
+        {
+          "source": "Annex shop open door frames",
+          "object": "Annex shop open door frames"
+        },
+        {
+          "source": "Annex shop open door glass",
+          "object": "Annex shop open door glass"
+        },
+        {
+          "source": "Annex shop display cabinets",
+          "object": "Annex shop display cabinets"
+        },
+        {
+          "source": "Annex shop cabinet edging",
+          "object": "Annex shop cabinet edging"
+        },
+        {
+          "source": "Annex shop display cards",
+          "object": "Annex shop display cards"
+        },
+        {
+          "source": "Lobby light strips",
+          "object": "Lobby light strips"
+        },
+        {
+          "source": "Lobby lettering 세종문화회관",
+          "object": "Lobby lettering 세종문화회관"
+        },
+        {
+          "source": "Lobby lettering SEJONG CENTER",
+          "object": "Lobby lettering SEJONG CENTER"
+        },
+        {
+          "source": "Annex shop sign SEJONG",
+          "object": "Annex shop sign SEJONG"
+        },
+        {
+          "source": "Annex shop sign ART",
+          "object": "Annex shop sign ART"
+        },
+        {
+          "source": "Annex shop sign LOUNGE",
+          "object": "Annex shop sign LOUNGE"
+        },
+        {
+          "source": "Original carved relief 0 00",
+          "object": "Original carved relief 0 00"
+        },
+        {
+          "source": "Original carved relief 0 01",
+          "object": "Original carved relief 0 01"
+        },
+        {
+          "source": "Original carved relief 0 02",
+          "object": "Original carved relief 0 02"
+        },
+        {
+          "source": "Original carved relief 0 03",
+          "object": "Original carved relief 0 03"
+        },
+        {
+          "source": "Original carved relief 0 04",
+          "object": "Original carved relief 0 04"
+        },
+        {
+          "source": "Original carved relief 0 05",
+          "object": "Original carved relief 0 05"
+        },
+        {
+          "source": "Original carved relief 0 06",
+          "object": "Original carved relief 0 06"
+        },
+        {
+          "source": "Original carved relief 0 07",
+          "object": "Original carved relief 0 07"
+        },
+        {
+          "source": "Original carved relief 0 08",
+          "object": "Original carved relief 0 08"
+        },
+        {
+          "source": "Original carved relief 0 09",
+          "object": "Original carved relief 0 09"
+        },
+        {
+          "source": "Original carved relief 0 10",
+          "object": "Original carved relief 0 10"
+        },
+        {
+          "source": "Original carved relief 0 11",
+          "object": "Original carved relief 0 11"
+        },
+        {
+          "source": "Original carved relief 0 12",
+          "object": "Original carved relief 0 12"
+        },
+        {
+          "source": "Original carved relief 0 13",
+          "object": "Original carved relief 0 13"
+        },
+        {
+          "source": "Original carved relief 0 14",
+          "object": "Original carved relief 0 14"
+        },
+        {
+          "source": "Original carved relief 1 00",
+          "object": "Original carved relief 1 00"
+        },
+        {
+          "source": "Original carved relief 1 01",
+          "object": "Original carved relief 1 01"
+        },
+        {
+          "source": "Original carved relief 1 02",
+          "object": "Original carved relief 1 02"
+        },
+        {
+          "source": "Original carved relief 1 03",
+          "object": "Original carved relief 1 03"
+        },
+        {
+          "source": "Original carved relief 1 04",
+          "object": "Original carved relief 1 04"
+        },
+        {
+          "source": "Original carved relief 1 05",
+          "object": "Original carved relief 1 05"
+        },
+        {
+          "source": "Original carved relief 1 06",
+          "object": "Original carved relief 1 06"
+        },
+        {
+          "source": "Original carved relief 1 07",
+          "object": "Original carved relief 1 07"
+        },
+        {
+          "source": "Original carved relief 1 08",
+          "object": "Original carved relief 1 08"
+        },
+        {
+          "source": "Original carved relief 1 09",
+          "object": "Original carved relief 1 09"
+        },
+        {
+          "source": "Original carved relief 1 10",
+          "object": "Original carved relief 1 10"
+        },
+        {
+          "source": "Original carved relief 1 11",
+          "object": "Original carved relief 1 11"
+        },
+        {
+          "source": "Original carved relief 1 12",
+          "object": "Original carved relief 1 12"
+        },
+        {
+          "source": "Original carved relief 1 13",
+          "object": "Original carved relief 1 13"
+        },
+        {
+          "source": "Original carved relief 1 14",
+          "object": "Original carved relief 1 14"
+        },
+        {
+          "source": "Annex screen • original art",
+          "object": "Annex screen • original art"
+        },
+        {
+          "source": "Terrace banner 0 • original art",
+          "object": "Terrace banner 0 • original art"
+        },
+        {
+          "source": "Terrace banner 1 • original art",
+          "object": "Terrace banner 1 • original art"
+        },
+        {
+          "source": "Glazed bridge banner backing",
+          "object": "Glazed bridge banner backing"
+        },
+        {
+          "source": "Glazed bridge banner • original art",
+          "object": "Glazed bridge banner • original art"
+        },
+        {
+          "source": "Photo cafe terrace - Terrace white painted metal",
+          "object": "Photo cafe terrace - Terrace white painted metal"
+        },
+        {
+          "source": "Photo cafe terrace - Terrace natural beige fabric",
+          "object": "Photo cafe terrace - Terrace natural beige fabric"
+        },
+        {
+          "source": "Photo cafe terrace - Terrace dark bronze frame",
+          "object": "Photo cafe terrace - Terrace dark bronze frame"
+        },
+        {
+          "source": "Photo cafe terrace - Terrace pale canopy textile",
+          "object": "Photo cafe terrace - Terrace pale canopy textile"
+        },
+        {
+          "source": "Photo plaza - regular stone paving joints",
+          "object": "Photo plaza - regular stone paving joints"
+        },
+        {
+          "source": "Cafe terrace - stone surface",
+          "object": "Cafe terrace - stone surface"
+        },
+        {
+          "source": "Cafe terrace - stone tile joints",
+          "object": "Cafe terrace - stone tile joints"
+        },
+        {
+          "source": "Photo terrace - lawn patches beneath seating",
+          "object": "Photo terrace - lawn patches beneath seating"
+        },
+        {
+          "source": "Terrace curb - opening retained ends",
+          "object": "Terrace curb - opening retained ends"
+        },
+        {
+          "source": "Terrace east access slope",
+          "object": "Terrace east access slope"
+        },
+        {
+          "source": "Photo145 Open Stage - Open Stage recessed coffers",
+          "object": "Photo145 Open Stage - Open Stage recessed coffers"
+        },
+        {
+          "source": "Photo145 Open Stage - Open Stage pale stone",
+          "object": "Photo145 Open Stage - Open Stage pale stone"
+        },
+        {
+          "source": "Photo145 Open Stage - Open Stage linear light lenses",
+          "object": "Photo145 Open Stage - Open Stage linear light lenses"
+        },
+        {
+          "source": "Photo145 Open Stage - Open Stage black metal frames",
+          "object": "Photo145 Open Stage - Open Stage black metal frames"
+        },
+        {
+          "source": "Photo145 Open Stage - Open Stage display background",
+          "object": "Photo145 Open Stage - Open Stage display background"
+        },
+        {
+          "source": "Photo145 Open Stage - Open Stage display abstract amber",
+          "object": "Photo145 Open Stage - Open Stage display abstract amber"
+        },
+        {
+          "source": "Photo145 Open Stage - Open Stage display abstract coral",
+          "object": "Photo145 Open Stage - Open Stage display abstract coral"
+        },
+        {
+          "source": "Photo145 Open Stage - Open Stage display pale strokes",
+          "object": "Photo145 Open Stage - Open Stage display pale strokes"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -76.008,
+          0.0,
+          -11.362
+        ],
+        "max": [
+          121.008,
+          17.49881,
+          125.0
+        ]
+      }
+    },
+    "gratitude-garden": {
+      "objects": [
+        {
+          "source": "Gratitude Light 01 - United States",
+          "object": "Gratitude Light 01 - United States"
+        },
+        {
+          "source": "Gratitude country stone inset 01",
+          "object": "Gratitude country stone inset 01"
+        },
+        {
+          "source": "Gratitude base nameplate 01",
+          "object": "Gratitude base nameplate 01"
+        },
+        {
+          "source": "Gratitude uplight 01",
+          "object": "Gratitude uplight 01"
+        },
+        {
+          "source": "Gratitude Light 02 - United Kingdom",
+          "object": "Gratitude Light 02 - United Kingdom"
+        },
+        {
+          "source": "Gratitude country stone inset 02",
+          "object": "Gratitude country stone inset 02"
+        },
+        {
+          "source": "Gratitude base nameplate 02",
+          "object": "Gratitude base nameplate 02"
+        },
+        {
+          "source": "Gratitude uplight 02",
+          "object": "Gratitude uplight 02"
+        },
+        {
+          "source": "Gratitude Light 03 - Australia",
+          "object": "Gratitude Light 03 - Australia"
+        },
+        {
+          "source": "Gratitude country stone inset 03",
+          "object": "Gratitude country stone inset 03"
+        },
+        {
+          "source": "Gratitude base nameplate 03",
+          "object": "Gratitude base nameplate 03"
+        },
+        {
+          "source": "Gratitude uplight 03",
+          "object": "Gratitude uplight 03"
+        },
+        {
+          "source": "Gratitude Light 04 - Netherlands",
+          "object": "Gratitude Light 04 - Netherlands"
+        },
+        {
+          "source": "Gratitude country stone inset 04",
+          "object": "Gratitude country stone inset 04"
+        },
+        {
+          "source": "Gratitude base nameplate 04",
+          "object": "Gratitude base nameplate 04"
+        },
+        {
+          "source": "Gratitude uplight 04",
+          "object": "Gratitude uplight 04"
+        },
+        {
+          "source": "Gratitude Light 05 - Canada",
+          "object": "Gratitude Light 05 - Canada"
+        },
+        {
+          "source": "Gratitude country stone inset 05",
+          "object": "Gratitude country stone inset 05"
+        },
+        {
+          "source": "Gratitude base nameplate 05",
+          "object": "Gratitude base nameplate 05"
+        },
+        {
+          "source": "Gratitude uplight 05",
+          "object": "Gratitude uplight 05"
+        },
+        {
+          "source": "Gratitude Light 06 - France",
+          "object": "Gratitude Light 06 - France"
+        },
+        {
+          "source": "Gratitude country stone inset 06",
+          "object": "Gratitude country stone inset 06"
+        },
+        {
+          "source": "Gratitude base nameplate 06",
+          "object": "Gratitude base nameplate 06"
+        },
+        {
+          "source": "Gratitude uplight 06",
+          "object": "Gratitude uplight 06"
+        },
+        {
+          "source": "Gratitude Light 07 - New Zealand",
+          "object": "Gratitude Light 07 - New Zealand"
+        },
+        {
+          "source": "Gratitude country stone inset 07",
+          "object": "Gratitude country stone inset 07"
+        },
+        {
+          "source": "Gratitude base nameplate 07",
+          "object": "Gratitude base nameplate 07"
+        },
+        {
+          "source": "Gratitude uplight 07",
+          "object": "Gratitude uplight 07"
+        },
+        {
+          "source": "Gratitude Light 08 - Philippines",
+          "object": "Gratitude Light 08 - Philippines"
+        },
+        {
+          "source": "Gratitude country stone inset 08",
+          "object": "Gratitude country stone inset 08"
+        },
+        {
+          "source": "Gratitude base nameplate 08",
+          "object": "Gratitude base nameplate 08"
+        },
+        {
+          "source": "Gratitude uplight 08",
+          "object": "Gratitude uplight 08"
+        },
+        {
+          "source": "Gratitude Light 09 - Sweden",
+          "object": "Gratitude Light 09 - Sweden"
+        },
+        {
+          "source": "Gratitude country stone inset 09",
+          "object": "Gratitude country stone inset 09"
+        },
+        {
+          "source": "Gratitude base nameplate 09",
+          "object": "Gratitude base nameplate 09"
+        },
+        {
+          "source": "Gratitude uplight 09",
+          "object": "Gratitude uplight 09"
+        },
+        {
+          "source": "Gratitude Light 10 - Turkiye",
+          "object": "Gratitude Light 10 - Turkiye"
+        },
+        {
+          "source": "Gratitude country stone inset 10",
+          "object": "Gratitude country stone inset 10"
+        },
+        {
+          "source": "Gratitude base nameplate 10",
+          "object": "Gratitude base nameplate 10"
+        },
+        {
+          "source": "Gratitude uplight 10",
+          "object": "Gratitude uplight 10"
+        },
+        {
+          "source": "Gratitude Light 11 - Thailand",
+          "object": "Gratitude Light 11 - Thailand"
+        },
+        {
+          "source": "Gratitude country stone inset 11",
+          "object": "Gratitude country stone inset 11"
+        },
+        {
+          "source": "Gratitude base nameplate 11",
+          "object": "Gratitude base nameplate 11"
+        },
+        {
+          "source": "Gratitude uplight 11",
+          "object": "Gratitude uplight 11"
+        },
+        {
+          "source": "Gratitude Light 12 - South Africa",
+          "object": "Gratitude Light 12 - South Africa"
+        },
+        {
+          "source": "Gratitude country stone inset 12",
+          "object": "Gratitude country stone inset 12"
+        },
+        {
+          "source": "Gratitude base nameplate 12",
+          "object": "Gratitude base nameplate 12"
+        },
+        {
+          "source": "Gratitude uplight 12",
+          "object": "Gratitude uplight 12"
+        },
+        {
+          "source": "Gratitude Light 13 - India",
+          "object": "Gratitude Light 13 - India"
+        },
+        {
+          "source": "Gratitude country stone inset 13",
+          "object": "Gratitude country stone inset 13"
+        },
+        {
+          "source": "Gratitude base nameplate 13",
+          "object": "Gratitude base nameplate 13"
+        },
+        {
+          "source": "Gratitude uplight 13",
+          "object": "Gratitude uplight 13"
+        },
+        {
+          "source": "Gratitude Light 14 - Greece",
+          "object": "Gratitude Light 14 - Greece"
+        },
+        {
+          "source": "Gratitude country stone inset 14",
+          "object": "Gratitude country stone inset 14"
+        },
+        {
+          "source": "Gratitude base nameplate 14",
+          "object": "Gratitude base nameplate 14"
+        },
+        {
+          "source": "Gratitude uplight 14",
+          "object": "Gratitude uplight 14"
+        },
+        {
+          "source": "Gratitude Light 15 - Belgium",
+          "object": "Gratitude Light 15 - Belgium"
+        },
+        {
+          "source": "Gratitude country stone inset 15",
+          "object": "Gratitude country stone inset 15"
+        },
+        {
+          "source": "Gratitude base nameplate 15",
+          "object": "Gratitude base nameplate 15"
+        },
+        {
+          "source": "Gratitude uplight 15",
+          "object": "Gratitude uplight 15"
+        },
+        {
+          "source": "Gratitude Light 16 - Luxembourg",
+          "object": "Gratitude Light 16 - Luxembourg"
+        },
+        {
+          "source": "Gratitude country stone inset 16",
+          "object": "Gratitude country stone inset 16"
+        },
+        {
+          "source": "Gratitude base nameplate 16",
+          "object": "Gratitude base nameplate 16"
+        },
+        {
+          "source": "Gratitude uplight 16",
+          "object": "Gratitude uplight 16"
+        },
+        {
+          "source": "Gratitude Light 17 - Denmark",
+          "object": "Gratitude Light 17 - Denmark"
+        },
+        {
+          "source": "Gratitude country stone inset 17",
+          "object": "Gratitude country stone inset 17"
+        },
+        {
+          "source": "Gratitude base nameplate 17",
+          "object": "Gratitude base nameplate 17"
+        },
+        {
+          "source": "Gratitude uplight 17",
+          "object": "Gratitude uplight 17"
+        },
+        {
+          "source": "Gratitude Light 18 - Ethiopia",
+          "object": "Gratitude Light 18 - Ethiopia"
+        },
+        {
+          "source": "Gratitude country stone inset 18",
+          "object": "Gratitude country stone inset 18"
+        },
+        {
+          "source": "Gratitude base nameplate 18",
+          "object": "Gratitude base nameplate 18"
+        },
+        {
+          "source": "Gratitude uplight 18",
+          "object": "Gratitude uplight 18"
+        },
+        {
+          "source": "Gratitude Light 19 - Colombia",
+          "object": "Gratitude Light 19 - Colombia"
+        },
+        {
+          "source": "Gratitude country stone inset 19",
+          "object": "Gratitude country stone inset 19"
+        },
+        {
+          "source": "Gratitude base nameplate 19",
+          "object": "Gratitude base nameplate 19"
+        },
+        {
+          "source": "Gratitude uplight 19",
+          "object": "Gratitude uplight 19"
+        },
+        {
+          "source": "Gratitude Light 20 - Norway",
+          "object": "Gratitude Light 20 - Norway"
+        },
+        {
+          "source": "Gratitude country stone inset 20",
+          "object": "Gratitude country stone inset 20"
+        },
+        {
+          "source": "Gratitude base nameplate 20",
+          "object": "Gratitude base nameplate 20"
+        },
+        {
+          "source": "Gratitude uplight 20",
+          "object": "Gratitude uplight 20"
+        },
+        {
+          "source": "Gratitude Light 21 - Italy",
+          "object": "Gratitude Light 21 - Italy"
+        },
+        {
+          "source": "Gratitude country stone inset 21",
+          "object": "Gratitude country stone inset 21"
+        },
+        {
+          "source": "Gratitude base nameplate 21",
+          "object": "Gratitude base nameplate 21"
+        },
+        {
+          "source": "Gratitude uplight 21",
+          "object": "Gratitude uplight 21"
+        },
+        {
+          "source": "Gratitude Light 22 - Germany",
+          "object": "Gratitude Light 22 - Germany"
+        },
+        {
+          "source": "Gratitude country stone inset 22",
+          "object": "Gratitude country stone inset 22"
+        },
+        {
+          "source": "Gratitude base nameplate 22",
+          "object": "Gratitude base nameplate 22"
+        },
+        {
+          "source": "Gratitude uplight 22",
+          "object": "Gratitude uplight 22"
+        },
+        {
+          "source": "Gratitude Light 23 - Republic of Korea",
+          "object": "Gratitude Light 23 - Republic of Korea"
+        },
+        {
+          "source": "Gratitude country stone inset 23",
+          "object": "Gratitude country stone inset 23"
+        },
+        {
+          "source": "Gratitude base nameplate 23",
+          "object": "Gratitude base nameplate 23"
+        },
+        {
+          "source": "Gratitude uplight 23",
+          "object": "Gratitude uplight 23"
+        },
+        {
+          "source": "Watercourse pedestrian bridge at crossing",
+          "object": "Watercourse pedestrian bridge at crossing"
+        },
+        {
+          "source": "Freedom entrance floor",
+          "object": "Freedom entrance floor"
+        },
+        {
+          "source": "Freedom entrance descending treads",
+          "object": "Freedom entrance descending treads"
+        },
+        {
+          "source": "Freedom entrance side retaining walls",
+          "object": "Freedom entrance side retaining walls"
+        },
+        {
+          "source": "Freedom entrance dark portal",
+          "object": "Freedom entrance dark portal"
+        },
+        {
+          "source": "Freedom entrance glass",
+          "object": "Freedom entrance glass"
+        },
+        {
+          "source": "Freedom entrance perimeter glass guard",
+          "object": "Freedom entrance perimeter glass guard"
+        },
+        {
+          "source": "Freedom entrance guardrail posts",
+          "object": "Freedom entrance guardrail posts"
+        },
+        {
+          "source": "Freedom entrance guardrail caps",
+          "object": "Freedom entrance guardrail caps"
+        },
+        {
+          "source": "Freedom entry west-end glass guards",
+          "object": "Freedom entry west-end glass guards"
+        },
+        {
+          "source": "Freedom entry west-end rail caps",
+          "object": "Freedom entry west-end rail caps"
+        },
+        {
+          "source": "Freedom entry west-end rail posts",
+          "object": "Freedom entry west-end rail posts"
+        },
+        {
+          "source": "Freedom stair sloped handrail",
+          "object": "Freedom stair sloped handrail"
+        },
+        {
+          "source": "Freedom stair handrail posts",
+          "object": "Freedom stair handrail posts"
+        },
+        {
+          "source": "Freedom stair sloped handrail.001",
+          "object": "Freedom stair sloped handrail.001"
+        },
+        {
+          "source": "Freedom stair handrail posts.001",
+          "object": "Freedom stair handrail posts.001"
+        },
+        {
+          "source": "Freedom stair sloped handrail.002",
+          "object": "Freedom stair sloped handrail.002"
+        },
+        {
+          "source": "Freedom stair handrail posts.002",
+          "object": "Freedom stair handrail posts.002"
+        },
+        {
+          "source": "Freedom Hall entrance signage backing",
+          "object": "Freedom Hall entrance signage backing"
+        },
+        {
+          "source": "Freedom Hall entrance original type",
+          "object": "Freedom Hall entrance original type [web mesh]"
+        },
+        {
+          "source": "Gratitude 23 warm linear footing lights",
+          "object": "Gratitude 23 warm linear footing lights"
+        },
+        {
+          "source": "Gratitude 23 top light lenses",
+          "object": "Gratitude 23 top light lenses"
+        }
+      ],
+      "bounds": {
+        "min": [
+          62.55,
+          -3.42,
+          56.92
+        ],
+        "max": [
+          158.5,
+          6.27,
+          117.3
+        ]
+      }
+    },
+    "plaza-water-detail": {
+      "objects": [
+        {
+          "source": "Surroundings - history water surface",
+          "object": "Surroundings - history water surface"
+        },
+        {
+          "source": "Surroundings - water channel edging",
+          "object": "Surroundings - water channel edging"
+        },
+        {
+          "source": "Surroundings - white lane markings",
+          "object": "Surroundings - white lane markings"
+        },
+        {
+          "source": "Surroundings - divided carriageway lines",
+          "object": "Surroundings - divided carriageway lines"
+        },
+        {
+          "source": "Surroundings - pedestrian crossings",
+          "object": "Surroundings - pedestrian crossings"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -210.0,
+          0.0,
+          115.1
+        ],
+        "max": [
+          240.0,
+          0.1,
+          150.2
+        ]
+      }
+    },
+    "public-planting-0": {
+      "objects": [
+        {
+          "source": "Public realm tree 00 - Tree trunk",
+          "object": "Public realm tree 00 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 00 - Tree foliage",
+          "object": "Public realm tree 00 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 00 - Tree foliage.001",
+          "object": "Public realm tree 00 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 00 - Tree foliage.002",
+          "object": "Public realm tree 00 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 00 - Tree foliage.003",
+          "object": "Public realm tree 00 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 01 - Tree trunk",
+          "object": "Public realm tree 01 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 01 - Tree foliage",
+          "object": "Public realm tree 01 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 01 - Tree foliage.001",
+          "object": "Public realm tree 01 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 01 - Tree foliage.002",
+          "object": "Public realm tree 01 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 01 - Tree foliage.003",
+          "object": "Public realm tree 01 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 02 - Tree trunk",
+          "object": "Public realm tree 02 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 02 - Tree foliage",
+          "object": "Public realm tree 02 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 02 - Tree foliage.001",
+          "object": "Public realm tree 02 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 02 - Tree foliage.002",
+          "object": "Public realm tree 02 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 02 - Tree foliage.003",
+          "object": "Public realm tree 02 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 03 - Tree trunk",
+          "object": "Public realm tree 03 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 03 - Tree foliage",
+          "object": "Public realm tree 03 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 03 - Tree foliage.001",
+          "object": "Public realm tree 03 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 03 - Tree foliage.002",
+          "object": "Public realm tree 03 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 03 - Tree foliage.003",
+          "object": "Public realm tree 03 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 04 - Tree trunk",
+          "object": "Public realm tree 04 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 04 - Tree foliage",
+          "object": "Public realm tree 04 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 04 - Tree foliage.001",
+          "object": "Public realm tree 04 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 04 - Tree foliage.002",
+          "object": "Public realm tree 04 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 04 - Tree foliage.003",
+          "object": "Public realm tree 04 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 05 - Tree trunk",
+          "object": "Public realm tree 05 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 05 - Tree foliage",
+          "object": "Public realm tree 05 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 05 - Tree foliage.001",
+          "object": "Public realm tree 05 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 05 - Tree foliage.002",
+          "object": "Public realm tree 05 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 05 - Tree foliage.003",
+          "object": "Public realm tree 05 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 24 - Tree trunk",
+          "object": "Public realm tree 24 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 24 - Tree foliage",
+          "object": "Public realm tree 24 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 24 - Tree foliage.001",
+          "object": "Public realm tree 24 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 24 - Tree foliage.002",
+          "object": "Public realm tree 24 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 24 - Tree foliage.003",
+          "object": "Public realm tree 24 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 25 - Tree trunk",
+          "object": "Public realm tree 25 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 25 - Tree foliage",
+          "object": "Public realm tree 25 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 25 - Tree foliage.001",
+          "object": "Public realm tree 25 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 25 - Tree foliage.002",
+          "object": "Public realm tree 25 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 25 - Tree foliage.003",
+          "object": "Public realm tree 25 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 26 - Tree trunk",
+          "object": "Public realm tree 26 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 26 - Tree foliage",
+          "object": "Public realm tree 26 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 26 - Tree foliage.001",
+          "object": "Public realm tree 26 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 26 - Tree foliage.002",
+          "object": "Public realm tree 26 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 26 - Tree foliage.003",
+          "object": "Public realm tree 26 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 27 - Tree trunk",
+          "object": "Public realm tree 27 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 27 - Tree foliage",
+          "object": "Public realm tree 27 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 27 - Tree foliage.001",
+          "object": "Public realm tree 27 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 27 - Tree foliage.002",
+          "object": "Public realm tree 27 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 27 - Tree foliage.003",
+          "object": "Public realm tree 27 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 28 - Tree trunk",
+          "object": "Public realm tree 28 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 28 - Tree foliage",
+          "object": "Public realm tree 28 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 28 - Tree foliage.001",
+          "object": "Public realm tree 28 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 28 - Tree foliage.002",
+          "object": "Public realm tree 28 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 28 - Tree foliage.003",
+          "object": "Public realm tree 28 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 29 - Tree trunk",
+          "object": "Public realm tree 29 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 29 - Tree foliage",
+          "object": "Public realm tree 29 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 29 - Tree foliage.001",
+          "object": "Public realm tree 29 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 29 - Tree foliage.002",
+          "object": "Public realm tree 29 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 29 - Tree foliage.003",
+          "object": "Public realm tree 29 - Tree foliage.003"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -191.28915,
+          0.10759,
+          81.6548
+        ],
+        "max": [
+          -83.9774,
+          10.05377,
+          158.67844
+        ]
+      }
+    },
+    "public-planting-1": {
+      "objects": [
+        {
+          "source": "Public realm tree 06 - Tree trunk",
+          "object": "Public realm tree 06 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 06 - Tree foliage",
+          "object": "Public realm tree 06 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 06 - Tree foliage.001",
+          "object": "Public realm tree 06 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 06 - Tree foliage.002",
+          "object": "Public realm tree 06 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 06 - Tree foliage.003",
+          "object": "Public realm tree 06 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 07 - Tree trunk",
+          "object": "Public realm tree 07 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 07 - Tree foliage",
+          "object": "Public realm tree 07 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 07 - Tree foliage.001",
+          "object": "Public realm tree 07 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 07 - Tree foliage.002",
+          "object": "Public realm tree 07 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 07 - Tree foliage.003",
+          "object": "Public realm tree 07 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 08 - Tree trunk",
+          "object": "Public realm tree 08 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 08 - Tree foliage",
+          "object": "Public realm tree 08 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 08 - Tree foliage.001",
+          "object": "Public realm tree 08 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 08 - Tree foliage.002",
+          "object": "Public realm tree 08 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 08 - Tree foliage.003",
+          "object": "Public realm tree 08 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 09 - Tree trunk",
+          "object": "Public realm tree 09 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 09 - Tree foliage",
+          "object": "Public realm tree 09 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 09 - Tree foliage.001",
+          "object": "Public realm tree 09 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 09 - Tree foliage.002",
+          "object": "Public realm tree 09 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 09 - Tree foliage.003",
+          "object": "Public realm tree 09 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 10 - Tree trunk",
+          "object": "Public realm tree 10 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 10 - Tree foliage",
+          "object": "Public realm tree 10 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 10 - Tree foliage.001",
+          "object": "Public realm tree 10 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 10 - Tree foliage.002",
+          "object": "Public realm tree 10 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 10 - Tree foliage.003",
+          "object": "Public realm tree 10 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 30 - Tree trunk",
+          "object": "Public realm tree 30 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 30 - Tree foliage",
+          "object": "Public realm tree 30 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 30 - Tree foliage.001",
+          "object": "Public realm tree 30 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 30 - Tree foliage.002",
+          "object": "Public realm tree 30 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 30 - Tree foliage.003",
+          "object": "Public realm tree 30 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 31 - Tree trunk",
+          "object": "Public realm tree 31 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 31 - Tree foliage",
+          "object": "Public realm tree 31 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 31 - Tree foliage.001",
+          "object": "Public realm tree 31 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 31 - Tree foliage.002",
+          "object": "Public realm tree 31 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 31 - Tree foliage.003",
+          "object": "Public realm tree 31 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 32 - Tree trunk",
+          "object": "Public realm tree 32 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 32 - Tree foliage",
+          "object": "Public realm tree 32 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 32 - Tree foliage.001",
+          "object": "Public realm tree 32 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 32 - Tree foliage.002",
+          "object": "Public realm tree 32 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 32 - Tree foliage.003",
+          "object": "Public realm tree 32 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 33 - Tree trunk",
+          "object": "Public realm tree 33 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 33 - Tree foliage",
+          "object": "Public realm tree 33 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 33 - Tree foliage.001",
+          "object": "Public realm tree 33 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 33 - Tree foliage.002",
+          "object": "Public realm tree 33 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 33 - Tree foliage.003",
+          "object": "Public realm tree 33 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 34 - Tree trunk",
+          "object": "Public realm tree 34 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 34 - Tree foliage",
+          "object": "Public realm tree 34 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 34 - Tree foliage.001",
+          "object": "Public realm tree 34 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 34 - Tree foliage.002",
+          "object": "Public realm tree 34 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 34 - Tree foliage.003",
+          "object": "Public realm tree 34 - Tree foliage.003"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -82.28915,
+          0.10759,
+          81.92451
+        ],
+        "max": [
+          1.72525,
+          10.05377,
+          158.67844
+        ]
+      }
+    },
+    "public-planting-2": {
+      "objects": [
+        {
+          "source": "Public realm tree 11 - Tree trunk",
+          "object": "Public realm tree 11 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 11 - Tree foliage",
+          "object": "Public realm tree 11 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 11 - Tree foliage.001",
+          "object": "Public realm tree 11 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 11 - Tree foliage.002",
+          "object": "Public realm tree 11 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 11 - Tree foliage.003",
+          "object": "Public realm tree 11 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 12 - Tree trunk",
+          "object": "Public realm tree 12 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 12 - Tree foliage",
+          "object": "Public realm tree 12 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 12 - Tree foliage.001",
+          "object": "Public realm tree 12 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 12 - Tree foliage.002",
+          "object": "Public realm tree 12 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 12 - Tree foliage.003",
+          "object": "Public realm tree 12 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 13 - Tree trunk",
+          "object": "Public realm tree 13 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 13 - Tree foliage",
+          "object": "Public realm tree 13 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 13 - Tree foliage.001",
+          "object": "Public realm tree 13 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 13 - Tree foliage.002",
+          "object": "Public realm tree 13 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 13 - Tree foliage.003",
+          "object": "Public realm tree 13 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 14 - Tree trunk",
+          "object": "Public realm tree 14 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 14 - Tree foliage",
+          "object": "Public realm tree 14 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 14 - Tree foliage.001",
+          "object": "Public realm tree 14 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 14 - Tree foliage.002",
+          "object": "Public realm tree 14 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 14 - Tree foliage.003",
+          "object": "Public realm tree 14 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 35 - Tree trunk",
+          "object": "Public realm tree 35 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 35 - Tree foliage",
+          "object": "Public realm tree 35 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 35 - Tree foliage.001",
+          "object": "Public realm tree 35 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 35 - Tree foliage.002",
+          "object": "Public realm tree 35 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 35 - Tree foliage.003",
+          "object": "Public realm tree 35 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 36 - Tree trunk",
+          "object": "Public realm tree 36 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 36 - Tree foliage",
+          "object": "Public realm tree 36 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 36 - Tree foliage.001",
+          "object": "Public realm tree 36 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 36 - Tree foliage.002",
+          "object": "Public realm tree 36 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 36 - Tree foliage.003",
+          "object": "Public realm tree 36 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 37 - Tree trunk",
+          "object": "Public realm tree 37 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 37 - Tree foliage",
+          "object": "Public realm tree 37 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 37 - Tree foliage.001",
+          "object": "Public realm tree 37 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 37 - Tree foliage.002",
+          "object": "Public realm tree 37 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 37 - Tree foliage.003",
+          "object": "Public realm tree 37 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 38 - Tree trunk",
+          "object": "Public realm tree 38 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 38 - Tree foliage",
+          "object": "Public realm tree 38 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 38 - Tree foliage.001",
+          "object": "Public realm tree 38 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 38 - Tree foliage.002",
+          "object": "Public realm tree 38 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 38 - Tree foliage.003",
+          "object": "Public realm tree 38 - Tree foliage.003"
+        },
+        {
+          "source": "Plaza timber benches",
+          "object": "Plaza timber benches"
+        },
+        {
+          "source": "Plaza bench steel legs",
+          "object": "Plaza bench steel legs"
+        },
+        {
+          "source": "East sidewalk lighting posts",
+          "object": "East sidewalk lighting posts"
+        },
+        {
+          "source": "East sidewalk lighting heads",
+          "object": "East sidewalk lighting heads"
+        },
+        {
+          "source": "Layered planted shrubs 0",
+          "object": "Layered planted shrubs 0"
+        },
+        {
+          "source": "Layered planted shrubs 1",
+          "object": "Layered planted shrubs 1"
+        },
+        {
+          "source": "Layered planted shrubs 2",
+          "object": "Layered planted shrubs 2"
+        },
+        {
+          "source": "Layered planted shrubs 3",
+          "object": "Layered planted shrubs 3"
+        },
+        {
+          "source": "Plaza long continuous seat timbers",
+          "object": "Plaza long continuous seat timbers"
+        },
+        {
+          "source": "Plaza long continuous bench supports",
+          "object": "Plaza long continuous bench supports"
+        },
+        {
+          "source": "Plaza pedestrian bollard lights",
+          "object": "Plaza pedestrian bollard lights"
+        },
+        {
+          "source": "Plaza pedestrian bollard diffusers",
+          "object": "Plaza pedestrian bollard diffusers"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -196.11,
+          -0.0785,
+          79.75
+        ],
+        "max": [
+          225.11,
+          9.37135,
+          158.35658
+        ]
+      }
+    },
+    "public-planting-3": {
+      "objects": [
+        {
+          "source": "Public realm tree 15 - Tree trunk",
+          "object": "Public realm tree 15 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 15 - Tree foliage",
+          "object": "Public realm tree 15 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 15 - Tree foliage.001",
+          "object": "Public realm tree 15 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 15 - Tree foliage.002",
+          "object": "Public realm tree 15 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 15 - Tree foliage.003",
+          "object": "Public realm tree 15 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 16 - Tree trunk",
+          "object": "Public realm tree 16 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 16 - Tree foliage",
+          "object": "Public realm tree 16 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 16 - Tree foliage.001",
+          "object": "Public realm tree 16 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 16 - Tree foliage.002",
+          "object": "Public realm tree 16 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 16 - Tree foliage.003",
+          "object": "Public realm tree 16 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 17 - Tree trunk",
+          "object": "Public realm tree 17 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 17 - Tree foliage",
+          "object": "Public realm tree 17 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 17 - Tree foliage.001",
+          "object": "Public realm tree 17 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 17 - Tree foliage.002",
+          "object": "Public realm tree 17 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 17 - Tree foliage.003",
+          "object": "Public realm tree 17 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 18 - Tree trunk",
+          "object": "Public realm tree 18 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 18 - Tree foliage",
+          "object": "Public realm tree 18 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 18 - Tree foliage.001",
+          "object": "Public realm tree 18 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 18 - Tree foliage.002",
+          "object": "Public realm tree 18 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 18 - Tree foliage.003",
+          "object": "Public realm tree 18 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 19 - Tree trunk",
+          "object": "Public realm tree 19 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 19 - Tree foliage",
+          "object": "Public realm tree 19 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 19 - Tree foliage.001",
+          "object": "Public realm tree 19 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 19 - Tree foliage.002",
+          "object": "Public realm tree 19 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 19 - Tree foliage.003",
+          "object": "Public realm tree 19 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 20 - Tree trunk",
+          "object": "Public realm tree 20 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 20 - Tree foliage",
+          "object": "Public realm tree 20 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 20 - Tree foliage.001",
+          "object": "Public realm tree 20 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 20 - Tree foliage.002",
+          "object": "Public realm tree 20 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 20 - Tree foliage.003",
+          "object": "Public realm tree 20 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 39 - Tree trunk",
+          "object": "Public realm tree 39 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 39 - Tree foliage",
+          "object": "Public realm tree 39 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 39 - Tree foliage.001",
+          "object": "Public realm tree 39 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 39 - Tree foliage.002",
+          "object": "Public realm tree 39 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 39 - Tree foliage.003",
+          "object": "Public realm tree 39 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 40 - Tree trunk",
+          "object": "Public realm tree 40 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 40 - Tree foliage",
+          "object": "Public realm tree 40 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 40 - Tree foliage.001",
+          "object": "Public realm tree 40 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 40 - Tree foliage.002",
+          "object": "Public realm tree 40 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 40 - Tree foliage.003",
+          "object": "Public realm tree 40 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 41 - Tree trunk",
+          "object": "Public realm tree 41 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 41 - Tree foliage",
+          "object": "Public realm tree 41 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 41 - Tree foliage.001",
+          "object": "Public realm tree 41 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 41 - Tree foliage.002",
+          "object": "Public realm tree 41 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 41 - Tree foliage.003",
+          "object": "Public realm tree 41 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 42 - Tree trunk",
+          "object": "Public realm tree 42 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 42 - Tree foliage",
+          "object": "Public realm tree 42 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 42 - Tree foliage.001",
+          "object": "Public realm tree 42 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 42 - Tree foliage.002",
+          "object": "Public realm tree 42 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 42 - Tree foliage.003",
+          "object": "Public realm tree 42 - Tree foliage.003"
+        }
+      ],
+      "bounds": {
+        "min": [
+          77.17131,
+          0.10759,
+          81.6548
+        ],
+        "max": [
+          160.90907,
+          10.05377,
+          158.67844
+        ]
+      }
+    },
+    "public-planting-4": {
+      "objects": [
+        {
+          "source": "Public realm tree 21 - Tree trunk",
+          "object": "Public realm tree 21 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 21 - Tree foliage",
+          "object": "Public realm tree 21 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 21 - Tree foliage.001",
+          "object": "Public realm tree 21 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 21 - Tree foliage.002",
+          "object": "Public realm tree 21 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 21 - Tree foliage.003",
+          "object": "Public realm tree 21 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 22 - Tree trunk",
+          "object": "Public realm tree 22 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 22 - Tree foliage",
+          "object": "Public realm tree 22 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 22 - Tree foliage.001",
+          "object": "Public realm tree 22 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 22 - Tree foliage.002",
+          "object": "Public realm tree 22 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 22 - Tree foliage.003",
+          "object": "Public realm tree 22 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 23 - Tree trunk",
+          "object": "Public realm tree 23 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 23 - Tree foliage",
+          "object": "Public realm tree 23 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 23 - Tree foliage.001",
+          "object": "Public realm tree 23 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 23 - Tree foliage.002",
+          "object": "Public realm tree 23 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 23 - Tree foliage.003",
+          "object": "Public realm tree 23 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 43 - Tree trunk",
+          "object": "Public realm tree 43 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 43 - Tree foliage",
+          "object": "Public realm tree 43 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 43 - Tree foliage.001",
+          "object": "Public realm tree 43 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 43 - Tree foliage.002",
+          "object": "Public realm tree 43 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 43 - Tree foliage.003",
+          "object": "Public realm tree 43 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 44 - Tree trunk",
+          "object": "Public realm tree 44 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 44 - Tree foliage",
+          "object": "Public realm tree 44 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 44 - Tree foliage.001",
+          "object": "Public realm tree 44 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 44 - Tree foliage.002",
+          "object": "Public realm tree 44 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 44 - Tree foliage.003",
+          "object": "Public realm tree 44 - Tree foliage.003"
+        },
+        {
+          "source": "Public realm tree 45 - Tree trunk",
+          "object": "Public realm tree 45 - Tree trunk"
+        },
+        {
+          "source": "Public realm tree 45 - Tree foliage",
+          "object": "Public realm tree 45 - Tree foliage"
+        },
+        {
+          "source": "Public realm tree 45 - Tree foliage.001",
+          "object": "Public realm tree 45 - Tree foliage.001"
+        },
+        {
+          "source": "Public realm tree 45 - Tree foliage.002",
+          "object": "Public realm tree 45 - Tree foliage.002"
+        },
+        {
+          "source": "Public realm tree 45 - Tree foliage.003",
+          "object": "Public realm tree 45 - Tree foliage.003"
+        }
+      ],
+      "bounds": {
+        "min": [
+          170.96901,
+          0.10759,
+          81.6548
+        ],
+        "max": [
+          217.0226,
+          10.05377,
+          158.04314
+        ]
+      }
+    },
+    "rear-garden-detail": {
+      "objects": [
+        {
+          "source": "Garden - double globe lamp posts",
+          "object": "Garden - double globe lamp posts"
+        },
+        {
+          "source": "Garden - unlit double globes",
+          "object": "Garden - unlit double globes"
+        },
+        {
+          "source": "Garden - pathside hedge",
+          "object": "Garden - pathside hedge"
+        },
+        {
+          "source": "Rear garden - brick paving",
+          "object": "Rear garden - brick paving"
+        },
+        {
+          "source": "Garden - timber edge benches",
+          "object": "Garden - timber edge benches"
+        },
+        {
+          "source": "Garden - bench supports",
+          "object": "Garden - bench supports"
+        },
+        {
+          "source": "DAY pavilion interior floor",
+          "object": "DAY pavilion interior floor"
+        },
+        {
+          "source": "DAY pavilion interior back wall",
+          "object": "DAY pavilion interior back wall"
+        },
+        {
+          "source": "DAY pavilion rear partition and opening",
+          "object": "DAY pavilion rear partition and opening"
+        },
+        {
+          "source": "DAY pavilion inner structural columns",
+          "object": "DAY pavilion inner structural columns"
+        },
+        {
+          "source": "DAY pavilion internal counter",
+          "object": "DAY pavilion internal counter"
+        },
+        {
+          "source": "DAY pavilion internal counter top",
+          "object": "DAY pavilion internal counter top"
+        },
+        {
+          "source": "DAY pavilion interior low seating",
+          "object": "DAY pavilion interior low seating"
+        },
+        {
+          "source": "DAY pavilion inner door frame",
+          "object": "DAY pavilion inner door frame"
+        },
+        {
+          "source": "DAY pavilion temporary original art board",
+          "object": "DAY pavilion temporary original art board"
+        },
+        {
+          "source": "DAY pavilion original art graphic marks",
+          "object": "DAY pavilion original art graphic marks"
+        },
+        {
+          "source": "DAY interpretive open glass door",
+          "object": "DAY interpretive open glass door"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -75.07665,
+          0.0,
+          -154.2374
+        ],
+        "max": [
+          78.01031,
+          5.8,
+          -111.18
+        ]
+      }
+    },
+    "rear-stair-detail": {
+      "objects": [
+        {
+          "source": "Rear connector - upper window transoms",
+          "object": "Rear connector - upper window transoms"
+        },
+        {
+          "source": "Rear soffit - recessed fixture bezels",
+          "object": "Rear soffit - recessed fixture bezels"
+        },
+        {
+          "source": "Rear soffit - unlit fixture lenses",
+          "object": "Rear soffit - unlit fixture lenses"
+        },
+        {
+          "source": "Rear connector - vertical bronze panels",
+          "object": "Rear connector - vertical bronze panels"
+        },
+        {
+          "source": "Rear colonnade - linear ceiling and access panels",
+          "object": "Rear colonnade - linear ceiling and access panels"
+        },
+        {
+          "source": "Rear columns - beveled stone joints and foot",
+          "object": "Rear columns - beveled stone joints and foot"
+        },
+        {
+          "source": "Rear columns - vertical stone panel joints",
+          "object": "Rear columns - vertical stone panel joints"
+        },
+        {
+          "source": "Rear hall entry - five canopy lenses",
+          "object": "Rear hall entry - five canopy lenses"
+        },
+        {
+          "source": "Rear hall - shallow entry interior",
+          "object": "Rear hall - shallow entry interior"
+        },
+        {
+          "source": "Rear hall - shallow entry interior details",
+          "object": "Rear hall - shallow entry interior details"
+        },
+        {
+          "source": "Upper passage - shallow landing floor",
+          "object": "Upper passage - shallow landing floor"
+        },
+        {
+          "source": "Upper passage - ceiling backing",
+          "object": "Upper passage - ceiling backing"
+        },
+        {
+          "source": "Upper passage - ceiling grid",
+          "object": "Upper passage - ceiling grid"
+        },
+        {
+          "source": "Survey141 - service double door jamb threshold and seam",
+          "object": "Survey141 - service double door jamb threshold and seam"
+        },
+        {
+          "source": "Survey141 - lower double louver dark recess",
+          "object": "Survey141 - lower double louver dark recess"
+        },
+        {
+          "source": "Survey141 - lower louver perimeter and centre divider",
+          "object": "Survey141 - lower louver perimeter and centre divider"
+        },
+        {
+          "source": "Survey141 - two banks of inclined louver leaves",
+          "object": "Survey141 - two banks of inclined louver leaves"
+        },
+        {
+          "source": "Survey141 - upper door vent recess",
+          "object": "Survey141 - upper door vent recess"
+        },
+        {
+          "source": "Survey141 - upper door vent frame",
+          "object": "Survey141 - upper door vent frame"
+        },
+        {
+          "source": "Survey141 - vertical and horizontal stone finish joints",
+          "object": "Survey141 - vertical and horizontal stone finish joints"
+        },
+        {
+          "source": "Survey141 - exposed service conduit",
+          "object": "Survey141 - exposed service conduit [web mesh]"
+        },
+        {
+          "source": "Survey141 - conduit saddles and door lock",
+          "object": "Survey141 - conduit saddles and door lock"
+        },
+        {
+          "source": "Survey141 - service door pull",
+          "object": "Survey141 - service door pull [web mesh]"
+        },
+        {
+          "source": "Survey143 - retained narrow planter stone curb",
+          "object": "Survey143 - retained narrow planter stone curb"
+        },
+        {
+          "source": "Survey143 - planter soil set below stone coping",
+          "object": "Survey143 - planter soil set below stone coping"
+        },
+        {
+          "source": "Survey143 - barrier long dark base",
+          "object": "Survey143 - barrier long dark base"
+        },
+        {
+          "source": "Survey143 - worn yellow edge beside barrier",
+          "object": "Survey143 - worn yellow edge beside barrier"
+        },
+        {
+          "source": "Survey143 - rounded stainless barrier top",
+          "object": "Survey143 - rounded stainless barrier top [web mesh]"
+        },
+        {
+          "source": "Survey143 - lower horizontal barrier rail",
+          "object": "Survey143 - lower horizontal barrier rail [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 00",
+          "object": "Survey143 - barrier vertical 00 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 01",
+          "object": "Survey143 - barrier vertical 01 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 02",
+          "object": "Survey143 - barrier vertical 02 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 03",
+          "object": "Survey143 - barrier vertical 03 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 04",
+          "object": "Survey143 - barrier vertical 04 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 05",
+          "object": "Survey143 - barrier vertical 05 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 06",
+          "object": "Survey143 - barrier vertical 06 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 07",
+          "object": "Survey143 - barrier vertical 07 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 08",
+          "object": "Survey143 - barrier vertical 08 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 09",
+          "object": "Survey143 - barrier vertical 09 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 10",
+          "object": "Survey143 - barrier vertical 10 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 11",
+          "object": "Survey143 - barrier vertical 11 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 12",
+          "object": "Survey143 - barrier vertical 12 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 13",
+          "object": "Survey143 - barrier vertical 13 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 14",
+          "object": "Survey143 - barrier vertical 14 [web mesh]"
+        },
+        {
+          "source": "Survey143 - barrier vertical 15",
+          "object": "Survey143 - barrier vertical 15 [web mesh]"
+        },
+        {
+          "source": "Survey141 - two notice posts",
+          "object": "Survey141 - two notice posts"
+        },
+        {
+          "source": "Survey141 - notice dark frame",
+          "object": "Survey141 - notice dark frame"
+        },
+        {
+          "source": "Survey141 - notice cream face",
+          "object": "Survey141 - notice cream face"
+        },
+        {
+          "source": "Survey141 - original notice diagram lines",
+          "object": "Survey141 - original notice diagram lines"
+        },
+        {
+          "source": "Survey143 - ten hand-placed evergreen strap leaf clumps",
+          "object": "Survey143 - ten hand-placed evergreen strap leaf clumps"
+        },
+        {
+          "source": "Survey141 - inner parapet stepped silhouette behind glass",
+          "object": "Survey141 - inner parapet stepped silhouette behind glass"
+        },
+        {
+          "source": "Survey143 - individually jointed damp stone apron",
+          "object": "Survey143 - individually jointed damp stone apron"
+        },
+        {
+          "source": "Survey143 - apron linear drain grate",
+          "object": "Survey143 - apron linear drain grate"
+        },
+        {
+          "source": "Survey143 - dark recessed mortar and drain bedding",
+          "object": "Survey143 - dark recessed mortar and drain bedding"
+        },
+        {
+          "source": "Survey143 - woody planted stems 0",
+          "object": "Survey143 - woody planted stems 0 [web mesh]"
+        },
+        {
+          "source": "Survey143 - woody planted stems 1",
+          "object": "Survey143 - woody planted stems 1 [web mesh]"
+        },
+        {
+          "source": "Survey143 - sparse evergreen shrub leaf sprays",
+          "object": "Survey143 - sparse evergreen shrub leaf sprays"
+        },
+        {
+          "source": "Survey141 - rear landing ceiling recessed backing",
+          "object": "Survey141 - rear landing ceiling recessed backing"
+        },
+        {
+          "source": "Survey141 - deep square coffer ribs above upper route",
+          "object": "Survey141 - deep square coffer ribs above upper route"
+        },
+        {
+          "source": "Survey141 - ceiling suspension to existing bridge soffit",
+          "object": "Survey141 - ceiling suspension to existing bridge soffit"
+        },
+        {
+          "source": "Survey141 - continuous LED lenses between coffers",
+          "object": "Survey141 - continuous LED lenses between coffers"
+        },
+        {
+          "source": "Survey141 - grounded charcoal lamp standard",
+          "object": "Survey141 - grounded charcoal lamp standard"
+        },
+        {
+          "source": "Survey141 - spun weather hood",
+          "object": "Survey141 - spun weather hood"
+        },
+        {
+          "source": "Survey141 - opal lantern lens",
+          "object": "Survey141 - opal lantern lens"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -28.96,
+          0.0,
+          -118.01
+        ],
+        "max": [
+          54.59,
+          13.91958,
+          -101.555
+        ]
+      }
+    },
+    "south-alley": {
+      "objects": [
+        {
+          "source": "Southern alley south side pedestrian path",
+          "object": "Southern alley south side pedestrian path"
+        },
+        {
+          "source": "Southern alley inferred joining carriageway",
+          "object": "Southern alley inferred joining carriageway"
+        },
+        {
+          "source": "Southern alley inferred connecting pedestrian pavement",
+          "object": "Southern alley inferred connecting pedestrian pavement"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -113.0,
+          0.0,
+          -65.0
+        ],
+        "max": [
+          -82.0,
+          0.12,
+          21.0
+        ]
+      }
+    },
+    "sunken-court": {
+      "objects": [
+        {
+          "source": "Sunken floor",
+          "object": "Sunken floor"
+        },
+        {
+          "source": "Sunken side and media-wall retaining walls",
+          "object": "Sunken side and media-wall retaining walls"
+        },
+        {
+          "source": "Sunken media wall black frame",
+          "object": "Sunken media wall black frame"
+        },
+        {
+          "source": "Original abstract media artwork",
+          "object": "Original abstract media artwork"
+        },
+        {
+          "source": "Twenty descending stair treads",
+          "object": "Twenty descending stair treads"
+        },
+        {
+          "source": "Upper ramp landing",
+          "object": "Upper ramp landing"
+        },
+        {
+          "source": "Long sloped access ramp - approximate",
+          "object": "Long sloped access ramp - approximate"
+        },
+        {
+          "source": "Upper glass balustrades",
+          "object": "Upper glass balustrades"
+        },
+        {
+          "source": "Upper glass balustrade posts",
+          "object": "Upper glass balustrade posts"
+        },
+        {
+          "source": "Upper rail cap",
+          "object": "Upper rail cap"
+        },
+        {
+          "source": "Stair sloping handrail",
+          "object": "Stair sloping handrail"
+        },
+        {
+          "source": "Stair handrail post",
+          "object": "Stair handrail post"
+        },
+        {
+          "source": "Stair handrail post.001",
+          "object": "Stair handrail post.001"
+        },
+        {
+          "source": "Stair handrail post.002",
+          "object": "Stair handrail post.002"
+        },
+        {
+          "source": "Stair handrail post.003",
+          "object": "Stair handrail post.003"
+        },
+        {
+          "source": "Stair handrail post.004",
+          "object": "Stair handrail post.004"
+        },
+        {
+          "source": "Stair sloping handrail.001",
+          "object": "Stair sloping handrail.001"
+        },
+        {
+          "source": "Stair handrail post.005",
+          "object": "Stair handrail post.005"
+        },
+        {
+          "source": "Stair handrail post.006",
+          "object": "Stair handrail post.006"
+        },
+        {
+          "source": "Stair handrail post.007",
+          "object": "Stair handrail post.007"
+        },
+        {
+          "source": "Stair handrail post.008",
+          "object": "Stair handrail post.008"
+        },
+        {
+          "source": "Stair handrail post.009",
+          "object": "Stair handrail post.009"
+        },
+        {
+          "source": "Stair sloping handrail.002",
+          "object": "Stair sloping handrail.002"
+        },
+        {
+          "source": "Stair handrail post.010",
+          "object": "Stair handrail post.010"
+        },
+        {
+          "source": "Stair handrail post.011",
+          "object": "Stair handrail post.011"
+        },
+        {
+          "source": "Stair handrail post.012",
+          "object": "Stair handrail post.012"
+        },
+        {
+          "source": "Stair handrail post.013",
+          "object": "Stair handrail post.013"
+        },
+        {
+          "source": "Stair handrail post.014",
+          "object": "Stair handrail post.014"
+        },
+        {
+          "source": "Ramp sloping handrail",
+          "object": "Ramp sloping handrail"
+        },
+        {
+          "source": "Ramp handrail post",
+          "object": "Ramp handrail post"
+        },
+        {
+          "source": "Ramp handrail post.001",
+          "object": "Ramp handrail post.001"
+        },
+        {
+          "source": "Ramp handrail post.002",
+          "object": "Ramp handrail post.002"
+        },
+        {
+          "source": "Ramp handrail post.003",
+          "object": "Ramp handrail post.003"
+        },
+        {
+          "source": "Ramp handrail post.004",
+          "object": "Ramp handrail post.004"
+        },
+        {
+          "source": "Ramp handrail post.005",
+          "object": "Ramp handrail post.005"
+        },
+        {
+          "source": "Ramp sloping handrail.001",
+          "object": "Ramp sloping handrail.001"
+        },
+        {
+          "source": "Ramp handrail post.006",
+          "object": "Ramp handrail post.006"
+        },
+        {
+          "source": "Ramp handrail post.007",
+          "object": "Ramp handrail post.007"
+        },
+        {
+          "source": "Ramp handrail post.008",
+          "object": "Ramp handrail post.008"
+        },
+        {
+          "source": "Ramp handrail post.009",
+          "object": "Ramp handrail post.009"
+        },
+        {
+          "source": "Ramp handrail post.010",
+          "object": "Ramp handrail post.010"
+        },
+        {
+          "source": "Ramp handrail post.011",
+          "object": "Ramp handrail post.011"
+        },
+        {
+          "source": "Passage floor",
+          "object": "Passage floor"
+        },
+        {
+          "source": "Passage wall and ceiling",
+          "object": "Passage wall and ceiling"
+        },
+        {
+          "source": "Passage dark end",
+          "object": "Passage dark end"
+        },
+        {
+          "source": "Screen editorial inset panels",
+          "object": "Screen editorial inset panels"
+        },
+        {
+          "source": "Screen hairline graphic bars",
+          "object": "Screen hairline graphic bars"
+        },
+        {
+          "source": "Media artwork typography - GWANGHWAMUN mesh",
+          "object": "Media artwork typography - GWANGHWAMUN mesh"
+        },
+        {
+          "source": "Media artwork typography - SEOUL  /  CITY IN MOTION mesh",
+          "object": "Media artwork typography - SEOUL  /  CITY IN MOTION mesh"
+        },
+        {
+          "source": "Media artwork typography - LIGHT  /  WATER  /  PEOPLE mesh",
+          "object": "Media artwork typography - LIGHT  /  WATER  /  PEOPLE mesh"
+        },
+        {
+          "source": "Media artwork typography - THE LIVING SQUARE mesh",
+          "object": "Media artwork typography - THE LIVING SQUARE mesh"
+        },
+        {
+          "source": "Media artwork typography - CULTURE AND EVERYDAY LIFE mesh",
+          "object": "Media artwork typography - CULTURE AND EVERYDAY LIFE mesh"
+        },
+        {
+          "source": "Media artwork typography - A CITY OPEN TO EVERYONE mesh",
+          "object": "Media artwork typography - A CITY OPEN TO EVERYONE mesh"
+        },
+        {
+          "source": "Media artwork typography - MEET IN SEOUL mesh",
+          "object": "Media artwork typography - MEET IN SEOUL mesh"
+        },
+        {
+          "source": "Media artwork typography - ART  /  SPACE  /  LIGHT mesh",
+          "object": "Media artwork typography - ART  /  SPACE  /  LIGHT mesh"
+        },
+        {
+          "source": "Media artwork typography - 2026  |  PUBLIC PLAZA mesh",
+          "object": "Media artwork typography - 2026  |  PUBLIC PLAZA mesh"
+        },
+        {
+          "source": "Media artwork orbital circle",
+          "object": "Media artwork orbital circle"
+        },
+        {
+          "source": "Media artwork concentric circle",
+          "object": "Media artwork concentric circle"
+        },
+        {
+          "source": "Media artwork concentric inner circle",
+          "object": "Media artwork concentric inner circle"
+        },
+        {
+          "source": "Media artwork city circle",
+          "object": "Media artwork city circle"
+        },
+        {
+          "source": "Screen fine typographic texture",
+          "object": "Screen fine typographic texture"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -59.04,
+          -3.45,
+          93.98
+        ],
+        "max": [
+          -2.0,
+          1.13,
+          108.0
+        ]
+      }
+    },
+    "west-garden": {
+      "objects": [
+        {
+          "source": "Aerial west garden - wet brick-paved circulation field",
+          "object": "Aerial west garden - wet brick-paved circulation field"
+        },
+        {
+          "source": "Aerial west garden - curved planted island 00",
+          "object": "Aerial west garden - curved planted island 00"
+        },
+        {
+          "source": "Aerial west garden - stone coping island 00",
+          "object": "Aerial west garden - stone coping island 00"
+        },
+        {
+          "source": "Aerial west garden - curved planted island 01",
+          "object": "Aerial west garden - curved planted island 01"
+        },
+        {
+          "source": "Aerial west garden - stone coping island 01",
+          "object": "Aerial west garden - stone coping island 01"
+        },
+        {
+          "source": "Aerial west garden - curved planted island 02",
+          "object": "Aerial west garden - curved planted island 02"
+        },
+        {
+          "source": "Aerial west garden - stone coping island 02",
+          "object": "Aerial west garden - stone coping island 02"
+        },
+        {
+          "source": "Aerial west garden - curved planted island 03",
+          "object": "Aerial west garden - curved planted island 03"
+        },
+        {
+          "source": "Aerial west garden - stone coping island 03",
+          "object": "Aerial west garden - stone coping island 03"
+        },
+        {
+          "source": "Aerial west garden - curved planted island 04",
+          "object": "Aerial west garden - curved planted island 04"
+        },
+        {
+          "source": "Aerial west garden - stone coping island 04",
+          "object": "Aerial west garden - stone coping island 04"
+        },
+        {
+          "source": "Aerial west garden - curved planted island 05",
+          "object": "Aerial west garden - curved planted island 05"
+        },
+        {
+          "source": "Aerial west garden - stone coping island 05",
+          "object": "Aerial west garden - stone coping island 05"
+        },
+        {
+          "source": "Aerial west garden - curved planted island 06",
+          "object": "Aerial west garden - curved planted island 06"
+        },
+        {
+          "source": "Aerial west garden - stone coping island 06",
+          "object": "Aerial west garden - stone coping island 06"
+        },
+        {
+          "source": "Tree trunk 900",
+          "object": "Tree trunk 900"
+        },
+        {
+          "source": "Tree foliage 900 shade 0",
+          "object": "Tree foliage 900 shade 0"
+        },
+        {
+          "source": "Tree foliage 900 shade 1",
+          "object": "Tree foliage 900 shade 1"
+        },
+        {
+          "source": "Tree foliage 900 shade 2",
+          "object": "Tree foliage 900 shade 2"
+        },
+        {
+          "source": "Tree foliage 900 shade 3",
+          "object": "Tree foliage 900 shade 3"
+        },
+        {
+          "source": "Tree trunk 901",
+          "object": "Tree trunk 901"
+        },
+        {
+          "source": "Tree foliage 901 shade 0",
+          "object": "Tree foliage 901 shade 0"
+        },
+        {
+          "source": "Tree foliage 901 shade 1",
+          "object": "Tree foliage 901 shade 1"
+        },
+        {
+          "source": "Tree foliage 901 shade 2",
+          "object": "Tree foliage 901 shade 2"
+        },
+        {
+          "source": "Tree foliage 901 shade 3",
+          "object": "Tree foliage 901 shade 3"
+        },
+        {
+          "source": "Tree trunk 902",
+          "object": "Tree trunk 902"
+        },
+        {
+          "source": "Tree foliage 902 shade 0",
+          "object": "Tree foliage 902 shade 0"
+        },
+        {
+          "source": "Tree foliage 902 shade 1",
+          "object": "Tree foliage 902 shade 1"
+        },
+        {
+          "source": "Tree foliage 902 shade 2",
+          "object": "Tree foliage 902 shade 2"
+        },
+        {
+          "source": "Tree foliage 902 shade 3",
+          "object": "Tree foliage 902 shade 3"
+        },
+        {
+          "source": "Tree trunk 903",
+          "object": "Tree trunk 903"
+        },
+        {
+          "source": "Tree foliage 903 shade 0",
+          "object": "Tree foliage 903 shade 0"
+        },
+        {
+          "source": "Tree foliage 903 shade 1",
+          "object": "Tree foliage 903 shade 1"
+        },
+        {
+          "source": "Tree foliage 903 shade 2",
+          "object": "Tree foliage 903 shade 2"
+        },
+        {
+          "source": "Tree foliage 903 shade 3",
+          "object": "Tree foliage 903 shade 3"
+        },
+        {
+          "source": "Tree trunk 904",
+          "object": "Tree trunk 904"
+        },
+        {
+          "source": "Tree foliage 904 shade 0",
+          "object": "Tree foliage 904 shade 0"
+        },
+        {
+          "source": "Tree foliage 904 shade 1",
+          "object": "Tree foliage 904 shade 1"
+        },
+        {
+          "source": "Tree foliage 904 shade 2",
+          "object": "Tree foliage 904 shade 2"
+        },
+        {
+          "source": "Tree foliage 904 shade 3",
+          "object": "Tree foliage 904 shade 3"
+        },
+        {
+          "source": "Tree trunk 905",
+          "object": "Tree trunk 905"
+        },
+        {
+          "source": "Tree foliage 905 shade 0",
+          "object": "Tree foliage 905 shade 0"
+        },
+        {
+          "source": "Tree foliage 905 shade 1",
+          "object": "Tree foliage 905 shade 1"
+        },
+        {
+          "source": "Tree foliage 905 shade 2",
+          "object": "Tree foliage 905 shade 2"
+        },
+        {
+          "source": "Tree foliage 905 shade 3",
+          "object": "Tree foliage 905 shade 3"
+        },
+        {
+          "source": "Tree trunk 906",
+          "object": "Tree trunk 906"
+        },
+        {
+          "source": "Tree foliage 906 shade 0",
+          "object": "Tree foliage 906 shade 0"
+        },
+        {
+          "source": "Tree foliage 906 shade 1",
+          "object": "Tree foliage 906 shade 1"
+        },
+        {
+          "source": "Tree foliage 906 shade 2",
+          "object": "Tree foliage 906 shade 2"
+        },
+        {
+          "source": "Tree foliage 906 shade 3",
+          "object": "Tree foliage 906 shade 3"
+        },
+        {
+          "source": "Tree trunk 907",
+          "object": "Tree trunk 907"
+        },
+        {
+          "source": "Tree foliage 907 shade 0",
+          "object": "Tree foliage 907 shade 0"
+        },
+        {
+          "source": "Tree foliage 907 shade 1",
+          "object": "Tree foliage 907 shade 1"
+        },
+        {
+          "source": "Tree foliage 907 shade 2",
+          "object": "Tree foliage 907 shade 2"
+        },
+        {
+          "source": "Tree foliage 907 shade 3",
+          "object": "Tree foliage 907 shade 3"
+        },
+        {
+          "source": "Tree trunk 908",
+          "object": "Tree trunk 908"
+        },
+        {
+          "source": "Tree foliage 908 shade 0",
+          "object": "Tree foliage 908 shade 0"
+        },
+        {
+          "source": "Tree foliage 908 shade 1",
+          "object": "Tree foliage 908 shade 1"
+        },
+        {
+          "source": "Tree foliage 908 shade 2",
+          "object": "Tree foliage 908 shade 2"
+        },
+        {
+          "source": "Tree foliage 908 shade 3",
+          "object": "Tree foliage 908 shade 3"
+        },
+        {
+          "source": "Tree trunk 909",
+          "object": "Tree trunk 909"
+        },
+        {
+          "source": "Tree foliage 909 shade 0",
+          "object": "Tree foliage 909 shade 0"
+        },
+        {
+          "source": "Tree foliage 909 shade 1",
+          "object": "Tree foliage 909 shade 1"
+        },
+        {
+          "source": "Tree foliage 909 shade 2",
+          "object": "Tree foliage 909 shade 2"
+        },
+        {
+          "source": "Tree foliage 909 shade 3",
+          "object": "Tree foliage 909 shade 3"
+        },
+        {
+          "source": "Tree trunk 910",
+          "object": "Tree trunk 910"
+        },
+        {
+          "source": "Tree foliage 910 shade 0",
+          "object": "Tree foliage 910 shade 0"
+        },
+        {
+          "source": "Tree foliage 910 shade 1",
+          "object": "Tree foliage 910 shade 1"
+        },
+        {
+          "source": "Tree foliage 910 shade 2",
+          "object": "Tree foliage 910 shade 2"
+        },
+        {
+          "source": "Tree foliage 910 shade 3",
+          "object": "Tree foliage 910 shade 3"
+        },
+        {
+          "source": "Tree trunk 911",
+          "object": "Tree trunk 911"
+        },
+        {
+          "source": "Tree foliage 911 shade 0",
+          "object": "Tree foliage 911 shade 0"
+        },
+        {
+          "source": "Tree foliage 911 shade 1",
+          "object": "Tree foliage 911 shade 1"
+        },
+        {
+          "source": "Tree foliage 911 shade 2",
+          "object": "Tree foliage 911 shade 2"
+        },
+        {
+          "source": "Tree foliage 911 shade 3",
+          "object": "Tree foliage 911 shade 3"
+        },
+        {
+          "source": "Aerial west garden - connector approach paving",
+          "object": "Aerial west garden - connector approach paving"
+        },
+        {
+          "source": "Aerial west garden - layered clipped evergreen shrubs",
+          "object": "Aerial west garden - layered clipped evergreen shrubs"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -76.1875,
+          0.004,
+          -115.0
+        ],
+        "max": [
+          -28.9,
+          10.24376,
+          -55.0
+        ]
+      }
+    },
+    "yellow-shop-detail": {
+      "objects": [
+        {
+          "source": "075 entrance handles",
+          "object": "075 entrance handles"
+        },
+        {
+          "source": "075 luminous canopy grille",
+          "object": "075 luminous canopy grille"
+        },
+        {
+          "source": "075 golden surround tile seams",
+          "object": "075 golden surround tile seams"
+        },
+        {
+          "source": "075 dining tables by floor",
+          "object": "075 dining tables by floor"
+        },
+        {
+          "source": "075 table legs",
+          "object": "075 table legs"
+        },
+        {
+          "source": "075 warm interior ceiling fixtures",
+          "object": "075 warm interior ceiling fixtures"
+        },
+        {
+          "source": "075 middle floor original graphic artwork",
+          "object": "075 middle floor original graphic artwork"
+        },
+        {
+          "source": "075 original artwork accent",
+          "object": "075 original artwork accent"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -101.69998,
+          0.0,
+          -22.51999
+        ],
+        "max": [
+          -93.48999,
+          14.18,
+          -10.47998
+        ]
+      }
+    }
+  }
+}

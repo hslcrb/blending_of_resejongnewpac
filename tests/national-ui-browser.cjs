@@ -1,0 +1,40 @@
+const { chromium } = require('playwright');
+const assert = require('node:assert/strict');
+(async () => {
+ const browser = await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'});
+ try {
+  const page = await browser.newPage({viewport:{width:390,height:844}});
+  const errors = [];page.on('pageerror',e=>errors.push(e.message));
+  await page.route('**/data/national-cultural-changes.geojson', route => route.abort());
+  await page.goto((process.env.NATIONAL_TEST_ORIGIN || 'http://127.0.0.1:3142') + '/tests/national-ui-fixture.html');
+  await page.getByRole('alert').filter({hasText:'불러오지 못했습니다'}).waitFor({timeout:30000});
+  await page.unroute('**/data/national-cultural-changes.geojson');
+  await page.getByRole('button',{name:'다시 불러오기'}).click();
+  await page.getByText('347건', {exact:false}).first().waitFor({timeout:30000});
+  assert.ok(await page.getByText(/전국 전체 목록이 아니/).isVisible());
+  await page.getByLabel('지역', {exact:true}).selectOption('29');
+  await page.getByText('이 자료에 후보가 없습니다.').waitFor();
+  await page.getByLabel('지역', {exact:true}).selectOption('11');
+  await page.getByLabel('건물명 또는 지번 검색').fill('겸재정선미술관');
+  const card = page.locator('.national-card').first();
+  await card.getByRole('heading', {name:'겸재정선미술관'}).waitFor();
+  await card.getByText('원본 31개 필드 보기').click();
+  assert.equal(await card.locator('dt').count(),31);
+  await card.getByRole('button',{name:'이 후보의 위치 보기'}).click();
+  const selected=JSON.parse(await page.getByLabel('선택 좌표').innerText());
+  assert.equal(selected.id,11699); assert.equal(selected.coordinates.length,2);
+  await page.setViewportSize({width:320,height:700});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth <= document.documentElement.clientWidth), true,'mobile width');
+  await page.getByLabel('건물명 또는 지번 검색').fill('');
+  await page.getByRole('button',{name:'다음 페이지'}).click();
+  await page.getByText('2 / 5쪽', {exact:true}).waitFor();
+  await page.getByLabel('건물명 또는 지번 검색').fill('924');
+  const overflowCard = page.locator('.national-card').first();
+  const summary = overflowCard.getByText('원본 31개 필드 보기');
+  await summary.focus(); await page.keyboard.press('Enter');
+  await overflowCard.getByText('원본 범위 초과 (*********)', {exact:true}).waitFor();
+  assert.ok(await overflowCard.getByText('미기재', {exact:true}).count() > 0);
+  assert.deepEqual(errors, []);
+  console.log('PASS: failure/retry, 347 candidates, empty region, name search, 31 fields, location, mobile and pagination');
+ } finally { await browser.close(); }
+})().catch(e=>{console.error(e);process.exitCode=1});

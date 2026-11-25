@@ -1,0 +1,840 @@
+{
+  "version": 1,
+  "coordinateSystem": "Three.js campus local",
+  "photometry": "Illustrative, not measured",
+  "fixtures": [
+    {
+      "name": "Survey luminaire 00",
+      "position": [
+        -25.3614,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 01",
+      "position": [
+        -25.3614,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 02",
+      "position": [
+        -23.2794,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 03",
+      "position": [
+        -23.2794,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 04",
+      "position": [
+        -21.1974,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 05",
+      "position": [
+        -21.1974,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 06",
+      "position": [
+        -17.0333,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 07",
+      "position": [
+        -17.0333,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 08",
+      "position": [
+        -14.9513,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 09",
+      "position": [
+        -14.9513,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 10",
+      "position": [
+        -12.8693,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 11",
+      "position": [
+        -12.8693,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 12",
+      "position": [
+        -8.7053,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 13",
+      "position": [
+        -8.7053,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 14",
+      "position": [
+        -6.6233,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 15",
+      "position": [
+        -6.6233,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 16",
+      "position": [
+        -4.5413,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 17",
+      "position": [
+        -4.5413,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 18",
+      "position": [
+        -0.3772,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 19",
+      "position": [
+        -0.3772,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 20",
+      "position": [
+        1.7048,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 21",
+      "position": [
+        1.7048,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 22",
+      "position": [
+        3.7868,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 23",
+      "position": [
+        3.7868,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 24",
+      "position": [
+        7.9508,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 25",
+      "position": [
+        7.9508,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 26",
+      "position": [
+        10.0329,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 27",
+      "position": [
+        10.0329,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 28",
+      "position": [
+        12.1149,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 29",
+      "position": [
+        12.1149,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 30",
+      "position": [
+        16.2789,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 31",
+      "position": [
+        16.2789,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 32",
+      "position": [
+        18.3609,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 33",
+      "position": [
+        18.3609,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 34",
+      "position": [
+        20.4429,
+        6.762,
+        -105.0
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 35",
+      "position": [
+        20.4429,
+        6.762,
+        -107.1
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 85,
+      "distance": 16,
+      "photos": "092,095,115",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 36",
+      "position": [
+        29.18,
+        0.125,
+        -111.8
+      ],
+      "color": [
+        1.0,
+        0.7300000190734863,
+        0.4300000071525574
+      ],
+      "intensity": 45,
+      "distance": 7,
+      "photos": "117,127",
+      "direction": 1
+    },
+    {
+      "name": "Survey luminaire 37",
+      "position": [
+        29.18,
+        0.125,
+        -113.35
+      ],
+      "color": [
+        1.0,
+        0.7300000190734863,
+        0.4300000071525574
+      ],
+      "intensity": 45,
+      "distance": 7,
+      "photos": "117,127",
+      "direction": 1
+    },
+    {
+      "name": "Survey luminaire 38",
+      "position": [
+        29.18,
+        0.125,
+        -114.9
+      ],
+      "color": [
+        1.0,
+        0.7300000190734863,
+        0.4300000071525574
+      ],
+      "intensity": 45,
+      "distance": 7,
+      "photos": "117,127",
+      "direction": 1
+    },
+    {
+      "name": "Survey luminaire 39",
+      "position": [
+        29.18,
+        0.125,
+        -116.45
+      ],
+      "color": [
+        1.0,
+        0.7300000190734863,
+        0.4300000071525574
+      ],
+      "intensity": 45,
+      "distance": 7,
+      "photos": "117,127",
+      "direction": 1
+    },
+    {
+      "name": "Survey luminaire 40",
+      "position": [
+        29.18,
+        0.125,
+        -118.0
+      ],
+      "color": [
+        1.0,
+        0.7300000190734863,
+        0.4300000071525574
+      ],
+      "intensity": 45,
+      "distance": 7,
+      "photos": "117,127",
+      "direction": 1
+    },
+    {
+      "name": "Survey luminaire 41",
+      "position": [
+        29.18,
+        0.125,
+        -119.55
+      ],
+      "color": [
+        1.0,
+        0.7300000190734863,
+        0.4300000071525574
+      ],
+      "intensity": 45,
+      "distance": 7,
+      "photos": "117,127",
+      "direction": 1
+    },
+    {
+      "name": "Survey luminaire 42",
+      "position": [
+        29.18,
+        0.125,
+        -121.1
+      ],
+      "color": [
+        1.0,
+        0.7300000190734863,
+        0.4300000071525574
+      ],
+      "intensity": 45,
+      "distance": 7,
+      "photos": "117,127",
+      "direction": 1
+    },
+    {
+      "name": "Survey luminaire 43",
+      "position": [
+        10.8,
+        6.34,
+        -106.72
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 150,
+      "distance": 16,
+      "photos": "141",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 44",
+      "position": [
+        12.06,
+        6.34,
+        -106.72
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 150,
+      "distance": 16,
+      "photos": "141",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 45",
+      "position": [
+        13.34,
+        6.34,
+        -106.72
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 150,
+      "distance": 16,
+      "photos": "141",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 46",
+      "position": [
+        -17.5,
+        6.695,
+        -2.25
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 250,
+      "distance": 16,
+      "photos": "145",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 47",
+      "position": [
+        -17.5,
+        6.695,
+        -4.9
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 250,
+      "distance": 16,
+      "photos": "145",
+      "direction": -1
+    },
+    {
+      "name": "Survey luminaire 48",
+      "position": [
+        -17.5,
+        6.695,
+        -7.55
+      ],
+      "color": [
+        0.7799999713897705,
+        0.8799999952316284,
+        1.0
+      ],
+      "intensity": 250,
+      "distance": 16,
+      "photos": "145",
+      "direction": -1
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+*.blend binary
+*.glb binary
+*.bin binary
+
+# Preserve exact bytes required by the national dataset manifest.
+/public/data/national-cultural-changes.geojson text eol=lf
+/public/data/national-cultural-manifest.json text eol=lf

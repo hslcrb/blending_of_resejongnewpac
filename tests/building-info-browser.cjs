@@ -1,0 +1,20 @@
+const {chromium}=require(process.env.PLAYWRIGHT_PATH || 'playwright');
+const assert=require('node:assert/strict');
+(async()=>{let browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH||'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'});try{
+ const page=await browser.newPage({viewport:{width:390,height:844}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto((process.env.INFO_TEST_ORIGIN||'http://127.0.0.1:5188')+'/tests/building-info-harness.html');
+ await page.getByRole('button',{name:'서울 전체 자료'}).click();await page.getByRole('status').filter({hasText:'선택 지역'}).waitFor({timeout:60000});
+ assert.equal(await page.getByLabel('자료 지역 선택').locator('option').count(),664);assert.equal(await page.locator('.building-info-card').first().locator('dt').count(),29);
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth),true);
+ const initial=await page.locator('.building-info-card').first().innerText();await page.getByRole('button',{name:'다음 건물'}).click();assert.notEqual(await page.locator('.building-info-card').first().innerText(),initial);
+ await page.getByLabel('서울 전체 주소·건물명 검색').fill('세종로 81-3');await page.getByRole('button',{name:'전체 검색'}).click();await page.getByRole('status').filter({hasText:/검색 결과 [1-9]/}).waitFor({timeout:120000});
+ await page.getByRole('button',{name:'delayed prior click'}).click();await page.getByRole('list',{name:'서울 전체 검색 결과'}).getByRole('button').first().click();await page.getByRole('status').filter({hasText:'선택한 건물의 모든 필드'}).waitFor({timeout:30000});await page.waitForTimeout(2200);
+ assert.match(await page.locator('.building-info-card').first().innerText(),/세종로 81-3/);assert.equal(await page.locator('.building-info-card').first().locator('dt').count(),29);
+ await page.getByRole('button',{name:'서울 전체 자료'}).click();await page.getByRole('status').filter({hasText:'선택 지역'}).waitFor({timeout:30000});
+ await page.route('**/area/building-search/manifest.json',route=>route.abort());await page.getByLabel('서울 전체 주소·건물명 검색').fill('서울');await page.getByRole('button',{name:'전체 검색'}).click();await page.getByRole('status').filter({hasText:'검색 색인을 불러오지 못했습니다'}).waitFor({timeout:30000});await page.unroute('**/area/building-search/manifest.json');
+ await page.getByLabel('서울 전체 주소·건물명 검색').fill('종로');await page.getByRole('button',{name:'전체 검색'}).click();await page.getByRole('status').filter({hasText:'200건까지 표시'}).waitFor({timeout:120000});
+ const slow=page.locator('.building-info-results button[data-tile=\"195_555\"]').first();const fast=page.locator('.building-info-results button[data-tile=\"195_557\"]').first();assert.equal(await slow.count(),1);assert.equal(await fast.count(),1);const expected=await fast.getAttribute('data-building-id');
+ await page.route('**/area/buildings/195_555.json.gz',async route=>{await new Promise(resolve=>setTimeout(resolve,1800));await route.continue()});await slow.click();await fast.click();await page.getByRole('status').filter({hasText:'선택한 건물의 모든 필드'}).waitFor();await page.waitForTimeout(2200);assert.match(await page.locator('.building-info-card').first().innerText(),new RegExp(`원본 도형 행 번호 ${expected}\\b`));
+ const retry=await browser.newPage();await retry.route('**/area/buildings/manifest.json',route=>route.abort());await retry.goto((process.env.INFO_TEST_ORIGIN||'http://127.0.0.1:5188')+'/tests/building-info-harness.html');await retry.getByRole('button',{name:'서울 전체 자료'}).click();await retry.getByRole('status').filter({hasText:'전체 건물 자료를 불러오지 못했습니다'}).waitFor();await retry.unroute('**/area/buildings/manifest.json');await retry.getByRole('button',{name:'자료 다시 불러오기'}).click();await retry.getByRole('status').filter({hasText:'선택 지역'}).waitFor({timeout:60000});await retry.close();
+ assert.deepEqual(errors,[]);console.log('PASS: 664 regions, 29 fields, pagination, global search, stale click/search rejection, failure/retry, 390px');
+ }finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});

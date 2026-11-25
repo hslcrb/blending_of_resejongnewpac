@@ -1,0 +1,2452 @@
+{
+  "version": 1,
+  "crs": "EPSG:5186",
+  "tileSizeMetres": 50000,
+  "source": {
+    "name": "사용자 제공 대한민국전도_.gpkg",
+    "sha256": "cd5c34ced00cff5af0446261a8fa48db95b876dc2b86b7965b2278327cbb53df",
+    "provenance": "원저작자·제작일·정확한 사용허가 미확인"
+  },
+  "scale": "소축척 개요도. 최신성·정확도 미확인, 측량·지적·안전 판단에 부적합",
+  "layers": [
+    {
+      "id": "expressway",
+      "name": "고속국도",
+      "sourceCount": 21973,
+      "unlocatedCount": 0,
+      "sourceCRS": "Korean_1985_Katech_TM128",
+      "sourceWKT": "PROJCS[\"Korean_1985_Katech_TM128\",GEOGCS[\"Korean 1985\",DATUM[\"Korean_Datum_1985\",SPHEROID[\"Bessel 1841\",6377397.155,299.1528128],AUTHORITY[\"EPSG\",\"6162\"]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.0174532925199433],AUTHORITY[\"EPSG\",\"4162\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",38],PARAMETER[\"central_meridian\",128],PARAMETER[\"scale_factor\",0.9999],PARAMETER[\"false_easting\",400000],PARAMETER[\"false_northing\",600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "fieldSchema": [
+        {
+          "name": "LINK_ID",
+          "type": "String"
+        },
+        {
+          "name": "UP_FROM_NO",
+          "type": "String"
+        },
+        {
+          "name": "UP_TO_NODE",
+          "type": "String"
+        },
+        {
+          "name": "DOWN_FROM_",
+          "type": "String"
+        },
+        {
+          "name": "DOWN_TO_NO",
+          "type": "String"
+        },
+        {
+          "name": "NAVI_LV",
+          "type": "String"
+        },
+        {
+          "name": "KOTI_LV",
+          "type": "String"
+        },
+        {
+          "name": "LENGTH",
+          "type": "Real"
+        },
+        {
+          "name": "ST_DIR",
+          "type": "String"
+        },
+        {
+          "name": "ED_DIR",
+          "type": "String"
+        },
+        {
+          "name": "ROAD_RANK",
+          "type": "String"
+        },
+        {
+          "name": "LINK_CATE",
+          "type": "Integer64"
+        },
+        {
+          "name": "ONEWAY",
+          "type": "String"
+        },
+        {
+          "name": "WIDTH",
+          "type": "Integer"
+        },
+        {
+          "name": "LANES",
+          "type": "Integer"
+        },
+        {
+          "name": "UP_LANES",
+          "type": "Integer"
+        },
+        {
+          "name": "DOWN_LANES",
+          "type": "Integer"
+        },
+        {
+          "name": "ROAD_NAME",
+          "type": "String"
+        },
+        {
+          "name": "FIRST_DO",
+          "type": "String"
+        },
+        {
+          "name": "FIRST_GU",
+          "type": "String"
+        },
+        {
+          "name": "TG_NAME",
+          "type": "String"
+        },
+        {
+          "name": "ROAD_FAC_N",
+          "type": "String"
+        },
+        {
+          "name": "ROAD_NO",
+          "type": "String"
+        },
+        {
+          "name": "HOV_LANE",
+          "type": "String"
+        },
+        {
+          "name": "SHOV_LANE",
+          "type": "String"
+        },
+        {
+          "name": "AUTO_EXCLU",
+          "type": "String"
+        },
+        {
+          "name": "NUM_CROSS",
+          "type": "Integer"
+        },
+        {
+          "name": "BARRIER",
+          "type": "String"
+        },
+        {
+          "name": "FACIL_KIND",
+          "type": "String"
+        },
+        {
+          "name": "TL_DENSITY",
+          "type": "Real"
+        },
+        {
+          "name": "TRAF_ID_P",
+          "type": "String"
+        },
+        {
+          "name": "TRAF_ID_N",
+          "type": "String"
+        }
+      ],
+      "redactions": {},
+      "shards": [
+        {
+          "url": "/gis/national-roads/expressway/p2_p5.json.gz",
+          "bbox": [
+            144243.7,
+            267227.6,
+            150481.6,
+            269142.7
+          ],
+          "count": 45,
+          "bytes": 6857,
+          "sha256": "05756f7b4807e3b48189922053d7c7f3bb1a14d6e98a0b0c123838d364697aec"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p3_p4.json.gz",
+          "bbox": [
+            156596.0,
+            231587.8,
+            199847.2,
+            240723.8
+          ],
+          "count": 230,
+          "bytes": 41732,
+          "sha256": "c5ef715e54d672b225da9f981e4cc72b57cf359d489e1132ad968ca4182f2953"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p3_p5.json.gz",
+          "bbox": [
+            150479.9,
+            250365.7,
+            199981.7,
+            300972.4
+          ],
+          "count": 755,
+          "bytes": 163725,
+          "sha256": "2c1863a58ca3c3911d48ebca299347034ad93d000c4294c3e524435a0b9ed127"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p3_p6.json.gz",
+          "bbox": [
+            159201.5,
+            298536.2,
+            200139.0,
+            349970.5
+          ],
+          "count": 418,
+          "bytes": 107359,
+          "sha256": "4d42748d19921b41654603eef3662d85aa988776fcf8f78cc6377305be6a1743"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p3_p7.json.gz",
+          "bbox": [
+            162634.8,
+            348820.1,
+            200036.8,
+            400813.8
+          ],
+          "count": 264,
+          "bytes": 59848,
+          "sha256": "3315b7df7b26a8f63f68af08f8174794adac53387e5fcfa657b732dff03da890"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p3_p8.json.gz",
+          "bbox": [
+            159964.0,
+            399879.9,
+            200386.4,
+            450021.4
+          ],
+          "count": 447,
+          "bytes": 93072,
+          "sha256": "894d387e272ac61b7577426ae6cd1db3a5cab5d9b711b523677e7e53db4026c7"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p3_p9.json.gz",
+          "bbox": [
+            159999.4,
+            449962.9,
+            201681.1,
+            502375.1
+          ],
+          "count": 428,
+          "bytes": 110610,
+          "sha256": "002c7f98a0cee7f76131c48dd31eb75b889e217f23b582cab325cc4f52286e60"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p3_p10.json.gz",
+          "bbox": [
+            154197.5,
+            497340.6,
+            200213.0,
+            550437.6
+          ],
+          "count": 1732,
+          "bytes": 425416,
+          "sha256": "0a789af1d46c215b8df0eff72acca86a6361ac3f1be3fb500580cc7ea184be65"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p3_p11.json.gz",
+          "bbox": [
+            164704.5,
+            549729.0,
+            199343.7,
+            583945.2
+          ],
+          "count": 769,
+          "bytes": 151840,
+          "sha256": "ca696aed453933782e1d7d7f8e7ffd0173e999a7a47070593708672af9ac99b6"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p4_p4.json.gz",
+          "bbox": [
+            199832.6,
+            240699.5,
+            236954.2,
+            250285.2
+          ],
+          "count": 183,
+          "bytes": 33923,
+          "sha256": "b8617b61dc3697da257bddf0d9c694e829c10db0064465f66cab89d22c2c09c6"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p4_p5.json.gz",
+          "bbox": [
+            199478.2,
+            250270.2,
+            250042.8,
+            299050.3
+          ],
+          "count": 515,
+          "bytes": 118319,
+          "sha256": "40e4848501d55a9674f8e1b4b99f77a04e3bf398427db8af05ab6ea4784afd36"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p4_p6.json.gz",
+          "bbox": [
+            200119.6,
+            299049.9,
+            250077.9,
+            350085.7
+          ],
+          "count": 594,
+          "bytes": 112918,
+          "sha256": "b374f7ea53db6bb513d4489d9c2174bc378ad8a65a1189abcb69f2e4def78cb9"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p4_p7.json.gz",
+          "bbox": [
+            200011.4,
+            349975.1,
+            249813.5,
+            401959.8
+          ],
+          "count": 667,
+          "bytes": 146560,
+          "sha256": "7935375d7e88be93632396cc291975252301d080eb5d4c6c5cd850751ebebe29"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p4_p8.json.gz",
+          "bbox": [
+            199823.6,
+            398707.6,
+            250133.0,
+            450178.2
+          ],
+          "count": 1083,
+          "bytes": 251530,
+          "sha256": "04bb6464e70fb15d8656671dd35c03657bbb8a8b30710190fa4476e27dfb217c"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p4_p9.json.gz",
+          "bbox": [
+            198834.6,
+            449204.5,
+            250043.3,
+            499945.0
+          ],
+          "count": 797,
+          "bytes": 205014,
+          "sha256": "c56f40ad9d1a8566928ae7dd9878425bd12c437984d286c055e75f0237ae6394"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p4_p10.json.gz",
+          "bbox": [
+            199460.8,
+            499797.7,
+            250254.3,
+            550564.6
+          ],
+          "count": 1855,
+          "bytes": 405015,
+          "sha256": "1a669bb77615ae9d5d02ef8ed290c1990059e383b340b25613cc64a8a3d68501"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p4_p11.json.gz",
+          "bbox": [
+            199328.1,
+            548763.8,
+            250243.8,
+            590961.8
+          ],
+          "count": 934,
+          "bytes": 196685,
+          "sha256": "d251ad7ea62e82bb7f9b7fb7aad5014006d22fe15c64751e8a49b7c71b2cc89e"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p5_p5.json.gz",
+          "bbox": [
+            249902.5,
+            261071.9,
+            300054.8,
+            300059.5
+          ],
+          "count": 355,
+          "bytes": 101135,
+          "sha256": "2269a2e9f53f80845629a4a92e2d3e99f54d64f9df60d92b6f2111f287899289"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p5_p6.json.gz",
+          "bbox": [
+            249418.7,
+            299700.7,
+            299734.7,
+            348917.4
+          ],
+          "count": 472,
+          "bytes": 119185,
+          "sha256": "5b00f70a11f24f7d7792867ed1009ce85adc1d20ab04dd889dec022f1892644e"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p5_p7.json.gz",
+          "bbox": [
+            249674.3,
+            348720.9,
+            300813.2,
+            400468.2
+          ],
+          "count": 150,
+          "bytes": 35685,
+          "sha256": "beac229582f66f41ec12b9e277a631b255cf7fc39e5e70112b1a1a02d0c2636b"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p5_p8.json.gz",
+          "bbox": [
+            249768.8,
+            400186.9,
+            300212.8,
+            435015.2
+          ],
+          "count": 438,
+          "bytes": 82248,
+          "sha256": "3248754f02622bbae42075bc33d910412e8d1ebed4a7e5e890e480e1eda969a6"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p5_p9.json.gz",
+          "bbox": [
+            250040.0,
+            456048.5,
+            301272.6,
+            500200.9
+          ],
+          "count": 511,
+          "bytes": 106752,
+          "sha256": "d25665859c7d75fc38977fa3ffbaadd98deb6e7d7614894d68fbb04cd05e1820"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p5_p10.json.gz",
+          "bbox": [
+            249926.4,
+            498468.5,
+            300364.8,
+            549816.2
+          ],
+          "count": 559,
+          "bytes": 157107,
+          "sha256": "c3cf5a60770b7a00d86d8d31fa329e80eee3b0c4fe8814460ad5c10df0236e93"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p5_p11.json.gz",
+          "bbox": [
+            250232.6,
+            549802.5,
+            300191.1,
+            583221.2
+          ],
+          "count": 378,
+          "bytes": 71583,
+          "sha256": "88887e016f51515732332ed3733df7760624755372411a1343886f5804e57c40"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p6_p5.json.gz",
+          "bbox": [
+            299943.1,
+            252992.8,
+            349846.8,
+            300444.7
+          ],
+          "count": 478,
+          "bytes": 126028,
+          "sha256": "0639bca499b428892c8f335d95334607ad892cf9be0824e92c53f0489d57c7ef"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p6_p6.json.gz",
+          "bbox": [
+            299733.3,
+            299776.6,
+            346353.1,
+            350022.7
+          ],
+          "count": 439,
+          "bytes": 110191,
+          "sha256": "5b0666392a58e2f9b7560b23f26d4d09f5f557461af04e254e680e02f778adc8"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p6_p7.json.gz",
+          "bbox": [
+            300804.6,
+            349615.0,
+            350290.5,
+            401033.9
+          ],
+          "count": 1237,
+          "bytes": 259536,
+          "sha256": "5b62e8a8a60e354e508ede9f67194ce577cb063fc534618401d0ff0890ee51ff"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p6_p8.json.gz",
+          "bbox": [
+            300199.3,
+            400009.0,
+            350062.6,
+            450064.7
+          ],
+          "count": 859,
+          "bytes": 186162,
+          "sha256": "bd322af1feeb61037eb5be51db86e3dc77339a9768276d87ff620b02749c1c8d"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p6_p9.json.gz",
+          "bbox": [
+            299284.1,
+            449899.3,
+            340985.5,
+            500681.0
+          ],
+          "count": 193,
+          "bytes": 54797,
+          "sha256": "4c60a71ddd495e9c1dc3d15cbdc98abed5763bc4a19ab5f15902cf9f94df74d3"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p6_p10.json.gz",
+          "bbox": [
+            300079.4,
+            500175.5,
+            316403.0,
+            551003.8
+          ],
+          "count": 77,
+          "bytes": 25031,
+          "sha256": "07c36067b3898f7139cd4ea051c8d67d8bfa0ce65168c60e8cd12536f31f485f"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p6_p11.json.gz",
+          "bbox": [
+            299749.9,
+            550976.6,
+            350026.6,
+            599795.6
+          ],
+          "count": 333,
+          "bytes": 74480,
+          "sha256": "75fd62b2e748b900faed61a01aebe62d1a5c760099d44af131abda725bc8c149"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p6_p12.json.gz",
+          "bbox": [
+            332658.0,
+            599779.6,
+            349841.8,
+            623861.5
+          ],
+          "count": 263,
+          "bytes": 52156,
+          "sha256": "016bca70998ca8a8f66d1c102afad1ad49f702242527a5ba46369257d274198f"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p7_p5.json.gz",
+          "bbox": [
+            349782.3,
+            278963.1,
+            399896.5,
+            300100.9
+          ],
+          "count": 512,
+          "bytes": 123463,
+          "sha256": "d82ec9fd789e1bf7a16d4606c6143f556999ff052b8fd21b2cd784fd58371fb6"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p7_p6.json.gz",
+          "bbox": [
+            354803.5,
+            299014.7,
+            400083.1,
+            350257.8
+          ],
+          "count": 896,
+          "bytes": 198368,
+          "sha256": "ae5ec6c554706b91e33be4c88ffcc26454ff22c37f01d229c472309ad1ff8a70"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p7_p7.json.gz",
+          "bbox": [
+            349543.7,
+            348640.2,
+            400034.4,
+            389869.7
+          ],
+          "count": 750,
+          "bytes": 176140,
+          "sha256": "b08577047e238fb658ddf2ffe8937ad488c7a4ba4d018b2efefb0c997a02246e"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p7_p8.json.gz",
+          "bbox": [
+            350062.5,
+            425309.5,
+            399943.3,
+            435939.8
+          ],
+          "count": 289,
+          "bytes": 40169,
+          "sha256": "46c039bee43b727dd0e5354a04a815753d5a3a052024f7593c55c8d86c5d6ed6"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p7_p10.json.gz",
+          "bbox": [
+            384802.2,
+            534777.0,
+            396086.8,
+            549974.5
+          ],
+          "count": 147,
+          "bytes": 26708,
+          "sha256": "f3a3478894dc8c5bc4aceed9f541d39d264bf810f8b1d064bc5dd62e6326eaeb"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p7_p11.json.gz",
+          "bbox": [
+            350024.6,
+            549974.2,
+            385466.3,
+            600042.8
+          ],
+          "count": 252,
+          "bytes": 71723,
+          "sha256": "7b235dcd3da34d984016f5dec3431d1cfe1bb27ed8afe057a485fb455b6341dd"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p7_p12.json.gz",
+          "bbox": [
+            349829.1,
+            600038.2,
+            351316.9,
+            603103.6
+          ],
+          "count": 6,
+          "bytes": 1769,
+          "sha256": "a07b5cc1bb8d850cebde34c2eb5d3f00c605d2e14206d15d8a4743a8bcaf7ce3"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p8_p5.json.gz",
+          "bbox": [
+            399877.0,
+            289286.9,
+            403048.4,
+            300103.9
+          ],
+          "count": 36,
+          "bytes": 10567,
+          "sha256": "9fcf27df5a389cdd219e5b9a3f490fb194d794f800cad86f8639ae414f9c7e3d"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p8_p6.json.gz",
+          "bbox": [
+            399890.8,
+            299795.0,
+            408284.2,
+            350046.8
+          ],
+          "count": 333,
+          "bytes": 76542,
+          "sha256": "5ad7d4fbf363da80cf2280ba0df20ea1d318e7512571522e4b101167efe1d724"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p8_p7.json.gz",
+          "bbox": [
+            399870.6,
+            350041.0,
+            421118.5,
+            388232.2
+          ],
+          "count": 218,
+          "bytes": 38860,
+          "sha256": "7ad6f2c8fff748e3a7d3d4a7d7bcd82fa0eebc281d5d8a922d461fca6ee4dcca"
+        },
+        {
+          "url": "/gis/national-roads/expressway/p8_p8.json.gz",
+          "bbox": [
+            399899.3,
+            422732.2,
+            412883.0,
+            429499.2
+          ],
+          "count": 76,
+          "bytes": 9192,
+          "sha256": "7e314e95cc469cc0f447194f7379d0aaa8a88f9ad3983cd492994857780af1bc"
+        }
+      ]
+    },
+    {
+      "id": "national",
+      "name": "일반국도",
+      "sourceCount": 168014,
+      "unlocatedCount": 0,
+      "sourceCRS": "Korea_2000_Katech_TM128",
+      "sourceWKT": "PROJCS[\"Korea_2000_Katech_TM128\",GEOGCS[\"ITRF2000\",DATUM[\"International_Terrestrial_Reference_Frame_2000\",SPHEROID[\"GRS 1980\",6378137,298.257222101],AUTHORITY[\"EPSG\",\"6656\"]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.0174532925199433],AUTHORITY[\"EPSG\",\"8997\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",38],PARAMETER[\"central_meridian\",128],PARAMETER[\"scale_factor\",0.9999],PARAMETER[\"false_easting\",400000],PARAMETER[\"false_northing\",600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "fieldSchema": [
+        {
+          "name": "LINK_ID",
+          "type": "String"
+        },
+        {
+          "name": "UP_FROM_NO",
+          "type": "String"
+        },
+        {
+          "name": "UP_TO_NODE",
+          "type": "String"
+        },
+        {
+          "name": "DOWN_FROM_",
+          "type": "String"
+        },
+        {
+          "name": "DOWN_TO_NO",
+          "type": "String"
+        },
+        {
+          "name": "NAVI_LV",
+          "type": "String"
+        },
+        {
+          "name": "KOTI_LV",
+          "type": "String"
+        },
+        {
+          "name": "LENGTH",
+          "type": "Real"
+        },
+        {
+          "name": "ST_DIR",
+          "type": "String"
+        },
+        {
+          "name": "ED_DIR",
+          "type": "String"
+        },
+        {
+          "name": "ROAD_RANK",
+          "type": "String"
+        },
+        {
+          "name": "LINK_CATE",
+          "type": "Integer64"
+        },
+        {
+          "name": "ONEWAY",
+          "type": "String"
+        },
+        {
+          "name": "WIDTH",
+          "type": "Integer"
+        },
+        {
+          "name": "LANES",
+          "type": "Integer"
+        },
+        {
+          "name": "UP_LANES",
+          "type": "Integer"
+        },
+        {
+          "name": "DOWN_LANES",
+          "type": "Integer"
+        },
+        {
+          "name": "ROAD_NAME",
+          "type": "String"
+        },
+        {
+          "name": "FIRST_DO",
+          "type": "String"
+        },
+        {
+          "name": "FIRST_GU",
+          "type": "String"
+        },
+        {
+          "name": "TG_NAME",
+          "type": "String"
+        },
+        {
+          "name": "ROAD_FAC_N",
+          "type": "String"
+        },
+        {
+          "name": "ROAD_NO",
+          "type": "String"
+        },
+        {
+          "name": "HOV_LANE",
+          "type": "String"
+        },
+        {
+          "name": "SHOV_LANE",
+          "type": "String"
+        },
+        {
+          "name": "AUTO_EXCLU",
+          "type": "String"
+        },
+        {
+          "name": "NUM_CROSS",
+          "type": "Integer"
+        },
+        {
+          "name": "BARRIER",
+          "type": "String"
+        },
+        {
+          "name": "FACIL_KIND",
+          "type": "String"
+        },
+        {
+          "name": "TL_DENSITY",
+          "type": "Real"
+        },
+        {
+          "name": "TRAF_ID_P",
+          "type": "String"
+        },
+        {
+          "name": "TRAF_ID_N",
+          "type": "String"
+        }
+      ],
+      "redactions": {},
+      "shards": [
+        {
+          "url": "/gis/national-roads/national/p2_p3.json.gz",
+          "bbox": [
+            120864.3,
+            196511.2,
+            131989.9,
+            199990.8
+          ],
+          "count": 46,
+          "bytes": 16129,
+          "sha256": "d7c94d8635bb3cdf9aa07d896a4e1cf479ea5d66aecf52f4d5030fa5f4a54790"
+        },
+        {
+          "url": "/gis/national-roads/national/p2_p4.json.gz",
+          "bbox": [
+            114473.4,
+            199655.1,
+            150767.3,
+            249941.8
+          ],
+          "count": 392,
+          "bytes": 75911,
+          "sha256": "4477796eb8491a82311029aff86ffbd542d86dcce7a534550c50488ec856fc69"
+        },
+        {
+          "url": "/gis/national-roads/national/p2_p5.json.gz",
+          "bbox": [
+            119067.0,
+            249485.4,
+            150143.3,
+            298659.4
+          ],
+          "count": 348,
+          "bytes": 68654,
+          "sha256": "725d326ca6bd912e10ed4b534bc5f2a74781dbe80427b443df009ebec4d7a3b5"
+        },
+        {
+          "url": "/gis/national-roads/national/p2_p6.json.gz",
+          "bbox": [
+            143556.7,
+            298631.3,
+            149901.9,
+            311088.7
+          ],
+          "count": 57,
+          "bytes": 15920,
+          "sha256": "9ae0c1377cdbd3de94a3096b557722b451946c25cb60a952c13503a808b352ad"
+        },
+        {
+          "url": "/gis/national-roads/national/p2_p7.json.gz",
+          "bbox": [
+            145541.3,
+            356191.8,
+            149826.1,
+            357477.2
+          ],
+          "count": 17,
+          "bytes": 3926,
+          "sha256": "f274ae782d4303323c11d505a765e9547f2e93060611cf9f0af565e66a980c64"
+        },
+        {
+          "url": "/gis/national-roads/national/p2_p8.json.gz",
+          "bbox": [
+            138060.8,
+            418184.8,
+            150044.8,
+            449989.5
+          ],
+          "count": 122,
+          "bytes": 25341,
+          "sha256": "df5182754f2abfed9ff75c6548c07b1dc1d0b806ce91dec679842b2c8d31fbc9"
+        },
+        {
+          "url": "/gis/national-roads/national/p2_p9.json.gz",
+          "bbox": [
+            123475.3,
+            449989.4,
+            150103.3,
+            488442.3
+          ],
+          "count": 361,
+          "bytes": 47074,
+          "sha256": "97bb828fd695450be740a5a3af67d9f2bd0bf368b1d67f57c0632e1ff83ce6e9"
+        },
+        {
+          "url": "/gis/national-roads/national/p2_p10.json.gz",
+          "bbox": [
+            143044.4,
+            530770.8,
+            151244.6,
+            544438.6
+          ],
+          "count": 336,
+          "bytes": 58540,
+          "sha256": "95fdf858640a91658a0888789f047c3c9b5d31c9d5b402399575bbfb0f14b470"
+        },
+        {
+          "url": "/gis/national-roads/national/p2_p11.json.gz",
+          "bbox": [
+            143255.6,
+            574762.2,
+            150689.7,
+            576813.8
+          ],
+          "count": 22,
+          "bytes": 4340,
+          "sha256": "1b308981a905f12cdbd375597925023ac2c83be47722d50a8266cc9d51ccfda0"
+        },
+        {
+          "url": "/gis/national-roads/national/p3_p3.json.gz",
+          "bbox": [
+            155013.2,
+            189683.0,
+            181560.1,
+            201287.3
+          ],
+          "count": 205,
+          "bytes": 51417,
+          "sha256": "d3725d908dd54e05f4e917aba045df75012dda5f01f9313f9fd3903227d659fc"
+        },
+        {
+          "url": "/gis/national-roads/national/p3_p4.json.gz",
+          "bbox": [
+            149282.4,
+            199964.7,
+            200316.0,
+            250119.2
+          ],
+          "count": 1196,
+          "bytes": 184732,
+          "sha256": "9f6b4ce56b0b4fb5c7595ad639ce1e1673e92470e7da0867db20d48346dfd8f1"
+        },
+        {
+          "url": "/gis/national-roads/national/p3_p5.json.gz",
+          "bbox": [
+            150040.3,
+            249314.4,
+            200047.4,
+            300079.2
+          ],
+          "count": 14274,
+          "bytes": 1636482,
+          "sha256": "61ea9b68ec3a67c97a79384d203e2f25dfc30458a028528de12bc72433c147ed"
+        },
+        {
+          "url": "/gis/national-roads/national/p3_p6.json.gz",
+          "bbox": [
+            149901.8,
+            299803.2,
+            200163.8,
+            350227.0
+          ],
+          "count": 1783,
+          "bytes": 254890,
+          "sha256": "99bed7d90c4f1fc761b5be94c099a8e4ddff9a322014aeb5680d7a8056ef6aba"
+        },
+        {
+          "url": "/gis/national-roads/national/p3_p7.json.gz",
+          "bbox": [
+            149826.0,
+            349030.3,
+            200217.9,
+            400167.6
+          ],
+          "count": 1780,
+          "bytes": 228202,
+          "sha256": "d18cd509c8a923e99926ac856681a7e38a9a1bad7a507d0fc8889144c9072e87"
+        },
+        {
+          "url": "/gis/national-roads/national/p3_p8.json.gz",
+          "bbox": [
+            150044.7,
+            399996.5,
+            200013.5,
+            450389.1
+          ],
+          "count": 1763,
+          "bytes": 250596,
+          "sha256": "e7b357168d76c0b11bd7aa43372f39221b400ae3190802a80185f01a9b4e67f3"
+        },
+        {
+          "url": "/gis/national-roads/national/p3_p9.json.gz",
+          "bbox": [
+            149895.5,
+            449680.3,
+            201065.0,
+            500764.4
+          ],
+          "count": 1985,
+          "bytes": 251102,
+          "sha256": "24efdd1f82d518c496e6bd1382036236e9b10785447bec8c43b4f6c5be14543d"
+        },
+        {
+          "url": "/gis/national-roads/national/p3_p10.json.gz",
+          "bbox": [
+            149865.4,
+            499788.0,
+            200150.1,
+            550614.7
+          ],
+          "count": 27119,
+          "bytes": 2993699,
+          "sha256": "77a1d757ccfe6c8c63e8399f9fc677bfcdabb405c00bedca55fe0a95eebcea4f"
+        },
+        {
+          "url": "/gis/national-roads/national/p3_p11.json.gz",
+          "bbox": [
+            150689.6,
+            549260.9,
+            200189.5,
+            599910.0
+          ],
+          "count": 9431,
+          "bytes": 1141787,
+          "sha256": "32c5a9558cddd6f1d7bd4d6d2a67514186fc88c5aaefda7387f16a5c741a4954"
+        },
+        {
+          "url": "/gis/national-roads/national/p3_p12.json.gz",
+          "bbox": [
+            198844.3,
+            599909.9,
+            200336.9,
+            601142.6
+          ],
+          "count": 4,
+          "bytes": 1171,
+          "sha256": "9c05b7245d8bec880278f690b9a78d999e2dc3078a570cae8c3260b20e54c9e0"
+        },
+        {
+          "url": "/gis/national-roads/national/p4_p4.json.gz",
+          "bbox": [
+            200088.8,
+            203604.0,
+            250507.7,
+            250195.5
+          ],
+          "count": 828,
+          "bytes": 156186,
+          "sha256": "b30f945cc6a2e3ca37563bdf10407133be4841ea4b6b2da5c460ac6c2431c13a"
+        },
+        {
+          "url": "/gis/national-roads/national/p4_p5.json.gz",
+          "bbox": [
+            199971.1,
+            249604.3,
+            250182.3,
+            300659.4
+          ],
+          "count": 1437,
+          "bytes": 241995,
+          "sha256": "d708ec4b9b8732535e9949cc86ab89f41e4e53465c4b32360b20ad63fdc6c9fc"
+        },
+        {
+          "url": "/gis/national-roads/national/p4_p6.json.gz",
+          "bbox": [
+            199910.0,
+            299932.6,
+            250024.3,
+            350445.9
+          ],
+          "count": 1596,
+          "bytes": 284583,
+          "sha256": "518704f5efb03026f4e6ac6b2346b035ff1c8066bb90e1549d95b81848c3f479"
+        },
+        {
+          "url": "/gis/national-roads/national/p4_p7.json.gz",
+          "bbox": [
+            199448.4,
+            349603.7,
+            250355.5,
+            400478.6
+          ],
+          "count": 1453,
+          "bytes": 220234,
+          "sha256": "4e2e0b10b2abb845a4ae1bc39527ecaadd901c1ce5bffcf2301a5e5e77129d2a"
+        },
+        {
+          "url": "/gis/national-roads/national/p4_p8.json.gz",
+          "bbox": [
+            199983.2,
+            399877.3,
+            249980.0,
+            450068.2
+          ],
+          "count": 12376,
+          "bytes": 1528568,
+          "sha256": "2d9b7f0cb21949867718545aa34a9ad48d025e33b683bc4b24c837c9f13cba68"
+        },
+        {
+          "url": "/gis/national-roads/national/p4_p9.json.gz",
+          "bbox": [
+            199935.2,
+            449608.2,
+            250117.2,
+            500771.2
+          ],
+          "count": 2457,
+          "bytes": 309974,
+          "sha256": "5ef0a02f80967edf2606459c5d7d4683b070fac112f438502fec0c2748e52eed"
+        },
+        {
+          "url": "/gis/national-roads/national/p4_p10.json.gz",
+          "bbox": [
+            199803.0,
+            499860.0,
+            250084.9,
+            550157.8
+          ],
+          "count": 9973,
+          "bytes": 1151058,
+          "sha256": "c25e983fc5f823aa054764575b0972779d8686a5e5f5404be9cbac363acf4e9c"
+        },
+        {
+          "url": "/gis/national-roads/national/p4_p11.json.gz",
+          "bbox": [
+            199826.8,
+            549795.9,
+            249927.9,
+            600308.3
+          ],
+          "count": 10563,
+          "bytes": 1307625,
+          "sha256": "327a28571aa58f5c7fb6d6458d2aa00222a78a360f47790ab37c53993215c8e6"
+        },
+        {
+          "url": "/gis/national-roads/national/p4_p12.json.gz",
+          "bbox": [
+            200336.8,
+            599749.2,
+            250029.1,
+            632479.0
+          ],
+          "count": 791,
+          "bytes": 127290,
+          "sha256": "61668a1edbc58aaa23dc7a38271c26adc5fd464f4667fe54cf6d90905b517d32"
+        },
+        {
+          "url": "/gis/national-roads/national/p5_p4.json.gz",
+          "bbox": [
+            250507.6,
+            221244.4,
+            296469.8,
+            250203.0
+          ],
+          "count": 545,
+          "bytes": 102928,
+          "sha256": "0166ffbc83dd7b629517678009c2aade3a4db9e73206a74cd86bc5ecb2181f11"
+        },
+        {
+          "url": "/gis/national-roads/national/p5_p5.json.gz",
+          "bbox": [
+            249612.3,
+            249437.0,
+            300128.9,
+            300082.5
+          ],
+          "count": 1439,
+          "bytes": 221635,
+          "sha256": "281c9af5eddc5feadbc711280de1fbb5cc95f1e3bb5fff587283af03f7dd7945"
+        },
+        {
+          "url": "/gis/national-roads/national/p5_p6.json.gz",
+          "bbox": [
+            249992.0,
+            299993.4,
+            300346.7,
+            350186.7
+          ],
+          "count": 978,
+          "bytes": 181104,
+          "sha256": "a0d056276a4c20c118c27c734fe3154ad7fbbaaa1c9d4bf5479180a681cf673a"
+        },
+        {
+          "url": "/gis/national-roads/national/p5_p7.json.gz",
+          "bbox": [
+            249249.6,
+            349538.3,
+            300078.4,
+            400720.5
+          ],
+          "count": 966,
+          "bytes": 189831,
+          "sha256": "d0660ae0e08f0fdb46ba6412a783876ab5cdc7952cf31aadd98d1b45dcb1aa89"
+        },
+        {
+          "url": "/gis/national-roads/national/p5_p8.json.gz",
+          "bbox": [
+            249517.6,
+            399985.3,
+            300325.8,
+            450298.1
+          ],
+          "count": 878,
+          "bytes": 152531,
+          "sha256": "ad5c7b7105d43837b7a7eddebbea1e2281f28196b01d85976acc1f6ee1221db8"
+        },
+        {
+          "url": "/gis/national-roads/national/p5_p9.json.gz",
+          "bbox": [
+            249986.3,
+            449254.9,
+            299958.2,
+            500002.8
+          ],
+          "count": 1516,
+          "bytes": 219608,
+          "sha256": "a688c88d860de83e80178869986fed9c838cee64f0b23e6932ef5fad7a14c29e"
+        },
+        {
+          "url": "/gis/national-roads/national/p5_p10.json.gz",
+          "bbox": [
+            249925.8,
+            499266.2,
+            300113.8,
+            550469.2
+          ],
+          "count": 1345,
+          "bytes": 199417,
+          "sha256": "0d885bbc26a301aadadfea75d0755be6097d41c934097e0542f6da57b5344dce"
+        },
+        {
+          "url": "/gis/national-roads/national/p5_p11.json.gz",
+          "bbox": [
+            249927.8,
+            549890.4,
+            300145.6,
+            601868.3
+          ],
+          "count": 923,
+          "bytes": 160520,
+          "sha256": "597c98c6499274461dbd44f8d324a66943120517405a4bca8b570a1ab6f78184"
+        },
+        {
+          "url": "/gis/national-roads/national/p5_p12.json.gz",
+          "bbox": [
+            248571.7,
+            599634.3,
+            300539.4,
+            629902.5
+          ],
+          "count": 370,
+          "bytes": 83102,
+          "sha256": "bdbb16e2a91b5970e16c6205f7bdec68e6ffb3e1420a51345222b7b674def373"
+        },
+        {
+          "url": "/gis/national-roads/national/p6_p4.json.gz",
+          "bbox": [
+            347810.1,
+            238298.0,
+            349352.1,
+            239132.3
+          ],
+          "count": 5,
+          "bytes": 1850,
+          "sha256": "13fd446d22530233ce524dfe7d1582635426ff4bed4181aaf973b55b5ce63898"
+        },
+        {
+          "url": "/gis/national-roads/national/p6_p5.json.gz",
+          "bbox": [
+            299948.1,
+            252204.0,
+            349983.1,
+            300055.2
+          ],
+          "count": 1852,
+          "bytes": 293869,
+          "sha256": "5b31a2a94210d02872983821434797f73c620a8a815aab2548e50f36855d6390"
+        },
+        {
+          "url": "/gis/national-roads/national/p6_p6.json.gz",
+          "bbox": [
+            299757.7,
+            299984.6,
+            349915.0,
+            350553.4
+          ],
+          "count": 1277,
+          "bytes": 211059,
+          "sha256": "5cc115a6f10abeddd3c0f68ddc9556e940f5ed7ee7f726746becfec28bc970a5"
+        },
+        {
+          "url": "/gis/national-roads/national/p6_p7.json.gz",
+          "bbox": [
+            299503.7,
+            349789.5,
+            350582.9,
+            400304.4
+          ],
+          "count": 12324,
+          "bytes": 1449419,
+          "sha256": "8685b471f86cd2f1cbd0b1c3c85ca995ef0d3ab27c5c22a12cef1b78a6f347e6"
+        },
+        {
+          "url": "/gis/national-roads/national/p6_p8.json.gz",
+          "bbox": [
+            299698.9,
+            399428.1,
+            350900.1,
+            450108.7
+          ],
+          "count": 1358,
+          "bytes": 201185,
+          "sha256": "65190928e6bd50a60c42b6917a418cf597a3505f1597e69e03c3b73165c469ff"
+        },
+        {
+          "url": "/gis/national-roads/national/p6_p9.json.gz",
+          "bbox": [
+            299861.2,
+            449930.0,
+            350022.4,
+            499911.5
+          ],
+          "count": 793,
+          "bytes": 158191,
+          "sha256": "a7232c02744d3aba6b1cd4a73987ae1d99191d5f591cbfef3acac8481dcc5c39"
+        },
+        {
+          "url": "/gis/national-roads/national/p6_p10.json.gz",
+          "bbox": [
+            299977.7,
+            499850.8,
+            351631.9,
+            549895.6
+          ],
+          "count": 1117,
+          "bytes": 185120,
+          "sha256": "6cf6b156b02c87092ed2e2163aa826bb8857d729d8f9af7209ce511ef50711fe"
+        },
+        {
+          "url": "/gis/national-roads/national/p6_p11.json.gz",
+          "bbox": [
+            299944.5,
+            549731.5,
+            350134.7,
+            599951.3
+          ],
+          "count": 587,
+          "bytes": 218086,
+          "sha256": "1a91fb8f7f247346250c9df32261433752d17bee78397b12f7689969f2b44ba0"
+        },
+        {
+          "url": "/gis/national-roads/national/p6_p12.json.gz",
+          "bbox": [
+            300339.4,
+            599841.1,
+            349814.2,
+            650003.8
+          ],
+          "count": 970,
+          "bytes": 167755,
+          "sha256": "3c1215d578a6b83b1df300156b255556537d5d4cdeaa0492866fb7c7f1e369bf"
+        },
+        {
+          "url": "/gis/national-roads/national/p6_p13.json.gz",
+          "bbox": [
+            321403.0,
+            650003.7,
+            326036.5,
+            663889.1
+          ],
+          "count": 54,
+          "bytes": 7547,
+          "sha256": "fb747e7cde1feca65af6d103b004817641dec682f96557760bd926e8b0898ab1"
+        },
+        {
+          "url": "/gis/national-roads/national/p7_p4.json.gz",
+          "bbox": [
+            349352.0,
+            238941.1,
+            356443.0,
+            250115.9
+          ],
+          "count": 39,
+          "bytes": 22877,
+          "sha256": "1729d4fa602eb303a94516ade54e686895275f24fcab73ea2f5e26669910569c"
+        },
+        {
+          "url": "/gis/national-roads/national/p7_p5.json.gz",
+          "bbox": [
+            349771.4,
+            250115.8,
+            400134.8,
+            300090.9
+          ],
+          "count": 16837,
+          "bytes": 2092235,
+          "sha256": "973cca733ab710551f7175debd2aaf36e9264cca1b70b51c0a2029fdb9bf39b5"
+        },
+        {
+          "url": "/gis/national-roads/national/p7_p6.json.gz",
+          "bbox": [
+            349426.0,
+            299753.0,
+            400008.3,
+            350329.3
+          ],
+          "count": 1658,
+          "bytes": 246246,
+          "sha256": "25d88e842d7da28d01734e1ccf66e2e8aa6a6341254ae51d927f4660a83ec69e"
+        },
+        {
+          "url": "/gis/national-roads/national/p7_p7.json.gz",
+          "bbox": [
+            348871.5,
+            349907.7,
+            400710.2,
+            400017.2
+          ],
+          "count": 3262,
+          "bytes": 420392,
+          "sha256": "17baec12f626c9ebcfc689d819db31c5b082e6f67489388756d3cadfbb8faa4b"
+        },
+        {
+          "url": "/gis/national-roads/national/p7_p8.json.gz",
+          "bbox": [
+            349671.9,
+            399773.1,
+            401239.6,
+            451221.0
+          ],
+          "count": 823,
+          "bytes": 160241,
+          "sha256": "14153e4405e5fe0fdfaf2da89807f253420b2daccb787bb055e0ee5cf1157b29"
+        },
+        {
+          "url": "/gis/national-roads/national/p7_p9.json.gz",
+          "bbox": [
+            349954.4,
+            450157.5,
+            400271.0,
+            500299.2
+          ],
+          "count": 584,
+          "bytes": 133268,
+          "sha256": "0707570be39ea3e7002d6f985be82b10558b265c7c4a534ea442a0cf1042565c"
+        },
+        {
+          "url": "/gis/national-roads/national/p7_p10.json.gz",
+          "bbox": [
+            349939.5,
+            500299.1,
+            400762.6,
+            550311.9
+          ],
+          "count": 941,
+          "bytes": 193264,
+          "sha256": "dc4746f114a0240b22208a04873c3fd2e726431a064278d5bfa36f3c37214bfb"
+        },
+        {
+          "url": "/gis/national-roads/national/p7_p11.json.gz",
+          "bbox": [
+            350134.6,
+            548520.1,
+            386042.4,
+            600029.0
+          ],
+          "count": 475,
+          "bytes": 91567,
+          "sha256": "0c79f48db747e78f18819fc296aa12fcdef6c562ba892912cbce87f1affed177"
+        },
+        {
+          "url": "/gis/national-roads/national/p7_p12.json.gz",
+          "bbox": [
+            349814.1,
+            600028.9,
+            353598.9,
+            604849.6
+          ],
+          "count": 34,
+          "bytes": 5069,
+          "sha256": "460bf27bc04093dd45d2fbd152f2bc288c6ffba7c147b37c40b0a7902100c598"
+        },
+        {
+          "url": "/gis/national-roads/national/p8_p5.json.gz",
+          "bbox": [
+            399806.3,
+            288623.8,
+            404124.2,
+            300217.0
+          ],
+          "count": 174,
+          "bytes": 18725,
+          "sha256": "6d2766254c82d388c6208c3a4b9c659e9066dcf1f2451044402982ba1ba8a5e7"
+        },
+        {
+          "url": "/gis/national-roads/national/p8_p6.json.gz",
+          "bbox": [
+            399977.7,
+            299815.3,
+            423953.4,
+            350166.1
+          ],
+          "count": 9084,
+          "bytes": 1081981,
+          "sha256": "7ee78e5b2fd968b31df9ccba4ac92e4c98c1cb10042d99821fb1bb30f7d20e02"
+        },
+        {
+          "url": "/gis/national-roads/national/p8_p7.json.gz",
+          "bbox": [
+            399997.8,
+            349694.5,
+            429991.1,
+            400094.4
+          ],
+          "count": 1363,
+          "bytes": 224900,
+          "sha256": "3b00584b67a95af7b18d116f9d6fab41fd2d244276c58b4d1a8715cf0e57d5e2"
+        },
+        {
+          "url": "/gis/national-roads/national/p8_p8.json.gz",
+          "bbox": [
+            401239.5,
+            400094.3,
+            416200.6,
+            450070.7
+          ],
+          "count": 266,
+          "bytes": 44537,
+          "sha256": "97b917911336418d8b0bc5cbefd3eb317a5e70914ea93a92373ec9433070f0a6"
+        },
+        {
+          "url": "/gis/national-roads/national/p8_p9.json.gz",
+          "bbox": [
+            400029.7,
+            450070.6,
+            419762.5,
+            499926.5
+          ],
+          "count": 367,
+          "bytes": 85889,
+          "sha256": "e21e59acf5cf1da521d5e78b94e71d5602a19c0608f6f04e3eac1d2788b70834"
+        },
+        {
+          "url": "/gis/national-roads/national/p8_p10.json.gz",
+          "bbox": [
+            400762.5,
+            499926.4,
+            411284.2,
+            527010.7
+          ],
+          "count": 95,
+          "bytes": 14163,
+          "sha256": "73f92a46649babdd61fdd8077cb22d21234d008992ede18ee3f050b0d1c3d627"
+        }
+      ]
+    },
+    {
+      "id": "local",
+      "name": "지방도",
+      "sourceCount": 59429,
+      "unlocatedCount": 0,
+      "sourceCRS": "Korea_2000_Katech_TM128",
+      "sourceWKT": "PROJCS[\"Korea_2000_Katech_TM128\",GEOGCS[\"ITRF2000\",DATUM[\"International_Terrestrial_Reference_Frame_2000\",SPHEROID[\"GRS 1980\",6378137,298.257222101],AUTHORITY[\"EPSG\",\"6656\"]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.0174532925199433],AUTHORITY[\"EPSG\",\"8997\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",38],PARAMETER[\"central_meridian\",128],PARAMETER[\"scale_factor\",0.9999],PARAMETER[\"false_easting\",400000],PARAMETER[\"false_northing\",600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+      "fieldSchema": [
+        {
+          "name": "LINK_ID",
+          "type": "String"
+        },
+        {
+          "name": "UP_FROM_NO",
+          "type": "String"
+        },
+        {
+          "name": "UP_TO_NODE",
+          "type": "String"
+        },
+        {
+          "name": "DOWN_FROM_",
+          "type": "String"
+        },
+        {
+          "name": "DOWN_TO_NO",
+          "type": "String"
+        },
+        {
+          "name": "NAVI_LV",
+          "type": "String"
+        },
+        {
+          "name": "KOTI_LV",
+          "type": "String"
+        },
+        {
+          "name": "LENGTH",
+          "type": "Real"
+        },
+        {
+          "name": "ST_DIR",
+          "type": "String"
+        },
+        {
+          "name": "ED_DIR",
+          "type": "String"
+        },
+        {
+          "name": "ROAD_RANK",
+          "type": "String"
+        },
+        {
+          "name": "LINK_CATE",
+          "type": "Integer64"
+        },
+        {
+          "name": "ONEWAY",
+          "type": "String"
+        },
+        {
+          "name": "WIDTH",
+          "type": "Integer"
+        },
+        {
+          "name": "LANES",
+          "type": "Integer"
+        },
+        {
+          "name": "UP_LANES",
+          "type": "Integer"
+        },
+        {
+          "name": "DOWN_LANES",
+          "type": "Integer"
+        },
+        {
+          "name": "ROAD_NAME",
+          "type": "String"
+        },
+        {
+          "name": "FIRST_DO",
+          "type": "String"
+        },
+        {
+          "name": "FIRST_GU",
+          "type": "String"
+        },
+        {
+          "name": "TG_NAME",
+          "type": "String"
+        },
+        {
+          "name": "ROAD_FAC_N",
+          "type": "String"
+        },
+        {
+          "name": "ROAD_NO",
+          "type": "String"
+        },
+        {
+          "name": "HOV_LANE",
+          "type": "String"
+        },
+        {
+          "name": "SHOV_LANE",
+          "type": "String"
+        },
+        {
+          "name": "AUTO_EXCLU",
+          "type": "String"
+        },
+        {
+          "name": "NUM_CROSS",
+          "type": "Integer"
+        },
+        {
+          "name": "BARRIER",
+          "type": "String"
+        },
+        {
+          "name": "FACIL_KIND",
+          "type": "String"
+        },
+        {
+          "name": "TL_DENSITY",
+          "type": "Real"
+        },
+        {
+          "name": "TRAF_ID_P",
+          "type": "String"
+        },
+        {
+          "name": "TRAF_ID_N",
+          "type": "String"
+        }
+      ],
+      "redactions": {},
+      "shards": [
+        {
+          "url": "/gis/national-roads/local/p2_p1.json.gz",
+          "bbox": [
+            123476.9,
+            70738.0,
+            150144.3,
+            100022.0
+          ],
+          "count": 1481,
+          "bytes": 192889,
+          "sha256": "8c998a457805bdce39443424254e1749df91fec8e22df05262d1792e7d849652"
+        },
+        {
+          "url": "/gis/national-roads/local/p2_p2.json.gz",
+          "bbox": [
+            146659.7,
+            100021.9,
+            150087.6,
+            100333.1
+          ],
+          "count": 30,
+          "bytes": 3531,
+          "sha256": "817f26aa74cf9b4cd043cf6566ad2cf471aab3ad2bb4ca51488f064b91cb6717"
+        },
+        {
+          "url": "/gis/national-roads/local/p2_p4.json.gz",
+          "bbox": [
+            117318.0,
+            201786.1,
+            150095.8,
+            248157.1
+          ],
+          "count": 413,
+          "bytes": 89559,
+          "sha256": "e8f83991d7e7d5e9c7c428cc01060ec762efd712702a715d1ddd9607b6f26eae"
+        },
+        {
+          "url": "/gis/national-roads/local/p2_p5.json.gz",
+          "bbox": [
+            112043.1,
+            249515.0,
+            151066.6,
+            298835.9
+          ],
+          "count": 301,
+          "bytes": 81410,
+          "sha256": "724dcc86c6e83dc184618e50e05d211f4f49616a0f48b47e7d269b57c59f49b0"
+        },
+        {
+          "url": "/gis/national-roads/local/p2_p6.json.gz",
+          "bbox": [
+            146196.3,
+            302918.8,
+            150429.7,
+            317156.3
+          ],
+          "count": 71,
+          "bytes": 14391,
+          "sha256": "80378ffc8ea8bf1c9bf49f64578126eac8eb6eb0da5686f9869683a1024df54b"
+        },
+        {
+          "url": "/gis/national-roads/local/p2_p8.json.gz",
+          "bbox": [
+            138542.3,
+            434875.2,
+            151042.3,
+            450196.1
+          ],
+          "count": 61,
+          "bytes": 8975,
+          "sha256": "ff612c82b08f119676ee264ae455e3ff736703542b88404e05f02fef7b08e703"
+        },
+        {
+          "url": "/gis/national-roads/local/p2_p9.json.gz",
+          "bbox": [
+            122971.3,
+            450196.0,
+            150021.0,
+            484160.5
+          ],
+          "count": 255,
+          "bytes": 60679,
+          "sha256": "ebde7bab0f15d6145b180482b7ca848ba3aef676f854db1e47d31863c06bf73f"
+        },
+        {
+          "url": "/gis/national-roads/local/p2_p11.json.gz",
+          "bbox": [
+            145415.6,
+            559998.2,
+            148041.9,
+            567163.1
+          ],
+          "count": 13,
+          "bytes": 4118,
+          "sha256": "307f3fcbc2b41b1362ff3777b84c95b47d1cb87b553eb20125e69eda7feffc44"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p1.json.gz",
+          "bbox": [
+            148849.0,
+            72746.7,
+            191889.8,
+            100562.1
+          ],
+          "count": 2038,
+          "bytes": 281482,
+          "sha256": "6c92246b713a002f89ade6e45373499b453f1c34fd90fd2eff658b171ad4266a"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p2.json.gz",
+          "bbox": [
+            150087.5,
+            99614.9,
+            190090.9,
+            106960.6
+          ],
+          "count": 585,
+          "bytes": 63458,
+          "sha256": "bd1fd98c951f623842992acb9ef0c154fff049f87d1792fccb11178f727d0e4d"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p3.json.gz",
+          "bbox": [
+            180914.8,
+            191524.6,
+            193894.4,
+            200168.0
+          ],
+          "count": 47,
+          "bytes": 14884,
+          "sha256": "aacce360753fb801fb66a38e8d948c23271c84486ad1f4c6a4c9d7ddb593a33c"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p4.json.gz",
+          "bbox": [
+            149905.5,
+            198745.3,
+            199975.8,
+            250345.8
+          ],
+          "count": 1243,
+          "bytes": 233276,
+          "sha256": "2b85dc47f4abbe8edf3fa0982c1e6222a5e2b91e39d3871587f6e90812d601d3"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p5.json.gz",
+          "bbox": [
+            149214.4,
+            249867.3,
+            200223.7,
+            300528.8
+          ],
+          "count": 1661,
+          "bytes": 307894,
+          "sha256": "bdbb4a034e3b37cc3f841a40aacf1994e35039b0f9ba07d6671440760b97edd6"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p6.json.gz",
+          "bbox": [
+            149892.4,
+            299643.3,
+            200130.5,
+            350125.7
+          ],
+          "count": 1703,
+          "bytes": 330382,
+          "sha256": "dd57f905e5ae5fd9cd98a3df5a7da9b33bbcad50637f74d8e530494ec3e6f277"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p7.json.gz",
+          "bbox": [
+            157193.7,
+            349665.6,
+            200346.0,
+            400022.0
+          ],
+          "count": 1776,
+          "bytes": 311000,
+          "sha256": "61135b3a0e7a60f0420b54be5ceed8eb51a3c0499573348d35a64eb3cccc9405"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p8.json.gz",
+          "bbox": [
+            151042.2,
+            399448.0,
+            200196.9,
+            450020.6
+          ],
+          "count": 1218,
+          "bytes": 283011,
+          "sha256": "347dea52b0d3b208a1f4f893fd3f596b73a92eb5da10ec05a8e0e9b5710d53b9"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p9.json.gz",
+          "bbox": [
+            149797.5,
+            449315.2,
+            200178.8,
+            501625.1
+          ],
+          "count": 1929,
+          "bytes": 312907,
+          "sha256": "83d3079d83aef279c8caa0d52e476b103431d2a2457d3cda90c2ba35f8572826"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p10.json.gz",
+          "bbox": [
+            161798.7,
+            499893.0,
+            200129.1,
+            549997.7
+          ],
+          "count": 1261,
+          "bytes": 181490,
+          "sha256": "68868406a88faad6574c1af86c7aefad747437808d9580005bb25c655ac95465"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p11.json.gz",
+          "bbox": [
+            153708.6,
+            549997.6,
+            200107.7,
+            600246.0
+          ],
+          "count": 2898,
+          "bytes": 420143,
+          "sha256": "3a6144d69b07c00804c11d3c1682c6f5f5865676327b97162d9ef6f258a52690"
+        },
+        {
+          "url": "/gis/national-roads/local/p3_p12.json.gz",
+          "bbox": [
+            189235.4,
+            599963.4,
+            200231.1,
+            610125.7
+          ],
+          "count": 58,
+          "bytes": 15779,
+          "sha256": "7e6d1621af443835a9444be4338a955fbe52e9e04b76cc6d4a1badd7c499a8d2"
+        },
+        {
+          "url": "/gis/national-roads/local/p4_p4.json.gz",
+          "bbox": [
+            199879.1,
+            202711.3,
+            249907.7,
+            250398.0
+          ],
+          "count": 636,
+          "bytes": 139347,
+          "sha256": "dacda8ed2c50c288d1adaac2429a342c603d2d39b814da4b857f6e4ce0b01d1c"
+        },
+        {
+          "url": "/gis/national-roads/local/p4_p5.json.gz",
+          "bbox": [
+            199906.3,
+            249575.2,
+            250922.7,
+            301271.4
+          ],
+          "count": 1000,
+          "bytes": 250164,
+          "sha256": "834ec48a6964ae92467b52fb5d566f4ac1ee39d439ccbc79e15b1228c00f2cf0"
+        },
+        {
+          "url": "/gis/national-roads/local/p4_p6.json.gz",
+          "bbox": [
+            199902.9,
+            298995.3,
+            250483.0,
+            350215.6
+          ],
+          "count": 1407,
+          "bytes": 403601,
+          "sha256": "be1fa9cb6772740a32ed835575ce4c9e82a540cc6512ce3d4a76af3072a8f9ae"
+        },
+        {
+          "url": "/gis/national-roads/local/p4_p7.json.gz",
+          "bbox": [
+            199794.3,
+            349898.5,
+            250226.9,
+            402357.6
+          ],
+          "count": 1747,
+          "bytes": 381739,
+          "sha256": "e5fae8858b0260a1c1d1b4cb01b61d65f6db5fe4f96398503ca1a31d52003561"
+        },
+        {
+          "url": "/gis/national-roads/local/p4_p8.json.gz",
+          "bbox": [
+            199866.2,
+            399799.1,
+            250492.3,
+            450639.7
+          ],
+          "count": 2067,
+          "bytes": 372101,
+          "sha256": "c03791e9508517c67ed2110c5f5caf16dca57efb838c5de3a06cda75d1de0a29"
+        },
+        {
+          "url": "/gis/national-roads/local/p4_p9.json.gz",
+          "bbox": [
+            199829.4,
+            449849.3,
+            250247.8,
+            500356.2
+          ],
+          "count": 3094,
+          "bytes": 475494,
+          "sha256": "a5dbe688c83457a78b47c3bb505d38e2adeac16b02f3c80144e289b90c498987"
+        },
+        {
+          "url": "/gis/national-roads/local/p4_p10.json.gz",
+          "bbox": [
+            199929.6,
+            499575.2,
+            250250.2,
+            550012.0
+          ],
+          "count": 3646,
+          "bytes": 550395,
+          "sha256": "26740020f6441630397fda10616d3fa820c50a952ebb3194100e7b7fe99c0ab3"
+        },
+        {
+          "url": "/gis/national-roads/local/p4_p11.json.gz",
+          "bbox": [
+            199681.3,
+            549874.9,
+            250060.2,
+            600013.9
+          ],
+          "count": 1680,
+          "bytes": 336324,
+          "sha256": "b048552957caa753d6ee9eb861709b83d15920cdd4c4fc94efaaeb3d394b69db"
+        },
+        {
+          "url": "/gis/national-roads/local/p4_p12.json.gz",
+          "bbox": [
+            199892.0,
+            599952.0,
+            250416.1,
+            632750.0
+          ],
+          "count": 596,
+          "bytes": 147559,
+          "sha256": "084982947db327a94cbdc6d4408e99f33349873d466b226a96df0a31a8025ef6"
+        },
+        {
+          "url": "/gis/national-roads/local/p5_p4.json.gz",
+          "bbox": [
+            249907.6,
+            227046.6,
+            297066.9,
+            250231.6
+          ],
+          "count": 325,
+          "bytes": 91902,
+          "sha256": "2b9587e3ce074ae47cd1d73053aa3453e393cae0f9494b1c4d96221068837b1b"
+        },
+        {
+          "url": "/gis/national-roads/local/p5_p5.json.gz",
+          "bbox": [
+            249683.6,
+            249394.0,
+            300048.3,
+            300244.4
+          ],
+          "count": 1669,
+          "bytes": 425127,
+          "sha256": "3629ec0b770667f78fb43dd8812c072a4c68fcf1172d92e1f8eaad8eca8d3372"
+        },
+        {
+          "url": "/gis/national-roads/local/p5_p6.json.gz",
+          "bbox": [
+            249836.8,
+            299860.7,
+            301662.7,
+            350205.0
+          ],
+          "count": 1071,
+          "bytes": 340331,
+          "sha256": "e18498a50b3f0232671aceb72ab1a40bd3c16016698ee33bc82823720e3182fb"
+        },
+        {
+          "url": "/gis/national-roads/local/p5_p7.json.gz",
+          "bbox": [
+            249694.3,
+            349630.9,
+            300126.0,
+            399989.7
+          ],
+          "count": 830,
+          "bytes": 316399,
+          "sha256": "88a1bbdb1e76d55fca348d8b6a1b0980daeb5abf3f2e13f8b98f7394a8ac18f1"
+        },
+        {
+          "url": "/gis/national-roads/local/p5_p8.json.gz",
+          "bbox": [
+            249714.1,
+            399204.8,
+            300354.2,
+            450797.5
+          ],
+          "count": 1157,
+          "bytes": 316217,
+          "sha256": "9cee588ecca708a501f7ffef5bf8a6359d3b47b949190dcbe4d2a746d1be91e8"
+        },
+        {
+          "url": "/gis/national-roads/local/p5_p9.json.gz",
+          "bbox": [
+            249678.6,
+            449602.1,
+            300259.0,
+            500831.0
+          ],
+          "count": 1803,
+          "bytes": 415039,
+          "sha256": "582d406485d586b2c16f33598069734ea01204a18aa31a8bff0e3b27ea7fc40e"
+        },
+        {
+          "url": "/gis/national-roads/local/p5_p10.json.gz",
+          "bbox": [
+            249910.6,
+            499929.9,
+            300023.4,
+            550085.2
+          ],
+          "count": 1450,
+          "bytes": 310332,
+          "sha256": "24a1ce2f6a9183e5157c155d89f6e75a11aeb23d4add3eb0c7e94fce7e4f14ef"
+        },
+        {
+          "url": "/gis/national-roads/local/p5_p11.json.gz",
+          "bbox": [
+            250060.1,
+            549511.0,
+            300788.4,
+            599759.4
+          ],
+          "count": 945,
+          "bytes": 217525,
+          "sha256": "9a3a9638c7bbc1c68d5ce2833a30840faca7c8980c4d1f8746911868cf05d510"
+        },
+        {
+          "url": "/gis/national-roads/local/p5_p12.json.gz",
+          "bbox": [
+            250416.0,
+            599759.3,
+            299953.6,
+            632946.9
+          ],
+          "count": 373,
+          "bytes": 114997,
+          "sha256": "3ea1db5d964bb8a2ff9ac2f38438367f33bb935592ad1f7a30d092ddf2b5811d"
+        },
+        {
+          "url": "/gis/national-roads/local/p6_p4.json.gz",
+          "bbox": [
+            322495.3,
+            235346.1,
+            350078.2,
+            250077.3
+          ],
+          "count": 192,
+          "bytes": 89565,
+          "sha256": "d6da5683d4e771123b2c9e82e95b1dff6ccbf58ca8103289dc29ca3e749d6248"
+        },
+        {
+          "url": "/gis/national-roads/local/p6_p5.json.gz",
+          "bbox": [
+            299997.9,
+            249842.2,
+            350199.6,
+            300502.4
+          ],
+          "count": 1491,
+          "bytes": 345985,
+          "sha256": "93b17bd936e2f71ebd330e7a2150c591d80c95e5a46d020735dfb71044b40830"
+        },
+        {
+          "url": "/gis/national-roads/local/p6_p6.json.gz",
+          "bbox": [
+            299273.1,
+            299704.2,
+            350522.4,
+            349872.8
+          ],
+          "count": 1726,
+          "bytes": 351068,
+          "sha256": "aa75b44e9c8bbe728eedc4d1091c9e62ab1f16cc0df5e99e165d59ce1b229382"
+        },
+        {
+          "url": "/gis/national-roads/local/p6_p7.json.gz",
+          "bbox": [
+            299849.6,
+            349872.7,
+            350022.2,
+            400987.5
+          ],
+          "count": 1242,
+          "bytes": 219295,
+          "sha256": "3d0196e3370599e7d6ef0faa268a610d6aa3c2e057056d305bab0fff91fb8173"
+        },
+        {
+          "url": "/gis/national-roads/local/p6_p8.json.gz",
+          "bbox": [
+            299635.7,
+            399643.6,
+            351198.1,
+            449981.5
+          ],
+          "count": 1072,
+          "bytes": 316710,
+          "sha256": "65ec385aea159ee12eeae5fa98dbfd020ed95eea84e4c823703bc6dd67e1a182"
+        },
+        {
+          "url": "/gis/national-roads/local/p6_p9.json.gz",
+          "bbox": [
+            299743.4,
+            449981.4,
+            349902.6,
+            500254.7
+          ],
+          "count": 838,
+          "bytes": 267983,
+          "sha256": "35d7ca4b06a5f549eee02493dd2788c9fdc620eaaa6dbabd639917671f940cde"
+        },
+        {
+          "url": "/gis/national-roads/local/p6_p10.json.gz",
+          "bbox": [
+            299754.8,
+            499625.5,
+            350222.6,
+            551225.3
+          ],
+          "count": 785,
+          "bytes": 203412,
+          "sha256": "3b4b3383cc5ec2481b8453b1141ffcd6f3d15f6b8f1d559512f8883ee8f9480b"
+        },
+        {
+          "url": "/gis/national-roads/local/p6_p11.json.gz",
+          "bbox": [
+            299390.2,
+            549489.1,
+            350002.9,
+            600768.6
+          ],
+          "count": 414,
+          "bytes": 165920,
+          "sha256": "30ce5df3424c3a8648877473b43711219b18b10ccc9e5a725a4b79eae498adc7"
+        },
+        {
+          "url": "/gis/national-roads/local/p6_p12.json.gz",
+          "bbox": [
+            299953.5,
+            600290.8,
+            349268.5,
+            632901.1
+          ],
+          "count": 229,
+          "bytes": 42064,
+          "sha256": "4a7d2e084e31f5f2bd6f818e5f8812cf8e06cb1549cd429061fb9d506f451f65"
+        },
+        {
+          "url": "/gis/national-roads/local/p7_p4.json.gz",
+          "bbox": [
+            349321.4,
+            243344.1,
+            350969.2,
+            250160.8
+          ],
+          "count": 5,
+          "bytes": 5522,
+          "sha256": "944abe6d701c5b5d3164ebe139c2292d75b9af6d29913fc0f2dc92e94972f072"
+        },
+        {
+          "url": "/gis/national-roads/local/p7_p5.json.gz",
+          "bbox": [
+            349944.7,
+            250160.7,
+            380549.0,
+            300023.6
+          ],
+          "count": 925,
+          "bytes": 118046,
+          "sha256": "03b713fd522ee818efd24b3c8b3098b8dc424fbb166fd52205dda356a4d8a6a5"
+        },
+        {
+          "url": "/gis/national-roads/local/p7_p6.json.gz",
+          "bbox": [
+            349889.8,
+            299780.7,
+            400076.1,
+            350485.1
+          ],
+          "count": 1237,
+          "bytes": 294476,
+          "sha256": "f6c7db08b6612319f2dd8b6ac2efa4f9e3e525636619675e0632e99683779c02"
+        },
+        {
+          "url": "/gis/national-roads/local/p7_p7.json.gz",
+          "bbox": [
+            349911.0,
+            349620.6,
+            400017.9,
+            400044.5
+          ],
+          "count": 1156,
+          "bytes": 236907,
+          "sha256": "d317c4ecb2422e43b1d06797ceb815cdba7a7d89e313731411052fd1c784401d"
+        },
+        {
+          "url": "/gis/national-roads/local/p7_p8.json.gz",
+          "bbox": [
+            349412.3,
+            399780.2,
+            401221.4,
+            450269.6
+          ],
+          "count": 833,
+          "bytes": 273403,
+          "sha256": "58ab47fcd91006ebdd003c6b3f808b59d846ae98f8955d275a70d5d83fb36095"
+        },
+        {
+          "url": "/gis/national-roads/local/p7_p9.json.gz",
+          "bbox": [
+            348415.1,
+            448752.2,
+            400485.8,
+            500752.9
+          ],
+          "count": 640,
+          "bytes": 250706,
+          "sha256": "50deef177399e127cdecaa87418d487f75016f17af5a43d53e6273c90c75dad9"
+        },
+        {
+          "url": "/gis/national-roads/local/p7_p10.json.gz",
+          "bbox": [
+            349455.0,
+            499693.4,
+            399740.9,
+            549901.4
+          ],
+          "count": 520,
+          "bytes": 229678,
+          "sha256": "60ad2ed4ada3d2c7d6eb1a9ece839c5c86a3c96f486cf1f702f32782a05c7d76"
+        },
+        {
+          "url": "/gis/national-roads/local/p7_p11.json.gz",
+          "bbox": [
+            350001.8,
+            548807.9,
+            362482.8,
+            585222.6
+          ],
+          "count": 138,
+          "bytes": 77781,
+          "sha256": "88a5779e3c3cc126be5bc51e40c9c125dcb051373d3472e8cc8d4d9816b52b08"
+        },
+        {
+          "url": "/gis/national-roads/local/p7_p12.json.gz",
+          "bbox": [
+            349268.4,
+            603125.1,
+            350972.8,
+            603897.0
+          ],
+          "count": 4,
+          "bytes": 1836,
+          "sha256": "95662f3eb45d51e9c7a88c282070b2468294413f3eeda6226f3a6c9e79962ecf"
+        },
+        {
+          "url": "/gis/national-roads/local/p8_p6.json.gz",
+          "bbox": [
+            399845.1,
+            303695.8,
+            422885.4,
+            350174.1
+          ],
+          "count": 174,
+          "bytes": 31895,
+          "sha256": "efd012f7722882da7b08d64195618e8ebc7a150800d5645d226be64a7b0dc0a9"
+        },
+        {
+          "url": "/gis/national-roads/local/p8_p7.json.gz",
+          "bbox": [
+            399912.1,
+            349439.2,
+            432366.1,
+            399570.6
+          ],
+          "count": 561,
+          "bytes": 113888,
+          "sha256": "2108fc3a2fcf67ee329dfaee2f7d2860b6df47155075f77d328790559e054c8f"
+        },
+        {
+          "url": "/gis/national-roads/local/p8_p8.json.gz",
+          "bbox": [
+            398865.9,
+            399460.2,
+            418980.4,
+            450396.3
+          ],
+          "count": 323,
+          "bytes": 154120,
+          "sha256": "9d9bd0378b84520aab4d4a06c066a8c6b70668a74c6a4e45b4ae1cb60d9ef39c"
+        },
+        {
+          "url": "/gis/national-roads/local/p8_p9.json.gz",
+          "bbox": [
+            400106.8,
+            450396.2,
+            415745.4,
+            500067.9
+          ],
+          "count": 235,
+          "bytes": 76375,
+          "sha256": "9ca8795d2131cdcaffb5e291c0241fce29b7d04a37e220d3cadbf653ec46e796"
+        },
+        {
+          "url": "/gis/national-roads/local/p8_p10.json.gz",
+          "bbox": [
+            399740.8,
+            500067.8,
+            409886.8,
+            510681.4
+          ],
+          "count": 55,
+          "bytes": 15095,
+          "sha256": "7e5747bf6ef10c5f4befd658c828c7fa38a4cb0bd674635108ed101f08d05a04"
+        },
+        {
+          "url": "/gis/national-roads/local/p10_p10.json.gz",
+          "bbox": [
+            536452.7,
+            546888.1,
+            544955.7,
+            549999.9
+          ],
+          "count": 46,
+          "bytes": 13224,
+          "sha256": "f402efafe2394eca36c706863bbbf6d91b72c12165f19dbc64b80eaba1a704db"
+        },
+        {
+          "url": "/gis/national-roads/local/p10_p11.json.gz",
+          "bbox": [
+            536397.3,
+            549954.5,
+            546269.5,
+            557113.4
+          ],
+          "count": 50,
+          "bytes": 29639,
+          "sha256": "c9191affc3c6ffa95adf6824ed3b3e83e453d87094936834dc366dea941cbd4a"
+        }
+      ]
+    }
+  ]
+}

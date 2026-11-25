@@ -1,0 +1,253 @@
+{
+  "version": 1,
+  "source": "CH_D010_00_20261103",
+  "encoding": "EUC-KR with strict CP949 fallback",
+  "sourceCrs": "EPSG:5186",
+  "outputCrs": "EPSG:4326",
+  "sourceRecords": 97984,
+  "sourceActions": {
+    "U": 97827,
+    "I": 64,
+    "D": 93
+  },
+  "sourceDbfDeleted": 0,
+  "candidateCount": 347,
+  "candidateActions": {
+    "U": 345,
+    "I": 2
+  },
+  "filter": "A29 I/U AND (A8 05000/Z5000 OR A9 contains 문화/집회)",
+  "fieldSchema": [
+    {
+      "name": "A0",
+      "type": "N",
+      "width": 9,
+      "decimals": 0
+    },
+    {
+      "name": "A1",
+      "type": "C",
+      "width": 28,
+      "decimals": 0
+    },
+    {
+      "name": "A2",
+      "type": "C",
+      "width": 19,
+      "decimals": 0
+    },
+    {
+      "name": "A3",
+      "type": "C",
+      "width": 10,
+      "decimals": 0
+    },
+    {
+      "name": "A4",
+      "type": "C",
+      "width": 254,
+      "decimals": 0
+    },
+    {
+      "name": "A5",
+      "type": "C",
+      "width": 10,
+      "decimals": 0
+    },
+    {
+      "name": "A6",
+      "type": "C",
+      "width": 1,
+      "decimals": 0
+    },
+    {
+      "name": "A7",
+      "type": "C",
+      "width": 254,
+      "decimals": 0
+    },
+    {
+      "name": "A8",
+      "type": "C",
+      "width": 5,
+      "decimals": 0
+    },
+    {
+      "name": "A9",
+      "type": "C",
+      "width": 254,
+      "decimals": 0
+    },
+    {
+      "name": "A10",
+      "type": "C",
+      "width": 2,
+      "decimals": 0
+    },
+    {
+      "name": "A11",
+      "type": "C",
+      "width": 254,
+      "decimals": 0
+    },
+    {
+      "name": "A12",
+      "type": "N",
+      "width": 18,
+      "decimals": 15
+    },
+    {
+      "name": "A13",
+      "type": "C",
+      "width": 10,
+      "decimals": 0
+    },
+    {
+      "name": "A14",
+      "type": "N",
+      "width": 18,
+      "decimals": 15
+    },
+    {
+      "name": "A15",
+      "type": "N",
+      "width": 18,
+      "decimals": 15
+    },
+    {
+      "name": "A16",
+      "type": "N",
+      "width": 18,
+      "decimals": 15
+    },
+    {
+      "name": "A17",
+      "type": "N",
+      "width": 18,
+      "decimals": 15
+    },
+    {
+      "name": "A18",
+      "type": "N",
+      "width": 18,
+      "decimals": 15
+    },
+    {
+      "name": "A19",
+      "type": "C",
+      "width": 28,
+      "decimals": 0
+    },
+    {
+      "name": "A20",
+      "type": "C",
+      "width": 2,
+      "decimals": 0
+    },
+    {
+      "name": "A21",
+      "type": "C",
+      "width": 17,
+      "decimals": 0
+    },
+    {
+      "name": "A22",
+      "type": "D",
+      "width": 8,
+      "decimals": 0
+    },
+    {
+      "name": "A23",
+      "type": "N",
+      "width": 18,
+      "decimals": 15
+    },
+    {
+      "name": "A24",
+      "type": "C",
+      "width": 254,
+      "decimals": 0
+    },
+    {
+      "name": "A25",
+      "type": "C",
+      "width": 254,
+      "decimals": 0
+    },
+    {
+      "name": "A26",
+      "type": "N",
+      "width": 9,
+      "decimals": 0
+    },
+    {
+      "name": "A27",
+      "type": "N",
+      "width": 9,
+      "decimals": 0
+    },
+    {
+      "name": "A28",
+      "type": "C",
+      "width": 10,
+      "decimals": 0
+    },
+    {
+      "name": "A29",
+      "type": "C",
+      "width": 1,
+      "decimals": 0
+    },
+    {
+      "name": "A30",
+      "type": "C",
+      "width": 5,
+      "decimals": 0
+    }
+  ],
+  "candidateCp949FallbackFields": {},
+  "candidateNumericOverflowFields": {
+    "A27": 132,
+    "A15": 111,
+    "A17": 111,
+    "A18": 112,
+    "A16": 27,
+    "A26": 2
+  },
+  "nullGeometryFids": [],
+  "invalidGeometryFids": [],
+  "outsideCoarseKoreaBoundsFids": [],
+  "inputs": {
+    ".shp": {
+      "name": "CH_D010_00_20261103.shp",
+      "bytes": 16945636,
+      "sha256": "fa03d63650c0b19b8e00f61ea80fe3d76aec47a128e8a4b7c582414c9bda1c54"
+    },
+    ".shx": {
+      "name": "CH_D010_00_20261103.shx",
+      "bytes": 783972,
+      "sha256": "fc00a3017b27c8e4532d87b9450b45218ed73a62892f166b1d87d03947fb487a"
+    },
+    ".dbf": {
+      "name": "CH_D010_00_20261103.dbf",
+      "bytes": 179703681,
+      "sha256": "4ed5a28332374b4858119c2c1f50b053e2559573cb7e5ca75e1c62f6c062589f"
+    },
+    ".prj": {
+      "name": "CH_D010_00_20261103.prj",
+      "bytes": 553,
+      "sha256": "c9e055f0ba3e7d3844883a41ed9dbfc060fabc1fbf09bef13d7de34c0ef788cc"
+    },
+    ".cst": {
+      "name": "CH_D010_00_20261103.cst",
+      "bytes": 6,
+      "sha256": "ec0fed838f6249dfc243f5ad3eacb38c28aed69f7c66bd9103cbb66df9a9560b"
+    }
+  },
+  "output": {
+    "file": "national-cultural-changes.geojson",
+    "bytes": 269555,
+    "sha256": "ad41e4fad4d898ff06043dea91ff7d9592b8d335178a9a3311eb22a60c7d44bc"
+  },
+  "note": "Change records only; candidates are not a verified inventory of operating cultural venues."
+}

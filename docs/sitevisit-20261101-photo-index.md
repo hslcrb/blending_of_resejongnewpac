@@ -1,0 +1,164 @@
+# Photo reference index
+
+149 photographs; identifiers match oriented_0.jpg through oriented_5.jpg, sorted by filename.
+Labels describe visible content, not verified compass directions or dimensions.
+
+## Individual photographs
+
+- 000 - KakaoTalk_20261102_024617079.webp: Main hall corner and illuminated ground-floor cafe.
+- 001 - KakaoTalk_20261102_024617079_01.webp: Tree-lined wet sidewalk beside glass retail facade.
+- 002 - KakaoTalk_20261102_024617079_02.webp: Plaza garden, bare trees and seating against city buildings.
+- 003 - KakaoTalk_20261102_024617079_03.webp: Close view of cafe facade and exhibition banner.
+- 004 - KakaoTalk_20261102_024617079_04.webp: Cafe shopfront, gallery entry and exhibition banner.
+- 005 - KakaoTalk_20261102_024617079_05.webp: Outdoor cafe tables, umbrellas and trees on plaza.
+- 006 - KakaoTalk_20261102_024617079_06.webp: Cafe seating, trees and nearby towers.
+- 007 - KakaoTalk_20261102_024617079_07.webp: Main hall lattice upper facade over cafe and banner.
+- 008 - KakaoTalk_20261102_024617079_08.webp: Broad civic plaza, temporary tents and office tower.
+- 009 - KakaoTalk_20261102_024617079_09.webp: Main hall side mass and roof above stepped plaza.
+- 010 - KakaoTalk_20261102_024617079_10.webp: Broad stairs between two building wings; temporary event display.
+- 011 - KakaoTalk_20261102_024617079_11.webp: Hall corner, Y-shaped column capitals, sculpture and staircase.
+- 012 - KakaoTalk_20261102_024617079_12.webp: Hall side column row and tree-lined walkway.
+- 013 - KakaoTalk_20261102_024617079_13.webp: Opposite office tower and plaza at dusk.
+- 014 - KakaoTalk_20261102_024617079_14.webp: Cafe shopfront, exhibition signs and glazed entrance.
+- 015 - KakaoTalk_20261102_024617079_15.webp: Wet plaza, planters, trees and digital signs.
+- 016 - KakaoTalk_20261102_024617079_16.webp: Gallery shop edge and construction enclosure.
+- 017 - KakaoTalk_20261102_024617079_17.webp: Wet tree-lined sidewalk and overhead string lights.
+- 018 - KakaoTalk_20261102_024617079_18.webp: Plaza wayfinding and accessible route sign.
+- 019 - KakaoTalk_20261102_024617079_19.webp: Construction wall and path along cafe side.
+- 020 - KakaoTalk_20261102_024617079_20.webp: City plaza from walkway between buildings.
+- 021 - KakaoTalk_20261102_024617079_21.webp: Construction wall and adjacent commercial building.
+- 022 - KakaoTalk_20261102_024617079_22.webp: Plaza gardens, trees and illuminated buildings.
+- 023 - KakaoTalk_20261102_024617079_23.webp: Plaza overview with planters and distant towers.
+- 024 - KakaoTalk_20261102_024617079_24.webp: Restaurant side path and illuminated sign.
+- 025 - KakaoTalk_20261102_024617079_25.webp: City sidewalk, planters and commercial frontage.
+- 026 - KakaoTalk_20261102_024617079_26.webp: Wet plaza garden, planted beds and trees.
+- 027 - KakaoTalk_20261102_024617079_27.webp: Elevator safety notices.
+- 028 - KakaoTalk_20261102_024617079_28.webp: Coffee and laptop at cafe table.
+- 029 - KakaoTalk_20261102_024617079_29.webp: Cafe interior, patrons and large windows.
+- 030 - KakaoTalk_20261102_024617908.webp: Cafe interior facing red office tower.
+- 031 - KakaoTalk_20261102_024827813.webp: Cafe interior facing opposite illuminated sign.
+- 032 - KakaoTalk_20261102_024827813_01.webp: Cafe ceiling recess and downlights.
+- 033 - KakaoTalk_20261102_024827813_02.webp: Cafe ceiling and wall display.
+- 034 - KakaoTalk_20261102_024827813_03.webp: Laptop in cafe.
+- 035 - KakaoTalk_20261102_024827813_04.webp: Cafe ceiling and windows.
+- 036 - KakaoTalk_20261102_024827813_05.webp: Cafe interior looking toward opposite building.
+- 037 - KakaoTalk_20261102_024827813_06.webp: Similar cafe window and ceiling view.
+- 038 - KakaoTalk_20261102_024827813_07.webp: Street view from cafe entrance.
+- 039 - KakaoTalk_20261102_024827813_08.webp: Cafe order screen and shopfront.
+- 040 - KakaoTalk_20261102_024827813_09.webp: Starbucks glazed entrance.
+- 041 - KakaoTalk_20261102_024827813_10.webp: Night plaza garden, trees and towers.
+- 042 - KakaoTalk_20261102_024827813_11.webp: Starbucks illuminated logo.
+- 043 - KakaoTalk_20261102_024827813_12.webp: Plaza garden with small white kiosk.
+- 044 - KakaoTalk_20261102_024827813_13.webp: Wet civic plaza garden and distant towers.
+- 045 - KakaoTalk_20261102_024827813_14.webp: Plaza garden and small white kiosk.
+- 046 - KakaoTalk_20261102_024827813_15.webp: Construction scaffold and white wall.
+- 047 - KakaoTalk_20261102_024827813_16.webp: Civic plaza and event structures at night.
+- 048 - KakaoTalk_20261102_024827813_17.webp: Opposite commercial building and scaffold.
+- 049 - KakaoTalk_20261102_024827813_18.webp: Plaza rules sign.
+- 050 - KakaoTalk_20261102_024827813_19.webp: Garden edge, traffic cones and large screen.
+- 051 - KakaoTalk_20261102_024827813_20.webp: City towers and event tents at night.
+- 052 - KakaoTalk_20261102_024827813_21.webp: City towers and billboard alternate view.
+- 053 - KakaoTalk_20261102_024827813_22.webp: Construction enclosure, small kiosk and planted path.
+- 054 - KakaoTalk_20261102_024827813_23.webp: Sunken plaza edge and digital media wall.
+- 055 - KakaoTalk_20261102_024827813_24.webp: Sunken plaza stair, railing and media wall.
+- 056 - KakaoTalk_20261102_024827813_25.webp: Main hall and roadside garden at night.
+- 057 - KakaoTalk_20261102_024827813_26.webp: Construction enclosure with hall in background.
+- 058 - KakaoTalk_20261102_024827813_27.webp: Main hall side and wet road with cones.
+- 059 - KakaoTalk_20261102_024827813_28.webp: Planted bed above sunken plaza.
+- 060 - KakaoTalk_20261102_024827813_29.webp: Sunken plaza and illuminated media wall.
+- 061 - KakaoTalk_20261102_024836988.webp: Main hall corner with lit shop and garden.
+- 062 - KakaoTalk_20261102_024836988_01.webp: Main hall roof, projecting eaves and upper lattice.
+- 063 - KakaoTalk_20261102_024836988_02.webp: Sunken plaza with long illuminated media wall.
+- 064 - KakaoTalk_20261102_024836988_03.webp: Night sidewalk and commercial streetscape.
+- 065 - KakaoTalk_20261102_024836988_04.webp: Sunken plaza, media wall and office block.
+- 066 - KakaoTalk_20261102_024836988_05.webp: Main hall corner, shop and pedestrian path.
+- 067 - KakaoTalk_20261102_024836988_06.webp: Planted bed, low spotlight and sidewalk.
+- 068 - KakaoTalk_20261102_024836988_07.webp: Wet roadside pedestrian route and curb.
+- 069 - KakaoTalk_20261102_024836988_08.webp: Main hall, garden bed and wayfinding sign.
+- 070 - KakaoTalk_20261102_024836988_09.webp: Night streetscape and sidewalk garden.
+- 071 - KakaoTalk_20261102_024836988_10.webp: Outdoor cafe seating and main hall facade.
+- 072 - KakaoTalk_20261102_024836988_11.webp: Main hall roof edge, Y capital and lattice close-up.
+- 073 - KakaoTalk_20261102_024836988_12.webp: Corner glazed shop, steps and stone column.
+- 074 - KakaoTalk_20261102_024836988_13.webp: Walkway beside glass shop and string lights.
+- 075 - KakaoTalk_20261102_024836988_14.webp: Opposite commercial shops.
+- 076 - KakaoTalk_20261102_024836988_15.webp: Low stone side wall with gridded windows.
+- 077 - KakaoTalk_20261102_024836988_16.webp: Street trees and opposite buildings.
+- 078 - KakaoTalk_20261102_024836988_17.webp: Opposite shop frontage at night.
+- 079 - KakaoTalk_20261102_024836988_18.webp: Wet square paving and projected pattern.
+- 080 - KakaoTalk_20261102_024836988_19.webp: Sidewalk with raised planting beds and benches.
+- 081 - KakaoTalk_20261102_024836988_20.webp: Stone wall panel joints and gridded windows.
+- 082 - KakaoTalk_20261102_024836988_21.webp: Stone wall illuminated projection and colonnade.
+- 083 - KakaoTalk_20261102_024836988_22.webp: Sidewalk, tree planters and opposite shops.
+- 084 - KakaoTalk_20261102_024836988_23.webp: Projection on stone wall, closer view.
+- 085 - KakaoTalk_20261102_024836988_24.webp: Street light and illuminated commercial street.
+- 086 - KakaoTalk_20261102_024836988_25.webp: Long stone side wall, tree sidewalk and string lights.
+- 087 - KakaoTalk_20261102_024836988_26.webp: Stone wall directional sign.
+- 088 - KakaoTalk_20261102_024836988_27.webp: Side building stone wall and dark service doorway.
+- 089 - KakaoTalk_20261102_024836988_28.webp: Sidewalk lights, trees and commercial street.
+- 090 - KakaoTalk_20261102_024836988_29.webp: White stone wing, massive columns and downlights.
+- 091 - KakaoTalk_20261102_024845377.webp: Broad wet stone pedestrian plaza.
+- 092 - KakaoTalk_20261102_024845377_01.webp: Long colonnade: square stone pillars and ceiling downlights.
+- 093 - KakaoTalk_20261102_024845377_02.webp: White stone colonnade wall, windows and metal door.
+- 094 - KakaoTalk_20261102_024845377_03.webp: Garden directory sign and main hall behind.
+- 095 - KakaoTalk_20261102_024845377_04.webp: Colonnade in perspective with planted garden edge.
+- 096 - KakaoTalk_20261102_024845377_05.webp: Main hall, glass pavilion and illuminated roof trim.
+- 097 - KakaoTalk_20261102_024845377_06.webp: Garden sign and light strings near main hall.
+- 098 - KakaoTalk_20261102_024845377_07.webp: Connecting wing, brown stone facade and narrow vertical windows.
+- 099 - KakaoTalk_20261102_024845377_08.webp: Garden seating, string lights and wet paving.
+- 100 - KakaoTalk_20261102_024845377_09.webp: Garden edge looking toward surrounding streets.
+- 101 - KakaoTalk_20261102_024845377_10.webp: Commercial intersection from garden.
+- 102 - KakaoTalk_20261102_024845377_11.webp: Garden planting, tree, string lights and main hall.
+- 103 - KakaoTalk_20261102_024845377_12.webp: Plant beds and low temporary partitions before connecting wing.
+- 104 - KakaoTalk_20261102_024845377_13.webp: Connecting wing and stair rising underneath.
+- 105 - KakaoTalk_20261102_024845377_14.webp: Garden use notice, tall grasses and brick paving.
+- 106 - KakaoTalk_20261102_024845377_15.webp: Temporary kiosk and partitions in front of colonnade.
+- 107 - KakaoTalk_20261102_024845377_16.webp: Curved brick garden walk, low beds and strings.
+- 108 - KakaoTalk_20261102_024845377_17.webp: Garden chairs, tables, grasses and street beyond.
+- 109 - KakaoTalk_20261102_024845377_18.webp: Connecting wing and autumn trees from below.
+- 110 - KakaoTalk_20261102_024845377_19.webp: Garden benches, trees and overhead lights.
+- 111 - KakaoTalk_20261102_024845377_20.webp: Main hall illuminated eaves, Y capitals and lattice facade.
+- 112 - KakaoTalk_20261102_024845377_21.webp: Garden double globe lamp among trees.
+- 113 - KakaoTalk_20261102_024845377_22.webp: Near-duplicate double globe lamp view.
+- 114 - KakaoTalk_20261102_024845377_23.webp: Garden kiosk, tables, heater and light strings.
+- 115 - KakaoTalk_20261102_024845377_24.webp: Connecting wing colonnade framed by garden plants.
+- 116 - KakaoTalk_20261102_024845377_25.webp: Main hall side, entrance forecourt and landscaped path.
+- 117 - KakaoTalk_20261102_024845377_26.webp: Long glass pavilion before main hall with SEJONG lettering.
+- 118 - KakaoTalk_20261102_024845377_27.webp: Dense hedges, trees and garden path lighting.
+- 119 - KakaoTalk_20261102_024845377_28.webp: Curved brick garden path, hedges and string lights.
+- 120 - KakaoTalk_20261102_024845377_29.webp: Main hall entrance and glazed foreground railing.
+- 121 - KakaoTalk_20261102_024853519.webp: Looking down into lightwell beside building.
+- 122 - KakaoTalk_20261102_024853519_01.webp: Lightwell and green surface seen through railing.
+- 123 - KakaoTalk_20261102_024853519_02.webp: Garden trees, wet paving and adjacent road.
+- 124 - KakaoTalk_20261102_024853519_03.webp: Garden and sidewalk beside lit side entrance.
+- 125 - KakaoTalk_20261102_024853519_04.webp: Main hall lower entrance, terrace and connecting wing.
+- 126 - KakaoTalk_20261102_024853519_05.webp: Main hall entrance doors, banner and terrace seating.
+- 127 - KakaoTalk_20261102_024853519_06.webp: Glazed pavilion side, black mullions, posters and illuminated S.
+- 128 - KakaoTalk_20261102_024853519_07.webp: Main hall terrace facing connecting wing and stairs.
+- 129 - KakaoTalk_20261102_024853519_08.webp: Garden edge, hedges, benches and side wall.
+- 130 - KakaoTalk_20261102_024853519_09.webp: Side entrance under deep lit overhang.
+- 131 - KakaoTalk_20261102_024853519_10.webp: Side service path, tactile strip and main entrance.
+- 132 - KakaoTalk_20261102_024853519_11.webp: Main hall eave and Y columns from below.
+- 133 - KakaoTalk_20261102_024853519_12.webp: Wet paving, tactile strip and vehicle entry marking.
+- 134 - KakaoTalk_20261102_024853519_13.webp: Hedge-lined garden path with small ground lights.
+- 135 - KakaoTalk_20261102_024853519_14.webp: Curved planted garden path and low lighting.
+- 136 - KakaoTalk_20261102_024853519_15.webp: Garden path, trees, lamps and street beyond.
+- 137 - KakaoTalk_20261102_024853519_16.webp: Glass pavilion, illuminated S and connecting wing from garden.
+- 138 - KakaoTalk_20261102_024853519_17.webp: Glazed pavilion and hall entrance from planted edge.
+- 139 - KakaoTalk_20261102_024853519_18.webp: Glass pavilion facing connecting wing across brick garden.
+- 140 - KakaoTalk_20261102_024853519_19.webp: Main hall roof trim and Y-column capitals.
+- 141 - KakaoTalk_20261102_024853519_20.webp: Connecting wing stair with handrail and lit ceiling.
+- 142 - KakaoTalk_20261102_024853519_21.webp: Temporary exhibition banner outside main hall.
+- 143 - KakaoTalk_20261102_024853519_22.webp: Wet colonnade paving, ramp handrails and planting.
+- 144 - KakaoTalk_20261102_024853519_23.webp: Elevated view over garden, paths and lampposts.
+- 145 - KakaoTalk_20261102_024853519_24.webp: Covered passage with coffered ceiling and media wall.
+- 146 - KakaoTalk_20261102_024853519_25.webp: Stone hall wall, low enclosure and pole light.
+- 147 - KakaoTalk_20261102_024853519_26.webp: Stone terrace wall, hedge planters and handrail.
+- 148 - KakaoTalk_20261102_024853519_27.webp: Street-side trees, stone seats and illuminated building.
+
+## Priority features
+
+- Glass pavilion: 096, 116–117, 120, 125–128, 137–139. Elongated, low glazed volume in front of the main hall, dark slender mullions, flat roof, large SEJONG lettering, internally lit, entrance near the right side of the long glazed face in photo 127 (door mechanism and count unconfirmed); the adjacent luminous S and banners appear temporary.
+- Connecting wing: 092–095, 098, 104, 106, 115, 128, 139, 141. Tall lower colonnade under a wide slab; pale stone square pillars, pale walls, recessed service doors and narrow windows; upper brown masonry with a repeated band of narrow vertical slit windows. External stair climbs diagonally to a lit passage under the elevated wing.
+- Garden and pedestrian paths: 067–071, 080, 083, 086, 094, 097, 099, 102–103, 107–110, 112–119, 123–124, 129, 134–136, 143–144. Paths alternate large gray rectangular stone paving and curved reddish brick paving; planted islands with mature trees, dense low hedges, tall grasses and shrubs; warm globe lamps, low spotlights and suspended strings. Rain creates specular reflections. Tables, benches, heaters, kiosk and temporary enclosures appear in several views.
+- Main hall: 009–012, 056–062, 072, 096, 111, 117, 120, 125–128, 132, 140. Deep projecting layered eaves, closely spaced exposed underslung elements, large pale stone piers with flared/Y-like capitals, dark recessed diagonal lattice and glazed lower entry.
+- Many images show temporary advertising, construction fencing and event fittings; distinguish these from permanent architecture. Use the photographs for relative appearance; they do not establish dimensions or precise plan coordinates.
