@@ -135,3 +135,46 @@ Blender 5.0.1에서 고정 원본을 읽어 이전 평면과 바뀐 보행 지�
 | 감사의 정원 | [첫 조형](public-axis-20261125/web-gratitude-after.jpg) | [직선 배열과 석재 홈](public-axis-20261125/field/web-gratitude-after.jpg) |
 
 S씨어터 두 스틸은 문이 있는 면 자체가 달라 카메라 위치도 다르다. 별도의 [시설 위치 대표점](https://qbh.purpleo.kr/article/809)은 출입문 측량값이 아니므로 파빌리온 배치 전체를 해당 핀으로 이동하지 않았다. 이 회차는 **북쪽을 향하는 출입구와 유리면 내 상대 위치**를 교정했으며, 캠퍼스 전체의 절대 좌표·단차 실측은 남았다.
+
+## 8. 감사의 정원 집중 수정: 기단, 국기 명판, 광장과 출입구
+
+### 사진에서 확인한 세 가지 오류
+
+이전 회차에서는 휘어진 배열을 정리했지만, 동쪽으로 뻗는 낮은 석재가 얇아져 그대로 지면에 사라졌다. 국기 대신 빈 금속 조각만 있었고, 호주와 영국·스웨덴과 필리핀의 순서가 서로 바뀌어 있었다. 정원 바닥과 프리덤 홀 주변은 대부분 기존의 단순한 평면이었다. 이번에는 조형물만 따로 빼서 암기한 모양을 고치는 대신, 남쪽과 동쪽에서 찍은 사진, 기증석 접사, 반대편 측면, 계단을 정면으로 내려다본 사진을 함께 대조했다.
+
+| 대조 근거 | 실제로 확인한 것 | 반영 |
+| --- | --- | --- |
+| [서울시 5월 현장 취재](https://mediahub.seoul.go.kr/archives/2018140) · [남쪽에서 본 일렬 배치](https://mediahub.seoul.go.kr/uploads/mediahub/2026/05/PkWPjYyraFkuUCDpgsIfNlROUWKWlnZf.jpg) | 23개가 같은 방향을 향하고, 전면 기단은 수직 단면이 있어 지면 위에서 끝난다. | 6.25m 상단은 유지. 저층 기단 위로 부드럽게 이어지는 곡면, 잘린 전면과 모서리 사면, 6개 석재 단으로 재구성. |
+| [기증석과 기단의 접사](https://mediahub.seoul.go.kr/uploads/mediahub/2026/05/kLiZmzJLFEhurVzGnxsnILUOgkuqNcRs.jpg) · [반대편 원경](https://mediahub.seoul.go.kr/uploads/mediahub/2026/05/QWhMNkDrOfSOphOsIrkkSojmxFOOHpFp.jpg) | 기증석은 기둥 옆에 붙인 표지가 아니라 낮은 기단에 들어간 모듈이며, 석재 종류에 따라 색이 다르다. | 개장 때 확인된 7개와 [10월 현장 취재](https://mediahub.seoul.go.kr/archives/2019630)에서 설치가 확인된 스웨덴까지 8개 기단 모듈. 색과 모듈 치수는 근사. |
+| [준공식 현장 23개국 배열](https://mediahub.seoul.go.kr/archives/2018128) · [국기 명판 확대](https://mediahub.seoul.go.kr/archives/2018217) | 미국→호주→영국→네덜란드로 시작, 스웨덴이 필리핀보다 남쪽, 대한민국이 북쪽 끝. 옆면에는 국기와 이름이 함께 있다. | 공통 배치 데이터에 23개 순서를 기록하고 모든 기둥에 한·영 이름과 국기 명판을 붙임. QR이나 기증 문양 원본 복제는 하지 않음. |
+| [프리덤 홀 주변 화단·유리 난간](https://mediahub.seoul.go.kr/uploads/mediahub/2026/05/hywkuQcKbFNdjEapBPuxrguqQXMWXZzd.jpg) · [정면 계단과 두 간판](https://mediahub.seoul.go.kr/archives/2018143) · [광장 반대편의 고각 전경](https://mediahub.seoul.go.kr/uploads/mediahub/2026/05/qHqIqUGQvtNHVFbyBrDqSXCCjJmXhOnO.jpg) | 낮은 화단과 경계석, 광장 포장의 줄눈, 정면의 두 이름이 공간을 구분한다. | 가까운 바닥·화단·광장 간판·프리덤 홀 입구 상부의 쌍간판 추가. 기존 계단·난간과 별도 물길 보행교는 유지. |
+
+사진에서 대략 맞춘 모델 숫자는 기단 높이 0.39m, 최대 반폭 0.455m, 돌 앞 끝이 축에서 약 6.42m다. **이 숫자는 배치·테스트에 쓰는 모델 치수이지 실측값이 아니다.** 사진과 공개 안내에서 확인한 공통 길이 6.25m는 기둥 높이이며 포장과 주변 접근로의 실제 단차를 뜻하지 않는다. [서울시보 실시계획 고시](https://urban.seoul.go.kr/UpisArchive/DATA/PM/pdf/11000TTC202603120009/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B3%A0%EC%8B%9C%20%EC%A0%9C2026-137%ED%98%B8%282026.3.12.%29.pdf)의 사업 면적을 개별 석재 너비로 환산하지 않았다.
+
+### 모델과 렌더를 남긴 방법
+
+별도의 `sejong_gratitude_plaza.blend`에 23개 석재와 각 명판, 화단, 복도 표지 및 포장 청크를 편집 가능하게 보관했다. 기단과 곡면 사이에 끊긴 선을 없애고, 바닥과 닿는 하부 수직벽·모따기·석재 이음은 따로 만들었다. 기증석은 기단을 실제로 분할해 교체하는 방식이라 표면 위에 떠 있는 판이 아니다. 재질은 자체 생성한 화강암·광장 포장과 공통 텍스처 하나로 만든 국기판을 쓰므로 서울시의 원본 사진을 텍스처로 재복제하지 않는다. 국기는 [flag-icons v7.5.0](https://github.com/lipis/flag-icons/tree/v7.5.0/flags/4x3)의 범용 국기이며 [MIT 고지](../scripts/assets/gratitude-flag-icons-LICENSE.txt)를 같이 둔다. 국가명과 안내 글씨는 새로 조판했다. 파일 다운로드나 외부 폰트 호출을 웹 런타임에 추가하지 않았다.
+
+GLB는 398,540B에서 566,948B로 **168,408B 증가**했다. 이전 GLB와 Blender 파일은 보존했고 기존 URL·S씨어터·광화문 자산은 바꾸지 않았다. 기존 거리 스트리밍에 새 해시·경계로만 등록했다. 샘플 사진에서 모바일 카메라가 멀어질 때 기존 나무 뒤로 빠지는 것을 확인해 좁은 비율에만 다른 카메라 위치를 썼다. 기존 주변 장면의 식생과 벤치를 숨겨 화면을 꾸미지 않았다.
+
+![이전 버전과 동일한 카메라에서 본 새 기단과 국기 명판](public-axis-20261125/gratitude-plaza/garden-row-after.jpg)
+
+| 확인 각도 | 자료 |
+| --- | --- |
+| 동일 카메라 Blender | [수정 전](public-axis-20261125/gratitude-plaza/garden-row-before.jpg) · [수정 뒤](public-axis-20261125/gratitude-plaza/garden-row-after.jpg) |
+| 수정 뒤 가까운 Blender | [석재 모듈·국기 표지](public-axis-20261125/gratitude-plaza/garden-stone-after.jpg) · [프리덤 홀 계단과 문 앞](public-axis-20261125/gratitude-plaza/garden-entry-after.jpg) |
+| 실제 웹 뷰어 | [이전 GLB](public-axis-20261125/gratitude-plaza/garden-web-previous.jpg) · [새 GLB, 동일 데스크톱 프리셋](public-axis-20261125/gratitude-plaza/garden-web-close.jpg) · [390px](public-axis-20261125/gratitude-plaza/garden-web-mobile.jpg) |
+
+Blender 독립 렌더의 첫 계단 컷에서는 비교 장면용 평면이 입구 구멍을 막아 보였다. 테스트 렌더에서만 생긴 오류였고, 비교용 평면을 계단 구멍 밖 네 조각으로 나눈 다음 다시 찍었다. 실제 메시 검사는 23개 상단 높이와 기단 전면의 최소 높이, 명판 존재, 원래 계단과 보행교의 보존을 확인한다. 실제 Chromium에서는 신·구 GLB가 각각 200으로 로드되는지, 390px에서 가로 넘침 없이 열리는지, 자바스크립트 오류가 없는지를 검사했다. Node 144/144 및 Vite production build 통과. 기존 500kB 번들 경고는 남았다.
+
+```sh
+blender -b --factory-startup --disable-autoexec -t 4 --python-exit-code 1 \
+  -P scripts/build_gratitude_plaza.py -- --source path/to/pinned-survey.blend --gltfpack path/to/gltfpack
+python scripts/refresh_gratitude_manifest.py
+node --test tests/*.test.js
+npm run build
+# Vite preview를 띄우고 AXIS_ORIGIN, CHROME_PATH, PLAYWRIGHT_PATH를 환경에 맞게 지정
+node tests/gratitude-garden-browser.cjs
+```
+
+[GLB·배치·텍스처 검증값](../public/model/public-axis-20261125/gratitude-plaza-evidence.json)까지 남겼다. **남은 범위**는 실제 원점·측량과 현장별 포장 색·폭, 8개 외의 기증석 설치 현황, 명판의 세부 문장·QR, 프리덤 홀 내부 전시와 실제 야간 공중 광선이다. 서울시의 [운영 안내](https://uri.seoul.go.kr/ghm/gratitudeGarden/list.do?mid=1360)는 광선의 존재를 확인하는 근거일 뿐, 이번 GLB에는 상단 렌즈 형상까지만 포함한다.
