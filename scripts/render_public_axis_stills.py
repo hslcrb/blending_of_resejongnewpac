@@ -31,6 +31,6 @@ def image(title, pos, focal, lens):
  optic.lens=lens
  scene.render.filepath=str(Path(sys.argv[sys.argv.index('--')+1])/f'{title}.jpg')
  bpy.ops.render.render(write_still=True)
-image('s-theatre-sunken',(30.6,119.32,3.91),(33.6,115.8,-1.0),25)
+image('s-theatre-sunken',(34.8,119.32,3.91),(31.8,115.8,-1.0),25)
 image('gwanghwamun-roof-forecourt',(368,-96,11),(404,-71,8.3),44)
 image('gratitude-stone-detail',(55,-80,3.1),(69,-71,2.38),44)

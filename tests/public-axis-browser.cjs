@@ -12,7 +12,7 @@ async function open(browser,viewport,scenario) {
     const models=[];
     p.on('pageerror',e=>errors.push(e.message));
     p.on('response',response=>{if(response.url().includes('/model/'))models.push({url:response.url(),status:response.status()});});
-    if(scenario==='missing') await p.route('**/public-axis-20261125/theatre.glb',r=>r.fulfill({status:404,body:'missing'}));
+    if(scenario==='missing') await p.route('**/public-axis-20261125/theatre-field.glb',r=>r.fulfill({status:404,body:'missing'}));
     if(scenario==='before') await p.route('**/model/streaming-manifest.json',async r=>{
         const f=await r.fetch();const data=await f.json();
         delete data.sTheatrePatch;
@@ -47,15 +47,15 @@ async function snap(frame,name) {
                 await p.waitForTimeout(950);
                 await snap(frame,'web-theatre-'+scenario);
                 if(scenario==='after'){
-                    assert.ok(models.some(r=>r.url.endsWith('/theatre.glb')&&r.status===200));
+                    assert.ok(models.some(r=>r.url.endsWith('/theatre-field.glb')&&r.status===200));
                 }
                 if(scenario==='missing'){
-                    assert.ok(models.some(r=>r.url.endsWith('/theatre.glb')&&r.status===404));
+                    assert.ok(models.some(r=>r.url.endsWith('/theatre-field.glb')&&r.status===404));
                     assert.equal(await p.getByRole('button',{name:'처음 시점',exact:true}).isEnabled(),true);
                     assert.deepEqual(errors,[]);
                     continue;
                 }
-                const gardenEnd=scenario==='after'?'/gratitude.glb':'/20261103-gratitude-garden.glb';
+                const gardenEnd=scenario==='after'?'/gratitude-field.glb':'/20261103-gratitude-garden.glb';
                 const gardenPromise=!models.some(r=>r.url.endsWith(gardenEnd)&&r.status===200) && p.waitForResponse(r=>r.url().endsWith(gardenEnd)&&r.status()===200,timeout);
                 await news.selectOption('gratitude-garden',timeout);
                 if(gardenPromise) await gardenPromise;

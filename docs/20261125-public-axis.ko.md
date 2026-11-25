@@ -102,3 +102,36 @@ Blender 5.0.1에서 고정 원본을 읽어 이전 평면과 바뀐 보행 지�
 ## 6. 남겨 둔 부분
 
 정밀 실측, 공연장 객석/예술동 엘리베이터, 프리덤 홀 미디어 월과 가동 중인 전시, 새로 참여한 국가별 실물 석재, 실물 단청 문양 전체, 어도 앞 석수, 북쪽 궁궐과 차도 교통은 후속 범위다. 전 구간 성능·실기기와 운영 액세스 안의 동작은 별도 검증해야 한다. 이 기록에서 확인된 장면과 추정값을 섞어서 인허가·안전·현장 안내에 사용하면 안 된다.
+
+## 7. 현장 대조 재작업: 반대편 입구와 감사의 빛 23
+
+첫 버전은 `8f489ebe`로 병합되어 Cloudflare Pages production에서 배포된 것을 확인했다. 아래는 그 시점에 호세가 지적한 두 오류에 대한 후속 변경이다. 위의 렌더와 수치는 앞 버전의 작업 기록이므로 삭제하지 않는다.
+
+### S씨어터: 사진의 좌우를 모델 축에 매핑
+
+[1층 공식 안내도](https://www.sejongpac.or.kr/static/portal/img/content/img_space_add.png)에서 D(유리 입구)와 H(예술동) 사이의 통행 관계를 확인하고, [동일 투영의 공식 주차장 진입 안내도](https://www.sejongpac.or.kr/static/portal/img/content/parking_0104.gif)에 적힌 광화문·광장·8번 출구로 방위를 설정했다. 광화문이 북측임을 기준으로 보면, 관람객이 예술동 쪽에서 마주보는 면은 모델의 **+X, 북쪽 긴 면**이다. [2018년 세종문화회관 공개 외관](https://mediahub.seoul.go.kr/wp-content/uploads/2018/10/737e327f2c72449652c283a78bfde5aa.jpg)과 [공개 입구 내부 사진](https://mediahub.seoul.go.kr/wp-content/uploads/2018/10/dba6814d14f1f5545faecd31fa91e1f4.jpg), [답사 사진 127 및 관계표](sitevisit-photo-relationships.md)를 비교했다. 사진을 보는 사람의 오른쪽, 노란 S 가까이에 유리문이 있고 반대쪽에 돌계단이 있다.
+
+처음에는 남쪽 면을 기준으로 사진 오른쪽을 해석해 문을 같은 면에서 반대쪽 끝으로 옮겨봤다. 방위 표기가 있는 두 번째 자료를 겹쳐 보니 그 가설은 틀렸다. 최종본은 건물 장축을 유지한 채 문을 반대 면으로 옮겼다. 북쪽으로부터 남쪽을 바라보면 사진 오른쪽이 Blender +Y라, 유리면 길이의 약 81~94% 지점에 문을 배치했다. 새 모델의 문은 **X=36.5m, Y=120.35~121.85m**이고 폭 약 1.50m이며 기존 추정 1.46m와 비슷하다. 이것은 사진 비례를 로컬 모델에 대입한 수치이지 측량 좌표가 아니다. 문만 옮기지 않고 포치, 노란 S, 난간, 계단 개구부, 지면을 같이 반전·재절삭했다. 새 접근점은 북쪽에서 남쪽으로 바라보게 했고 기존 남쪽 벽을 통과할 수 없는 것도 검사했다.
+
+![북측 출입구에 맞춰 반전한 선큰 계단의 Blender 렌더](public-axis-20261125/field/s-theatre-sunken.jpg)
+
+### 감사의 정원: 휘어진 배열과 반복된 판 모양 수정
+
+[서울시 준공 자료](https://mediahub.seoul.go.kr/archives/2018122)의 남북 일렬 표기와 [개장 현장 측면](https://mediahub.seoul.go.kr/archives/2018143), [석재 근접 사진](https://mediahub.seoul.go.kr/uploads/mediahub/2026/05/EgvfvcJmKdQKbhTGiKplysWFYhsYsNSv.png), [야간 원경](https://mediahub.seoul.go.kr/uploads/mediahub/2026/05/hVQbCJoSzpsOEMczdHhcPKWFcjCYDsjt.jpg), [프리덤 홀 입구 현장](https://mediahub.seoul.go.kr/uploads/mediahub/2026/05/pbAZnZZzhzbqboCjZqKGDcIafxxxENdB.png)을 같이 봤다. 첫 버전이 같은 갈고리 모양을 휜 줄에 놓아 실제로 보이는 바닥과 수직부의 접선과 석재 모서리의 차이를 놓쳤다.
+
+23개를 **남북 직선**, 동일 6.25m 석재 상단 높이로 맞췄다. 바닥으로 길게 닿는 발부터 위로 올라오는 면을 연속 곡선으로 만들고, 각 조형물의 밝은 사면·좁은 홈과 수평 줄눈을 별도로 모델링했다. 명판은 면에 붙이고, 기증석은 개장 시 확인된 일곱 나라에만 표시했다. 명판의 실제 국기 그림이나 11월의 추가 기증석, 석재 산지별 색과 곡률·간격은 이번 공개 자료로 확정하지 못해 추정 또는 미반영이다. 기존 프리덤 홀 계단과 물길 보행교는 유지했다.
+
+![직선 배열, 석재의 줄눈·사면과 낮은 발을 보강한 Blender 렌더](public-axis-20261125/field/gratitude-stone-detail.jpg)
+
+### 검증과 기록 규칙
+
+기존 Blender 파일 및 GLB는 남겨 두고, `sejong_public_axis_field.blend`, `theatre-field.glb`, `gratitude-field.glb`를 새 경로에 올렸다. 서로 다른 URL이라 이전 GLB 캐시와 섞이지 않는다. 두 새 GLB의 상세 크기·해시·좌표는 [field-evidence.json](../public/model/public-axis-20261125/field-evidence.json)에 남겼다. 광화문 GLB 파일과 SHA는 바꾸지 않았다. Blender 지면 광선 검사에서 계단 여섯 지점·기존 물길 보행교·조형물 23개를 확인했고, Node 단위 테스트 142개와 Vite 빌드가 통과했다.
+
+이후에도 확인한 사진과 도면은 출처·각도·판단과 함께 회차별로 여기에 추가한다. 이번에 직접 만든 사진·렌더는 원본 파일을 함께 넣는다. 외부 사진은 재게시 권한이 뚜렷하지 않으면 원본 링크만 연결한다.
+
+| 웹 카메라 | 앞 버전 | 후속 버전 |
+| --- | --- | --- |
+| S씨어터 | [남쪽에서 본 기존 문](public-axis-20261125/web-theatre-after.jpg) | [북쪽 긴 유리면과 노란 S](public-axis-20261125/field/web-theatre-after.jpg) |
+| 감사의 정원 | [첫 조형](public-axis-20261125/web-gratitude-after.jpg) | [직선 배열과 석재 홈](public-axis-20261125/field/web-gratitude-after.jpg) |
+
+S씨어터 두 스틸은 문이 있는 면 자체가 달라 카메라 위치도 다르다. 별도의 [시설 위치 대표점](https://qbh.purpleo.kr/article/809)은 출입문 측량값이 아니므로 파빌리온 배치 전체를 해당 핀으로 이동하지 않았다. 이 회차는 **북쪽을 향하는 출입구와 유리면 내 상대 위치**를 교정했으며, 캠퍼스 전체의 절대 좌표·단차 실측은 남았다.

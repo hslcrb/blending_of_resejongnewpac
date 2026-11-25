@@ -8,7 +8,7 @@ import bpy
 from mathutils import Vector
 
 root=Path(__file__).resolve().parents[1]
-data=json.loads((root/"public/model/public-axis-20261125/build-evidence.json").read_text())
+data=json.loads((root/"public/model/public-axis-20261125/field-evidence.json").read_text())
 parser=argparse.ArgumentParser()
 parser.add_argument('--source',required=True,type=Path)
 parser.add_argument('--output',required=True,type=Path)
@@ -16,7 +16,7 @@ parser.add_argument('--render',action='store_true')
 parser.add_argument('--engine',choices=('CYCLES','BLENDER_EEVEE','BLENDER_WORKBENCH'),default='CYCLES')
 args=parser.parse_args(sys.argv[sys.argv.index('--')+1:])
 args.output.mkdir(parents=True,exist_ok=True)
-packed=root/"blender_work/20261125-public-axis/sejong_public_axis_components.blend"
+packed=root/"blender_work/20261125-public-axis/sejong_public_axis_field.blend"
 bpy.ops.wm.open_mainfile(filepath=str(args.source),load_ui=False)
 scene=next((s for s in bpy.data.scenes if '주간' in s.name),bpy.context.scene)
 bpy.context.window.scene=scene
@@ -85,7 +85,7 @@ def render(name,pos,target,lens=37):
 
 oldfloors=[o for o in scene.objects if o.name in names and (o.name=='ground' or o.name.startswith('Surroundings'))]
 check_close(ray_z(33,115,oldfloors),0)
-render("theatre-before",(21,126,2.65),(32,116,2.35),33)
+render("theatre-before",(45,126,2.65),(32,116,2.35),33)
 render("gratitude-before",(53,-82,4.2),(77,-71,2.3),45)
 render("north-before",(341,-55,23),(396,-75,6.2),42)
 
@@ -106,15 +106,16 @@ ground=locates("Axis ground replacement",new)
 t=locates("S Theatre / sunken",new)+ground
 checks=[(33,118.72,.24),(33,118.45,.07),(33,117.86,-.27),(33,115.1,-2.14),(33,112.93,-3.16),(27.8,117,0)]
 # Height expectations follow drawn steps and measured mesh, not box boundaries inferred from the renderer.
-for x,y,h in checks:check_close(ray_z(x,y,t),h)
-assert not ray_z(33,115,ground)
+mirror=data["theatreLayout"]["minX"]+data["theatreLayout"]["maxX"]
+for x,y,h in checks:check_close(ray_z(mirror-x,y,t),h)
+assert not ray_z(mirror-33,115,ground)
 check_close(ray_z(155,-116,locates("Watercourse pedestrian bridge",new)),.115)
 assert len({o.name.split(' / ')[0] for o in new if o.name.startswith('Gratitude Light')})==23
 for prefix in ["Gwanghwamun /","Woldae plaque /"]:
  assert locates(prefix,new)
 print('PUBLIC AXIS: legacy terrain, six new floor samples, bridge, 23 sculptures and gate verified',flush=True)
-render("theatre-after",(21,126,2.65),(32,116,2.35),33)
-render("theatre-skylight",(31.4,120.4,2.0),(33,115,-.6),29)
+render("theatre-after",(45,126,2.65),(32,116,2.35),33)
+render("theatre-skylight",(mirror-31.4,120.4,2.0),(mirror-33,115,-.6),29)
 render("gratitude-after",(53,-82,4.2),(77,-71,2.3),45)
 render("north-after",(341,-55,23),(396,-75,6.2),42)
 render("north-detail",(355,-70,3.1),(412,-73,9),38)
