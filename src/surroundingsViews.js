@@ -2,6 +2,9 @@
 const PRESETS = {
     perspective: { position: [170, 235, 155], target: [0, 4, 5] },
     front: { position: [0, 55, 112], target: [0, 8, -35] },
+    's-theatre': { position: [17, 4.7, -128], target: [32, 2.3, -116] },
+    'gratitude-garden': { position: [52, 5, 83], target: [78, 2.7, 71] },
+    'north-axis': { position: [325, 29, 53], target: [400, 7, 73] },
     rear: { position: [-100, 115, -170], target: [0, 6, -45] },
 };
 
