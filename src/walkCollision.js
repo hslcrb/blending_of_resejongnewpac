@@ -1,3 +1,4 @@
+import gratitude from './gratitudeGardenLayout.json' with { type: 'json' };
 import { isCampusPlanting } from './campusLayout.js';
 import { northAxisWalkable, sTheatreObstructed } from './publicAxis.js';
 
@@ -39,7 +40,11 @@ const SURROUNDINGS_BLOCKS = [
     { minX: 110.3, maxX: 120, minZ: 61.4, maxZ: 61.9 },
     { minX: 110.3, maxX: 120, minZ: 65.1, maxZ: 65.6 },
     // Separate memorial columns keep the spaces between them passable.
-    ...Array.from({ length: 23 }, (_, i) => ({ minX: 62.65 + 2 * i, maxX: 63.35 + 2 * i, minZ: 69.5, maxZ: 76.3 })),
+    ...Array.from({ length: gratitude.count }, (_, index) => {
+        const center = gratitude.originX + gratitude.spacingX * index;
+        return { minX: center - gratitude.halfWidth, maxX: center + gratitude.halfWidth,
+            minZ: gratitude.spineZ + gratitude.backZ, maxZ: gratitude.spineZ + gratitude.frontZ };
+    }),
     // The southern cafe shell (photo 048); the recessed entrance remains open.
     { minX: -118.3, maxX: -117.7, minZ: -7.3, maxZ: 10.95 },
     { minX: -118.3, maxX: -117.7, minZ: 13.25, maxZ: 15.3 },

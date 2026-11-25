@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": "20261125-public-axis-v3-field",
+  "revision": "20261125-public-axis-v4-gratitude",
   "focusBounds": {
     "min": [
       -78,
@@ -325,18 +325,18 @@
     },
     {
       "id": "gratitude-garden",
-      "url": "/model/public-axis-20261125/gratitude-field.glb",
-      "bytes": 398540,
-      "objects": 334,
+      "url": "/model/public-axis-20261125/gratitude-plaza.glb",
+      "bytes": 566948,
+      "objects": 262,
       "bounds": {
         "min": [
-          62.72,
+          55.0,
           -3.42,
-          56.92
+          49.3
         ],
         "max": [
           158.5,
-          6.259,
+          6.251,
           117.3
         ]
       },
@@ -344,7 +344,7 @@
       "unloadDistance": 155,
       "shadowDistance": 55,
       "maxViewDistance": 330,
-      "sha256": "ff181c49ecd7d77c9e42770fcc990a9e32ce6de81c20d80005a452eb908dba3d"
+      "sha256": "5b66affa6d78794204418e175a625dc550c22b73058bcec26df9697a302f3b56"
     },
     {
       "id": "plaza-water-detail",
