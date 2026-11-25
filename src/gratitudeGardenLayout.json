@@ -1,0 +1,25 @@
+{
+  "count": 23,
+  "height": 6.25,
+  "originX": 63,
+  "spacingX": 2,
+  "spineZ": 70,
+  "halfWidth": 0.455,
+  "backZ": -0.21,
+  "frontZ": 6.42,
+  "plinthHeight": 0.39,
+  "countries": [
+    ["us", "미국", "United States"], ["au", "호주", "Australia"],
+    ["gb", "영국", "United Kingdom"], ["nl", "네덜란드", "Netherlands"],
+    ["ca", "캐나다", "Canada"], ["fr", "프랑스", "France"],
+    ["nz", "뉴질랜드", "New Zealand"], ["se", "스웨덴", "Sweden"],
+    ["ph", "필리핀", "Philippines"], ["tr", "튀르키예", "Türkiye"],
+    ["th", "태국", "Thailand"], ["za", "남아프리카공화국", "South Africa"],
+    ["in", "인도", "India"], ["gr", "그리스", "Greece"],
+    ["be", "벨기에", "Belgium"], ["lu", "룩셈부르크", "Luxembourg"],
+    ["dk", "덴마크", "Denmark"], ["et", "에티오피아", "Ethiopia"],
+    ["co", "콜롬비아", "Colombia"], ["no", "노르웨이", "Norway"],
+    ["it", "이탈리아", "Italy"], ["de", "독일", "Germany"],
+    ["kr", "대한민국", "Republic of Korea"]
+  ]
+}
