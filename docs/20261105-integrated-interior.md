@@ -1,4 +1,4 @@
-# 기존 대극장을 외피 안에 배치 — 2026-11-05
+# 기존 대극장을 외피 안에 배치 - 2026-11-05
 
 이번 작업은 이미 만든 `grand-theatre`의 1,368개 좌석과 발코니, 무대막, 오르간, 음향반사판, 스크린, 무대 뒤 철골을 재사용한다. 새 독립 scene을 만들어 이동하는 방식이 아니라, `append_campus_interior(scene, theatre_blend)`로 현재 외피 scene의 `CampusGrandTheatreInterior_20261105` collection에 기존 메시를 복사하여 물리적으로 배치한다. 원본 내부 메시 데이터와 기존 `grand-theatre.glb`는 보존한다. 외피의 기존 고체 벽과 출입구 절개는 통합 담당자가 처리한다.
 

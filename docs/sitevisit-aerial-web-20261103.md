@@ -2,7 +2,7 @@
 
 ## 사용자 자료와 작업본
 
-사용자가 보낸 항공사진은 [원본 PNG](references/user-media/20261103-aerial.png)에 보존했다. 이번 요청을 포함한 사용자 명령 9개는 [원문 기록](references/user-requests-verbatim.md)과 대응 JSON에, 명시적으로 제공된 첨부 25개의 원본/복사본 SHA-256 대조는 [자료 보존 감사](references/archive-audit-20261103.json)에 있다. 초기 첨부 24개와 새 항공사진 1개 모두 원본 경로와 저장소 사본이 일치했다. 답사 폴더의 149개 원본과 전수 관찰 기록도 기존 그대로 보존했다.
+사용자가 보낸 항공사진은 [원본 PNG](references/user-media/20261103-aerial.png)에 보존했다. 명시적으로 제공된 첨부 25개의 원본/복사본 SHA-256 대조는 [자료 보존 감사](references/archive-audit-20261103.json)에 있다. 초기 첨부 24개와 새 항공사진 1개 모두 원본 경로와 저장소 사본이 일치했다. 답사 폴더의 149개 원본과 전수 관찰 기록도 기존 그대로 보존했다.
 
 작업 시작에 `git pull --ff-only`를 수행했고 기준은 `99b8d87`이다. 이전 `sejong_survey_manual_20261103.blend`는 보존하고 live Blender MCP에서 **`blender_work/20261103/sejong_aerial_streaming_20261103.blend`** 복사본을 수정했다. 예전 전체 장면 생성 스크립트는 실행하지 않았다.
 

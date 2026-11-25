@@ -1,4 +1,4 @@
-# 독립 건물정보 패널 — 2026-11-04
+# 독립 건물정보 패널 - 2026-11-04
 
 `src/area/BuildingInformation.jsx`는 기존 장면과 분리된 두 내보내기를 제공한다. `useBuildingInformation`은 돋보기·검색 조회 순서와 현재 선택을 관리하고, `BuildingInformationPanel`은 근처 건물·서울 전체 목록과 검색을 보여준다. 독립 스타일은 `src/area/building-information.css`에 있다. 이 모듈은 페이지를 임의로 수정하거나 장면에 직접 접근하지 않는다.
 

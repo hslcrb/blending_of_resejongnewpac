@@ -32,8 +32,8 @@ for (const feature of collection.features) {
 
 ```powershell
 $env:PYTHONUTF8='1'
-& 'C:\Program Files\QGIS 3.44.15\bin\python-qgis-ltr.bat' scripts/build_national_cultural.py --source '<로컬 경로>' --output public/data
-& 'C:\Program Files\QGIS 3.44.15\bin\python-qgis-ltr.bat' scripts/validate_national_cultural.py --source '<로컬 경로>' --data public/data/national-cultural-changes.geojson
+& 'C:\Program Files\QGIS 3.44.15\bin\python-qgis-ltr.bat' scripts/build_national_cultural.py --source '<자료 폴더>\CH_D010_00_20261103\CH_D010_00_20261103.shp' --output public/data
+& 'C:\Program Files\QGIS 3.44.15\bin\python-qgis-ltr.bat' scripts/validate_national_cultural.py --source '<자료 폴더>\CH_D010_00_20261103\CH_D010_00_20261103.shp' --data public/data/national-cultural-changes.geojson
 python -m unittest tests/national_cultural_test.py
 node --test tests/national-cultural-data.test.mjs
 ```

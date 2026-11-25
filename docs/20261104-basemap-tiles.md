@@ -48,7 +48,7 @@ map.setBrightness(0.7); // 0–1, 기본 1
 ```powershell
 node --test tests/basemap-projection.test.js tests/basemap-layer.test.js
 # Vite 서버를 포트 4177에 띄운 뒤 Playwright와 Chrome 경로를 지정:
-$env:PLAYWRIGHT_PATH='<로컬 경로>'
+$env:PLAYWRIGHT_PATH='<자료 폴더>\renewsejongpac\v5\node_modules\playwright'
 $env:CHROME_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'
 node tests/basemap-render.cjs
 ```

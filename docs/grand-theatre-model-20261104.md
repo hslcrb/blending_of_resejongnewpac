@@ -15,7 +15,7 @@
 ## 재생성 및 검증
 
 ```powershell
-& 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' -b --threads 2 --python scripts/build_grand_theatre.py -- --source '<로컬 경로>'
+& 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' -b --threads 2 --python scripts/build_grand_theatre.py -- --source '<자료 폴더>\blenderssejong\blender_work\20261104-live-sky\blender_work\20261104\sejong_trees_connected_20261104.blend'
 python -B -m unittest tests/grand_theatre_contract_test.py
 ```
 

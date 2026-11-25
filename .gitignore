@@ -1,6 +1,5 @@
 node_modules/
 dist/
-.local-reports/
 *.blend1
 
 # Isolated, disposable GIS regeneration outputs.

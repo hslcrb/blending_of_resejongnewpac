@@ -8,7 +8,7 @@
 | --- | --- | ---: | ---: |
 | `public/gis/national-admin.json.gz` | 시도 30개·시군구 백지도 3,176개 폴리곤 | 약 0.98MB | 약 3.32MB |
 | `public/gis/seoul-ground.json.gz` | 서울 인근 행정선·하천·국도·철도 43,668개 선 | 약 2.38MB | 약 32.37MB |
-| `public/gis/manifest.json` | 원본 해시, 좌표계, 레이어 건수, 정확한 크기와 압축 해시 | 2KB 내외 | — |
+| `public/gis/manifest.json` | 원본 해시, 좌표계, 레이어 건수, 정확한 크기와 압축 해시 | 2KB 내외 | - |
 
 두 압축 파일의 형식은 GeoJSON `FeatureCollection`이지만 좌표는 경위도가 아닌 **EPSG:5186 미터 `[동쪽, 북쪽]`**이다. 각 feature의 `id`는 `원본 레이어명:FID`, `properties`는 `layer`, `fid`, `fields`를 갖는다. 원본의 나머지 속성은 그대로 남기되 제공자 컴퓨터 경로가 들어 있는 `path` 필드는 공개하지 않는다. 좌표는 0.1m 단위로 기록한다. 전국 폴리곤은 위상 보존 방식으로 50m, 서울 선형은 5m 단순화했다. 원본 자체가 소축척이므로 정밀 위치가 필요한 지적 측량·경계 판정에는 사용할 수 없다.
 
@@ -40,7 +40,7 @@ const data = await loadOverview('/gis/national-admin.json.gz');
 Windows QGIS 설치 시 저장소 루트에서 실행한다. 데이터 경로는 실제 위치에 맞게 지정한다.
 
 ```powershell
-& 'C:\Program Files\QGIS 3.44.15\bin\python-qgis-ltr.bat' scripts/export_overview_gis.py --input '<로컬 경로>'
+& 'C:\Program Files\QGIS 3.44.15\bin\python-qgis-ltr.bat' scripts/export_overview_gis.py --input '<자료 폴더>\CH_D010_00_20261103\디지털소축척지도_대한민국전도\대한민국전도_.gpkg'
 node --test tests/gis-overview.test.mjs
 ```
 
