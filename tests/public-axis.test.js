@@ -96,3 +96,32 @@ test('only obsolete interior is retired inside the rear garden chunk', () => {
     chunk.add(stale,garden);hideOldPavilionInterior(chunk);
     assert.equal(stale.visible,false);assert.equal(garden.visible,true);
 });
+
+test('the pavilion GLB keeps the existing stone base and carries both new tier meshes', () => {
+    const entry=manifest.chunks.find(c=>c.id==='gwanghwamun-north-axis');
+    const evidence=read('../public/model/public-axis-20261125/gwanghwamun-pavilion-evidence.json');
+    const previous=read('../public/model/public-axis-20261125/field-evidence.json').north;
+    const json=readGlbMetadata(entry.url);
+    const old=readGlbMetadata(previous.url);
+    for (const key of ['url','sha256','bytes','objects','bounds']) assert.deepEqual(entry[key],evidence[key]);
+    assert.equal(json.nodes.length,evidence.objects);
+    const names=json.nodes.map(n=>n.name||'');
+    for(const prefix of ['Lower pavilion / four continuous','Upper pavilion / four continuous',
+        'Lower pavilion / posts','Upper pavilion / posts','Pavilion plinth','Upper / black plaque']) {
+        assert.ok(names.some(n=>n.startsWith(prefix)),prefix);
+    }
+    const preserved=old.nodes.filter(n=>n.name?.startsWith('Gwanghwamun / three vaulted')||
+        n.name?.startsWith('Gwanghwamun / Woldae stair')||
+        n.name?.startsWith('Gwanghwamun / northern square'));
+    assert.ok(preserved.length>0);
+    assert.ok(preserved.every(n=>names.includes(n.name)));
+    assert.equal(names.filter(n=>n.startsWith('Plaque gilt ')).length,3);
+    assert.ok(!names.some(n=>n.includes('two timber halls')));
+    assert.equal(entry.bounds.max[2],previous.bounds.max[2]);
+    assert.ok(entry.bytes<1_500_000,'detailed streamed GLB budget');
+});
+
+function readGlbMetadata(url) {
+    const buf=readFileSync(new URL('../public'+url,import.meta.url));
+    return JSON.parse(buf.toString('utf8',20,20+buf.readUInt32LE(12)));
+}
