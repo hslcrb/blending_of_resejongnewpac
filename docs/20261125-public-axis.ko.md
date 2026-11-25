@@ -178,3 +178,47 @@ node tests/gratitude-garden-browser.cjs
 ```
 
 [GLB·배치·텍스처 검증값](../public/model/public-axis-20261125/gratitude-plaza-evidence.json)까지 남겼다. **남은 범위**는 실제 원점·측량과 현장별 포장 색·폭, 8개 외의 기증석 설치 현황, 명판의 세부 문장·QR, 프리덤 홀 내부 전시와 실제 야간 공중 광선이다. 서울시의 [운영 안내](https://uri.seoul.go.kr/ghm/gratitudeGarden/list.do?mid=1360)는 광선의 존재를 확인하는 근거일 뿐, 이번 GLB에는 상단 렌즈 형상까지만 포함한다.
+
+## 9. 광화문 2층 문루: 정면의 세 칸부터 다시 세우기
+
+정원을 고친 뒤 다음 우선순위를 문루에 두었다. 기존 웹 자산은 전면을 사실상 폭이 같은 창 여러 개로 반복했고, 기둥이 창살과 비슷한 두께였다. 낮은 처마의 얇은 경계 위로 주택의 지붕 같은 면이 한 번 더 떠 보였다. 이번에는 지붕 크기만 키우지 않고, **석축 위에 굵은 목주가 세 칸을 만들고 그 위로 넓은 처마가 펼쳐지는 실루엣**을 다시 구성했다. 색감보다 먼저 네 기둥과 두 지붕의 그림자를 비교했다.
+
+### 근거와 확인 순서
+
+| 근거 | 확인한 부분 | 모델에 옮긴 방법 |
+| --- | --- | --- |
+| [한국학중앙연구원: 경복궁 광화문](https://encykorea.aks.ac.kr/Article/E0002439) | 우진각지붕, 중층, 정면 3칸·측면 2칸, 다포 | 먼저 기둥과 공간을 나눈 뒤 네 지붕면이 용마루에서 만나는 형태로 구성했다. 팔작처럼 삼각 벽을 세우지 않았다. |
+| [서울시 현장 기록: 장승철 촬영](https://mediahub.seoul.go.kr/archives/2014171) | 월대 정면, 해치 옆에서 본 입면, 현판 가까이에서 보이는 막새·단청·격자 | 사선 창살, 현판 금빛, 서까래 단면과 창의 깊이를 따로 보정했다. |
+| [서울시: 월대 복원과 파사드 정면·높은 시점](https://mediahub.seoul.go.kr/archives/2009341) | 위에서 보이는 지붕 경사와 보행자 시점의 처마 밑 실루엣 | 같은 지붕을 정면과 비스듬한 시점으로 번갈아 살피고, 낮은 층이 윗층을 먹어 보이지 않도록 조정했다. |
+| [서울시: 장소의 기억과 광화문 재현](https://mediahub.seoul.go.kr/archives/2014810) | 낮 정면과 밤 사선에서 보이는 지붕·석축의 위계 | 누각 면을 조금씩 나누고, 낮의 목재·기와가 너무 반짝이거나 검게 뭉치지 않게 했다. |
+| [국립고궁박물관: 광화문 월대의 복원](https://www.gogung.go.kr/gogung/cmmn/file/fileDown.do?atchFileId=3bbe9a9f1fff4afdbe9da9a9bb351918&fileSn=2&menuNo=800105) | 월대와 성문 사이의 연결 | 새 누각만 교체하고 기존 월대 접근과 홍예는 유지했다. |
+
+참고 사진 자체는 텍스처, 저장소, 비교 렌더에 넣지 않았다. [국가유산청 광화문 도면 이미지 등록 페이지](https://www.data.go.kr/data/15102114/fileData.do)와 [국가기록원 복원 설계 목록](https://www.archives.go.kr/next/newsearch/showDetailPopup.do?p_current_page=2&rc_code=1310377&rc_rfile_no=201003360333&rc_ritem_no=&sitePage=0-0-0)을 추가 근거로 연결한다. 이번 치수는 도면 원본을 계측해 옮긴 수치가 아니다.
+
+### 두 지붕과 공포를 따로 구성한 이유
+
+- **목구조.** 한쪽 면의 주요 목주 4개, 깊이의 중앙 기둥, 문틀에 들어간 사선 격자, 퇴색한 적갈색과 녹색 계열 부재를 분리했다. 기둥은 상하 지름이 다른 다각 단면이다. 임의의 수직 막대만 반복하던 판벽에서, 각 칸의 어두운 내측 배경 앞에 창살과 틀을 넣는 방식으로 바꿨다.
+- **처마와 기와.** 지붕의 네 면을 연속 곡면으로 만들고, 추녀 합류선과 용마루를 단면을 쓸어 만든 입체 띠로 처리했다. 고른 기와 골을 곡면의 실제 높낮이에 반영하고, 끝은 막새와 칠한 서까래 단면으로 따로 모델링했다. 취두·잡상은 작은 실루엣으로 읽히도록 조형했지만 개수·세부 조각을 실측 복원했다고 보지 않는다.
+- **시행착오.** 초안에서 아래층 마루가 너무 높아 윗층 측면의 창살에 지붕이 박혀 보였다. 사선 카메라에서 확인한 뒤 아래층 마루 높이 증가분을 2.30→1.75 모델 단위로 낮췄다. 두 창 높이와 기둥은 유지했다. 현판도 초안에서는 크기가 작고 공포에 가렸다. 현판판을 받침보다 앞으로 옮겨 걸고, 글자를 키우고, 작게 읽히는 녹청 계열 테두리를 뒀다. 문자는 남측 정면에서 왼쪽부터 `門化光`, 전통 방향으로 오른쪽부터 광화문이다. Noto Serif CJK 계열 글자를 메시로 바꾼 근사이며 2023년 실물 붓글씨의 복제는 아니다.
+- **경계.** 누각과 대석 사이 낮은 난간 실루엣을 더했다. 기존 월대·석축 3개 홍예·북쪽 접근부는 이름으로 가져왔다. 두 Blender 파일에서 기존 석축·월대·광장 메시 12개의 월드 정점과 면 인덱스 SHA-256을 계산해 동일한 것을 확인했다. 기존 정원, S씨어터, 출입 충돌 범위는 수정하지 않았다.
+
+### 렌더와 웹 자산
+
+| 같은 카메라에서 | 이전 문루 | 수정한 문루 |
+| --- | --- | --- |
+| 정면 월대에서 | ![기존 광화문 정면: 많은 세로 창틀을 반복하고 얇은 지붕을 가진 모습](public-axis-20261125/gwanghwamun-before-front.jpg) | ![수정 광화문 정면: 세 칸과 두 겹 처마, 검정과 금빛 현판](public-axis-20261125/gwanghwamun-after-front.jpg) |
+| 옆에서 처마 밑 | ![기존 사선: 단순 기와선의 목조부](public-axis-20261125/gwanghwamun-before-eaves.jpg) | ![수정 사선: 추녀, 서까래 끝과 입체 공포](public-axis-20261125/gwanghwamun-after-eaves.jpg) |
+
+편집 가능한 새 원본은 [sejong_gwanghwamun_pavilion.blend](../blender_work/20261125-public-axis/sejong_gwanghwamun_pavilion.blend)이다. 종전 Blender 파일과 GLB는 유지한다. [새 GLB](../public/model/public-axis-20261125/gwanghwamun-pavilion.glb)는 1,304,780B(같은 청크 종전 297,864B, +1,006,916B), glTF 노드 61개다. 메인 모델에는 합치지 않았고 북쪽 청크의 거리 조건을 유지했다. 199m 폭의 청크에서 얇은 장식이 뭉개질 수 있어 정수 양자화 경고가 난 초안을 버리고 gltfpack 부동소수점 위치 양자화 16비트와 meshopt 압축을 사용했다. 모델 샤딩이나 재질 회귀를 확인하기 전에는 수치만 보고 압축을 더 세게 걸지 않는다.
+
+```sh
+blender -b --factory-startup --disable-autoexec --python-exit-code 1 \
+  -P scripts/build_gwanghwamun_pavilion.py -- --gltfpack /path/to/gltfpack
+blender -b blender_work/20261125-public-axis/sejong_gwanghwamun_pavilion.blend \
+  --disable-autoexec --python-exit-code 1 \
+  -P scripts/render_gwanghwamun_pavilion.py -- /tmp after
+node --test tests/*.test.js
+npm run build
+```
+
+재수출할 때는 `gwanghwamun-pavilion-evidence.json`의 URL·바이트·노드·SHA-256·경계를 `streaming-manifest.json`의 `gwanghwamun-north-axis` 항목에만 옮긴다. 과거 광역용 동기화 스크립트의 출력을 덮어쓰면 정원과 북축이 함께 과거 버전으로 되돌아갈 수 있다. 정면 프리셋은 보행자 높이에 가깝게 낮추고 모바일은 별도 거리로 정면 전체가 들어오게 했다. JS의 기존 번들 크기 경고는 남아 있다. 실측 단청 도안, 지붕 조각의 개별 공예, 월대/성벽 전체의 후속 실측, 경복궁 안쪽은 이 수정 범위가 아니다.

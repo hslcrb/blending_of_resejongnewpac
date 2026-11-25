@@ -61,7 +61,7 @@ async function snap(frame,name) {
                 if(gardenPromise) await gardenPromise;
                 await p.waitForTimeout(1050);
                 await snap(frame,'web-gratitude-'+scenario);
-                const northReady=scenario==='after'&&!models.some(r=>r.url.endsWith('/gwanghwamun.glb')&&r.status===200)&&p.waitForResponse(r=>r.url().endsWith('/gwanghwamun.glb')&&r.status()===200,timeout);
+                const northReady=scenario==='after'&&!models.some(r=>r.url.endsWith('/gwanghwamun-pavilion.glb')&&r.status===200)&&p.waitForResponse(r=>r.url().endsWith('/gwanghwamun-pavilion.glb')&&r.status()===200,timeout);
                 await p.getByLabel('장소 바로 보기').selectOption('north-axis',timeout);
                 if(northReady) await northReady;
                 await p.waitForTimeout(1250);
@@ -69,7 +69,7 @@ async function snap(frame,name) {
                 assert.deepEqual(errors,[]);
             }finally{await p.close();}
         }
-        const {p,frame,errors}=await open(browser,{width:390,height:844},'after');
+        const {p,frame,errors,models}=await open(browser,{width:390,height:844},'after');
         try{
             assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
             assert.ok(await p.locator('.view-actions').evaluate(el=>{
@@ -77,6 +77,8 @@ async function snap(frame,name) {
                 return Array.from(el.children).every(c=>{const r=c.getBoundingClientRect();return r.left>=frame.left&&r.right<=frame.right;});
             }));
             await p.getByLabel('장소 바로 보기').selectOption('north-axis',timeout);
+            if (!models.some(r=>r.url.endsWith('/gwanghwamun-pavilion.glb')&&r.status===200))
+                await p.waitForResponse(r=>r.url().endsWith('/gwanghwamun-pavilion.glb')&&r.status()===200,timeout);
             await p.waitForTimeout(2200);await snap(frame,'web-north-mobile');
             await p.getByRole('button',{name:'직접 걷기'}).evaluate(el=>el.click());
             assert.equal(await p.getByRole('button',{name:'직접 걷기'}).getAttribute('aria-pressed'),'true');

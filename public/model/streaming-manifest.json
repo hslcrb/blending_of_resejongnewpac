@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": "20261125-public-axis-v4-gratitude",
+  "revision": "20261125-public-axis-v5-gwanghwamun",
   "focusBounds": {
     "min": [
       -78,
@@ -613,9 +613,9 @@
     },
     {
       "id": "gwanghwamun-north-axis",
-      "url": "/model/public-axis-20261125/gwanghwamun.glb",
-      "bytes": 297864,
-      "objects": 42,
+      "url": "/model/public-axis-20261125/gwanghwamun-pavilion.glb",
+      "bytes": 1304780,
+      "objects": 61,
       "bounds": {
         "min": [
           239.0,
@@ -624,11 +624,11 @@
         ],
         "max": [
           438.0,
-          18.79,
+          20.0551,
           145.0
         ]
       },
-      "sha256": "3bc0cf9b09c33376c017920e6946a57c0fbcffcee55e1bd90d456bcd7e813e88",
+      "sha256": "f5a71837b17d11c317bc665474de0fc05bda6e6a7a058d878b42186fb4f61d16",
       "loadDistance": 135,
       "unloadDistance": 225,
       "shadowDistance": 85,
