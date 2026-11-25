@@ -4,9 +4,11 @@ import axis from './publicAxisLayout.json' with { type: 'json' };
 export const NORTH_AXIS_ID = 'gwanghwamun-north-axis';
 const { theatre: t, north: n } = axis;
 
+const toModelX = (x) => t.publicFace === 'north' ? t.minX + t.maxX - x : x;
 const valid = (x,lo,hi)=>x>=lo&&x<=hi;
 export function sTheatreHeight(x,z) {
     const y=-z;
+    x=toModelX(x);
     if (!valid(x,t.minX,t.maxX)||!valid(y,t.minY,t.maxY)) return null;
     if (!valid(x,t.wellMinX,t.wellMaxX)||!valid(y,t.wellMinY,t.stairTopY)) return t.top;
     const count = Math.min(t.steps, 1 + Math.floor((t.stairTopY-y) * t.steps / (t.stairTopY-t.stairBottomY)));
@@ -15,6 +17,7 @@ export function sTheatreHeight(x,z) {
 
 export function sTheatreObstructed(x,z) {
     const y=-z;
+    x=toModelX(x);
     const edge=.22;
     const at=(val,center)=>Math.abs(val-center)<=edge;
     if (valid(y,t.minY-edge,t.maxY+edge)) {
@@ -92,7 +95,8 @@ export function hideOldPavilionInterior(root) {
 
 export function publicAxisWalkStart(name, available) {
     if (name === 's-theatre' && available?.theatre)
-        return { x:t.minX-2.2, z:-(t.doorMinY+t.doorMaxY)/2, yaw:-Math.PI/2 };
+        return { x:toModelX(t.minX-2.2),
+            z:-(t.doorMinY+t.doorMaxY)/2, yaw:t.publicFace === 'north' ? Math.PI/2 : -Math.PI/2 };
     if (name === 'north-axis' && available?.north)
         return { x:343, z:n.z, yaw:-Math.PI/2 };
     return null;

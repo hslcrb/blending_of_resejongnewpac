@@ -11,11 +11,11 @@ test('remains at old terrain when the S Theatre patch is not active', () => {
 });
 test('a loaded S Theatre uses the new door and descending public stair, with side rails', () => {
     const layout = { theatre: true };
-    assert.equal(canWalk(28.9, -120.6, true, layout), true);
-    assert.equal(canWalk(28.9, -116, true, layout), false);
-    assert.equal(canWalk(30.1, -116, true, layout), false);
-    assert.ok(surroundingsGroundHeight(33, -118, layout) > surroundingsGroundHeight(33, -114, layout));
-    assert.equal(surroundingsGroundHeight(33, -113, layout), -3.16);
+    assert.equal(canWalk(36.5, -121.15, true, layout), true);
+    assert.equal(canWalk(28.9, -121.15, true, layout), false);
+    assert.equal(canWalk(35.25, -116, true, layout), false);
+    assert.ok(surroundingsGroundHeight(32.4, -118, layout) > surroundingsGroundHeight(32.4, -114, layout));
+    assert.equal(surroundingsGroundHeight(32.4, -113, layout), -3.16);
 });
 test('the north extension is walkable only when loaded and stays in the crossing and forecourt', () => {
     assert.equal(canWalk(317, 73, true), false);
@@ -86,7 +86,7 @@ test('a location starts walking only when its terrain is available, on the publi
         const layout={theatre:true,north:true};
         const at=publicAxisWalkStart(name,layout);
         assert.ok(canWalk(at.x,at.z,true,layout));
-        assert.equal(at.yaw,-Math.PI/2);
+        assert.equal(at.yaw,name==='s-theatre'?Math.PI/2:-Math.PI/2);
     }
 });
 test('only obsolete interior is retired inside the rear garden chunk', () => {

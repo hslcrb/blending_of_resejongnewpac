@@ -21,7 +21,7 @@ from mathutils import Vector
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = ROOT / "public/model/public-axis-20261125"
-BLEND = ROOT / "blender_work/20261125-public-axis/sejong_public_axis_components.blend"
+BLEND = ROOT / "blender_work/20261125-public-axis/sejong_public_axis_field.blend"
 ORIGINAL = ROOT / "blender_work/20261115-survey/sejong_survey_colonnade_refined.blend"
 GROUND_NAMES = ("ground", "Surroundings - continuous plaza foundation")
 PAVILION_NAMES = (
@@ -30,10 +30,10 @@ PAVILION_NAMES = (
     "Pavilion - unlit garden uplights", "Pavilion - upper band and suggested entry",
 )
 THEATRE = {"minX": 28.9, "maxX": 36.5, "minY": 111.25, "maxY": 122.5,
-           "doorMinY": 119.7, "doorMaxY": 121.65,
+           "doorMinY": 120.35, "doorMaxY": 121.85,
            "wellMinX": 30.15, "wellMaxX": 35.4, "wellMinY": 112.6,
            "wellMaxY": 119.15, "stairTopY": 118.6, "stairBottomY": 113.48,
-           "top": .24, "bottom": -3.16, "steps": 20}
+           "top": .24, "bottom": -3.16, "steps": 20, "publicFace": "north"}
 COUNTRIES = ("United States", "United Kingdom", "Australia", "Netherlands", "Canada",
              "France", "New Zealand", "Philippines", "Sweden", "Turkiye", "Thailand",
              "South Africa", "India", "Greece", "Belgium", "Luxembourg", "Denmark",
@@ -161,7 +161,7 @@ def export(c, filename, pack):
         world=[(p.x,p.z,-p.y) for p in coords]
         bounds[("min","max")[i]] = [round(f(v[a] for v in world),4) for a in range(3)]
     path=MODEL/filename
-    if pack and filename!="theatre.glb":
+    if pack and filename!="theatre-field.glb":
         import subprocess
         packed=MODEL/("packed-"+filename)
         subprocess.run([str(pack),"-i",str(path),"-o",str(packed),"-cc","-kn","-vtf"],check=True)
@@ -196,11 +196,16 @@ def theatre_model(c, mats):
     p=THEATRE; a,b,s,n=(p[k] for k in ("minX","maxX","minY","maxY"))
     w0,w1,ws,wn=(p[k] for k in ("wellMinX","wellMaxX","wellMinY","wellMaxY"))
     d0,d1=p["doorMinY"],p["doorMaxY"]
+    # Official parking axonometric puts Gwanghwamun at lower right (north).
+    # The public face beside H is +X; photo-right is west (+Y).
+    mirror=a+b
+    cut_min,cut_max=mirror-w1,mirror-w0
+    reflect=lambda point:(mirror-point[0],point[1],point[2])
     for obj in tuple(c.objects):
         if not obj.name.startswith("Axis ground replacement"):
             continue
         # Carve both base meshes so the original z=0 surfaces cannot cover the treads.
-        bpy.ops.mesh.primitive_cube_add(size=1,location=((w0+w1)/2,(ws+wn)/2,-.05))
+        bpy.ops.mesh.primitive_cube_add(size=1,location=((cut_min+cut_max)/2,(ws+wn)/2,-.05))
         cutter=bpy.context.object
         cutter.dimensions=(w1-w0,wn-ws,4.0)
         bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
@@ -229,7 +234,7 @@ def theatre_model(c, mats):
                 face.material_index=f.material_index
                 if layer:
                     for j,loop in enumerate(face.loops): loop[newuv].uv=f.loops[j][layer].uv
-            if bb[0][0] < w1 and bb[0][1] > w0 and bb[1][0] < wn and bb[1][1] > ws:
+            if bb[0][0] < cut_max and bb[0][1] > cut_min and bb[1][0] < wn and bb[1][1] > ws:
                 pm=bpy.data.meshes.new("Ground island")
                 piece.to_mesh(pm)
                 helper=bpy.data.objects.new("Ground island temporary",pm);c.objects.link(helper)
@@ -281,7 +286,10 @@ def theatre_model(c, mats):
         shell.box(m["steel"],a,b,y-.05,y+.05,z1-.03,z1+.055)
         shell.box(m["inner"],a+.12,b-.12,y-.049,y+.049,z1-.29,z1-.125)
     shell.box(m["roofglass"],a,b,s,n,z1,z1+.024)
-    shell.finish()
+    for o in shell.finish():
+        for v in o.data.vertices: v.co=reflect(v.co)
+        o.data.flip_normals()
+        o.data.update()
 
     interior=Batch("S Theatre / sunken stairs and stone floor",c)
     for x0,x1,y0,y1 in ((a,w0,s,n),(w1,b,s,n),(w0,w1,s,ws),(w0,w1,wn,n)):
@@ -312,13 +320,16 @@ def theatre_model(c, mats):
     interior.beam(m["polished"],(w0,ws,1.13),(w1,ws,1.13),.041)
     interior.box(m["wall"],w0+.12,w1-.12,ws+.12,ws+.24,p["bottom"],.24)
     interior.box(m["tactile"],a+.12,w0-.11,d0+.09,d1-.09,.24,.255)
-    interior.finish()
+    for o in interior.finish():
+        for v in o.data.vertices: v.co=reflect(v.co)
+        o.data.flip_normals()
+        o.data.update()
     # The freestanding S appears both at opening and in the 2026 site visit.
     sign_curve=bpy.data.curves.new("Entrance freestanding S",'FONT')
-    sign_curve.body="S";sign_curve.size=2.02;sign_curve.extrude=.085
+    sign_curve.body="S";sign_curve.align_x="CENTER";sign_curve.size=2.02;sign_curve.extrude=.085
     sign_curve.bevel_depth=.015;sign_curve.resolution_u=9
     sign=bpy.data.objects.new("S Theatre / freestanding entrance S",sign_curve)
-    sign.location=(27.95,122.64,.22);sign.rotation_euler=(pi/2,0,-pi/2)
+    sign.location=reflect((27.2,122.55,.22));sign.rotation_euler=(pi/2,0,pi/2)
     c.objects.link(sign);sign.data.materials.append(m["yellow"])
     bpy.ops.object.select_all(action='DESELECT');sign.select_set(True)
     bpy.context.view_layer.objects.active=sign
@@ -327,28 +338,57 @@ def theatre_model(c, mats):
 
 
 def garden_model(c,m):
-    # Keep the existing opening and approach. Replace the installation's visible skins.
+    # The 23 silhouettes form one straight north–south row. The height is official;
+    # local widths, curvature and joint dimensions are photo-guided estimates.
+    joint_heights=(.055,.88,1.94,3.08,4.22,5.32,6.25)
+    donation={"Netherlands":(.51,.56,.61), "India":(.55,.39,.29),
+              "Greece":(.70,.70,.71), "Belgium":(.22,.25,.29),
+              "Luxembourg":(.56,.54,.49), "Norway":(.29,.34,.39),
+              "Germany":(.42,.39,.36)}
+    donated={name:material("Donated stone / "+name+" (appearance estimate)",rgb,.85,0.)
+             for name,rgb in donation.items()}
+    bevel=material("Gratitude / honed chamfer",(.29,.33,.38),.78,0.)
+    groove=material("Gratitude / recessed edge joint",(.10,.12,.15),.90,0.)
+    # Capture the near-horizontal toe, its tangent into the upright, and the
+    # slight taper of the opposite edge without the old discontinuity at z=.16.
+    def profile(z):
+        t=max(0.,min(1.,(z-.055)/5.59))
+        front=-5.98+5.40*(2*t-t*t)**.5
+        back=.16-.12*(z/6.25)**2
+        return front,back
     for i,country in enumerate(COUNTRIES):
-        x=63+2*i; curve=.14*(1-((i-11)/11)**2)
-        y=-70.+curve
+        x,y=63+2*i,-70.
         b=Batch(f"Gratitude Light {i+1:02} / {country}",c)
-        # Profile sampled through every stone course; no overlaid duplicate faces.
-        outer=lambda h: y+.15-(.12*(h/6.25)**2)
-        # Upright face with visible bed joints, following the photographed stone silhouette.
-        for low,high in zip((.055,.88,1.94,3.08,4.22,5.32),(.88,1.94,3.08,4.22,5.32,6.25)):
-            def inner(z):
-                angle=np.arccos(np.clip(1-(z-.16)/5.6,0,1))
-                return y-6.03+.51*max(0,(z-.048)/.112) if z<.16 else y-.12-5.4*(1-sin(angle)) if z<5.76 else y-.12
-            za=low+.004 if low>.055 else low
-            zb=high-.004 if high<6.25 else high
-            poly=[(inner(za),za),(outer(za),za),(outer(zb),zb),(inner(zb),zb)]
-            # Add intermediate samples to preserve the continuous concavity through the joint.
-            samples=[(inner(z),z) for z in np.linspace(zb,za,9)[1:-1]]
-            b.extrude_x(m["granite"],x-.27,x+.27,poly+samples)
-        b.box(m["stone_dark"],x-.19,x+.19,y-.14,y+.07,.84,1.64)
-        b.box(m["bronze"],x-.285,x-.267,y-.81,y-.39,.98,1.28)
-        b.box(m["plaque"],x-.288,x-.283,y-.77,y-.43,1.018,1.24)
-        b.box(m["warm"],x-.17,x+.17,y-.15,y+.11,6.235,6.25)
+        for n,(low,high) in enumerate(zip(joint_heights,joint_heights[1:])):
+            za=low+(.003 if n else 0)
+            zb=high-(.003 if n<5 else 0)
+            # Extra samples are concentrated in the first course, where the
+            # curve is tightest. Each course is a capped mesh with stone seams.
+            samples=[za+(zb-za)*(j/16)**(2 if n==0 else 1) for j in range(17)]
+            rings=[]
+            for z in samples:
+                front,back=profile(z)
+                # Eight-sided section, including a narrow recessed bevel stripe.
+                rings.append([(x+dx,y+dy,z) for dx,dy in (
+                    (-.27,front+.13),(-.16,front+.030),(-.139,front+.037),
+                    (-.12,front),(.16,front),(.27,front+.13),
+                    (.27,back),(-.27,back))])
+            finishes=(bevel,groove,bevel,bevel,bevel,m["granite"],m["granite"],m["granite"])
+            for a,d in zip(rings,rings[1:]):
+                for j,finish in enumerate(finishes):
+                    k=(j+1)%len(a)
+                    b.shape(finish,[a[j],a[k],d[k],d[j]],[(0,1,2,3)])
+            b.shape(m["granite"],rings[0],[tuple(reversed(range(8)))])
+            b.shape(m["granite"],rings[-1],[tuple(range(8))])
+        if country in donated:
+            # Only the installed examples confirmed in the opening coverage
+            # are shown; don't introduce an imaginary insert on every stone.
+            b.box(donated[country],x-.273,x-.266,y-.49,y+.045,.084,.81)
+        # Small metal plaques are mounted flat on the broad face, not floating
+        # on the tapered edge. Plain plaques avoid unverified flag artwork.
+        b.box(m["bronze"],x-.279,x-.27,y-1.19,y-.84,1.22,1.49)
+        b.box(m["plaque"],x-.280,x-.279,y-1.16,y-.87,1.245,1.466)
+        b.box(m["warm"],x-.115,x+.115,y-.29,y-.09,6.247,6.259)
         b.finish()
     p=Batch("Freedom Hall / door head and illuminated handrail edge",c)
     p.box(m["stone_dark"],121.58,121.72,-65.25,-61.7,-.69,-.31)
@@ -548,14 +588,14 @@ def main():
         bpy.ops.wm.save_as_mainfile(filepath=str(BLEND),compress=True)
         meta={
           "version":1,"sourceGitBlob":hashlib.sha1(("blob "+str(source.stat().st_size)+"\0").encode()+source.read_bytes()).hexdigest(),
-          "theatre":export(theatre,"theatre.glb",a.gltfpack),
-          "garden":export(garden,"gratitude.glb",a.gltfpack),
+          "theatre":export(theatre,"theatre-field.glb",a.gltfpack),
+          "garden":export(garden,"gratitude-field.glb",a.gltfpack),
           "north":export(gate,"gwanghwamun.glb",a.gltfpack),
           "hideFromCore":[*GROUND_NAMES,*PAVILION_NAMES],
           "theatreLayout":THEATRE,
           "northAnchor":{"latitude":37.576044,"longitude":126.977019,"x":GATE_X,"z":-GATE_Y},
         }
-        (MODEL/"build-evidence.json").write_text(json.dumps(meta,ensure_ascii=False,indent=2)+"\n")
+        (MODEL/"field-evidence.json").write_text(json.dumps(meta,ensure_ascii=False,indent=2)+"\n")
         print(json.dumps(meta,ensure_ascii=False))
 
 

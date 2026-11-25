@@ -3,7 +3,7 @@ import hashlib,json
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 asset=root/'public/model/public-axis-20261125'
-data=json.loads((asset/'build-evidence.json').read_text())
+data=json.loads((asset/'field-evidence.json').read_text())
 def write(value,path):
     path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 for k in ('theatre','garden','north'):
@@ -13,7 +13,7 @@ for k in ('theatre','garden','north'):
         raise ValueError(f'Mismatched Blender export: {k}')
 path=root/'public/model/streaming-manifest.json'
 m=json.loads(path.read_text())
-m['revision']='20261125-public-axis-v2'
+m['revision']='20261125-public-axis-v3-field'
 m['sTheatrePatch']={**data['theatre'],'hideFromCore':data['hideFromCore']}
 next(x for x in m['chunks'] if x['id']=='gratitude-garden').update(data['garden'])
 n=next((x for x in m['chunks'] if x['id']=='gwanghwamun-north-axis'),None)
