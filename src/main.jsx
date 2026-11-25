@@ -15,7 +15,7 @@ import { walkKeyForEvent } from './walkKeys.js';
 import { focusOrbitAt } from './orbitFocus.js';
 import { rearGroundHeight } from './rearGround.js';
 import { surroundingsGroundHeight } from './surroundingsGround.js';
-import { hideOldPavilionInterior, installSTheatrePatch, NORTH_AXIS_ID } from './publicAxis.js';
+import { hideOldPavilionInterior, installSTheatrePatch, NORTH_AXIS_ID, publicAxisWalkStart } from './publicAxis.js';
 import { surroundingsView } from './surroundingsViews.js';
 import { createSpatialModelStreamer, validateStreamManifest } from './modelStreaming.js';
 import { disposeModelResources, shouldCastModelShadow } from './modelResources.js';
@@ -488,6 +488,12 @@ function BuildingViewer({ skyMode, mode, view, viewerRef, onStatusChange, onWeat
                 camera.fov = 58;
                 camera.updateProjectionMatrix();
                 resetWalk();
+                const start = publicAxisWalkStart(activePreset, axis);
+                if (start) {
+                    camera.position.set(start.x, groundHeight(start.x,start.z,axis)+1.7, start.z);
+                    yaw=start.yaw; pitch=0;
+                    camera.rotation.set(pitch,yaw,0,'YXZ');
+                }
                 container.focus({ preventScroll: true });
             } else {
                 modeNow = 'orbit';
@@ -1347,11 +1353,16 @@ function App() {
                             {mode === 'orbit' && area === 'local' && <>
                                 <button type="button" disabled={!ready} onClick={() => setView({ name: 'front' })}>정면 보기</button>
                                 <button type="button" disabled={!ready} onClick={() => setView({ name: 'rear' })}>뒷면 보기</button>
-                                {SHOW_SURROUNDINGS && <>
-                                    <button type="button" disabled={!ready} onClick={() => setView({ name: 's-theatre' })}>S씨어터 보기</button>
-                                    <button type="button" disabled={!ready} onClick={() => setView({ name: 'gratitude-garden' })}>감사의 정원 보기</button>
-                                    <button type="button" disabled={!ready} onClick={() => setView({ name: 'north-axis' })}>광화문 보기</button>
-                                </>}
+                                {SHOW_SURROUNDINGS && <select className="view-location" aria-label="장소 바로 보기" defaultValue="" disabled={!ready} onChange={event => {
+                                    const name = event.currentTarget.value;
+                                    event.currentTarget.value = '';
+                                    if (name) setView({ name });
+                                }}>
+                                    <option value="" disabled>장소 바로 보기</option>
+                                    <option value="s-theatre">S씨어터</option>
+                                    <option value="gratitude-garden">감사의 정원</option>
+                                    <option value="north-axis">광화문</option>
+                                </select>}
                             </>}
                             <button type="button" disabled={!ready} onClick={() => mode === 'walk' ? viewerRef.current?.resetWalk() : setView({ name: 'perspective' })}>{mode === 'walk' ? '시작 위치' : '처음 시점'}</button>
                         </div>
