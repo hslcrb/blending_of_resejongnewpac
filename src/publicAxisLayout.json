@@ -1,0 +1,24 @@
+{
+  "theatre": {
+    "minX": 28.9,
+    "maxX": 36.5,
+    "minY": 111.25,
+    "maxY": 122.5,
+    "doorMinY": 119.7,
+    "doorMaxY": 121.65,
+    "wellMinX": 30.15,
+    "wellMaxX": 35.4,
+    "wellMinY": 112.6,
+    "wellMaxY": 119.15,
+    "stairTopY": 118.6,
+    "stairBottomY": 113.48,
+    "top": 0.24,
+    "bottom": -3.16,
+    "steps": 20
+  },
+  "north": {
+    "x": 413.324,
+    "z": 72.957,
+    "walkLimitX": 403.95
+  }
+}

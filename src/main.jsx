@@ -15,6 +15,7 @@ import { walkKeyForEvent } from './walkKeys.js';
 import { focusOrbitAt } from './orbitFocus.js';
 import { rearGroundHeight } from './rearGround.js';
 import { surroundingsGroundHeight } from './surroundingsGround.js';
+import { hideOldPavilionInterior, installSTheatrePatch, NORTH_AXIS_ID, publicAxisWalkStart } from './publicAxis.js';
 import { surroundingsView } from './surroundingsViews.js';
 import { createSpatialModelStreamer, validateStreamManifest } from './modelStreaming.js';
 import { disposeModelResources, shouldCastModelShadow } from './modelResources.js';
@@ -56,9 +57,9 @@ const WALK_SPEED = 2;
 const WALK_FAST_SPEED = 5;
 // Show the surrounding district by default; retain the original model as a fallback.
 const SHOW_SURROUNDINGS = new URLSearchParams(window.location.search).get('environment') !== 'legacy';
-function groundHeight(x, z) {
+function groundHeight(x, z, axis) {
     if (SHOW_SURROUNDINGS) {
-        const height = surroundingsGroundHeight(x, z);
+        const height = surroundingsGroundHeight(x, z, axis);
         if (height !== null) return height;
     }
     const rearHeight = rearGroundHeight(x, z);
@@ -317,6 +318,7 @@ function BuildingViewer({ skyMode, mode, view, viewerRef, onStatusChange, onWeat
         refreshSky();
         let coreAsset;
         let streamer;
+        const axis = { theatre: false, north: false };
         let viewerVisible = false;
         // [백지도 시설·지형 / National overview points and boundaries]
         // 기존 지면 절두체와 동일한 범위를 사용하고 숨겨진 화면에서는 요청을 취소합니다.
@@ -486,6 +488,12 @@ function BuildingViewer({ skyMode, mode, view, viewerRef, onStatusChange, onWeat
                 camera.fov = 58;
                 camera.updateProjectionMatrix();
                 resetWalk();
+                const start = publicAxisWalkStart(activePreset, axis);
+                if (start) {
+                    camera.position.set(start.x, groundHeight(start.x,start.z,axis)+1.7, start.z);
+                    yaw=start.yaw; pitch=0;
+                    camera.rotation.set(pitch,yaw,0,'YXZ');
+                }
                 container.focus({ preventScroll: true });
             } else {
                 modeNow = 'orbit';
@@ -842,8 +850,24 @@ function BuildingViewer({ skyMode, mode, view, viewerRef, onStatusChange, onWeat
                     } catch (error) { if (error.name === 'AbortError') throw error; }
                 }
                 const coreUrl = manifest?.core.url || (SHOW_SURROUNDINGS ? '/model/sejong_surroundings_latest.glb' : '/model/sejong_sitevisit_refined.glb');
-                const gltf = await loadGltf(coreUrl, { signal: bootRequest.signal });
-                if (disposed) { disposeModelResources(gltf.scene); return; }
+                const correction = manifest?.sTheatrePatch;
+                // Start the small replacement in parallel and handle failure separately.
+                const correctionFetch = correction
+                    ? loadGltf(correction.url, { signal: typeof AbortSignal.any === 'function' && typeof AbortSignal.timeout === 'function'
+                        ? AbortSignal.any([bootRequest.signal, AbortSignal.timeout(8000)]) : bootRequest.signal })
+                        .then(value => ({ value }), error => ({ error }))
+                    : null;
+                let gltf;
+                try {
+                    gltf = await loadGltf(coreUrl, { signal: bootRequest.signal });
+                } catch (error) {
+                    void correctionFetch?.then(({value}) => { if (value) disposeModelResources(value.scene); });
+                    throw error;
+                }
+                if (disposed) {
+                    void correctionFetch?.then(({value}) => { if (value) disposeModelResources(value.scene); });
+                    disposeModelResources(gltf.scene); return;
+                }
                 // Optional photo correction: failure leaves the complete original core visible.
                 let patchGltf = null;
                 try {
@@ -859,25 +883,53 @@ function BuildingViewer({ skyMode, mode, view, viewerRef, onStatusChange, onWeat
                     geometryPatch = patch;
                 } catch (error) {
                     if (patchGltf) for (const root of patchGltf.scenes || [patchGltf.scene]) disposeModelResources(root);
-                    if (error.name === 'AbortError') { disposeModelResources(gltf.scene); throw error; }
+                    if (error.name === 'AbortError') {
+                        void correctionFetch?.then(({value}) => { if (value) disposeModelResources(value.scene); });
+                        disposeModelResources(gltf.scene); throw error;
+                    }
                     console.warn('Photo geometry correction unavailable; original model retained.', error);
                 }
-                if (disposed) { disposeModelResources(gltf.scene); if (geometryPatch) disposeModelResources(geometryPatch.root); return; }
+                if (disposed) {
+                    void correctionFetch?.then(({value}) => { if (value) disposeModelResources(value.scene); });
+                    disposeModelResources(gltf.scene); if (geometryPatch) disposeModelResources(geometryPatch.root); return;
+                }
                 const patch = geometryPatch;
                 if (patch) {
                     hideReplacedSurveyGeometry(gltf.scene, patch);
                     gltf.scene.add(patch.root);
                 }
                 geometryPatch = null;
+                if (correctionFetch) {
+                    let replacement = null;
+                    try {
+                        const result = await correctionFetch;
+                        if (result.error) throw result.error;
+                        replacement = result.value;
+                        bootRequest.signal.throwIfAborted();
+                        installSTheatrePatch(gltf.scene, replacement.scene, correction.hideFromCore);
+                        axis.theatre = true;
+                    } catch(error) {
+                        if (replacement) disposeModelResources(replacement.scene);
+                        if (error.name === 'AbortError') { disposeModelResources(gltf.scene); throw error; }
+                        console.warn('S Theatre correction unavailable; original room and paths retained.', error);
+                    }
+                }
                 const core = prepareAsset(gltf);
                 geometryPatch = patch;
                 installCore(core, manifest?.focusBounds);
                 if (manifest) {
                     streamer = createSpatialModelStreamer({
                         chunks: manifest.chunks,
-                        load: async (url, options) => prepareAsset(await loadGltf(url, options)),
+                        load: async (url, options) => {
+                            const gltf = await loadGltf(url, options);
+                            if (axis.theatre && options.chunk.id === 'rear-garden-detail') hideOldPavilionInterior(gltf.scene);
+                            return prepareAsset(gltf);
+                        },
                         attach: (asset) => { model.add(asset.root); asset.root.updateWorldMatrix(true, true); },
-                        onChange: () => { renderer.shadowMap.needsUpdate = true; },
+                        onChange: () => {
+                            axis.north = streamer?.isVisible(NORTH_AXIS_ID) ?? false;
+                            renderer.shadowMap.needsUpdate = true;
+                        },
                     });
                     streamer.setPaused(document.hidden || !viewerVisible);
                     sceneRef.current.getStreamingStats = () => streamer.snapshot();
@@ -927,11 +979,11 @@ function BuildingViewer({ skyMode, mode, view, viewerRef, onStatusChange, onWeat
                     const dx = direction.x * motionDt * speed / steps;
                     const dz = direction.z * motionDt * speed / steps;
                     for (let i = 0; i < steps; i += 1) {
-                        if (theatre.canMove(camera.position,{x:camera.position.x+dx,z:camera.position.z},(x,z)=>canWalk(x,z,SHOW_SURROUNDINGS))) camera.position.x += dx;
-                        if (theatre.canMove(camera.position,{x:camera.position.x,z:camera.position.z+dz},(x,z)=>canWalk(x,z,SHOW_SURROUNDINGS))) camera.position.z += dz;
+                        if (theatre.canMove(camera.position,{x:camera.position.x+dx,z:camera.position.z},(x,z)=>canWalk(x,z,SHOW_SURROUNDINGS,axis))) camera.position.x += dx;
+                        if (theatre.canMove(camera.position,{x:camera.position.x,z:camera.position.z+dz},(x,z)=>canWalk(x,z,SHOW_SURROUNDINGS,axis))) camera.position.z += dz;
                     }
                 }
-                if(!theatre?.isSitting())camera.position.y=(theatre?.isInside(camera.position)?theatre.floor(camera.position):groundHeight(camera.position.x,camera.position.z))+1.7;
+                if(!theatre?.isSitting())camera.position.y=(theatre?.isInside(camera.position)?theatre.floor(camera.position):groundHeight(camera.position.x,camera.position.z,axis))+1.7;
                 camera.rotation.set(pitch, yaw, 0, 'YXZ');
             } else {
                 controls.update();
@@ -1301,6 +1353,16 @@ function App() {
                             {mode === 'orbit' && area === 'local' && <>
                                 <button type="button" disabled={!ready} onClick={() => setView({ name: 'front' })}>정면 보기</button>
                                 <button type="button" disabled={!ready} onClick={() => setView({ name: 'rear' })}>뒷면 보기</button>
+                                {SHOW_SURROUNDINGS && <select className="view-location" aria-label="장소 바로 보기" defaultValue="" disabled={!ready} onChange={event => {
+                                    const name = event.currentTarget.value;
+                                    event.currentTarget.value = '';
+                                    if (name) setView({ name });
+                                }}>
+                                    <option value="" disabled>장소 바로 보기</option>
+                                    <option value="s-theatre">S씨어터</option>
+                                    <option value="gratitude-garden">감사의 정원</option>
+                                    <option value="north-axis">광화문</option>
+                                </select>}
                             </>}
                             <button type="button" disabled={!ready} onClick={() => mode === 'walk' ? viewerRef.current?.resetWalk() : setView({ name: 'perspective' })}>{mode === 'walk' ? '시작 위치' : '처음 시점'}</button>
                         </div>

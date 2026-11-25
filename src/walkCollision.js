@@ -1,4 +1,5 @@
 import { isCampusPlanting } from './campusLayout.js';
+import { northAxisWalkable, sTheatreObstructed } from './publicAxis.js';
 
 // GLB의 광장과 출입구에 맞춘 보행 범위입니다. / Walkable plaza and entrances from the GLB.
 const WALK_LIMITS = { minX: -75, maxX: 80.6, minZ: -166, maxZ: 78 };
@@ -17,12 +18,6 @@ const SURROUNDINGS_BLOCKS = [
         ({ minX: x - 0.65, maxX: x + 0.65, minZ: z - 0.65, maxZ: z + 0.65 }))),
     ...[[-66, 28.2], [-55.1, 28.2], [-68.5, 30.3], [-57, 30.3], [-46, 30.3]].map(([x, z]) =>
         ({ minX: x - 0.3, maxX: x + 0.3, minZ: z - 0.3, maxZ: z + 0.3 })),
-    // Pavilion walls, leaving the garden-side opening clear.
-    { minX: 29.05, maxX: 29.75, minZ: -122.85, maxZ: -120.53 },
-    { minX: 29.05, maxX: 29.75, minZ: -119.57, maxZ: -110.73 },
-    { minX: 33.65, maxX: 34.35, minZ: -122.85, maxZ: -110.73 },
-    { minX: 29.05, maxX: 34.35, minZ: -122.85, maxZ: -122.15 },
-    { minX: 29.05, maxX: 34.35, minZ: -111.43, maxZ: -110.73 },
     // Haechi sunken court perimeter and stair sides. The stair opens at z=94.
     { minX: -55.3, maxX: -54.88, minZ: 93.7, maxZ: 108.3 },
     { minX: -50.45, maxX: -47, minZ: 93.7, maxZ: 94.3 },
@@ -66,6 +61,14 @@ const SURROUNDINGS_BLOCKS = [
     { minX: -94.3, maxX: -93.7, minZ: -28.4, maxZ: -26.6 },
     { minX: -103.3, maxX: -102.7, minZ: -34.5, maxZ: -22.3 },
     { minX: -103.3, maxX: -93.7, minZ: -34.5, maxZ: -33.9 },
+];
+const LEGACY_PAVILION_BLOCKS = [
+    // Pavilion walls, leaving the garden-side opening clear.
+    { minX: 29.05, maxX: 29.75, minZ: -122.85, maxZ: -120.53 },
+    { minX: 29.05, maxX: 29.75, minZ: -119.57, maxZ: -110.73 },
+    { minX: 33.65, maxX: 34.35, minZ: -122.85, maxZ: -110.73 },
+    { minX: 29.05, maxX: 34.35, minZ: -122.85, maxZ: -122.15 },
+    { minX: 29.05, maxX: 34.35, minZ: -111.43, maxZ: -110.73 },
 ];
 const WALK_BLOCKS = [
     // 후면 정원의 식재 구역 / Planted islands in the rear garden.
@@ -129,7 +132,8 @@ const WALK_BLOCKS = [
     { minX: 73.15, maxX: 78.85, minZ: -83.35, maxZ: -6.65 },
 ];
 
-export function canWalk(x, z, surroundings = false) {
+export function canWalk(x, z, surroundings = false, axis = null) {
+    if (surroundings && x > SURROUNDINGS_LIMITS.maxX) return Boolean(axis?.north && northAxisWalkable(x,z));
     const limits = surroundings ? SURROUNDINGS_LIMITS : WALK_LIMITS;
     if (x < limits.minX || x > limits.maxX || z < limits.minZ || z > limits.maxZ) return false;
     if (surroundings && isCampusPlanting(x, z)) return false;
@@ -137,6 +141,8 @@ export function canWalk(x, z, surroundings = false) {
     if (surroundings && z > 125 && z < 151 && !((x >= -137.5 && x <= -132.5) || (x >= 152.5 && x <= 157.5))) return false;
     // Channel edges match the exported mesh; the modeled bridge is at x=151.5..158.5.
     if (surroundings && x > 24.7 && x < 237.3 && z > 115.1 && z < 117.3 && !(x >= 151.5 && x <= 158.5)) return false;
+    if (surroundings && (axis?.theatre ? sTheatreObstructed(x,z)
+        : LEGACY_PAVILION_BLOCKS.some(box => x > box.minX && x < box.maxX && z > box.minZ && z < box.maxZ))) return false;
     if (surroundings && SURROUNDINGS_BLOCKS.some((box) => x > box.minX && x < box.maxX && z > box.minZ && z < box.maxZ)) return false;
     // The expanded scene paves a portion of the first planted bed for the terrace.
     const inFirstBed = x > -73.05 && x < -49.15 && z > 16.65 && z < 36.35;
