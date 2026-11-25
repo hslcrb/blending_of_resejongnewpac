@@ -89,3 +89,11 @@ export function hideOldPavilionInterior(root) {
         if(LEGACY_INTERIOR.has(o.userData.name||o.name)) o.visible=false;
     });
 }
+
+export function publicAxisWalkStart(name, available) {
+    if (name === 's-theatre' && available?.theatre)
+        return { x:t.minX-2.2, z:-(t.doorMinY+t.doorMaxY)/2, yaw:-Math.PI/2 };
+    if (name === 'north-axis' && available?.north)
+        return { x:343, z:n.z, yaw:-Math.PI/2 };
+    return null;
+}

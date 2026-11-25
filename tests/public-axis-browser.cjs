@@ -24,8 +24,8 @@ async function open(browser,viewport,scenario) {
     await p.goto(base+'/explore/',{waitUntil:'domcontentloaded',timeout:90000});
     const frame=p.locator('.view-frame');
     await frame.scrollIntoViewIfNeeded();
-    const news=p.getByRole('button',{name:'S씨어터 보기',exact:true});
-    await p.waitForFunction(()=>Array.from(document.querySelectorAll('button')).some(b=>b.textContent==='S씨어터 보기'&&!b.disabled),null,timeout);
+    const news=p.getByLabel('장소 바로 보기');
+    await p.waitForFunction(()=>document.querySelector('select.view-location:not([disabled])'),null,timeout);
     await p.getByLabel('낮과 밤 조명').selectOption('day',{timeout:90000});
     assert.equal(await p.locator('canvas.campus-webgl').count(),1);
     return {p,frame,news,errors,models};
@@ -43,7 +43,7 @@ async function snap(frame,name) {
         for(const scenario of ['after','missing','before']){
             const {p,frame,news,errors,models}=await open(browser,desktop,scenario);
             try{
-                await news.evaluate(el=>el.click());
+                await news.selectOption('s-theatre',timeout);
                 await p.waitForTimeout(950);
                 await snap(frame,'web-theatre-'+scenario);
                 if(scenario==='after'){
@@ -57,12 +57,12 @@ async function snap(frame,name) {
                 }
                 const gardenEnd=scenario==='after'?'/gratitude.glb':'/20261103-gratitude-garden.glb';
                 const gardenPromise=!models.some(r=>r.url.endsWith(gardenEnd)&&r.status===200) && p.waitForResponse(r=>r.url().endsWith(gardenEnd)&&r.status()===200,timeout);
-                await p.getByRole('button',{name:'감사의 정원 보기'}).evaluate(el=>el.click());
+                await news.selectOption('gratitude-garden',timeout);
                 if(gardenPromise) await gardenPromise;
                 await p.waitForTimeout(1050);
                 await snap(frame,'web-gratitude-'+scenario);
                 const northReady=scenario==='after'&&!models.some(r=>r.url.endsWith('/gwanghwamun.glb')&&r.status===200)&&p.waitForResponse(r=>r.url().endsWith('/gwanghwamun.glb')&&r.status()===200,timeout);
-                await p.getByRole('button',{name:'광화문 보기'}).evaluate(el=>el.click());
+                await p.getByLabel('장소 바로 보기').selectOption('north-axis',timeout);
                 if(northReady) await northReady;
                 await p.waitForTimeout(1250);
                 await snap(frame,'web-north-'+scenario);
@@ -72,7 +72,11 @@ async function snap(frame,name) {
         const {p,frame,errors}=await open(browser,{width:390,height:844},'after');
         try{
             assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
-            await p.getByRole('button',{name:'광화문 보기'}).evaluate(el=>el.click());
+            assert.ok(await p.locator('.view-actions').evaluate(el=>{
+                const frame=el.closest('.view-frame').getBoundingClientRect();
+                return Array.from(el.children).every(c=>{const r=c.getBoundingClientRect();return r.left>=frame.left&&r.right<=frame.right;});
+            }));
+            await p.getByLabel('장소 바로 보기').selectOption('north-axis',timeout);
             await p.waitForTimeout(2200);await snap(frame,'web-north-mobile');
             await p.getByRole('button',{name:'직접 걷기'}).evaluate(el=>el.click());
             assert.equal(await p.getByRole('button',{name:'직접 걷기'}).getAttribute('aria-pressed'),'true');

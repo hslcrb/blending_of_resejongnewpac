@@ -37,7 +37,7 @@ test('the district manifest keeps the old core and declares the new north and gr
 
 import { createHash } from 'node:crypto';
 import { BoxGeometry, Group, Mesh, MeshBasicMaterial } from 'three';
-import { installSTheatrePatch } from '../src/publicAxis.js';
+import { hideOldPavilionInterior, installSTheatrePatch, publicAxisWalkStart } from '../src/publicAxis.js';
 import { geoToWorld, latLonTo5186 } from '../src/mapProjection.js';
 
 const manifest = read('../public/model/streaming-manifest.json');
@@ -76,4 +76,23 @@ test('missing mesh validation leaves the original geometry active', () => {
     installSTheatrePatch(base,correction,names);
     assert.ok(base.children.slice(0,-1).every(o=>!o.visible));
     assert.equal(base.children.at(-1),correction);
+});
+
+
+test('a location starts walking only when its terrain is available, on the public side of the glass', () => {
+    assert.equal(publicAxisWalkStart('s-theatre',{}),null);
+    assert.equal(publicAxisWalkStart('north-axis',{theatre:true}),null);
+    for (const name of ['s-theatre','north-axis']) {
+        const layout={theatre:true,north:true};
+        const at=publicAxisWalkStart(name,layout);
+        assert.ok(canWalk(at.x,at.z,true,layout));
+        assert.equal(at.yaw,-Math.PI/2);
+    }
+});
+test('only obsolete interior is retired inside the rear garden chunk', () => {
+    const chunk=new Group();
+    const stale=new Group();stale.userData.name='DAY pavilion temporary original art board';
+    const garden=new Group();garden.userData.name='DAY perennial garden';
+    chunk.add(stale,garden);hideOldPavilionInterior(chunk);
+    assert.equal(stale.visible,false);assert.equal(garden.visible,true);
 });
